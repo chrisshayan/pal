@@ -15,22 +15,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:selectableItemBackground"
-        android:orientation="horizontal" />
+        android:orientation="vertical" >
+    </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/placeNameHolder"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
         <TextView
-            android:id="@+id/recent_thread_card_title"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="left"
-            android:paddingLeft="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/black" />
+            android:text="Card Title"
+            android:id="@+id/title"
+            android:layout_marginLeft="@dimen/card_horizontal_padding"
+            android:layout_marginTop="@dimen/card_vertical_padding"
+            android:layout_marginBottom="@dimen/card_vertical_padding"
+            />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Card Desc."
+            android:id="@+id/createdDate"
+            android:layout_marginLeft="@dimen/card_horizontal_padding"
+            android:layout_marginTop="@dimen/card_vertical_padding"
+            android:layout_marginBottom="@dimen/card_vertical_padding"
+            />
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

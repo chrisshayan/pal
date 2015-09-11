@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.models.AppModel;
+import vietnamworks.com.pal.models.RecentThread;
+import vietnamworks.com.pal.utils.Common;
 
 /**
  * Created by duynk on 9/11/15.
@@ -26,19 +29,25 @@ public class RecentThreadListAdapter extends RecyclerView.Adapter<RecentThreadLi
 
     @Override
     public int getItemCount() {
-        return 10;
+        int totalItem = AppModel.recentThreadData.getData().size();
+        return totalItem;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.uiTitle.setText("Item " + position);
+        RecentThread item = (RecentThread) AppModel.recentThreadData.getData().get(position);
+
+        holder.uiTitle.setText(item.title);
+        holder.uiCreatedDate.setText(Common.getDateString(item.createdDate));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView uiTitle;
+        protected TextView uiTitle;
+        protected TextView uiCreatedDate;
         public ViewHolder(View view) {
             super(view);
-            this.uiTitle = (TextView) view.findViewById(R.id.recent_thread_card_title);
+            this.uiTitle = (TextView) view.findViewById(R.id.title);
+            this.uiCreatedDate = (TextView) view.findViewById(R.id.createdDate);
         }
     }
 }
