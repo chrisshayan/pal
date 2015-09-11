@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <eat-comment/>
+    <!--common card-->
+    <color name="card_background">#FFFFFF</color>
+    <dimen name="card_corner_radius">0dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
+    <dimen name="card_horizontal_padding">20dp</dimen>
+    <dimen name="card_vertical_padding">5dp</dimen>
+
+    <!--sendme card-->
+    <dimen name="sendme_card_vertical_padding">20dp</dimen>
+
+    <!--others-->
     <color name="accent">#6C7F91</color>
     <color name="dark_green">#5B852D</color>
     <color name="light_green">#7ABA34</color>
     <color name="primary">#FFFFFF</color>
     <color name="primary_dark">#6C7F91</color>
 
-    <color name="card_background">#FFFFFF</color>
 
-    <eat-comment/>
     <dimen name="activity_horizontal_margin">0dp</dimen>
     <dimen name="activity_vertical_margin">0dp</dimen>
     <dimen name="button_elevation">1dp</dimen>
     <dimen name="button_press_elevation">18dp</dimen>
 
-    <dimen name="card_corner_radius">0dp</dimen>
-    <dimen name="card_elevation">1dp</dimen>
-    <dimen name="card_horizontal_padding">20dp</dimen>
-    <dimen name="card_vertical_padding">5dp</dimen>
+
 
     <dimen name="floating_button_size">60dp</dimen>
 </resources>

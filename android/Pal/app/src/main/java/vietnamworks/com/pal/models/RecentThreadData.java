@@ -13,7 +13,7 @@ public class RecentThreadData extends AbstractContainer<RecentThread> {
         /***
          * This stuff is for testing
          */
-        String[] postTitle = {"How to say Hello", "How to say thank you"};
+        String[] postTitle = {"How to say Hello", "How to say thank you", "How to say Hello", "How to say thank you", "How to say Hello", "How to say thank you", "How to say Hello", "How to say thank you", "How to say Hello", "How to say thank you", "How to say Hello", "How to say thank you", "How to say Hello", "How to say thank you"};
         ArrayList<RecentThread> data = new ArrayList<>();
         for (int i = 0; i < postTitle.length; i++) {
             RecentThread d = new RecentThread();

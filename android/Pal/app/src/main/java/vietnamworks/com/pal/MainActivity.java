@@ -7,6 +7,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import vietnamworks.com.pal.components.RecentThreadListAdapter;
 
@@ -38,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
         mAdapter = new RecentThreadListAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+
+        RecentThreadListAdapter.OnItemClickListener onItemClickListener = new RecentThreadListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int type, int position) {
+                System.out.println("onItemClick " + type + ", " + position);
+            }
+        };
+        mAdapter.setOnItemClickListener(onItemClickListener);
     }
 
     @Override
