@@ -16,14 +16,33 @@
         android:layout_height="match_parent"
         android:background="?android:selectableItemBackground"
         android:orientation="vertical" >
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/holder"
-        android:orientation="vertical"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+
+        <ImageView
+            android:layout_width="@dimen/recent_thread_image_size"
+            android:layout_height="79dp"
+            android:id="@+id/imageView"
+            android:layout_gravity="left"
+            android:src="@drawable/ic_conversation"
+            android:cropToPadding="false"
+            android:padding="@dimen/recent_thread_image_padding" />
+
+        <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+            android:weightSum="10">
 
         <TextView
             android:layout_width="fill_parent"
@@ -46,6 +65,8 @@
             android:layout_marginTop="@dimen/card_vertical_padding"
             android:layout_marginBottom="@dimen/card_vertical_padding"
             />
+    </LinearLayout>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

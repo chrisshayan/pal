@@ -87,7 +87,7 @@ public class RecentThreadListAdapter extends RecyclerView.Adapter<RecentThreadLi
             super(view);
             this.uiTitle = (TextView) view.findViewById(R.id.title);
             this.uiCreatedDate = (TextView) view.findViewById(R.id.createdDate);
-            this.holder = (LinearLayout) view.findViewById(R.id.holder);
+            this.holder = (LinearLayout) view.findViewById(R.id.mainHolder);
             this.holder.setOnClickListener(this);
         }
 
