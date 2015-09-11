@@ -1,27 +1,40 @@
 package vietnamworks.com.pal;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
-import vietnamworks.com.pal.utils.*;
+import vietnamworks.com.pal.components.RecentThreadListAdapter;
 
 public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView mRecyclerView;
+    private StaggeredGridLayoutManager mStaggeredLayoutManager;
+    private RecentThreadListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (Common.isLollipopOrBelow()) {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setActionBar(toolbar);
-        } else {
-            android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
             setSupportActionBar(toolbar);
+            try {
+                getSupportActionBar().setElevation(7);
+            } catch (NullPointerException E) {
+
+            }
         }
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.list_recent_threads);
+        mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
+        mAdapter = new RecentThreadListAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
