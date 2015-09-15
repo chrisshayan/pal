@@ -81,7 +81,11 @@ public class TutorialActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return TutorialFragment.create(position, sNumPages);
+            if (position < sNumPages - 1) {
+                return TutorialFragment.create(position, sNumPages);
+            } else {
+                return new LoginFragment();
+            }
         }
 
         @Override
