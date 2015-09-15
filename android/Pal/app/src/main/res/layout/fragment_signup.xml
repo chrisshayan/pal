@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:ems="10"
-                android:id="@+id/input_login_email"
+                android:id="@+id/input_signup_email"
                 android:layout_gravity="center_horizontal"
                 android:hint="@string/login_email_hint" />
 

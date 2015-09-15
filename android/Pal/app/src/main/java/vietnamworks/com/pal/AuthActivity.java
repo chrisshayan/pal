@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
+
+import vietnamworks.com.pal.utils.Common;
 
 public class AuthActivity extends AppCompatActivity {
     SignUpFragment mFragmentSignUp;
@@ -57,7 +60,20 @@ public class AuthActivity extends AppCompatActivity {
             transaction.replace(R.id.auth_fragment_container, next);
             //transaction.addToBackStack(null);
             transaction.commit();
-        } else {
+        } else if (f instanceof  SignUpFragment) {
+            final String email = ((SignUpFragment)f).getEmail();
+            if (email.length() == 0) {
+                Toast.makeText(this.getBaseContext(),getString(R.string.login_validation_empty_email),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!Common.isValidEmail(email)) {
+                Toast.makeText(this.getBaseContext(), getString(R.string.login_validation_invalid_email_format),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             SignUpProcessingFragment next = SignUpProcessingFragment.create(this);
             transaction.replace(R.id.auth_fragment_container, next);
