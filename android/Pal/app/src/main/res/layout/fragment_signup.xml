@@ -55,6 +55,7 @@
                 android:onClick="onSignUp"
                 android:id="@+id/btn_signup"
                 android:layout_gravity="center_horizontal"
+                android:elevation="@dimen/button_elevation"
                 android:layout_marginTop="@dimen/base_padding" />
 
             <TextView
@@ -77,6 +78,7 @@
                 android:layout_alignBottom="@+id/linearLayout"
                 android:layout_alignLeft="@+id/linearLayout"
                 android:layout_alignStart="@+id/linearLayout"
+                android:elevation="@dimen/button_elevation"
                 android:layout_marginTop="@dimen/base_padding" />
         </LinearLayout>
 
