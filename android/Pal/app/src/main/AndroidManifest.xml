@@ -13,6 +13,7 @@
         </activity>
         <activity
             android:noHistory="true"
+            android:theme="@style/AppTheme.FullScreen"
             android:name=".LauncherActivity"
             android:label="@string/title_activity_launcher" >
             <intent-filter>
