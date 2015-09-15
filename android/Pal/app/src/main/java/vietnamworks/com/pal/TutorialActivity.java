@@ -112,7 +112,10 @@ public class TutorialActivity extends AppCompatActivity {
     }
 
     public void onLogin(View v) {
-        final LoginFragment fragment = (LoginFragment)mCurrentFragment;
-        fragment.onLogin();
+        ((LoginFragment)mCurrentFragment).onLogin();
+    }
+
+    public void onSignUp(View v) {
+        ((LoginFragment)mCurrentFragment).onSignUp();
     }
 }

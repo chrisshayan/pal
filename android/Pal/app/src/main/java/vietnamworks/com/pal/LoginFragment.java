@@ -1,6 +1,7 @@
 package vietnamworks.com.pal;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -158,6 +159,12 @@ public class LoginFragment extends Fragment {
     }
 
     public void onLoginSuccess() {
-        showToastMessage("OK", Toast.LENGTH_SHORT);
+        Intent intent = new Intent(mRefActivity, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void onSignUp() {
+        Intent intent = new Intent(mRefActivity, AuthActivity.class);
+        startActivity(intent);
     }
 }
