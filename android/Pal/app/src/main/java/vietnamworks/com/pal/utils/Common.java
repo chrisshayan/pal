@@ -1,6 +1,7 @@
 package vietnamworks.com.pal.utils;
 
 import android.os.Build;
+import android.text.TextUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,5 +36,9 @@ public class Common {
     public static String getDateString(Date date, String format) {
         java.text.DateFormat df = new SimpleDateFormat(format);
         return df.format(date);
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }

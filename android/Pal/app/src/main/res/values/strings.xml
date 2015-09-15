@@ -5,6 +5,11 @@
     <string name="title_activity_launcher">Launcher</string>
     <string name="title_activity_tutorial">Tutorial</string>
 
+
+    <!-- common -->
+    <string name="message_fail_to_connect_server">Fail to connect server. Please check your internet connection and try again</string>
+
+    <!-- tutorial -->
     <string-array name="tutor">
         <item>Learn English for Free</item>
         <item>Practice pronunciation with experienced English teachers</item>
@@ -12,9 +17,15 @@
         <item></item>
     </string-array>
 
+    <!-- login -->
     <string name="login_title">Let\'s start</string>
     <string name="login_email_hint">your@email.com</string>
     <string name="login_password_hint">password</string>
+    
+    <string name="login_validation_empty_email">Email is required</string>
+    <string name="login_validation_empty_password">Password is required</string>
+    <string name="login_validation_invalid_email_format">This email is invalid</string>
+    <string name="login_message_login_fail">Invalid email/password combination. Please try again.</string>
 
     <string name="btn_login">Login</string>
     <string name="btn_signup">Sign up</string>
