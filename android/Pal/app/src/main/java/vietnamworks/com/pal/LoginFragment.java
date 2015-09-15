@@ -167,4 +167,8 @@ public class LoginFragment extends Fragment {
         Intent intent = new Intent(mRefActivity, AuthActivity.class);
         startActivity(intent);
     }
+
+    public void setActivity(Activity act) {
+        this.mRefActivity = act;
+    }
 }
