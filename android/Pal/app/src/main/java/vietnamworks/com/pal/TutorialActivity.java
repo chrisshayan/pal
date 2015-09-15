@@ -13,9 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import vietnamworks.com.pal.utils.Common;
 
 public class TutorialActivity extends AppCompatActivity {
 
@@ -24,8 +21,6 @@ public class TutorialActivity extends AppCompatActivity {
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
     private Fragment mCurrentFragment;
-
-    Toast mToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +50,6 @@ public class TutorialActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
-
-        mToast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
     }
 
     public void SetPageIndex(int index) {
@@ -94,7 +87,7 @@ public class TutorialActivity extends AppCompatActivity {
             if (position < sNumPages - 1) {
                 return TutorialFragment.create(position, sNumPages);
             } else {
-                return new LoginFragment();
+                return LoginFragment.create(sInstance);
             }
         }
 
@@ -118,70 +111,8 @@ public class TutorialActivity extends AppCompatActivity {
         sInstance = null;
     }
 
-    private void showToastMessage(CharSequence message, int time) {
-        mToast.cancel();
-        mToast = Toast.makeText(getApplicationContext(), message, time);
-        mToast.show();
-    }
-
-    private void showToastMessage(int id) {
-        String str = getString(id);
-        showToastMessage(str, Toast.LENGTH_SHORT);
-    }
-
-    private void showToastMessage(int id, int time) {
-        String str = getString(id);
-        showToastMessage(str, time);
-    }
-
     public void onLogin(View v) {
         final LoginFragment fragment = (LoginFragment)mCurrentFragment;
-        final String email = fragment.getEmail().trim();
-        final String password = fragment.getPassword();
-
-        if (email.length() == 0) {
-            showToastMessage(R.string.login_validation_empty_email);
-            fragment.focusEmail();
-            return;
-        }
-
-        if (!Common.isValidEmail(email)) {
-            showToastMessage(R.string.login_validation_invalid_email_format);
-            fragment.focusEmail();
-            return;
-        }
-
-        if (password.length() == 0) {
-            showToastMessage(R.string.login_validation_empty_password);
-            fragment.focusPassword();
-            return;
-        }
-
-        fragment.startProcessing();
-
-        //// TODO: 9/15/15 Add login progress here
-
-        new android.os.Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                fragment.endProcessing();
-                if (email.toLowerCase().compareTo("network@email.com") == 0) {
-                    onLoginFail(R.string.message_fail_to_connect_server);
-                } else if (email.toLowerCase().compareTo("tester01@email.com") == 0 && password.compareTo("1234") == 0) {
-                    onLoginSuccess();
-                } else {
-                    onLoginFail(R.string.login_message_login_fail);
-                }
-            }
-        }, 3000L);
-
-    }
-
-    public void onLoginFail(int error) {
-        showToastMessage(error, Toast.LENGTH_LONG);
-    }
-
-    public void onLoginSuccess() {
-        showToastMessage("OK", Toast.LENGTH_SHORT);
+        fragment.onLogin();
     }
 }

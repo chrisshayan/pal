@@ -1,5 +1,6 @@
 package vietnamworks.com.pal;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import vietnamworks.com.pal.utils.Common;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -19,6 +23,8 @@ public class LoginFragment extends Fragment {
     Button mBtnLogin;
     Button mBtnSignup;
     ProgressBar mProgressbar;
+    Toast mToast;
+    Activity mRefActivity;
 
     public LoginFragment() {
     }
@@ -41,6 +47,14 @@ public class LoginFragment extends Fragment {
         mBtnSignup = ((Button) rootView.findViewById(R.id.btn_signup));
         mProgressbar = ((ProgressBar) rootView.findViewById(R.id.progressBar));
         return rootView;
+    }
+
+
+    public static LoginFragment create(Activity act) {
+        LoginFragment fragment = new LoginFragment();
+        fragment.mRefActivity = act;
+        fragment.mToast = Toast.makeText(act, "", Toast.LENGTH_SHORT);
+        return fragment;
     }
 
     public String getEmail() {
@@ -74,5 +88,76 @@ public class LoginFragment extends Fragment {
         this.mBtnSignup.setEnabled(true);
         this.mProgressbar.setVisibility(View.INVISIBLE);
         this.mTxtPassword.setText("");
+    }
+
+    private void showToastMessage(CharSequence message, int time) {
+        mToast.cancel();
+        mToast = Toast.makeText(this.mRefActivity, message, time);
+        mToast.show();
+    }
+
+    private void showToastMessage(int id) {
+        String str = getString(id);
+        showToastMessage(str, Toast.LENGTH_SHORT);
+    }
+
+    private void showToastMessage(int id, int time) {
+        String str = getString(id);
+        showToastMessage(str, time);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.mRefActivity = null;
+    }
+
+    public void onLogin() {
+        final String email = this.getEmail().trim();
+        final String password = this.getPassword();
+
+        if (email.length() == 0) {
+            showToastMessage(R.string.login_validation_empty_email);
+            this.focusEmail();
+            return;
+        }
+
+        if (!Common.isValidEmail(email)) {
+            showToastMessage(R.string.login_validation_invalid_email_format);
+            this.focusEmail();
+            return;
+        }
+
+        if (password.length() == 0) {
+            showToastMessage(R.string.login_validation_empty_password);
+            this.focusPassword();
+            return;
+        }
+
+        this.startProcessing();
+
+        //// TODO: 9/15/15 Add login progress here
+
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                endProcessing();
+                if (email.toLowerCase().compareTo("network@email.com") == 0) {
+                    onLoginFail(R.string.message_fail_to_connect_server);
+                } else if (email.toLowerCase().compareTo("tester01@email.com") == 0 && password.compareTo("1234") == 0) {
+                    onLoginSuccess();
+                } else {
+                    onLoginFail(R.string.login_message_login_fail);
+                }
+            }
+        }, 3000L);
+    }
+
+    public void onLoginFail(int error) {
+        showToastMessage(error, Toast.LENGTH_LONG);
+    }
+
+    public void onLoginSuccess() {
+        showToastMessage("OK", Toast.LENGTH_SHORT);
     }
 }
