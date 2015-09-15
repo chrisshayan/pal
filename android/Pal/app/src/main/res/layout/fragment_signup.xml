@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/login_title"
+            android:text="@string/signup_title"
             android:id="@+id/textView"
             android:textColor="@color/primary_text"
             android:textSize="50dp"
@@ -48,14 +48,25 @@
                 android:layout_gravity="center_horizontal"
                 android:hint="@string/login_email_hint" />
 
-            <EditText
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/input_login_password"
+                android:text="@string/btn_signup"
+                android:onClick="onSignUp"
+                android:id="@+id/btn_signup"
                 android:layout_gravity="center_horizontal"
-                android:hint="@string/login_password_hint" />
+                android:layout_marginTop="@dimen/base_padding" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/signup_has_account"
+                android:id="@+id/textView2"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/base_padding"
+                android:textColor="@color/divider"
+                android:textStyle="italic" />
 
             <Button
                 android:layout_width="match_parent"
@@ -66,16 +77,7 @@
                 android:layout_alignBottom="@+id/linearLayout"
                 android:layout_alignLeft="@+id/linearLayout"
                 android:layout_alignStart="@+id/linearLayout"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/base_padding" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_signup"
-                android:onClick="onSignUp"
-                android:id="@+id/btn_signup"
-                android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
         <ProgressBar

@@ -17,10 +17,14 @@
         <item></item>
     </string-array>
 
-    <!-- login -->
+    <!-- login & signup -->
     <string name="login_title">Let\'s start</string>
     <string name="login_email_hint">your@email.com</string>
     <string name="login_password_hint">password</string>
+
+    <string name="signup_title">Sign Up</string>
+    <string name="signup_has_account">Already have account?</string>
+
     
     <string name="login_validation_empty_email">Email is required</string>
     <string name="login_validation_empty_password">Password is required</string>
