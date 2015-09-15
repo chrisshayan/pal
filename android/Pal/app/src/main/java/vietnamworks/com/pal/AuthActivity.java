@@ -58,7 +58,18 @@ public class AuthActivity extends AppCompatActivity {
             //transaction.addToBackStack(null);
             transaction.commit();
         } else {
-            ///// TODO: 9/15/15
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            SignUpProcessingFragment next = SignUpProcessingFragment.create(this);
+            transaction.replace(R.id.auth_fragment_container, next);
+            //transaction.addToBackStack(null);
+            transaction.commit();
+        }
+    }
+
+    public void onRetrySignUp(View v) {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.auth_fragment_container);
+        if (f instanceof  SignUpProcessingFragment) {
+            ((SignUpProcessingFragment) f).onSignUp();
         }
     }
 }

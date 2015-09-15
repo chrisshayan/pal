@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Created by duynk on 9/11/15.
@@ -40,5 +41,10 @@ public class Common {
 
     public static boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    public static int randomInt(int min, int max) {
+        Random r = new Random();
+        return r.nextInt(max - min + 1) + min;
     }
 }

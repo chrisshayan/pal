@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import vietnamworks.com.pal.utils.Common;
@@ -19,8 +19,8 @@ import vietnamworks.com.pal.utils.Common;
  */
 public class LoginFragment extends Fragment {
 
-    TextView mTxtEmail;
-    TextView mTxtPassword;
+    EditText mTxtEmail;
+    EditText mTxtPassword;
     Button mBtnLogin;
     Button mBtnSignup;
     ProgressBar mProgressbar;
@@ -42,8 +42,8 @@ public class LoginFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_login, container, false);
 
-        mTxtEmail = ((TextView) rootView.findViewById(R.id.input_login_email));
-        mTxtPassword = ((TextView) rootView.findViewById(R.id.input_login_password));
+        mTxtEmail = ((EditText) rootView.findViewById(R.id.input_login_email));
+        mTxtPassword = ((EditText) rootView.findViewById(R.id.input_login_password));
         mBtnLogin = ((Button) rootView.findViewById(R.id.btn_login));
         mBtnSignup = ((Button) rootView.findViewById(R.id.btn_signup));
         mProgressbar = ((ProgressBar) rootView.findViewById(R.id.progressBar));

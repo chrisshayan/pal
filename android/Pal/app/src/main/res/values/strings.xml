@@ -4,10 +4,12 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_launcher">Launcher</string>
     <string name="title_activity_tutorial">Tutorial</string>
-
+    <string name="title_activity_auth">AuthActivity</string>
 
     <!-- common -->
     <string name="message_fail_to_connect_server">Fail to connect server. Please check your internet connection and try again</string>
+    <string name="message_thank_you">Thank you</string>
+    <string name="message_precessing">Processing</string>
 
     <!-- tutorial -->
     <string-array name="tutor">
@@ -24,6 +26,7 @@
 
     <string name="signup_title">Sign Up</string>
     <string name="signup_has_account">Already have account?</string>
+    <string name="signup_queueing">Thank you!\nYour request has been queued</string>
 
     
     <string name="login_validation_empty_email">Email is required</string>
@@ -33,5 +36,6 @@
 
     <string name="btn_login">Login</string>
     <string name="btn_signup">Sign up</string>
-    <string name="title_activity_auth">AuthActivity</string>
+    <string name="btn_try_again">Try again</string>
+    
 </resources>
