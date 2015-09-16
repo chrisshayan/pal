@@ -55,6 +55,7 @@
                     android:id="@+id/imageButton3"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
+                    android:onClick="onSelectTopic"
                     android:background="@drawable/shape_circle_button" />
 
                 <ImageView
