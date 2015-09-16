@@ -30,6 +30,7 @@ public class TopicData extends AbstractContainer<Topic> {
                 public void onSuccess(JSONObject obj) {
                     try {
                         JSONArray json_data = obj.getJSONArray("data");
+                        data.clear();
                         for (int i = 0; i < json_data.length(); i++) {
                             Topic entity = new Topic();
                             entity.mTitle = json_data.getJSONObject(i).getString("question");
