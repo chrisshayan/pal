@@ -145,7 +145,7 @@ public class LoginFragment extends Fragment {
                 endProcessing();
                 if (email.toLowerCase().compareTo("network@email.com") == 0) {
                     onLoginFail(R.string.message_fail_to_connect_server);
-                } else if (email.toLowerCase().compareTo("tester01@email.com") == 0 && password.compareTo("1234") == 0) {
+                } else if (email.toLowerCase().startsWith("test") && password.compareTo("1234") == 0) {
                     onLoginSuccess();
                 } else {
                     onLoginFail(R.string.login_message_login_fail);
