@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             super.setPrimaryItem(container, position, object);
 
             if (position == this.getCount() - 1) {
-                AppModel.topics.loadAsync(new AbstractContainer.OnLoadAsyncCallback() {
+                AppModel.topics.loadAsync(sIntance, new AbstractContainer.OnLoadAsyncCallback() {
                     @Override
                     public void onSuccess() {
                         refreshTopics();

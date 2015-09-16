@@ -1,5 +1,7 @@
 package vietnamworks.com.pal.models;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 /**
@@ -14,7 +16,7 @@ public abstract class AbstractContainer<T> {
     public void setData(ArrayList<T> data) {
         this.data = data;
     }
-    public void loadAsync(OnLoadAsyncCallback callback) {
+    public void loadAsync(Context context, OnLoadAsyncCallback callback) {
         if (callback != null) {
             callback.onSuccess();
         }
