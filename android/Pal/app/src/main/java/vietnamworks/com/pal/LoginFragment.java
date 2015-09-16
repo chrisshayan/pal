@@ -3,6 +3,7 @@ package vietnamworks.com.pal;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,7 @@ public class LoginFragment extends Fragment {
 
     EditText mTxtEmail;
     EditText mTxtPassword;
-    Button mBtnLogin;
+    FloatingActionButton mBtnLogin;
     Button mBtnSignup;
     ProgressBar mProgressbar;
     Toast mToast;
@@ -44,9 +45,10 @@ public class LoginFragment extends Fragment {
 
         mTxtEmail = ((EditText) rootView.findViewById(R.id.input_login_email));
         mTxtPassword = ((EditText) rootView.findViewById(R.id.input_login_password));
-        mBtnLogin = ((Button) rootView.findViewById(R.id.btn_login));
+        mBtnLogin = ((FloatingActionButton) rootView.findViewById(R.id.btn_login));
         mBtnSignup = ((Button) rootView.findViewById(R.id.btn_signup));
-        mProgressbar = ((ProgressBar) rootView.findViewById(R.id.progressBar));
+        mProgressbar = ((ProgressBar) rootView.findViewById(R.id.login_progressBar));
+        mProgressbar.setVisibility(View.INVISIBLE);
         return rootView;
     }
 

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -45,6 +46,10 @@ public class TutorialFragment extends Fragment {
 
         String str = getResources().getStringArray(R.array.tutor)[mPageNumber];
         ((TextView) rootView.findViewById(R.id.tutorTextView)).setText(str);
+
+        ImageView img = (ImageView) rootView.findViewById(R.id.img_tutor);
+        int []res = new int[] {R.drawable.ic_tutor_1, R.drawable.ic_tutor_2, R.drawable.ic_tutor_3};
+        img.setImageResource(res[mPageNumber % res.length]);
 
         return rootView;
     }
