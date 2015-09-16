@@ -5,4 +5,5 @@ package vietnamworks.com.pal.models;
  */
 public class AppModel {
     public static RecentThreadData recentThreadData = new RecentThreadData();
+    public static TopicData topics = new TopicData();
 }

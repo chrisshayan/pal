@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Medium Text"
-                    android:id="@+id/textView3"
+                    android:id="@+id/lb_topic_title"
                     android:gravity="center"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true" />
