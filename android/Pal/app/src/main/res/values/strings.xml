@@ -42,10 +42,13 @@
     <!-- recorder -->
     <string name="message_dash_or">-- or --</string>
     <string name="talk_about">Talk about:</string>
+    <string name="say_something">Say something</string>
+    <string name="enter_topic">Enter your topic</string>
     <string-array name="recorders_message">
         <item>Touch to begin</item>
         <item>Recording \nTouch to stop</item>
         <item>Touch to retry</item>
     </string-array>
+    <string name="user_topic_validation_empty_string">Topic is required</string>
 
 </resources>

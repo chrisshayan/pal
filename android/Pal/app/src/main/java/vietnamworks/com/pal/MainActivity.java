@@ -53,9 +53,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSelectTopic(View v) {
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         RecorderFragment next = RecorderFragment.create(this, AppModel.topics.getData().get(this.mCurrentTopicIndex).mTitle);
+        transaction.replace(R.id.main_fragment_container, next);
+        //transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void onSaySomething(View v) {
+        mCurrentTopicIndex = -1;
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        String title = getString(R.string.say_something);
+        if (this.mCurrentTopicIndex >= 0) {
+            title = AppModel.topics.getData().get(this.mCurrentTopicIndex).mTitle;
+        }
+        RecorderFragment next = RecorderFragment.create(this, title);
         transaction.replace(R.id.main_fragment_container, next);
         //transaction.addToBackStack(null);
         transaction.commit();
@@ -67,8 +80,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onCancelRecorder(View v) {
-        RecorderFragment f = (RecorderFragment)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
-        f.stopPlayer();
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        if (f instanceof RecorderFragment) {
+            ( (RecorderFragment)f).stopPlayer();
+        }
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         TalkWithMeFragment next = TalkWithMeFragment.create(this);
         transaction.replace(R.id.main_fragment_container, next);
@@ -77,7 +93,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSubmitRecord(View v) {
-
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        SubmitTopicFragment next = SubmitTopicFragment.create(this, mCurrentTopicIndex);
+        transaction.replace(R.id.main_fragment_container, next);
+        //transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     public void onReplay(View v) {
@@ -85,4 +105,18 @@ public class MainActivity extends AppCompatActivity {
         f.onReplay();
     }
 
+    public void onConfirmTopicAndSubmitData(View v) {
+        SubmitTopicFragment f = (SubmitTopicFragment)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        f.onSubmit();
+    }
+
+    public void onRetrySubmitData(View v) {
+        SubmitTopicFragment f = (SubmitTopicFragment)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        f.onRetry();
+    }
+
+    public void onCancelSubmitData(View v) {
+        SubmitTopicFragment f = (SubmitTopicFragment)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        f.onCancel();
+    }
 }
