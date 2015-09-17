@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +16,27 @@ import vietnamworks.com.pal.models.AppModel;
  * Created by duynk on 9/16/15.
  */
 public class TalkWithMeFragment extends Fragment {
-    MainActivity mRefActivity;
     private CustomViewPager mPager;
     private ScreenSlidePagerAdapter mPagerAdapter;
-    TopicLoaderFragment mTopicLoaderFragment;
-
 
     public TalkWithMeFragment() {
     }
 
-    public static TalkWithMeFragment create(MainActivity act) {
+    public static TalkWithMeFragment create() {
         TalkWithMeFragment fragment = new TalkWithMeFragment();
-        fragment.mRefActivity = act;
         return fragment;
+    }
+
+    private void loadData() {
+        AppModel.topics.loadAsync(this.getActivity(), new AbstractContainer.OnLoadAsyncCallback() {
+            @Override
+            public void onSuccess() {
+                refreshTopics();
+            }
+            @Override
+            public void onError() {
+            }
+        });
     }
 
 
@@ -37,13 +46,34 @@ public class TalkWithMeFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragement_talk_with_me, container, false);
 
-
-
         mPager = (CustomViewPager) rootView.findViewById(R.id.pager);
-        mTopicLoaderFragment = new TopicLoaderFragment();
+
+        ((MainActivity) this.getActivity()).getSupportActionBar().show();
+
+        mPager.clearOnPageChangeListeners();
+        mPager.addOnPageChangeListener(new CustomViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                PagerAdapter adapter = mPager.getAdapter();
+                if (adapter != null && position == adapter.getCount() - 1) {
+                    loadData();
+                } else {
+                    ((MainActivity) getActivity()).mCurrentTopicIndex = position;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
         this.refreshTopics();
 
-        mRefActivity.getSupportActionBar().show();
         return rootView;
     }
 
@@ -59,7 +89,7 @@ public class TalkWithMeFragment extends Fragment {
             if (position < count - 1) {
                 return TopicFragment.create(position);
             } else {
-                return mTopicLoaderFragment;
+                return new TopicLoaderFragment();
             }
         }
 
@@ -71,21 +101,6 @@ public class TalkWithMeFragment extends Fragment {
         @Override
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
-
-            if (position == this.getCount() - 1) {
-                AppModel.topics.loadAsync(mRefActivity, new AbstractContainer.OnLoadAsyncCallback() {
-                    @Override
-                    public void onSuccess() {
-                        refreshTopics();
-                    }
-
-                    @Override
-                    public void onError() {
-                    }
-                });
-            } else {
-                mRefActivity.mCurrentTopicIndex = position;
-            }
         }
 
         public void setCount(int value) {
@@ -95,27 +110,24 @@ public class TalkWithMeFragment extends Fragment {
     }
 
     public void refreshTopics() {
-        mRefActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                boolean delay = true;
-                if (mPagerAdapter == null) {
-                    delay = false;
-                    mPagerAdapter = new ScreenSlidePagerAdapter(mRefActivity.getSupportFragmentManager());
-                }
+        boolean delay = true;
+        if (mPagerAdapter == null) {
+            delay = false;
+            mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
+        }
 
-                if (delay) {
-                    new android.os.Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mPager.setAdapter(null);
-                            mPagerAdapter.setCount(AppModel.topics.getData().size());
-                            mPager.setAdapter(mPagerAdapter);
-                        }
-                    }, 1000);
-                } else {
+        if (delay) {
+            new android.os.Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mPager.setAdapter(null);
+                    mPagerAdapter.setCount(AppModel.topics.getData().size());
                     mPager.setAdapter(mPagerAdapter);
                 }
-            }
-        });
+            }, 500);
+        } else {
+            mPager.setAdapter(mPagerAdapter);
+            loadData();
+        }
     }
 }

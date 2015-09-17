@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState != null) {
                 return;
             }
-            TalkWithMeFragment fragment = TalkWithMeFragment.create(this);
+            TalkWithMeFragment fragment = TalkWithMeFragment.create();
             fragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.main_fragment_container, fragment).commit();
@@ -42,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        if (id == R.id.action_show_recent_list) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            RecentTopicFragment next = new RecentTopicFragment();
+            transaction.replace(R.id.main_fragment_container, next);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -86,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        TalkWithMeFragment next = TalkWithMeFragment.create(this);
+        TalkWithMeFragment next = TalkWithMeFragment.create();
         transaction.replace(R.id.main_fragment_container, next);
         //transaction.addToBackStack(null);
         transaction.commit();

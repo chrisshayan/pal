@@ -57,6 +57,10 @@ public class TopicData extends AbstractContainer<Topic> {
                     isLoading = false;
                 }
             });
+        } else {
+            if (callback != null) {
+                callback.onError();
+            }
         }
     }
 }
