@@ -42,7 +42,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_show_recent_list) {
+        if (id == android.R.id.home) {
+            this.onBackPressed();
+        }
+        else if (id == R.id.action_show_recent_list) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             RecentTopicFragment next = new RecentTopicFragment();
             transaction.replace(R.id.main_fragment_container, next);

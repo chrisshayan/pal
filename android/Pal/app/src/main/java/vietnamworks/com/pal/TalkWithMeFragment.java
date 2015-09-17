@@ -49,6 +49,7 @@ public class TalkWithMeFragment extends Fragment {
         mPager = (CustomViewPager) rootView.findViewById(R.id.pager);
 
         ((MainActivity) this.getActivity()).getSupportActionBar().show();
+        ((MainActivity) this.getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         mPager.clearOnPageChangeListeners();
         mPager.addOnPageChangeListener(new CustomViewPager.OnPageChangeListener() {

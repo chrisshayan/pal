@@ -40,6 +40,7 @@ public class RecentTopicFragment extends Fragment {
         mAdapter.setOnItemClickListener(onItemClickListener);
 
         ((MainActivity) this.getActivity()).hideListMenuItem();
+        ((MainActivity) this.getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return rootView;
     }
 
