@@ -71,7 +71,7 @@ public class TutorialActivity extends AppCompatActivity {
             img.setImageDrawable(index != i?circle:filled_circle);
             indicators.addView(img);
 
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(30, 30);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(15, 15);
             lp.setMargins(10, 0, 10, 0);
             img.setLayoutParams(lp);
         }
