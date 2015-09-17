@@ -72,6 +72,8 @@ public class TalkWithMeFragment extends Fragment {
             }
         });
 
+
+        ((MainActivity) this.getActivity()).resetMenuItem();
         this.refreshTopics();
 
         return rootView;

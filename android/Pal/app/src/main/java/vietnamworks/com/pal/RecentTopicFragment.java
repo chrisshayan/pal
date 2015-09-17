@@ -39,6 +39,7 @@ public class RecentTopicFragment extends Fragment {
         };
         mAdapter.setOnItemClickListener(onItemClickListener);
 
+        ((MainActivity) this.getActivity()).hideListMenuItem();
         return rootView;
     }
 

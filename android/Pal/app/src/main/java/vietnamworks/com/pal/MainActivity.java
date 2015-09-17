@@ -59,6 +59,34 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void hideMenuItem(int index)
+    {
+        if (menu != null) {
+            MenuItem mi = menu.getItem(index);
+            if (mi != null) {
+                mi.setVisible(false);
+            }
+        }
+    }
+
+    public void showMenuItem(int index)
+    {
+        if (menu != null) {
+            MenuItem mi = menu.getItem(index);
+            if (mi != null) {
+                mi.setVisible(true);
+            }
+        }
+    }
+
+    public void hideListMenuItem() {
+        hideMenuItem(0);
+    }
+
+    public void resetMenuItem() {
+        showMenuItem(0);
+    }
+
     public void onSelectTopic(View v) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         RecorderFragment next = RecorderFragment.create(this, AppModel.topics.getData().get(this.mCurrentTopicIndex).mTitle);
