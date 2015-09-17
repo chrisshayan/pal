@@ -1,5 +1,6 @@
 package vietnamworks.com.pal;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,11 +31,19 @@ public class TalkWithMeFragment extends Fragment {
     private void loadData() {
         AppModel.topics.loadAsync(this.getActivity(), new AbstractContainer.OnLoadAsyncCallback() {
             @Override
-            public void onSuccess() {
-                refreshTopics();
+            public void onSuccess(Context context) {
+                if (context instanceof MainActivity && !((MainActivity) context).isFinishing()) {
+                    Fragment fragment = ((MainActivity) context).getActiveFragment();
+                    if (fragment instanceof TalkWithMeFragment) {
+                        TalkWithMeFragment f = (TalkWithMeFragment) fragment;
+                        if (f.isVisible()) {
+                            refreshTopics();
+                        }
+                    }
+                }
             }
             @Override
-            public void onError() {
+            public void onError(Context context) {
             }
         });
     }
@@ -123,12 +132,21 @@ public class TalkWithMeFragment extends Fragment {
             new android.os.Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mPager.setAdapter(null);
-                    mPagerAdapter.setCount(AppModel.topics.getData().size());
-                    mPager.setAdapter(mPagerAdapter);
+                    Context context = getActivity();
+                    if (context instanceof MainActivity && !((MainActivity) context).isFinishing()) {
+                        Fragment fragment = ((MainActivity) getActivity()).getActiveFragment();
+                        if (fragment instanceof TalkWithMeFragment) {
+                            TalkWithMeFragment f = (TalkWithMeFragment) fragment;
+                            if (f.isVisible()) {
+                                mPager.setAdapter(null);
+                                mPagerAdapter.setCount(AppModel.topics.getData().size());
+                                mPager.setAdapter(mPagerAdapter);
+                            }
+                        }
+                    }
                 }
-            }, 500);
-        } else {
+            },500);
+        }else {
             mPager.setAdapter(mPagerAdapter);
             loadData();
         }

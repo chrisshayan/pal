@@ -90,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
         showMenuItem(0);
     }
 
+    public Fragment getActiveFragment() {
+        return getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+    }
+
     public void onSelectTopic(View v) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         RecorderFragment next = RecorderFragment.create(this, AppModel.topics.getData().get(this.mCurrentTopicIndex).mTitle);
@@ -100,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onSaySomething(View v) {
         mCurrentTopicIndex = -1;
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         String title = getString(R.string.say_something);
         if (this.mCurrentTopicIndex >= 0) {

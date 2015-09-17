@@ -22,7 +22,7 @@ public class TopicData extends AbstractContainer<Topic> {
     }
 
     @Override
-    public synchronized void  loadAsync(Context context, final OnLoadAsyncCallback callback) {
+    public synchronized void loadAsync(final Context context, final OnLoadAsyncCallback callback) {
         if (!isLoading) {
             isLoading = true;
             BaseService.Get(context, "tasks", new BaseService.OnLoadAsyncCallback() {
@@ -38,12 +38,12 @@ public class TopicData extends AbstractContainer<Topic> {
                         }
                         AppModel.topics.setData(data);
                         if (callback != null) {
-                            callback.onSuccess();
+                            callback.onSuccess(context);
                         }
                         isLoading = false;
                     } catch (Exception E) {
                         if (callback != null) {
-                            callback.onError();
+                            callback.onError(context);
                         }
                         isLoading = false;
                     }
@@ -52,14 +52,14 @@ public class TopicData extends AbstractContainer<Topic> {
                 @Override
                 public void onError() {
                     if (callback != null) {
-                        callback.onError();
+                        callback.onError(context);
                     }
                     isLoading = false;
                 }
             });
         } else {
             if (callback != null) {
-                callback.onError();
+                callback.onError(context);
             }
         }
     }

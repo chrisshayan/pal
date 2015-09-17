@@ -18,12 +18,12 @@ public abstract class AbstractContainer<T> {
     }
     public void loadAsync(Context context, OnLoadAsyncCallback callback) {
         if (callback != null) {
-            callback.onSuccess();
+            callback.onSuccess(context);
         }
     }
 
     public interface OnLoadAsyncCallback {
-        void onSuccess();
-        void onError();
+        void onSuccess(Context context);
+        void onError(Context context);
     }
 }
