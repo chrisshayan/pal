@@ -31,6 +31,15 @@ public class RecentTopicFragment extends Fragment {
         mAdapter = new RecentThreadListAdapter(rootView.getContext());
         mRecyclerView.setAdapter(mAdapter);
 
+        RecentThreadListAdapter.OnItemClickListener onItemClickListener = new RecentThreadListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int type, int position) {
+                System.out.println("onItemClick " + type + ", " + position);
+            }
+        };
+        mAdapter.setOnItemClickListener(onItemClickListener);
+
         return rootView;
     }
+
 }
