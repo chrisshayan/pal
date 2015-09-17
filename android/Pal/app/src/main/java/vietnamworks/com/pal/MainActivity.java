@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onCancelRecorder(View v) {
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        RecorderFragment f = (RecorderFragment)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        f.stopPlayer();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         TalkWithMeFragment next = TalkWithMeFragment.create(this);
         transaction.replace(R.id.main_fragment_container, next);
@@ -77,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onSubmitRecord(View v) {
 
+    }
+
+    public void onReplay(View v) {
+        RecorderFragment f = (RecorderFragment)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        f.onReplay();
     }
 
 }
