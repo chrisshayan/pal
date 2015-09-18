@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.models.AppModel;
-import vietnamworks.com.pal.models.RecentThread;
+import vietnamworks.com.pal.models.RecentTopic;
 import vietnamworks.com.pal.utils.Common;
 
 /**
@@ -66,15 +66,15 @@ public class RecentThreadListAdapter extends RecyclerView.Adapter<RecentThreadLi
         if (position == 0) { //header
             ViewHolder_User item = (ViewHolder_User)holder;
         } else {
-            RecentThread item = (RecentThread) AppModel.recentThreadData.getData().get(position-1);
+            RecentTopic item = (RecentTopic) AppModel.recentThreadData.getData().get(position-1);
             ViewHolder_RecentThread view = (ViewHolder_RecentThread)holder;
-            view.uiTitle.setText(item.title);
-            view.mImgStatus.setImageResource((item.status == RecentThread.STATUS_WAITING)?R.drawable.ic_timer:R.drawable.ic_checkbox_marked_circle_outline);
-            view.uiCreatedDate.setText(Common.getDateString(item.createdDate));
-            if (item.score < 0) {
+            view.uiTitle.setText(item.mTitle);
+            view.mImgStatus.setImageResource((item.mStatus == RecentTopic.STATUS_WAITING)?R.drawable.ic_timer:R.drawable.ic_checkbox_marked_circle_outline);
+            view.uiCreatedDate.setText(Common.getDateString(item.mCreatedDate));
+            if (item.mScore < 0) {
                 view.mTxtScore.setText("_");
             } else {
-                view.mTxtScore.setText(item.score + "");
+                view.mTxtScore.setText(item.mScore + "");
             }
         }
     }
