@@ -50,5 +50,6 @@
         <item>Touch to retry</item>
     </string-array>
     <string name="user_topic_validation_empty_string">Topic is required</string>
+    <string name="btn_fail_to_load_topic">Retry</string>
 
 </resources>

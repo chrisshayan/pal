@@ -28,22 +28,38 @@ public class TalkWithMeFragment extends Fragment {
         return fragment;
     }
 
+    public static boolean isThis(Context context) {
+        if (context instanceof MainActivity && !((MainActivity) context).isFinishing()) {
+            Fragment fragment = ((MainActivity) context).getActiveFragment();
+            if (fragment instanceof TalkWithMeFragment) {
+                TalkWithMeFragment f = (TalkWithMeFragment) fragment;
+                if (f.isVisible()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void loadData() {
         AppModel.topics.loadAsync(this.getActivity(), new AbstractContainer.OnLoadAsyncCallback() {
             @Override
             public void onSuccess(Context context) {
-                if (context instanceof MainActivity && !((MainActivity) context).isFinishing()) {
-                    Fragment fragment = ((MainActivity) context).getActiveFragment();
-                    if (fragment instanceof TalkWithMeFragment) {
-                        TalkWithMeFragment f = (TalkWithMeFragment) fragment;
-                        if (f.isVisible()) {
-                            refreshTopics();
+                if (TalkWithMeFragment.isThis(context)) {
+                    refreshTopics();
+                }
+            }
+
+            @Override
+            public void onError(Context context) {
+                if (TalkWithMeFragment.isThis(context)) {
+                    if (mPagerAdapter != null) {
+                        TopicLoaderFragment loader = mPagerAdapter.getTopicLoaderFragment();
+                        if (loader != null) {
+                            loader.onLoadingFail();
                         }
                     }
                 }
-            }
-            @Override
-            public void onError(Context context) {
             }
         });
     }
@@ -94,14 +110,15 @@ public class TalkWithMeFragment extends Fragment {
         public ScreenSlidePagerAdapter( FragmentManager fm) {
             super(fm);
         }
-
+        private int mCurrentPosition;
+        TopicLoaderFragment loader =  new TopicLoaderFragment();
         @Override
         public Fragment getItem(int position) {
             int count = this.getCount();
             if (position < count - 1) {
                 return TopicFragment.create(position);
             } else {
-                return new TopicLoaderFragment();
+                return loader;
             }
         }
 
@@ -113,11 +130,23 @@ public class TalkWithMeFragment extends Fragment {
         @Override
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
+            mCurrentPosition = position;
         }
 
         public void setCount(int value) {
             mDataSize = value + 1;
             this.notifyDataSetChanged();
+        }
+
+        public TopicLoaderFragment getTopicLoaderFragment() {
+            /*
+            Fragment f = this.getItem(mCurrentPosition);
+            if (f instanceof  TopicLoaderFragment) {
+                return (TopicLoaderFragment)f;
+            }
+            return null;
+            */
+            return loader;
         }
     }
 
@@ -129,23 +158,25 @@ public class TalkWithMeFragment extends Fragment {
         }
 
         if (delay) {
+            final TopicLoaderFragment loader = mPagerAdapter.getTopicLoaderFragment();
+            if (loader != null) {
+                loader.onStartLoading();
+            }
+
             new android.os.Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Context context = getActivity();
-                    if (context instanceof MainActivity && !((MainActivity) context).isFinishing()) {
-                        Fragment fragment = ((MainActivity) getActivity()).getActiveFragment();
-                        if (fragment instanceof TalkWithMeFragment) {
-                            TalkWithMeFragment f = (TalkWithMeFragment) fragment;
-                            if (f.isVisible()) {
-                                mPager.setAdapter(null);
-                                mPagerAdapter.setCount(AppModel.topics.getData().size());
-                                mPager.setAdapter(mPagerAdapter);
-                            }
+                    if (TalkWithMeFragment.isThis(context)) {
+                        mPager.setAdapter(null);
+                        mPagerAdapter.setCount(AppModel.topics.getData().size());
+                        mPager.setAdapter(mPagerAdapter);
+                        if (mPagerAdapter.getCount() <= 1) {
+                            loadData();
                         }
                     }
                 }
-            },500);
+            },100);
         }else {
             mPager.setAdapter(mPagerAdapter);
             loadData();

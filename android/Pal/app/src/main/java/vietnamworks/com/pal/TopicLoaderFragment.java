@@ -7,6 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class TopicLoaderFragment extends Fragment {
+
+    ViewGroup mProcessingGroup;
+    ViewGroup mFailGroup;
+    private boolean isLoadingFail = false;
+
     public TopicLoaderFragment() {}
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,6 +24,30 @@ public class TopicLoaderFragment extends Fragment {
         // Inflate the layout containing a title and body text.
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_topic_loading, container, false);
+
+        mProcessingGroup = ( (ViewGroup) rootView.findViewById(R.id.loading_topic_card_processing));
+        mFailGroup = ( (ViewGroup) rootView.findViewById(R.id.loading_topic_card_fail));
+        if (isLoadingFail) {
+            onLoadingFail();
+        } else {
+            onStartLoading();
+        }
         return rootView;
+    }
+
+    public void onStartLoading() {
+        isLoadingFail = false;
+        mProcessingGroup.setVisibility(View.VISIBLE);
+        mFailGroup.setVisibility(View.GONE);
+    }
+
+    public void onLoadingFail() {
+        isLoadingFail = true;
+        if (mProcessingGroup != null) {
+            mProcessingGroup.setVisibility(View.GONE);
+        }
+        if (mFailGroup != null) {
+            mFailGroup.setVisibility(View.VISIBLE);
+        }
     }
 }

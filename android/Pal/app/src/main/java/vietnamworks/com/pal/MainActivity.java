@@ -94,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
         return getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
     }
 
+    public void onRetryToLoadTopic(View v) {
+        TalkWithMeFragment fragment = (TalkWithMeFragment) getActiveFragment();
+        fragment.refreshTopics();
+    }
+
     public void onSelectTopic(View v) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         RecorderFragment next = RecorderFragment.create(this, AppModel.topics.getData().get(this.mCurrentTopicIndex).mTitle);

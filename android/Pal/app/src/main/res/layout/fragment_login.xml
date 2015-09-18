@@ -142,5 +142,6 @@
         android:clickable="true"
         android:src="@drawable/ic_arrow_right_white"
         app:layout_anchor="@id/login_card"
+        app:pressedTranslationZ="12dp"
         app:layout_anchorGravity="bottom|center|center_horizontal" />
 </android.support.design.widget.CoordinatorLayout>

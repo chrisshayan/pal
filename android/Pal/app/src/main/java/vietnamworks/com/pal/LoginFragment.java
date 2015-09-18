@@ -1,5 +1,6 @@
 package vietnamworks.com.pal;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ public class LoginFragment extends Fragment {
     Toast mToast;
     Activity mRefActivity;
 
+    ObjectAnimator loginButtonObjectAnimator;
+
     public LoginFragment() {
     }
 
@@ -49,6 +52,10 @@ public class LoginFragment extends Fragment {
         mBtnSignup = ((Button) rootView.findViewById(R.id.btn_signup));
         mProgressbar = ((ProgressBar) rootView.findViewById(R.id.login_progressBar));
         mProgressbar.setVisibility(View.INVISIBLE);
+
+        loginButtonObjectAnimator = ObjectAnimator.ofFloat(mBtnLogin , "rotation", 0f, 360f);
+        loginButtonObjectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        loginButtonObjectAnimator.setRepeatMode(ObjectAnimator.RESTART);
         return rootView;
     }
 
@@ -82,6 +89,9 @@ public class LoginFragment extends Fragment {
         this.mBtnLogin.setEnabled(false);
         this.mBtnSignup.setEnabled(false);
         this.mProgressbar.setVisibility(View.VISIBLE);
+
+        loginButtonObjectAnimator.setDuration(1000);
+        //loginButtonObjectAnimator.start();
     }
 
     public void endProcessing() {
@@ -91,6 +101,8 @@ public class LoginFragment extends Fragment {
         this.mBtnSignup.setEnabled(true);
         this.mProgressbar.setVisibility(View.INVISIBLE);
         this.mTxtPassword.setText("");
+
+        //loginButtonObjectAnimator.cancel();
     }
 
     private void showToastMessage(CharSequence message, int time) {
@@ -153,7 +165,7 @@ public class LoginFragment extends Fragment {
                     onLoginFail(R.string.login_message_login_fail);
                 }
             }
-        }, 3000L);
+        }, 5000L);
     }
 
     public void onLoginFail(int error) {
