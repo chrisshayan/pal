@@ -3,16 +3,33 @@
         <div class="col-lg-12">
             <div class="text-center m-t-lg">
                 <h1>
-                    {{main.helloText}}
+                    <span ng-show="isAdmin">Admin</span>
+                    <span ng-show="!isAdmin">User</span>
                 </h1>
                 <small>
                     {{main.descriptionText}}
 
                     <i class="glyphicon glyphicon-pencil"></i>
 
-                    {{data}}
+                    <br/>
                 </small>
             </div>
+        </div>
+        <div class="col-lg-12">
+            <div>
+                <button class="btn btn-white btn-xs" type="button" ng-click="onAddTopic()">Add a topics</button>
+            </div>
+            <ul>
+                <li ng-repeat = "r in topics">
+                    {{r}} <button class="btn btn-white btn-xs" type="button" ng-click="onPost(r)">Post</button>
+                </li>
+            </ul>
+            POST
+            <ul>
+                <li ng-repeat = "r in posts">
+                    {{r}}
+                </li>
+            </ul>
         </div>
     </div>
 </div>

@@ -1,0 +1,23 @@
+{
+    "rules": {
+        "profiles": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid == $uid || root.child('profiles').child(auth.uid).child('role').val() == 'admin')",
+            ".write": "auth != null && (auth.uid == $uid || root.child('profiles').child(auth.uid).child('role').val() == 'admin')"
+          }
+        },
+        "topics": {
+          ".read": true,
+          ".write": "auth != null && (root.child('profiles').child(auth.uid).child('role').val() == 'admin' || root.child('profiles').child(auth.uid).child('role').val() == 'mod')"
+        },
+        "posts": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid == $uid || root.child('profiles').child(auth.uid).child('role').val() == 'admin' || root.child('profiles').child(auth.uid).child('role').val() == 'admin')",
+            ".write": "auth != null && (auth.uid == $uid || root.child('profiles').child(auth.uid).child('role').val() == 'user')"
+          },
+          ".read": "auth != null && (root.child('profiles').child(auth.uid).child('role').val() == 'admin' || root.child('profiles').child(auth.uid).child('role').val() == 'mod')"   
+        },
+        ".read": false,
+        ".write": false
+    }
+}

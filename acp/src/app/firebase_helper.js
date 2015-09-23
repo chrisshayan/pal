@@ -9,30 +9,46 @@ angular.module('firebaseHelper', [])
     }
 
     this.bindObject = function(path, $scope, key) {
+        console.log("bindObject", path);
         var syncObject = $firebaseObject(self.getFireBaseInstance(path));
         syncObject.$bindTo($scope, key);
     }
 
     this.syncObject = function(path) {
+        console.log("syncObject", path);
         return $firebaseObject(self.getFireBaseInstance(path));
     }
 
+    this.syncProtectedObject = function(path) {
+        console.log("syncProtectedObject", path);
+        return $firebaseObject(self.getFireBaseInstance(path + "/" + self.getUID()));
+    }
+
     this.syncArray = function(path) {
+        console.log("syncArray", path);
         return $firebaseArray(self.getFireBaseInstance(path));
+    }
+
+    this.syncProtectedArray = function(path) {
+        console.log("syncArray", path + "/" + self.getUID());
+        return $firebaseArray(self.getFireBaseInstance(path + "/" + self.getUID()));
     }
 
     this.auth = $firebaseAuth(self.getFireBaseInstance());
     this.authData = null;
+    this.profileData = null;
     this.auth.$onAuth(function(authData) {
         console.log("$onAuth", authData);
         self.authData = authData;
         if (authData) {
             self.syncObject("profiles/" + self.getUID()).$loaded(
                 function (data) {
-                    if (data.role !== "admin") {
-                        $state.go("login");
-                        $rootScope.notifyError("Invalid permission");
-                    }
+                    self.profileData = data;
+                    $rootScope.$broadcast('user:login',authData);
+                    // if (data.role !== "admin") {
+                    //     $state.go("login");
+                    //     $rootScope.notifyError("Invalid permission");
+                    // }
                 },
                 function (error) {
                     $rootScope.notifyError("Fail to get data");
@@ -41,6 +57,10 @@ angular.module('firebaseHelper', [])
             )
         }
     });
+
+    this.isAdmin = function() {
+        return (this.profileData && this.profileData.role === "admin");
+    }
 
     this.getUID = function() {
         if (this.authData && this.authData.uid) {
