@@ -14,6 +14,11 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         abstract: true,
         url: "/index",
         templateUrl: "components/common/content.html",
+        resolve: {
+            currentAuth: function(firebaseHelper) {
+                return firebaseHelper.auth.$requireAuth();
+            }
+        }
     })
     .state('index.main', {
         url: "/main",
@@ -29,7 +34,13 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
     $urlRouterProvider.otherwise('/login');
 })
 
-.run(function() {
-})
+.run(function($rootScope, $state) {
+    $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+        console.log("$stateChangeError", error);
+        if (error === "AUTH_REQUIRED") {
+            $state.go("login");
+        }
+    });
+});
 
 ;

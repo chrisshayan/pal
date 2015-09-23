@@ -1,10 +1,11 @@
+window.FIREBASE_URL = "https://flickering-fire-25.firebaseio.com";
+
 angular.module('firebaseHelper', [])
 .service('firebaseHelper', function($firebaseObject, $firebaseArray, $firebaseAuth, $rootScope, $state) {
     var self = this;
 
     this.getFireBaseInstance = function(key) {
-        var base = "https://flickering-fire-25.firebaseio.com";
-        return new Firebase(key?base + "/" + key:base);
+        return new Firebase(key?FIREBASE_URL + "/" + key:FIREBASE_URL);
     }
 
     this.bindObject = function($scope, key) {
@@ -20,8 +21,6 @@ angular.module('firebaseHelper', [])
     this.authData = null;
     this.auth.$onAuth(function(authData) {
         self.authData = authData;
-        $rootScope.$broadcast('user:login',authData);
-        console.log("$onAuth", authData);
     });
 
     this.hasAlreadyLogin = function() {
@@ -56,4 +55,4 @@ angular.module('firebaseHelper', [])
             });
 
     }
-})
+});
