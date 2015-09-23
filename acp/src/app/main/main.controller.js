@@ -15,11 +15,12 @@ angular.module('inspinia')
             firebaseHelper.bindObject("profiles/" + firebaseHelper.getUID(), $scope, "data");
             $scope.topics = firebaseHelper.syncArray("topics");
             if (firebaseHelper.isAdmin()) {
-                console.log("xxxxx");
                 $scope.isAdmin = true;
                 $scope.posts = firebaseHelper.syncArray("posts");
+                $scope.posts.$watch(function(event) {
+                    console.log(event);
+                })
             } else {
-                console.log("yyyyy");
                 $scope.isAdmin = false;
                 $scope.posts = firebaseHelper.syncProtectedArray("posts");
             }

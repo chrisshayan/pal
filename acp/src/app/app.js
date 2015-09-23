@@ -16,7 +16,6 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         templateUrl: "components/common/content.html",
         resolve: {
             currentAuth: function(firebaseHelper) {
-                console.log("herer");
                 return firebaseHelper.auth.$requireAuth();
             }
         }
