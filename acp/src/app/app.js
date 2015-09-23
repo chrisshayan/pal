@@ -5,6 +5,11 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
 .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
 
+    .state('login', {
+        url: '/login',
+        templateUrl: "app/auth/login.html"
+    })
+
     .state('index', {
         abstract: true,
         url: "/index",
@@ -21,7 +26,7 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         data: { pageTitle: 'Example view' }
     })
 
-    $urlRouterProvider.otherwise('/index/main');
+    $urlRouterProvider.otherwise('/login');
 })
 
 .run(function() {
