@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'ui.bootstrap', 'firebase', 'firebaseHelper'])
+angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'ui.bootstrap', 'firebase', 'firebaseHelper', 'cgNotify'])
 
 .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
@@ -34,13 +34,20 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
     $urlRouterProvider.otherwise('/login');
 })
 
-.run(function($rootScope, $state) {
+.run(function($rootScope, $state, notify) {
     $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
         console.log("$stateChangeError", error);
         if (error === "AUTH_REQUIRED") {
             $state.go("login");
         }
     });
-});
-
+    $rootScope.inspiniaTemplate = 'components/common/notify.html';
+    notify.config({
+       duration: '5000',
+       position: 'center'
+    });
+    $rootScope.notifyError = function(message) {
+        notify({ message: message, classes: 'alert-danger', templateUrl: $rootScope.inspiniaTemplate});
+    }
+})
 ;

@@ -1,27 +1,53 @@
 window.FIREBASE_URL = "https://flickering-fire-25.firebaseio.com";
 
 angular.module('firebaseHelper', [])
-.service('firebaseHelper', function($firebaseObject, $firebaseArray, $firebaseAuth, $rootScope, $state) {
+.service('firebaseHelper', function($firebaseObject, $firebaseArray, $firebaseObject, $firebaseAuth, $rootScope, $state, notify) {
     var self = this;
 
     this.getFireBaseInstance = function(key) {
         return new Firebase(key?FIREBASE_URL + "/" + key:FIREBASE_URL);
     }
 
-    this.bindObject = function($scope, key) {
-        var syncObject = $firebaseObject(self.getFireBaseInstance(key));
+    this.bindObject = function(path, $scope, key) {
+        var syncObject = $firebaseObject(self.getFireBaseInstance(path));
         syncObject.$bindTo($scope, key);
     }
 
-    this.syncArray = function(key) {
-        return $firebaseArray(self.getFireBaseInstance(key));
+    this.syncObject = function(path) {
+        return $firebaseObject(self.getFireBaseInstance(path));
+    }
+
+    this.syncArray = function(path) {
+        return $firebaseArray(self.getFireBaseInstance(path));
     }
 
     this.auth = $firebaseAuth(self.getFireBaseInstance());
     this.authData = null;
     this.auth.$onAuth(function(authData) {
+        console.log("$onAuth", authData);
         self.authData = authData;
+        if (authData) {
+            self.syncObject("profiles/" + self.getUID()).$loaded(
+                function (data) {
+                    if (data.role !== "admin") {
+                        $state.go("login");
+                        $rootScope.notifyError("Invalid permission");
+                    }
+                },
+                function (error) {
+                    $rootScope.notifyError("Fail to get data");
+                    $state.go("login");
+                }
+            )
+        }
     });
+
+    this.getUID = function() {
+        if (this.authData && this.authData.uid) {
+            return this.authData.uid;
+        }
+        return "";
+    }
 
     this.hasAlreadyLogin = function() {
         return this.authData != null;
@@ -50,6 +76,7 @@ angular.module('firebaseHelper', [])
                 if (callback.success) {callback.success(authData);}
             })
             .catch(function(error) {
+                $rootScope.notifyError("Invalid account");
                 self.authData = null;
                 if (callback.error) {callback.error(error);}
             });
