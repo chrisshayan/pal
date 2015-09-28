@@ -1,35 +1,68 @@
 <div class="wrapper wrapper-content animated fadeInRight"  ng-controller="MainCtrl as main">
     <div class="row">
-        <div class="col-lg-12">
-            <div class="text-center m-t-lg">
-                <h1>
-                    <span ng-show="isAdmin">Admin</span>
-                    <span ng-show="!isAdmin">User</span>
-                </h1>
-                <small>
-                    {{main.descriptionText}}
-
-                    <i class="glyphicon glyphicon-pencil"></i>
-
-                    <br/>
-                </small>
+        <div class="col-lg-12" ng-if = "false">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Create Post</h5>
+                    <div ibox-tools></div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form role="form" ng-submit="onPost()">
+                                <div class="form-group">
+                                    <label>Question</label>
+                                    <textarea ng-model="addTopicTitle" rows="6" placeholder="Question" class="form-control" required=""></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Audio Link</label>
+                                    <input ng-model="addTopicAudioURL" type="text" placeholder="Audio file url" class="form-control" required=""/>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Add</strong></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-lg-12">
-            <div>
-                <button class="btn btn-white btn-xs" type="button" ng-click="onAddTopic()">Add a topics</button>
+    </div>
+    <div class="row animated fadeInRight">
+        <div class="col-lg-6">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h3>To-do</h3>
+                    <ul class="connectList agile-list" style="padding:0">
+                        <li class="info-element" ng-show="newPosts && newPosts.length == 0">
+                            <h4>No data</h4>
+                        </li>
+                        <div class="sk-spinner sk-spinner-double-bounce" ng-if="!newPosts">
+                            <div class="sk-double-bounce1"></div>
+                            <div class="sk-double-bounce2"></div>
+                        </div>
+                        <custom-post ng-repeat = "p in newPosts" data="p"></custom-post>
+                    </ul>
+                </div>
             </div>
-            <ul>
-                <li ng-repeat = "r in topics">
-                    {{r}} <button class="btn btn-white btn-xs" type="button" ng-click="onPost(r)">Post</button>
-                </li>
-            </ul>
-            POST
-            <ul>
-                <li ng-repeat = "r in posts">
-                    {{r}}
-                </li>
-            </ul>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h3>Finished</h3>
+                    <ul class="connectList agile-list" style="padding:0">
+                        <li class="warning-element" ng-show="completedPosts && completedPosts.length == 0">
+                            <h4>No data</h4>
+                        </li>
+                        <div class="sk-spinner sk-spinner-double-bounce" ng-if="!completedPosts">
+                            <div class="sk-double-bounce1"></div>
+                            <div class="sk-double-bounce2"></div>
+                        </div>
+                        <custom-post ng-repeat = "p in completedPosts" data="p"></custom-post>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>

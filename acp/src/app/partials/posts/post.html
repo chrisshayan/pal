@@ -1,0 +1,21 @@
+<li class="info-element">
+    <h4>User abc</h4>
+    <p>{{data.title}}</p>
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+            <a ng-show="!audio.playing" class="btn btn-success btn-rounded btn-xs" ng-click="playPause()" href=""><i class="fa fa fa-play"></i> Play</a>
+            <a ng-show="audio.playing" class="btn btn-warning btn-rounded btn-xs" ng-click="playPause()" href=""><i class="fa fa fa-pause"></i> Pause</a>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9">
+            <progressbar value="audio_percent" type="success" class="progress-striped"></progressbar>
+        </div>
+    </div>
+    <div class="agile-detail">
+        <a href="" ng-click="showComment = !showComment" class="pull-right btn btn-xs btn-primary">Answer</a>
+        <i class="fa fa-clock-o"></i> {{formatDateTime(data.createdDate)}}
+        <div ng-show="showComment">
+            <hr/>
+            <input type="file" accept="audio/*;capture=microphone">
+        </div>
+    </div>
+</li>
