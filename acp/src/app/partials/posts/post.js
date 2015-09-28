@@ -13,7 +13,9 @@ angular.module('inspinia')
             $scope.formatDateTime = cs.formatDateTime;
             $scope.showComment = false;
             $scope.audio = null;
+            $scope.teacher_audio = null;
             $scope.audio_percent = 0;
+            $scope.audioRecorder = null;
 
             $scope.playPause = function(){
                 if (!$scope.audio) {
@@ -39,6 +41,50 @@ angular.module('inspinia')
                 }
                 $scope.audio.playing = !$scope.audio.playing;
             };
+
+            $scope.isRecording = false;
+            $scope.startRecord = function() {
+                if ($scope.teacher_audio && $scope.teacher_audio.playing) {
+                    $scope.teacher_audio.pause();
+                }
+                navigator.getUserMedia({audio:true, video:false}, function(stream) {
+                    $scope.audioRecorder = RecordRTC(stream, {
+                        // recorderType: StereoAudioRecorder
+                        bufferSize: 16384
+                    });
+                    $scope.audioRecorder.startRecording();
+                    $scope.isRecording = true;
+                    $scope.$apply();
+                }, function(error) {
+                    console.log(error)
+                });
+            }
+
+            $scope.stopRecord = function() {
+                $scope.audioRecorder.stopRecording(function (audioVideoWebMURL) {
+                    $scope.isRecording = false;
+                    $scope.teacher_audio = new Audio();
+                    $scope.teacher_audio.src = audioVideoWebMURL;
+                    $scope.teacher_audio.playing = false;
+                    $scope.teacher_audio.addEventListener('ended', function(){
+                        $scope.teacher_audio.playing = false;
+                        $scope.$digest();
+                    });
+
+                    var recordedBlob = $scope.audioRecorder.getBlob();
+                    $scope.audioRecorder.getDataURL(function(dataURL) { });
+                    $scope.$apply();
+                });
+            }
+
+            $scope.playStopRecord = function() {
+                if ($scope.teacher_audio.playing) {
+                    $scope.teacher_audio.pause()
+                } else {
+                    $scope.teacher_audio.play()
+                }
+                $scope.teacher_audio.playing = !$scope.teacher_audio.playing;
+            }
         },
         templateUrl: "app/partials/posts/post.html"
     }
