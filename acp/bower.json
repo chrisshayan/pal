@@ -15,7 +15,8 @@
     "PACE": "https://github.com/HubSpot/pace.git#~1.0.2",
     "metisMenu": "~2.0.2",
     "font-awesome": "~4.3.0",
-    "angular-notify": "~2.5.0"
+    "angular-notify": "~2.5.0",
+    "ng-firebase-helper": "rickyngk/ng-firebase-helper"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.4"
