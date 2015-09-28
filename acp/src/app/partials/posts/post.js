@@ -49,8 +49,9 @@ angular.module('inspinia')
                 }
                 navigator.getUserMedia({audio:true, video:false}, function(stream) {
                     $scope.audioRecorder = RecordRTC(stream, {
-                        // recorderType: StereoAudioRecorder
-                        bufferSize: 16384
+                        sampleRate: 44100,
+                        bufferSize: 16384,
+                        numberOfAudioChannels: 1
                     });
                     $scope.audioRecorder.startRecording();
                     $scope.isRecording = true;
