@@ -26,6 +26,7 @@ angular.module('inspinia').controller('MainCtrl', function ($scope, firebaseHelp
             success: function() {
                 $scope.addTopicTitle = "";
                 $scope.addTopicAudioURL = "";
+                $scope.$apply();
             }
         });
         return true;
