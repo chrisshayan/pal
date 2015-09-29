@@ -34,8 +34,18 @@
                     <div ibox-tools></div>
                 </div>
                 <div class="ibox-content text-center">
-                    <h3 class="font-bold">There are {{numOfWaitingPost || '?'}} tasks available</h3>
-                    <button ng-click="onPickTask()" ng-disabled="!newPosts || !numOfWaitingPost || pickTaskCountDown > 0" class="btn btn-primary dim btn-large-dim" type="button">
+                    <div ng-if="numOfWaitingPost == null" class="spiner-example">
+                        <div class="sk-spinner sk-spinner-wave">
+                            <div class="sk-rect1"></div>
+                            <div class="sk-rect2"></div>
+                            <div class="sk-rect3"></div>
+                            <div class="sk-rect4"></div>
+                            <div class="sk-rect5"></div>
+                        </div>
+                    </div>
+                    <h3 ng-if="numOfWaitingPost == 0" class="font-bold">There is no task available</h3>
+                    <h3 ng-if="numOfWaitingPost > 0" class="font-bold">There are {{numOfWaitingPost}} tasks available</h3>
+                    <button ng-show="numOfWaitingPost >= 0" ng-click="onPickTask()" ng-disabled="!newPosts || !numOfWaitingPost || pickTaskCountDown > 0" class="btn btn-primary dim btn-large-dim" type="button">
                         <i ng-if="pickTaskCountDown == 0" i class="fa fa-plus"></i>
                         <span ng-if="pickTaskCountDown > 0">{{pickTaskCountDown}}</span>
                     </button>

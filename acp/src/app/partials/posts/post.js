@@ -90,17 +90,32 @@ angular.module('inspinia')
 
             $scope.onSubmit = function() {
                 if (firebaseHelper.getUID()) {
-                    firebaseHelper.getFireBaseInstance(["posts", $scope.data.$id]).update({
-                        status:2,
-                        answer_date: Date.now(),
-                        score: $scope.vote,
-                        answer_audio: "https://freesound.org/people/mishicu/sounds/323157/download/323157__mishicu__120-rap-5.wav"
-                    }, function(error) {
-                        if (error) {
-                            $rootScope.notifyError(error);
+                    firebaseHelper.getFireBaseInstance(["posts", $scope.data.$id]).transaction(function(recent){
+                        if (!recent) {
+                            $rootScope.notifyError("Something wrong. Please try again");
+                            return;
                         } else {
-                            $rootScope.notifySuccess("OK");
+                            if (recent.status == 1 && recent.picked_by == firebaseHelper.getUID()) {
+                                recent.status = 2;
+                                recent.answer_date == Date.now();
+                                recent.score == $scope.vote;
+                                recent.answer_audio == "https://d1ngnrwwqlw7nm.cloudfront.net/0096-03-OT-70/06_joshua/06_joshua_006.mp3?Expires=1451563200&Signature=HT0YT4rtQ7yNmF7wordPvcAfkl-5iucR6vIt2BpX3EbCQIjZqQOzPE4YaPahKEqnpmbyskSpX68i1364JLKjXNoJCjHz~KwWsY8nl5QKZb4OOZbonj3tUbWYRCFTi4EUWZ3KdxdgIcDLxk0ch1qnKtbffpGUgAyjGJxZPpIRejUTpXmXxdsA25ncW7wGmw--C-vi5JWWuxcIqjg5AZ-PRTVbmHB~CQ3KpN7sAE44~MWfOsWnrGUyW-rLr9ogu1pQYrWVgw98f2dOinkUoFT-12QRu0sjTK4SiSTqhkqMH2D4RcnqhqbDvmZyWI19fHeggNFldsRxkVRnS8dVxFA05Q__&Key-Pair-Id=APKAJQXQBQHDBU72DTAQ";
+                                return recent;
+                            } else {
+                                $rootScope.notifyError("This task was tranferred to another advisor before");
+                                return;
+                            }
                         }
+
+                    }, function(error, committed, snapshot){
+                        if (error) {
+                            $rootScope.notifyError("Something wrong. Please try again");
+                        } else if (!committed) {
+                            $rootScope.notifyError("Fail to save data");
+                        } else {
+                            $rootScope.notifySuccess("You have solved a task");
+                        }
+                        $scope.$apply();
                     });
                 } else {
                     $rootScope.notifyError("Something wrong");
