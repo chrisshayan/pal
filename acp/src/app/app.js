@@ -10,6 +10,10 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         url: '/login',
         templateUrl: "app/auth/login.html"
     })
+    .state('change_pass', {
+        url: '/change_pass',
+        templateUrl: "app/auth/change_pass.html"
+    })
 
     .state('index', {
         abstract: true,
