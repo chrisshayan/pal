@@ -47,6 +47,9 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
        duration: '5000',
        position: 'center'
     });
+    $rootScope.notifySuccess = function(message) {
+        notify({ message: message, classes: 'alert-success', templateUrl: $rootScope.inspiniaTemplate});
+    }
     $rootScope.notifyError = function(message) {
         notify({ message: message, classes: 'alert-danger', templateUrl: $rootScope.inspiniaTemplate});
     }

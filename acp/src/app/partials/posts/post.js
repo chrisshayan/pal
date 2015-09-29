@@ -11,7 +11,6 @@ angular.module('inspinia')
             $scope.formatTime = cs.formatTime;
             $scope.formatDate = cs.formatDate;
             $scope.formatDateTime = cs.formatDateTime;
-            $scope.showComment = false;
             $scope.audio = null;
             $scope.teacher_audio = null;
             $scope.audio_percent = 0;
@@ -23,16 +22,11 @@ angular.module('inspinia')
                 if (!$scope.audio) {
                     $scope.audio = new Audio();
                     $scope.audio.src = $scope.data.audio;
-                    $scope.audio_percent = 0;
 
                     $scope.audio.addEventListener('timeupdate', function(event){
-                        var percent = Math.min(100, Math.round((event.path[0].currentTime / event.path[0].duration)*100));
-                        $scope.audio_percent = percent;
-                        $scope.$digest();
                     });
                     $scope.audio.addEventListener('ended', function(){
                         $scope.audio.playing = false;
-                        // $scope.audio_percent = 0;
                         $scope.$digest();
                     });
                 }
@@ -87,6 +81,27 @@ angular.module('inspinia')
                     $scope.teacher_audio.play()
                 }
                 $scope.teacher_audio.playing = !$scope.teacher_audio.playing;
+            }
+
+            $scope.onSubmit = function() {
+                if (firebaseHelper.getUID()) {
+                    firebaseHelper.getFireBaseInstance(["posts", $scope.data.$id]).update({
+                        status:1,
+                        modifiedDate: Date.now(),
+                        modifiedBy: firebaseHelper.getUID(),
+                        score: $scope.vote,
+                        answerAudio: "https://freesound.org/people/mishicu/sounds/323157/download/323157__mishicu__120-rap-5.wav"
+                    }, function(error) {
+                        if (error) {
+                            $rootScope.notifyError(error);
+                        } else {
+                            $rootScope.notifySuccess("OK");
+                        }
+                    });
+                } else {
+                    $rootScope.notifyError("Something wrong");
+                }
+                    console.log($scope.data);
             }
         },
         templateUrl: "app/partials/posts/post.html"
