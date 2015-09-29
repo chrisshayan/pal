@@ -106,6 +106,22 @@ angular.module('inspinia')
                     $rootScope.notifyError("Something wrong");
                 }
             }
+
+            $scope.onPutBack = function() {
+                if (firebaseHelper.getUID()) {
+                    firebaseHelper.getFireBaseInstance(["posts", $scope.data.$id]).update({
+                        status:0
+                    }, function(error) {
+                        if (error) {
+                            $rootScope.notifyError(error);
+                        } else {
+                            $rootScope.notifySuccess("You have rejected a task");
+                        }
+                    });
+                } else {
+                    $rootScope.notifyError("Something wrong");
+                }
+            }
         },
         templateUrl: "app/partials/posts/post.html"
     }
