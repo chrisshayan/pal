@@ -115,7 +115,7 @@ angular.module('inspinia')
                         } else if (!committed) {
                             $rootScope.notifyError("Fail to save data");
                         } else {
-                            firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID(), $scope.ref.$id]).set(2);
+                            firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID(), $scope.ref.$id]).set(snapshot.val().status);
                             $rootScope.notifySuccess("You have solved a task");
                         }
                         $scope.$apply();
@@ -133,6 +133,7 @@ angular.module('inspinia')
                         if (error) {
                             $rootScope.notifyError(error);
                         } else {
+                            firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID(), $scope.ref.$id]).set(0);
                             $rootScope.notifySuccess("You have rejected a task");
                         }
                     });

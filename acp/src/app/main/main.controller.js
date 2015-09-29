@@ -100,7 +100,7 @@ angular.module('inspinia').controller('MainCtrl', function ($scope, firebaseHelp
                         } else {
                             $rootScope.notifySuccess("You have got a task");
                             $scope.startCountDown(15);
-                            firebaseHelper.getFireBaseInstance(["ref_advisor_posts", uid, key]).set(1);
+                            firebaseHelper.getFireBaseInstance(["ref_advisor_posts", uid, key]).set(snapshot.val().status);
                         }
                     });
                 }
