@@ -14,11 +14,13 @@ angular.module('inspinia').controller('MainCtrl', function ($scope, firebaseHelp
     $scope.addTopicTitle = "";
     $scope.addTopicAudioURL = "";
     $scope.onPost = function() {
+        var topic = $scope.addTopicTitle;
+        var url = $scope.addTopicAudioURL;
         firebaseHelper.pushItemOne("posts", "users", firebaseHelper.getUID(), {
-            createdDate: Date.now(),
-            createdBy: firebaseHelper.getUID(),
-            title: $scope.addTopicTitle,
-            audio: $scope.addTopicAudioURL,
+            created_date: Date.now(),
+            created_by: firebaseHelper.getUID(),
+            title: topic,
+            audio: url,
             status: 0
         }, {
             success: function() {

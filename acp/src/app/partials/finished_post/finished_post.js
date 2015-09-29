@@ -15,6 +15,11 @@ angular.module('inspinia')
             $scope.audio = null;
             $scope.advisorAudio = null;
 
+            $scope.user = firebaseHelper.getFireBaseInstance(["profiles_pub", $scope.data.created_by, "display_name"]).on('value', function(snapshot) {
+                $scope.user_display_name = snapshot.val();
+                $scope.$digest();
+            }, function() {});
+
             $scope.toggleUserVoice = function(){
                 if (!$scope.audio) {
                     $scope.audio = new Audio();
@@ -35,7 +40,7 @@ angular.module('inspinia')
             $scope.toggleAdvisorVoice = function(){
                 if (!$scope.advisorAudio) {
                     $scope.advisorAudio = new Audio();
-                    $scope.advisorAudio.src = $scope.data.answerAudio;
+                    $scope.advisorAudio.src = $scope.data.answer_audio;
                     $scope.advisorAudio.addEventListener('ended', function(){
                         $scope.advisorAudio.playing = false;
                         $scope.$digest();

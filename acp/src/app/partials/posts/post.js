@@ -18,6 +18,11 @@ angular.module('inspinia')
             $scope.vote = 0;
             $scope.pre_vote = 0;
 
+            $scope.user = firebaseHelper.getFireBaseInstance(["profiles_pub", $scope.data.created_by, "display_name"]).once('value', function(snapshot) {
+                $scope.user_display_name = snapshot.val();
+                $scope.$digest();
+            }, function() {});
+
             $scope.playPause = function(){
                 if (!$scope.audio) {
                     $scope.audio = new Audio();
@@ -87,10 +92,10 @@ angular.module('inspinia')
                 if (firebaseHelper.getUID()) {
                     firebaseHelper.getFireBaseInstance(["posts", $scope.data.$id]).update({
                         status:1,
-                        modifiedDate: Date.now(),
-                        modifiedBy: firebaseHelper.getUID(),
+                        modified_date: Date.now(),
+                        modified_by: firebaseHelper.getUID(),
                         score: $scope.vote,
-                        answerAudio: "https://freesound.org/people/mishicu/sounds/323157/download/323157__mishicu__120-rap-5.wav"
+                        answer_audio: "https://freesound.org/people/mishicu/sounds/323157/download/323157__mishicu__120-rap-5.wav"
                     }, function(error) {
                         if (error) {
                             $rootScope.notifyError(error);
@@ -101,7 +106,6 @@ angular.module('inspinia')
                 } else {
                     $rootScope.notifyError("Something wrong");
                 }
-                    console.log($scope.data);
             }
         },
         templateUrl: "app/partials/posts/post.html"
