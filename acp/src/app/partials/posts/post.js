@@ -91,9 +91,8 @@ angular.module('inspinia')
             $scope.onSubmit = function() {
                 if (firebaseHelper.getUID()) {
                     firebaseHelper.getFireBaseInstance(["posts", $scope.data.$id]).update({
-                        status:1,
-                        modified_date: Date.now(),
-                        modified_by: firebaseHelper.getUID(),
+                        status:2,
+                        answer_date: Date.now(),
                         score: $scope.vote,
                         answer_audio: "https://freesound.org/people/mishicu/sounds/323157/download/323157__mishicu__120-rap-5.wav"
                     }, function(error) {
