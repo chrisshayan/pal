@@ -12,7 +12,6 @@ angular.module('inspinia').controller('MainCtrl', function ($scope, firebaseHelp
     $scope.stat = firebaseHelper.getFireBaseInstance(["posts"]).orderByChild("status").equalTo(0).on('value', function(snapshot) {
         $scope.numOfWaitingPost = snapshot.numChildren();
         $scope.$digest();
-        $scope.$apply();
     });
 
     $scope.$on("user:login", function() {
