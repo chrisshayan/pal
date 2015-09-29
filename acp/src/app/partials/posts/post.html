@@ -11,14 +11,42 @@
         </div>
     </div>
     <div class="agile-detail">
-        <a href="" ng-click="showComment = !showComment" class="pull-right btn btn-xs btn-primary">Answer</a>
+        <a href="" ng-show="!showComment" ng-click="showComment = !showComment" class="pull-right btn btn-xs btn-primary">Answer</a>
         <i class="fa fa-clock-o"></i> {{formatDateTime(data.createdDate)}}
         <div ng-show="showComment">
             <hr/>
-            <a ng-show="isRecording" class="btn btn-warning btn-rounded" ng-click="stopRecord()" href=""><i class="fa fa-stop"></i> Stop</a>
-            <a ng-hide="isRecording" class="btn btn-success btn-rounded" ng-click="startRecord()" href=""><i class="fa fa-microphone"></i> Record</a>
-            <a ng-show="teacher_audio && !teacher_audio.playing && !isRecording" class="btn btn-success btn-rounded" ng-click="playStopRecord()" href=""><i class="fa fa-play"></i> Play</a>
-            <a ng-show="teacher_audio && teacher_audio.playing && !isRecording" class="btn btn-warning btn-rounded" ng-click="playStopRecord()" href=""><i class="fa fa-stop"></i> Stop</a>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Rating</h4>
+                    <div class="star-rating" style="text-align:center;vertical-align: middle" ng-mouseleave="pre_vote=vote">
+                        <span style="padding:0 5px 0 5px" class="fa fa-4x" ng-class="{'fa-star-o': !vote || vote == 0 || pre_vote == 0, 'fa-star': vote >= 1 && pre_vote >= 1, 'text-warning': vote >= 1 || pre_vote >= 1}" ng-mouseover="pre_vote=1" ng-click="vote=1"></span>
+                        <span style="padding:0 5px 0 5px" class="fa fa-4x" ng-class="{'fa-star-o': !vote || vote < 2  || pre_vote < 2 , 'fa-star': vote >= 2 && pre_vote >= 2, 'text-warning': vote >= 2 || pre_vote >= 2}" ng-mouseover="pre_vote=2" ng-click="vote=2"></span>
+                        <span style="padding:0 5px 0 5px" class="fa fa-4x" ng-class="{'fa-star-o': !vote || vote < 3  || pre_vote < 3 , 'fa-star': vote >= 3 && pre_vote >= 3, 'text-warning': vote >= 3 || pre_vote >= 3}" ng-mouseover="pre_vote=3" ng-click="vote=3"></span>
+                        <span style="padding:0 5px 0 5px" class="fa fa-4x" ng-class="{'fa-star-o': !vote || vote < 4  || pre_vote < 4 , 'fa-star': vote >= 4 && pre_vote >= 4, 'text-warning': vote >= 4 || pre_vote >= 4}" ng-mouseover="pre_vote=4" ng-click="vote=4"></span>
+                        <span style="padding:0 5px 0 5px" class="fa fa-4x" ng-class="{'fa-star-o': !vote || vote < 5  || pre_vote < 5 , 'fa-star': vote >= 5 && pre_vote >= 5, 'text-warning': vote >= 5 || pre_vote >= 5}" ng-mouseover="pre_vote=5" ng-click="vote=5"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Feedback</h4>
+                    <div style="text-align:center">
+                        <button ng-show="isRecording" class="btn btn-warning dim" type="button" ng-click="stopRecord()"><i class="fa fa-stop"></i></button>
+                        <button ng-hide="isRecording" class="btn btn-success dim" type="button" ng-click="startRecord()"><i class="fa fa-microphone"></i></button>
+                        <button ng-show="teacher_audio && !teacher_audio.playing && !isRecording" class="btn btn-success dim" type="button" ng-click="playStopRecord()"><i class="fa fa-play"></i></button>
+                        <button ng-show="teacher_audio && teacher_audio.playing && !isRecording" class="btn btn-warning dim" type="button" ng-click="playStopRecord()"><i class="fa fa-pause"></i></button>
+                    </div>
+                    <!-- <a ng-show="isRecording" class="btn btn-warning btn-rounded" ng-click="stopRecord()" href=""><i class="fa fa-stop"></i> Stop</a>
+                    <a ng-hide="isRecording" class="btn btn-success btn-rounded" ng-click="startRecord()" href=""><i class="fa fa-microphone"></i> Record</a>
+                    <a ng-show="teacher_audio && !teacher_audio.playing && !isRecording" class="btn btn-success btn-rounded" ng-click="playStopRecord()" href=""><i class="fa fa-play"></i> Play</a>
+                    <a ng-show="teacher_audio && teacher_audio.playing && !isRecording" class="btn btn-warning btn-rounded" ng-click="playStopRecord()" href=""><i class="fa fa-stop"></i> Stop</a> -->
+                </div>
+            </div>
+            <p class="pull-right ">
+                <a ng-click="showComment = false" class="btn btn-default btn-primary" href="">Cancel</a>
+                <button class="btn btn-primary btn-primary" href="" ng-disabled="!vote || vote == 0 || !teacher_audio" >Submit</button>
+            </p>
+            <div style="clear:both"></div>
         </div>
     </div>
 </li>

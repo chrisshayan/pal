@@ -16,6 +16,8 @@ angular.module('inspinia')
             $scope.teacher_audio = null;
             $scope.audio_percent = 0;
             $scope.audioRecorder = null;
+            $scope.vote = 0;
+            $scope.pre_vote = 0;
 
             $scope.playPause = function(){
                 if (!$scope.audio) {
