@@ -4,7 +4,7 @@ angular.module('inspinia')
         restrict: 'AE',
         transclude: true,
         scope: {
-            data: '=',
+            ref: '=',
             group: '@'
         },
         controller: function($scope, firebaseHelper, $sce, $rootScope, cs) {
@@ -14,6 +14,8 @@ angular.module('inspinia')
 
             $scope.audio = null;
             $scope.advisorAudio = null;
+
+            $scope.data = firebaseHelper.syncObject(["posts", $scope.ref.$id]);
 
             $scope.user = firebaseHelper.getFireBaseInstance(["profiles_pub", $scope.data.created_by, "display_name"]).on('value', function(snapshot) {
                 $scope.user_display_name = snapshot.val();

@@ -15,8 +15,8 @@ angular.module('inspinia').controller('MainCtrl', function ($scope, firebaseHelp
     });
 
     $scope.$on("user:login", function() {
-        $scope.newPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["posts"]).orderByChild("status").equalTo(1));
-        $scope.completedPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["posts"]).orderByChild("status").equalTo(2));
+        $scope.newPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID()]).orderByValue().equalTo(1));
+        $scope.completedPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID()]).orderByValue().equalTo(2));
     })
 
     $scope.addTopicTitle = "";
@@ -100,6 +100,7 @@ angular.module('inspinia').controller('MainCtrl', function ($scope, firebaseHelp
                         } else {
                             $rootScope.notifySuccess("You have got a task");
                             $scope.startCountDown(15);
+                            firebaseHelper.getFireBaseInstance(["ref_advisor_posts", uid, key]).set(1);
                         }
                     });
                 }

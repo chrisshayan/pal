@@ -4,7 +4,7 @@ angular.module('inspinia')
         restrict: 'AE',
         transclude: true,
         scope: {
-            data: '=',
+            ref: '=',
             group: '@'
         },
         controller: function($scope, firebaseHelper, $sce, $rootScope, cs) {
@@ -17,6 +17,8 @@ angular.module('inspinia')
             $scope.audioRecorder = null;
             $scope.vote = 0;
             $scope.pre_vote = 0;
+
+            $scope.data = firebaseHelper.syncObject(["posts", $scope.ref.$id]);
 
             $scope.user = firebaseHelper.getFireBaseInstance(["profiles_pub", $scope.data.created_by, "display_name"]).once('value', function(snapshot) {
                 $scope.user_display_name = snapshot.val();
@@ -113,6 +115,7 @@ angular.module('inspinia')
                         } else if (!committed) {
                             $rootScope.notifyError("Fail to save data");
                         } else {
+                            firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID(), $scope.ref.$id]).set(2);
                             $rootScope.notifySuccess("You have solved a task");
                         }
                         $scope.$apply();
