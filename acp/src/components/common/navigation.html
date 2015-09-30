@@ -7,7 +7,7 @@
                     <a class="dropdown-toggle" dropdown-toggle href>
                             <span class="clear">
                                 <span class="block m-t-xs">
-                                    <strong class="font-bold">{{email}}</strong>
+                                    <strong class="font-bold">{{info.email}}</strong>
                                 </span>
                                 <span class="text-muted text-xs block">Menu<b class="fa fa-caret-down fa-fw"></b></span>
                             </span>
@@ -19,7 +19,7 @@
                     </ul>
                 </div>
                 <div class="logo-element">
-                    IN+
+                    PAL
                 </div>
 
             </li>
@@ -27,7 +27,7 @@
             <li ui-sref-active="active">
                 <a ui-sref="index.tasks"><i class="fa fa-laptop"></i> <span class="nav-label">Tasks</span> </a>
             </li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active" ng-if="info.role=='admin'">
                 <a ui-sref="index.advisors"><i class="fa fa-desktop"></i> <span class="nav-label">Manage Advisor</span></a>
             </li>
         </ul>
