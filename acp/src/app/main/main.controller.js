@@ -23,9 +23,9 @@ angular.module('inspinia').controller('MainCtrl', function ($scope, firebaseHelp
     $scope.addTopicAudioURL = "";
     $scope.onPost = function() {
         if (firebaseHelper.getUID()) {
+            var topic = $scope.addTopicTitle;
+            var url = $scope.addTopicAudioURL;
             if (topic && url) {
-                var topic = $scope.addTopicTitle;
-                var url = $scope.addTopicAudioURL;
                 firebaseHelper.pushItemOne("posts", "users", firebaseHelper.getUID(), {
                     created_date: Date.now(),
                     created_by: firebaseHelper.getUID(),
@@ -39,7 +39,11 @@ angular.module('inspinia').controller('MainCtrl', function ($scope, firebaseHelp
                         $scope.$apply();
                     }
                 });
+            } else {
+                $rootScope.notifyError("Please fullfill the form");
             }
+        } else {
+            $rootScope.notifyError("Authenticaton failed. Please retry");
         }
         return true;
     }
