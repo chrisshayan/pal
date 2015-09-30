@@ -1,0 +1,14 @@
+{
+  "name": "rtc_handler",
+  "version": "0.0.1",
+  "dependencies": {
+    "body-parser": "^1.14.0",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "sys": "0.0.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}

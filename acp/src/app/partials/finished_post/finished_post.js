@@ -19,7 +19,9 @@ angular.module('inspinia')
 
             $scope.user = firebaseHelper.getFireBaseInstance(["profiles_pub", $scope.data.created_by, "display_name"]).on('value', function(snapshot) {
                 $scope.user_display_name = snapshot.val();
-                $scope.$digest();
+                setTimeout(function() {
+                    $scope.$digest();
+                }, 100);
             }, function() {});
 
             $scope.toggleUserVoice = function(){

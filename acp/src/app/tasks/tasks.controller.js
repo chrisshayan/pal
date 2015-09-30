@@ -16,10 +16,15 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
         }, 100);
     });
 
-    $scope.$on("user:login", function() {
+    if (firebaseHelper.getRole()) {
         $scope.newPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID()]).orderByValue().equalTo(1));
         $scope.completedPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID()]).orderByValue().equalTo(2));
-    })
+    } else {
+        $scope.$on("user:login", function() {
+            $scope.newPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID()]).orderByValue().equalTo(1));
+            $scope.completedPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID()]).orderByValue().equalTo(2));
+        })
+    }
 
     $scope.addTopicTitle = "";
     $scope.addTopicAudioURL = "";
