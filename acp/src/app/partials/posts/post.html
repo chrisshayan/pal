@@ -2,6 +2,7 @@
     <h4>{{data.title}}<br/>
         <small>{{user_display_name}}</small>
     </h4>
+    <hr/>
     <div ng-if="numOfWaitingPost == null" class="spiner-example" ng-show="isSubmitting">
         <div class="sk-spinner sk-spinner-wave">
             <div class="sk-rect1"></div>
@@ -11,7 +12,6 @@
             <div class="sk-rect5"></div>
         </div>
     </div>
-    <hr/>
     <div class="row" ng-show="!isSubmitting">
         <div class="col-md-6 col-xs-6 b-r" style="text-align:center">
             <h4>User's voice</h4>
@@ -36,6 +36,8 @@
             <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 5  || pre_vote < 5 , 'fa-star': vote >= 5 && pre_vote >= 5, 'text-warning': vote >= 5 || pre_vote >= 5}" ng-mouseover="pre_vote=5" ng-click="vote=5"></span>
         </div>
     </div>
+
+    <hr/>
     <div class="agile-detail" ng-show="!isSubmitting">
         <div class="pull-right">
             <button tooltip="Return this task to queue" href="" ng-click="onPutBack()" class="btn btn-xs btn-danger"><i class="fa fa-fw fa-undo"></i> Put back</button>
