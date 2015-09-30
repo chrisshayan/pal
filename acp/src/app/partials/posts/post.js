@@ -17,6 +17,7 @@ angular.module('inspinia')
             $scope.audioRecorder = null;
             $scope.vote = 0;
             $scope.pre_vote = 0;
+            $scope.isSubmitting = false;
 
             $scope.data = firebaseHelper.syncObject(["posts", $scope.ref.$id]);
 
@@ -94,6 +95,7 @@ angular.module('inspinia')
 
             $scope.onSubmit = function() {
                 if (firebaseHelper.getUID()) {
+                    $scope.isSubmitting = true;
                     //post audio file to server
                     $scope.audioRecorder.getDataURL(function(dataURL) {
                         var fileName = "advisors_" + firebaseHelper.getUID() + "_" + $scope.data.$id + "_" + Date.now();
@@ -107,6 +109,7 @@ angular.module('inspinia')
                             console.log(data.data.url);
                             if (!data.data.url) {
                                 $rootScope.notifyError("Fail to upload audio. Invalid response");
+                                $scope.isSubmitting = false;
                                 return;
                             }
                             //posted audio, now save question content
@@ -136,10 +139,12 @@ angular.module('inspinia')
                                     firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID(), $scope.ref.$id]).set(snapshot.val().status);
                                     $rootScope.notifySuccess("You have solved a task");
                                 }
+                                $scope.isSubmitting = false;
                                 $scope.$apply();
                             });
                         }, function() {
                             $rootScope.notifyError("Fail to upload audio");
+                            $scope.isSubmitting = false;
                         });
                     });
                 } else {
