@@ -6,7 +6,6 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
     $scope.formatDateTime = cs.formatDateTime;
     $scope.newPosts = null;
 
-    $scope.debugAddPost = true;
     $scope.pickTaskCountDown = 0;
 
     $scope.stat = firebaseHelper.getFireBaseInstance(["posts"]).orderByChild("status").equalTo(0).on('value', function(snapshot) {
@@ -24,35 +23,6 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
             $scope.newPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID()]).orderByValue().equalTo(1));
             $scope.completedPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID()]).orderByValue().equalTo(2));
         })
-    }
-
-    $scope.addTopicTitle = "";
-    $scope.addTopicAudioURL = "";
-    $scope.onPost = function() {
-        if (firebaseHelper.getUID()) {
-            var topic = $scope.addTopicTitle;
-            var url = $scope.addTopicAudioURL;
-            if (topic && url) {
-                firebaseHelper.pushItemOne("posts", "users", firebaseHelper.getUID(), {
-                    created_date: Date.now(),
-                    created_by: firebaseHelper.getUID(),
-                    title: topic,
-                    audio: url,
-                    status: 0
-                }, {
-                    success: function() {
-                        $scope.addTopicTitle = "";
-                        $scope.addTopicAudioURL = "";
-                        $scope.$apply();
-                    }
-                });
-            } else {
-                $rootScope.notifyError("Please fullfill the form");
-            }
-        } else {
-            $rootScope.notifyError("Authenticaton failed. Please retry");
-        }
-        return true;
     }
 
     var stop;
