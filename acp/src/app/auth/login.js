@@ -17,7 +17,7 @@ angular.module('inspinia').controller('LoginCtrl', function ($scope, $state, fir
 			console.log($scope.email, $scope.password);
 			firebaseHelper.login($scope.email, $scope.password, {
 	            success: function(data) {
-	                $state.go("index.main");
+	                $state.go("index.tasks");
 	            }
 	        });
 		}
