@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('inspinia').controller('MainCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval) {
+angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval) {
     $scope.formatTime = cs.formatTime;
     $scope.formatDate = cs.formatDate;
     $scope.formatDateTime = cs.formatDateTime;

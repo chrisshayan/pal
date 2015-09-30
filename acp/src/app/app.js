@@ -25,18 +25,18 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
             }
         }
     })
-    .state('index.main', {
-        url: "/main",
-        templateUrl: "app/main/main.html",
-        data: { pageTitle: 'Example view' }
+    .state('index.tasks', {
+        url: "/tasks",
+        templateUrl: "app/tasks/tasks.html",
+        data: { pageTitle: 'Tasks' }
     })
-    .state('index.minor', {
-        url: "/minor",
-        templateUrl: "app/minor/minor.html",
-        data: { pageTitle: 'Example view' }
+    .state('index.advisors', {
+        url: "/advisors",
+        templateUrl: "app/advisors/advisors.html",
+        data: { pageTitle: 'Advisors view' }
     })
 
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/index/tasks');
 })
 
 .run(function($rootScope, $state, notify) {
@@ -52,9 +52,10 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
        position: 'center'
     });
     $rootScope.notifySuccess = function(message) {
-        notify({ message: message, classes: 'alert-success', templateUrl: $rootScope.inspiniaTemplate});
+        notify({ message: message || "Your request processed successfully", classes: 'alert-success', templateUrl: $rootScope.inspiniaTemplate});
     }
     $rootScope.notifyError = function(message) {
+        message = message || "Uh-oh, something went wrong!";
         notify({ message: message, classes: 'alert-danger', templateUrl: $rootScope.inspiniaTemplate});
     }
 })
