@@ -80,7 +80,9 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
                 var uid = childSnapshot.key();
                 firebaseHelper.getFireBaseInstance(["profiles_pub", uid]).on('value', function(snapshot2) {
                     $scope.advisors.push(snapshot2.val());
-                    $scope.$digest()
+                    setTimeout(function() {
+                        $scope.$digest();
+                    }, 100);
                 })
             });
         })
