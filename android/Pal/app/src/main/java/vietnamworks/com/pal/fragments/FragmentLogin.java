@@ -1,4 +1,4 @@
-package vietnamworks.com.pal.ui.fragments;
+package vietnamworks.com.pal.fragments;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;

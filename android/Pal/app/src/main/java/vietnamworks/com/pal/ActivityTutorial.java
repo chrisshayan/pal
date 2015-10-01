@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import vietnamworks.com.pal.services.FirebaseService;
-import vietnamworks.com.pal.ui.fragments.FragmentLogin;
-import vietnamworks.com.pal.ui.fragments.FragmentTutorial;
+import vietnamworks.com.pal.fragments.FragmentLogin;
+import vietnamworks.com.pal.fragments.FragmentTutorial;
 
 public class ActivityTutorial extends ActivityBase {
     private static int sNumPages;

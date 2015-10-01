@@ -9,10 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import vietnamworks.com.pal.models.AppModel;
-import vietnamworks.com.pal.ui.fragments.FragmentRecentTopic;
-import vietnamworks.com.pal.ui.fragments.FragmentRecorder;
-import vietnamworks.com.pal.ui.fragments.FragmentSubmitTopic;
-import vietnamworks.com.pal.ui.fragments.FragmentTalkWithMe;
+import vietnamworks.com.pal.fragments.FragmentRecentTopic;
+import vietnamworks.com.pal.fragments.FragmentRecorder;
+import vietnamworks.com.pal.fragments.FragmentSubmitTopic;
+import vietnamworks.com.pal.fragments.FragmentTalkWithMe;
 
 /**
  * Created by duynk on 9/15/15.

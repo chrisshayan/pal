@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package vietnamworks.com.pal.ui.components;
+package vietnamworks.com.pal.components;
 
 import android.content.Context;
 import android.content.res.Resources;

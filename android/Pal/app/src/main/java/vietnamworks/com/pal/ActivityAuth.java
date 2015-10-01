@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import vietnamworks.com.pal.services.FirebaseService;
-import vietnamworks.com.pal.ui.fragments.FragmentLogin;
-import vietnamworks.com.pal.ui.fragments.FragmentSignUp;
-import vietnamworks.com.pal.ui.fragments.FragmentSignUpProcessing;
+import vietnamworks.com.pal.fragments.FragmentLogin;
+import vietnamworks.com.pal.fragments.FragmentSignUp;
+import vietnamworks.com.pal.fragments.FragmentSignUpProcessing;
 import vietnamworks.com.pal.utils.Common;
 
 public class ActivityAuth extends ActivityBase {

@@ -1,4 +1,4 @@
-package vietnamworks.com.pal.ui.fragments;
+package vietnamworks.com.pal.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import vietnamworks.com.pal.ActivityMain;
 import vietnamworks.com.pal.R;
-import vietnamworks.com.pal.ui.components.CustomViewPager;
+import vietnamworks.com.pal.components.CustomViewPager;
 import vietnamworks.com.pal.models.AbstractContainer;
 import vietnamworks.com.pal.models.AppModel;
 
