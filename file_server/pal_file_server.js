@@ -2,6 +2,7 @@ var express = require('express');
 var cors = require('cors')
 var bodyParser = require('body-parser');
 var post_audio = require('./modules/post_audio');
+var post_audio_android = require('./modules/android_audio');
 var app = express();
 require("./config");
 
@@ -12,6 +13,7 @@ app.use(express.static('uploads'))
 // test route
 app.get('/', function (req, res) { res.status(200).send('Hello world!') });
 app.post('/post_audio', post_audio);
+app.post('/post_audio_android', post_audio_android)
 
 // error handler
 app.use(function (err, req, res, next) {
