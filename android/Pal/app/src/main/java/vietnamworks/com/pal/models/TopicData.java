@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.BaseService;
 
 
@@ -25,7 +26,7 @@ public class TopicData extends AbstractContainer<Topic> {
     public synchronized void loadAsync(final Context context, final OnLoadAsyncCallback callback) {
         if (!isLoading) {
             isLoading = true;
-            BaseService.Get(context, "tasks", new BaseService.OnLoadAsyncCallback() {
+            BaseService.Get(context, "tasks", new AsyncCallback() {
                 @Override
                 public void onSuccess(JSONObject obj) {
                     try {
@@ -50,7 +51,7 @@ public class TopicData extends AbstractContainer<Topic> {
                 }
 
                 @Override
-                public void onError() {
+                public void onError(int code, String message) {
                     if (callback != null) {
                         callback.onError(context);
                     }

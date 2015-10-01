@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.utils.Common;
 
 public class AuthActivity extends AppCompatActivity {
@@ -16,6 +17,7 @@ public class AuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+        FirebaseService.setContext(this);
 
         if (findViewById(R.id.auth_fragment_container) != null) {
 

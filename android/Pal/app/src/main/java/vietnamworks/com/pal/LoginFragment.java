@@ -14,6 +14,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import vietnamworks.com.pal.services.AsyncCallback;
+import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.utils.Common;
 
 /**
@@ -151,25 +155,24 @@ public class LoginFragment extends Fragment {
 
         this.startProcessing();
 
-        //// TODO: 9/15/15 Add login progress here
-
-        new android.os.Handler().postDelayed(new Runnable() {
+        FirebaseService.login(email, password, new AsyncCallback() {
             @Override
-            public void run() {
+            public void onSuccess(JSONObject obj) {
                 endProcessing();
-                if (email.toLowerCase().compareTo("network@email.com") == 0) {
-                    onLoginFail(R.string.message_fail_to_connect_server);
-                } else if (email.toLowerCase().startsWith("test") && password.compareTo("1234") == 0) {
-                    onLoginSuccess();
-                } else {
-                    onLoginFail(R.string.login_message_login_fail);
-                }
+                onLoginSuccess();
             }
-        }, 5000L);
+
+            @Override
+            public void onError(int code, String message) {
+                endProcessing();
+                //onLoginFail(R.string.message_fail_to_connect_server);
+                onLoginFail(code, message);
+            }
+        });
     }
 
-    public void onLoginFail(int error) {
-        showToastMessage(error, Toast.LENGTH_LONG);
+    public void onLoginFail(int error, String  message) {
+        showToastMessage(message, Toast.LENGTH_LONG);
     }
 
     public void onLoginSuccess() {

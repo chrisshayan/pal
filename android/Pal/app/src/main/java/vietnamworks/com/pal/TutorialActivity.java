@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import vietnamworks.com.pal.services.FirebaseService;
+
 public class TutorialActivity extends AppCompatActivity {
 
     private static TutorialActivity sInstance;
@@ -26,6 +28,7 @@ public class TutorialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
+        FirebaseService.setContext(this);
 
         sNumPages = getResources().getStringArray(R.array.tutor).length;
 
