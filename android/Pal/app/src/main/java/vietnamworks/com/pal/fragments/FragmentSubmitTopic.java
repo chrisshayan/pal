@@ -141,7 +141,7 @@ public class FragmentSubmitTopic extends FragmentBase {
         }
         p.setCreated_by(FirebaseService.authData.getUid());
         p.setCreated_date(System.currentTimeMillis());
-        p.setAnswer_audio(Config.AudioServerBaseURL + "/" + server_file_path);
+        p.setAudio(Config.AudioServerBaseURL + "/" + server_file_path);
         p.setStatus(0);
         newPostRef.setValue(p);
 
