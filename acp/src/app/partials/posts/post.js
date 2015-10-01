@@ -31,7 +31,8 @@ angular.module('inspinia')
             $scope.playPause = function(){
                 if (!$scope.audio) {
                     $scope.audio = new Audio();
-                    $scope.audio.src = $scope.data.audio;
+                    $scope.audio.src = $scope.data.audio.replace(".3gp", ".mp3");
+                    console.log($scope.data.audio);
 
                     $scope.audio.addEventListener('timeupdate', function(event){
                     });
