@@ -63,7 +63,7 @@ public class Common {
         return getHomeDir() + "/" + currentSampleRecordSeed + "_" + Config.SampleRecorderFilename;
     }
 
-    public static String getAudioFilePath(String user_id, String post_id) {
-        return getHomeDir() + "/user_" + user_id + "_" + post_id + "_" + System.currentTimeMillis();
+    public static String getAudioServerFileName(String user_id, String post_id) {
+        return "user_" + user_id + "_" + post_id + "_" + System.currentTimeMillis() + Config.RecorderFileExt;
     }
 }

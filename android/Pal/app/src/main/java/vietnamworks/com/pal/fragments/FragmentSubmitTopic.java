@@ -18,6 +18,7 @@ import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.services.BaseService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.utils.Common;
+import vietnamworks.com.pal.utils.Config;
 
 /**
  * Created by duynk on 9/17/15.
@@ -127,8 +128,9 @@ public class FragmentSubmitTopic extends FragmentBase {
         mSubmitFormBtnCancel.setVisibility(View.GONE);
         mSubmitFormBtnRetry.setVisibility(View.GONE);
 
-        BaseService.PostFile(this.getActivityRef(ActivityMain.class), Common.getSampleRecordPath());
+        Firebase newPostRef = FirebaseService.newRef("posts").push();
 
+        String server_file_path = Common.getAudioServerFileName(FirebaseService.authData.getUid(), newPostRef.getKey());
         Post p = null;
         int current_topic = ((ActivityMain)this.getActivity()).mCurrentTopicIndex;
         if (current_topic >= 0) {
@@ -139,11 +141,16 @@ public class FragmentSubmitTopic extends FragmentBase {
         }
         p.setCreated_by(FirebaseService.authData.getUid());
         p.setCreated_date(System.currentTimeMillis());
-        p.setAnswer_audio("");
+        p.setAnswer_audio(Config.AudioServerBaseURL + "/" + server_file_path);
         p.setStatus(0);
-
-        Firebase newPostRef = FirebaseService.newRef("posts").push();
         newPostRef.setValue(p);
+
+        BaseService.PostFile(
+                this.getActivityRef(ActivityMain.class),
+                Config.AudioUploadURL,
+                Common.getSampleRecordPath(),
+                server_file_path);
+
         sayThankYou();
 
         ///TODO: should handle submit error status via onSubmitError();

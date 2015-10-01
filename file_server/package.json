@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "body-parser": "^1.14.0",
+    "connect-busboy": "0.0.2",
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "sys": "0.0.1"

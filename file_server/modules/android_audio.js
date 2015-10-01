@@ -1,5 +1,6 @@
 var fs = require('fs');
 var sys = require('sys');
+var crypto = require('crypto');
 var exec = require('child_process').exec;
 
 function saveFile(file) {
@@ -22,11 +23,23 @@ function saveFile(file) {
 }
 
 module.exports = function (req, res) {
-    var body = req.body;
-    var photoDir = __dirname + "/photos/";
-    console.log(req.body);
-    console.log(req.files);
-    return res.status(200).json({name: body.name, url: HOST + "/" + body.name});
+    var fstream;
+	req.pipe(req.busboy);
+	req.busboy.on('file', function (fieldname, file, filename) {
+		var ext = filename.substring(filename.lastIndexOf("."), filename.length);
+		if (ext === ".3gp") {
+			console.log("Uploading file ... " + filename);
+			fstream = fs.createWriteStream(__dirname + '/../uploads/' + filename);
+			file.pipe(fstream);
+			fstream.on('close', function () {
+				console.log("Done : " + filename);
+				res.json({"url": HOST + filename});
+			});
+		}
+		else {
+			res.status(500).send("invalid filetype");
+		}
+	});
 }
 
 
