@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import vietnamworks.com.pal.ActivityMain;
 import vietnamworks.com.pal.R;
-import vietnamworks.com.pal.components.RecentThreadListAdapter;
+import vietnamworks.com.pal.ui.components.RecentThreadListAdapter;
 
 /**
  * Created by duynk on 9/17/15.

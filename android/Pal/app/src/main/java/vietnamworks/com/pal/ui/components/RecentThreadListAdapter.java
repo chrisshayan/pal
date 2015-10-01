@@ -1,4 +1,4 @@
-package vietnamworks.com.pal.components;
+package vietnamworks.com.pal.ui.components;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
