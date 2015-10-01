@@ -153,6 +153,7 @@ public class FragmentSubmitTopic extends FragmentBase {
 
         sayThankYou();
 
-        ///TODO: should handle submit error status via onSubmitError();
+        //TODO: handle upload audio callback
+        //TODO: should handle submit error status via onSubmitError();
     }
 }
