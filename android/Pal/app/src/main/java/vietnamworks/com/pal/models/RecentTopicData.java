@@ -19,7 +19,7 @@ public class RecentTopicData extends AbstractContainer<RecentTopic> {
         ArrayList<RecentTopic> data = new ArrayList<>();
         for (int i = 0; i < postTitle.length; i++) {
             RecentTopic d = new RecentTopic();
-            d.mTitle = postTitle[i];
+            d.setTitle(postTitle[i]);
             d.mCreatedDate = new Date();
             d.mScore = Common.randomInt(1, 5);
             d.mStatus = Common.randomInt(1, 10) < 5 ? RecentTopic.STATUS_WAITING: RecentTopic.STATUS_COMPLETED;

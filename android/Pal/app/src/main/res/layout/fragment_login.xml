@@ -86,7 +86,7 @@
                             android:id="@+id/input_login_email"
                             android:layout_gravity="center_horizontal"
                             android:hint="@string/login_email_hint"
-                            android:text="tester@email.com"
+                            android:text="user01@email.com"
                             android:layout_margin="@dimen/base_padding" />
 
                         <EditText

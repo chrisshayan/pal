@@ -30,13 +30,13 @@ public class FirebaseService {
         if (p.length() > 0) {
             url = url + "/" + p;
         }
-        return new Firebase(p);
+        return new Firebase(url);
     }
 
     public static Firebase newRef(ArrayList<String> path) {
         StringBuilder str = new StringBuilder();
         for(int i = 0; i < path.size(); i++) {
-            str.append(path.indexOf(i));
+            str.append(path.get(i));
             if (i < path.size() - 1) {
                 str.append("/");
             }

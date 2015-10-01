@@ -28,8 +28,8 @@ angular.module('inspinia').controller('TopicsCtrl', function ($scope, firebaseHe
     $scope.onSetTopicStatus = function(id, status) {
         firebaseHelper.getFireBaseInstance(["topics", id]).update({
             status: status,
-            last_updated_date: Date.now(),
-            last_updated_by: firebaseHelper.getUID()
+            last_modified_date: Date.now(),
+            last_modified_by: firebaseHelper.getUID()
         }, function(error) {
             if (error) {
                 $rootScope.notifyError(error);

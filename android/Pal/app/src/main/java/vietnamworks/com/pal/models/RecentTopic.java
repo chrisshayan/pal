@@ -2,6 +2,8 @@ package vietnamworks.com.pal.models;
 
 import java.util.Date;
 
+import vietnamworks.com.pal.entities.Topic;
+
 /**
  * Created by duynk on 9/11/15.
  */

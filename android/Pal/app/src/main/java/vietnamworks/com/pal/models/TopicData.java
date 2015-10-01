@@ -2,13 +2,14 @@ package vietnamworks.com.pal.models;
 
 import android.content.Context;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 
-import vietnamworks.com.pal.services.AsyncCallback;
-import vietnamworks.com.pal.services.BaseService;
+import vietnamworks.com.pal.entities.Topic;
+import vietnamworks.com.pal.services.FirebaseService;
 
 
 /**
@@ -26,32 +27,24 @@ public class TopicData extends AbstractContainer<Topic> {
     public synchronized void loadAsync(final Context context, final OnLoadAsyncCallback callback) {
         if (!isLoading) {
             isLoading = true;
-            BaseService.Get(context, "tasks", new AsyncCallback() {
+
+            FirebaseService.newRef("topics").addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onSuccess(JSONObject obj) {
-                    try {
-                        JSONArray json_data = obj.getJSONArray("data");
-                        data.clear();
-                        for (int i = 0; i < json_data.length(); i++) {
-                            Topic entity = new Topic();
-                            entity.mTitle = json_data.getJSONObject(i).getString("question");
-                            data.add(entity);
-                        }
-                        AppModel.topics.setData(data);
-                        if (callback != null) {
-                            callback.onSuccess(context);
-                        }
-                        isLoading = false;
-                    } catch (Exception E) {
-                        if (callback != null) {
-                            callback.onError(context);
-                        }
-                        isLoading = false;
+                public void onDataChange(DataSnapshot snapshot) {
+                    data.clear();
+                    for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                        Topic topic = postSnapshot.getValue(Topic.class);
+                        data.add(topic);
                     }
+                    AppModel.topics.setData(data);
+                    if (callback != null) {
+                        callback.onSuccess(context);
+                    }
+                    isLoading = false;
                 }
 
                 @Override
-                public void onError(int code, String message) {
+                public void onCancelled(FirebaseError firebaseError) {
                     if (callback != null) {
                         callback.onError(context);
                     }

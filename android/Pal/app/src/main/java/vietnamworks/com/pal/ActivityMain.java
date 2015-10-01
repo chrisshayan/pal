@@ -104,7 +104,7 @@ public class ActivityMain extends ActivityBase {
 
     public void onSelectTopic(View v) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        FragmentRecorder next = FragmentRecorder.create(this, AppModel.topics.getData().get(this.mCurrentTopicIndex).mTitle);
+        FragmentRecorder next = FragmentRecorder.create(this, AppModel.topics.getData().get(this.mCurrentTopicIndex).getTitle());
         transaction.replace(R.id.main_fragment_container, next);
         //transaction.addToBackStack(null);
         transaction.commit();
@@ -115,7 +115,7 @@ public class ActivityMain extends ActivityBase {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         String title = getString(R.string.say_something);
         if (this.mCurrentTopicIndex >= 0) {
-            title = AppModel.topics.getData().get(this.mCurrentTopicIndex).mTitle;
+            title = AppModel.topics.getData().get(this.mCurrentTopicIndex).getTitle();
         }
         FragmentRecorder next = FragmentRecorder.create(this, title);
         transaction.replace(R.id.main_fragment_container, next);

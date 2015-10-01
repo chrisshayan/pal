@@ -68,7 +68,7 @@ public class RecentThreadListAdapter extends RecyclerView.Adapter<RecentThreadLi
         } else {
             RecentTopic item = (RecentTopic) AppModel.recentThreadData.getData().get(position-1);
             ViewHolder_RecentThread view = (ViewHolder_RecentThread)holder;
-            view.uiTitle.setText(item.mTitle);
+            view.uiTitle.setText(item.getTitle());
             view.mImgStatus.setImageResource((item.mStatus == RecentTopic.STATUS_WAITING)?R.drawable.ic_timer:R.drawable.ic_checkbox_marked_circle_outline);
             view.uiCreatedDate.setText(Common.getDateString(item.mCreatedDate));
             if (item.mScore < 0) {

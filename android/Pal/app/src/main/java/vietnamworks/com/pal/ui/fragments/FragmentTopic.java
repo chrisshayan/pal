@@ -28,7 +28,7 @@ public class FragmentTopic extends Fragment{
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_topic, container, false);
 
-        ((TextView) rootView.findViewById(R.id.lb_topic_title)).setText(AppModel.topics.getData().get(mDataIndex).mTitle);
+        ((TextView) rootView.findViewById(R.id.lb_topic_title)).setText(AppModel.topics.getData().get(mDataIndex).getTitle());
         return rootView;
     }
 
