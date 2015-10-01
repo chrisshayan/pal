@@ -3,6 +3,7 @@ package vietnamworks.com.pal.models;
 import java.util.ArrayList;
 import java.util.Date;
 
+import vietnamworks.com.pal.entities.RecentTopic;
 import vietnamworks.com.pal.utils.Common;
 
 /**

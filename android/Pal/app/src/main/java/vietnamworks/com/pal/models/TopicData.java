@@ -32,7 +32,7 @@ public class TopicData extends AbstractContainer<Topic> {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     data.clear();
-                    for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         Topic topic = postSnapshot.getValue(Topic.class);
                         data.add(topic);
                     }

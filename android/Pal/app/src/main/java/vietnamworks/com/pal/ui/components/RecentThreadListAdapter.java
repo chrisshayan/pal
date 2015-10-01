@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.models.AppModel;
-import vietnamworks.com.pal.models.RecentTopic;
+import vietnamworks.com.pal.entities.RecentTopic;
 import vietnamworks.com.pal.utils.Common;
 
 /**

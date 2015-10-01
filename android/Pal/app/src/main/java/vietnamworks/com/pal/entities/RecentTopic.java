@@ -1,8 +1,6 @@
-package vietnamworks.com.pal.models;
+package vietnamworks.com.pal.entities;
 
 import java.util.Date;
-
-import vietnamworks.com.pal.entities.Topic;
 
 /**
  * Created by duynk on 9/11/15.
@@ -15,6 +13,6 @@ public class RecentTopic extends Topic {
     public float mScore;
     public int mStatus;
 
-    protected RecentTopic() {}
+    public RecentTopic() {}
 
 }
