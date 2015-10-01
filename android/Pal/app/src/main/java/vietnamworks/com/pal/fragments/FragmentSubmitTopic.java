@@ -1,7 +1,6 @@
 package vietnamworks.com.pal.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +11,14 @@ import android.widget.Toast;
 
 import vietnamworks.com.pal.ActivityMain;
 import vietnamworks.com.pal.R;
-import vietnamworks.com.pal.utils.Common;
+import vietnamworks.com.pal.entities.Post;
+import vietnamworks.com.pal.models.AppModel;
+import vietnamworks.com.pal.services.FirebaseService;
 
 /**
  * Created by duynk on 9/17/15.
  */
-public class FragmentSubmitTopic extends Fragment {
-    ActivityMain mRefActivity;
+public class FragmentSubmitTopic extends FragmentBase {
     ProgressBar mProgressBar;
     ViewGroup mSubmitForm;
     ViewGroup mSubmitFormBtnOk;
@@ -31,9 +31,8 @@ public class FragmentSubmitTopic extends Fragment {
 
     private int mArticleIndex;
 
-    public static FragmentSubmitTopic create(ActivityMain act, int article_index) {
+    public static FragmentSubmitTopic create(int article_index) {
         FragmentSubmitTopic fragment = new FragmentSubmitTopic();
-        fragment.mRefActivity = act;
 
         Bundle args = new Bundle();
         args.putInt(ARG_ARTICLE_INDEX, article_index);
@@ -73,7 +72,7 @@ public class FragmentSubmitTopic extends Fragment {
             mSubmitFormBtnRetry.setVisibility(View.GONE);
         }
 
-        mRefActivity.getSupportActionBar().show();
+        this.getActivityRef(ActivityMain.class).showActionBar();
         return rootView;
     }
 
@@ -88,7 +87,7 @@ public class FragmentSubmitTopic extends Fragment {
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mRefActivity.onCancelRecorder(null);
+                getActivityRef(ActivityMain.class).onCancelRecorder(null);
             }
         }, 2000L);
     }
@@ -104,7 +103,7 @@ public class FragmentSubmitTopic extends Fragment {
     }
 
     public void onCancel() {
-        mRefActivity.onCancelRecorder(null);
+        getActivityRef(ActivityMain.class).onCancelRecorder(null);
     }
 
     public void onRetry() {
@@ -113,7 +112,7 @@ public class FragmentSubmitTopic extends Fragment {
 
     public void onSubmit() {
         if (this.mArticleIndex < 0 && mTxtUserTopic.getText().toString().trim().length() == 0) {
-            Toast.makeText(mRefActivity, getString(R.string.user_topic_validation_empty_string),
+            Toast.makeText(getActivityRef(ActivityMain.class), getString(R.string.user_topic_validation_empty_string),
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -124,16 +123,21 @@ public class FragmentSubmitTopic extends Fragment {
         mSubmitFormBtnCancel.setVisibility(View.GONE);
         mSubmitFormBtnRetry.setVisibility(View.GONE);
 
-        new android.os.Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                int n = Common.randomInt(1, 100);
-                if (n < 50) {
-                    onSubmitError();
-                } else {
-                    sayThankYou();
-                }
-            }
-        }, 3000L);
+
+        Post p = null;
+        int current_topic = ((ActivityMain)this.getActivity()).mCurrentTopicIndex;
+        if (current_topic >= 0) {
+            p = new Post(AppModel.topics.getData().get(current_topic));
+        } else {
+            p = new Post();
+            p.setTitle(mTxtUserTopic.getText().toString());
+        }
+        p.setCreated_by(FirebaseService.authData.getUid());
+        p.setCreated_date(System.currentTimeMillis());
+        p.setAnswer_audio("");
+        FirebaseService.newRef("posts").push().setValue(p);
+        sayThankYou();
+
+        ///TODO: should handle submit error status via onSubmitError();
     }
 }

@@ -17,7 +17,7 @@ import org.json.JSONObject;
 public class BaseService {
     public static final String API_URL = "http://private-c2153-palvnw.apiary-mock.com/";
 
-    public static void Get(Context context, String url, final AsyncCallback callback){
+    public static void Get(final Context context, String url, final AsyncCallback callback){
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, API_URL + url,
                 new Response.Listener<String>() {
@@ -26,9 +26,9 @@ public class BaseService {
                         if (callback!=null) {
                             try {
                                 JSONObject reader = new JSONObject(response);
-                                callback.onSuccess(reader);
+                                callback.onSuccess(context, reader);
                             } catch (Exception E) {
-                                callback.onError(0, E.toString());
+                                callback.onError(context, 0, E.toString());
                             }
                         }
                     }
@@ -36,7 +36,7 @@ public class BaseService {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (callback!=null) {
-                            callback.onError(0, "");
+                            callback.onError(context, 0, "");
                         }
                     }
                 });

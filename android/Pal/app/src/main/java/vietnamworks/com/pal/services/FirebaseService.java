@@ -6,8 +6,6 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 /**
@@ -16,9 +14,13 @@ import java.util.ArrayList;
 public class FirebaseService {
     public static final String API_URL = "https://pal-dev.firebaseio.com";
     public static AuthData authData;
+    public static Context context = null;
 
     public static void setContext(Context ctx) {
-        Firebase.setAndroidContext(ctx);
+        if (ctx != null) {
+            Firebase.setAndroidContext(ctx);
+        }
+        context = ctx;
     }
 
     public static Firebase newRef() {
@@ -50,14 +52,14 @@ public class FirebaseService {
             public void onAuthenticated(AuthData authData) {
                 FirebaseService.authData = authData;
                 if (callback != null) {
-                    callback.onSuccess(new JSONObject());
+                    callback.onSuccess(FirebaseService.context,  null);
                 }
             }
 
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
                 if (callback != null) {
-                    callback.onError(firebaseError.getCode(), firebaseError.getMessage());
+                    callback.onError(FirebaseService.context, firebaseError.getCode(), firebaseError.getMessage());
                 }
             }
         });

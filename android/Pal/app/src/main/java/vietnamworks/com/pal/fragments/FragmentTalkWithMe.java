@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import vietnamworks.com.pal.ActivityMain;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.components.CustomViewPager;
-import vietnamworks.com.pal.models.AbstractContainer;
 import vietnamworks.com.pal.models.AppModel;
+import vietnamworks.com.pal.services.AsyncCallback;
 
 /**
  * Created by duynk on 9/16/15.
@@ -45,16 +45,16 @@ public class FragmentTalkWithMe extends Fragment {
     }
 
     private void loadData() {
-        AppModel.topics.loadAsync(this.getActivity(), new AbstractContainer.OnLoadAsyncCallback() {
+        AppModel.topics.loadAsync(this.getActivity(), new AsyncCallback() {
             @Override
-            public void onSuccess(Context context) {
+            public void onSuccess(Context context, Object obj) {
                 if (FragmentTalkWithMe.isThis(context)) {
                     refreshTopics();
                 }
             }
 
             @Override
-            public void onError(Context context) {
+            public void onError(Context context, int code, String message) {
                 if (FragmentTalkWithMe.isThis(context)) {
                     if (mPagerAdapter != null) {
                         FragmentTopicLoader loader = mPagerAdapter.getTopicLoaderFragment();

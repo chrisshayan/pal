@@ -2,6 +2,7 @@ package vietnamworks.com.pal.fragments;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,8 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import vietnamworks.com.pal.ActivityAuth;
 import vietnamworks.com.pal.ActivityMain;
@@ -160,13 +159,13 @@ public class FragmentLogin extends Fragment {
 
         FirebaseService.login(email, password, new AsyncCallback() {
             @Override
-            public void onSuccess(JSONObject obj) {
+            public void onSuccess(Context ctx, Object obj) {
                 endProcessing();
                 onLoginSuccess();
             }
 
             @Override
-            public void onError(int code, String message) {
+            public void onError(Context ctx, int code, String message) {
                 endProcessing();
                 //onLoginFail(R.string.message_fail_to_connect_server);
                 onLoginFail(code, message);

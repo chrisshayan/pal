@@ -1,11 +1,11 @@
 package vietnamworks.com.pal.services;
 
-import org.json.JSONObject;
+import android.content.Context;
 
 /**
  * Created by duynk on 10/1/15.
  */
 public interface AsyncCallback {
-    void onSuccess(JSONObject obj);
-    void onError(int errorcode, String message);
+    void onSuccess(Context ctx, Object obj);
+    void onError(Context ctx, int error_code, String message);
 }

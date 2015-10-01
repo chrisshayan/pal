@@ -4,14 +4,49 @@ package vietnamworks.com.pal.entities;
  * Created by duynk on 10/1/15.
  */
 public class BaseEntity {
+    protected String id;
     protected String created_by;
     protected long created_date;
     protected String last_modified_by;
     protected long last_modified_date;
 
-    public String getCreated_by(){return this.created_by;}
-    public long getCreated_date(){return this.created_date;}
+    public String getId() {
+        return id;
+    }
 
-    public String getLast_modified_by(){return this.last_modified_by;}
-    public long getLast_modified_date(){return this.last_modified_date;}
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCreated_by() {
+        return created_by;
+    }
+
+    public void setCreated_by(String created_by) {
+        this.created_by = created_by;
+    }
+
+    public long getCreated_date() {
+        return created_date;
+    }
+
+    public void setCreated_date(long created_date) {
+        this.created_date = created_date;
+    }
+
+    public String getLast_modified_by() {
+        return last_modified_by;
+    }
+
+    public void setLast_modified_by(String last_modified_by) {
+        this.last_modified_by = last_modified_by;
+    }
+
+    public long getLast_modified_date() {
+        return last_modified_date;
+    }
+
+    public void setLast_modified_date(long last_modified_date) {
+        this.last_modified_date = last_modified_date;
+    }
 }

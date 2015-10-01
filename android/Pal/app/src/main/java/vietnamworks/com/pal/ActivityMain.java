@@ -103,24 +103,12 @@ public class ActivityMain extends ActivityBase {
     }
 
     public void onSelectTopic(View v) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        FragmentRecorder next = FragmentRecorder.create(this, AppModel.topics.getData().get(this.mCurrentTopicIndex).getTitle());
-        transaction.replace(R.id.main_fragment_container, next);
-        //transaction.addToBackStack(null);
-        transaction.commit();
+        this.openFragment(FragmentRecorder.create(this, AppModel.topics.getData().get(this.mCurrentTopicIndex).getTitle()), R.id.main_fragment_container);
     }
 
     public void onSaySomething(View v) {
         mCurrentTopicIndex = -1;
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        String title = getString(R.string.say_something);
-        if (this.mCurrentTopicIndex >= 0) {
-            title = AppModel.topics.getData().get(this.mCurrentTopicIndex).getTitle();
-        }
-        FragmentRecorder next = FragmentRecorder.create(this, title);
-        transaction.replace(R.id.main_fragment_container, next);
-        //transaction.addToBackStack(null);
-        transaction.commit();
+        this.openFragment(FragmentRecorder.create(this, getString(R.string.say_something)), R.id.main_fragment_container);
     }
 
     public void onToggleRecorder(View v) {
@@ -142,11 +130,7 @@ public class ActivityMain extends ActivityBase {
     }
 
     public void onSubmitRecord(View v) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        FragmentSubmitTopic next = FragmentSubmitTopic.create(this, mCurrentTopicIndex);
-        transaction.replace(R.id.main_fragment_container, next);
-        //transaction.addToBackStack(null);
-        transaction.commit();
+        this.openFragment(FragmentSubmitTopic.create(mCurrentTopicIndex), R.id.main_fragment_container);
     }
 
     public void onReplay(View v) {

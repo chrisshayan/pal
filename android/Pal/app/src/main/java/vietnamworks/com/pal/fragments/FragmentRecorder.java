@@ -4,7 +4,6 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +18,7 @@ import vietnamworks.com.pal.R;
 /**
  * Created by duynk on 9/16/15.
  */
-public class FragmentRecorder extends Fragment {
-    ActivityMain mRefActivity;
-
+public class FragmentRecorder extends FragmentBase {
     public final static int BTN_RECORDER_STATE__INIT = 0;
     public final static int BTN_RECORDER_STATE__RECORDING = 1;
     public final static int BTN_RECORDER_STATE__END = 2;
@@ -44,7 +41,6 @@ public class FragmentRecorder extends Fragment {
 
     public static FragmentRecorder create(ActivityMain act, String title) {
         FragmentRecorder fragment = new FragmentRecorder();
-        fragment.mRefActivity = act;
         fragment.mTitle = title;
         return fragment;
     }
@@ -61,8 +57,7 @@ public class FragmentRecorder extends Fragment {
         mBtnCancelGroup = ((ViewGroup) rootView.findViewById(R.id.ui_recorder_btn_cancel));
         mBtnPlayGroup = ((ViewGroup) rootView.findViewById(R.id.ui_recorder_btn_play));
         mBtnPlayIcon = ((ImageView) rootView.findViewById(R.id.btn_replay_icon));
-        mRefActivity.getSupportActionBar().hide();
-
+        this.getActivityRef(ActivityMain.class).hideActionBar();
 
         mButtonRecorderState = -1;
         setRecorderState(BTN_RECORDER_STATE__INIT);
@@ -140,10 +135,13 @@ public class FragmentRecorder extends Fragment {
                     mBtnCancelGroup.setVisibility(View.VISIBLE);
                     mBtnPlayGroup.setVisibility(View.VISIBLE);
 
-                    myAudioRecorder.stop();
-                    myAudioRecorder.release();
-                    myAudioRecorder = null;
-
+                    try {
+                        myAudioRecorder.stop();
+                        myAudioRecorder.release();
+                        myAudioRecorder = null;
+                    }catch (Exception E) {
+                        E.printStackTrace();
+                    }
                     break;
                 case BTN_RECORDER_STATE__RECORDING:
                     stopPlayer();

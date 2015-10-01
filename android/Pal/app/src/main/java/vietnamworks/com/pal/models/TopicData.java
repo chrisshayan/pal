@@ -9,6 +9,7 @@ import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 
 import vietnamworks.com.pal.entities.Topic;
+import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.FirebaseService;
 
 
@@ -24,7 +25,7 @@ public class TopicData extends AbstractContainer<Topic> {
     }
 
     @Override
-    public synchronized void loadAsync(final Context context, final OnLoadAsyncCallback callback) {
+    public synchronized void loadAsync(final Context context, final AsyncCallback callback) {
         if (!isLoading) {
             isLoading = true;
 
@@ -38,7 +39,7 @@ public class TopicData extends AbstractContainer<Topic> {
                     }
                     AppModel.topics.setData(data);
                     if (callback != null) {
-                        callback.onSuccess(context);
+                        callback.onSuccess(context, null);
                     }
                     isLoading = false;
                 }
@@ -46,14 +47,14 @@ public class TopicData extends AbstractContainer<Topic> {
                 @Override
                 public void onCancelled(FirebaseError firebaseError) {
                     if (callback != null) {
-                        callback.onError(context);
+                        callback.onError(context, 0, "");
                     }
                     isLoading = false;
                 }
             });
         } else {
             if (callback != null) {
-                callback.onError(context);
+                callback.onError(context, 0, "");
             }
         }
     }

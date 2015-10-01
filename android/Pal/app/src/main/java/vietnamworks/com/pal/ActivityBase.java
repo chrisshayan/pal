@@ -3,6 +3,7 @@ package vietnamworks.com.pal;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import vietnamworks.com.pal.services.FirebaseService;
@@ -23,6 +24,7 @@ public class ActivityBase extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ActivityBase.sInstance = null;
+        FirebaseService.setContext(null);
     }
 
     public void openFragment(android.support.v4.app.Fragment f, int holder_id, boolean addToBackStack) {
@@ -41,6 +43,20 @@ public class ActivityBase extends AppCompatActivity {
 
     public void openFragment(android.support.v4.app.Fragment f, int holder_id) {
         openFragment(f, holder_id, false);
+    }
+
+    public void showActionBar() {
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.show();
+        }
+    }
+
+    public void hideActionBar() {
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.hide();
+        }
     }
 
     public static ActivityBase sInstance;
