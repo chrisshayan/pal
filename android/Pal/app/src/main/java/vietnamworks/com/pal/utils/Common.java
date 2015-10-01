@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+import vietnamworks.com.pal.ActivityBase;
+
 /**
  * Created by duynk on 9/11/15.
  */
@@ -46,5 +48,22 @@ public class Common {
     public static int randomInt(int min, int max) {
         Random r = new Random();
         return r.nextInt(max - min + 1) + min;
+    }
+
+    public static String getHomeDir() {
+        return ActivityBase.applicationDataPath;
+    }
+
+    public static String currentSampleRecordSeed = System.currentTimeMillis() + "";
+    public static void newSampleRecord() {
+        currentSampleRecordSeed = System.currentTimeMillis() + "";
+    }
+
+    public static String getSampleRecordPath() {
+        return getHomeDir() + "/" + currentSampleRecordSeed + "_" + Config.SampleRecorderFilename;
+    }
+
+    public static String getAudioFilePath(String user_id, String post_id) {
+        return getHomeDir() + "/user_" + user_id + "_" + post_id + "_" + System.currentTimeMillis();
     }
 }

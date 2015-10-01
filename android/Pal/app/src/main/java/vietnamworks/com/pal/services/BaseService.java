@@ -2,14 +2,6 @@ package vietnamworks.com.pal.services;
 
 import android.content.Context;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONObject;
 
 /**
  * Created by duynk on 9/16/15.
@@ -17,6 +9,7 @@ import org.json.JSONObject;
 public class BaseService {
     public static final String API_URL = "http://private-c2153-palvnw.apiary-mock.com/";
 
+    /*
     public static void Get(final Context context, String url, final AsyncCallback callback){
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, API_URL + url,
@@ -41,5 +34,10 @@ public class BaseService {
                     }
                 });
         queue.add(stringRequest);
+    }
+    */
+
+    public static void PostFile(final Context context, String filepath) {
+        //new HttpUpload(context, "http://172.18.2.150:4040/post_audio_android", filepath).execute();
     }
 }

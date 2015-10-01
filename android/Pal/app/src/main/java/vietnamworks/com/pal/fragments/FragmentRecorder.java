@@ -3,7 +3,6 @@ package vietnamworks.com.pal.fragments;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import java.io.IOException;
 
 import vietnamworks.com.pal.ActivityMain;
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.utils.Common;
 
 /**
  * Created by duynk on 9/16/15.
@@ -26,7 +26,6 @@ public class FragmentRecorder extends FragmentBase {
 
     private MediaRecorder myAudioRecorder;
     private MediaPlayer   mPlayer = null;
-    private String outputFile = null;
 
     public String mTitle;
     private TextView mLbMessage;
@@ -36,7 +35,6 @@ public class FragmentRecorder extends FragmentBase {
     ImageView mBtnPlayIcon;
 
     public FragmentRecorder() {
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";;
     }
 
     public static FragmentRecorder create(ActivityMain act, String title) {
@@ -94,7 +92,7 @@ public class FragmentRecorder extends FragmentBase {
                 }
             });
             try {
-                mPlayer.setDataSource(outputFile);
+                mPlayer.setDataSource(Common.getSampleRecordPath());
                 mPlayer.prepare();
                 mPlayer.start();
                 mBtnPlayIcon.setImageResource(R.drawable.ic_stop);
@@ -150,11 +148,12 @@ public class FragmentRecorder extends FragmentBase {
                     mBtnCancelGroup.setVisibility(View.INVISIBLE);
                     mBtnPlayGroup.setVisibility(View.INVISIBLE);
 
+                    Common.newSampleRecord();
                     myAudioRecorder=new MediaRecorder();
                     myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                     myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
                     myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-                    myAudioRecorder.setOutputFile(outputFile);
+                    myAudioRecorder.setOutputFile(Common.getSampleRecordPath());
                     try {
                         myAudioRecorder.prepare();
                     } catch (IOException e) {

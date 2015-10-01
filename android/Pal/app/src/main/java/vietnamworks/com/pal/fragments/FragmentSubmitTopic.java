@@ -9,11 +9,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+
 import vietnamworks.com.pal.ActivityMain;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.models.AppModel;
+import vietnamworks.com.pal.services.BaseService;
 import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.utils.Common;
 
 /**
  * Created by duynk on 9/17/15.
@@ -123,6 +127,7 @@ public class FragmentSubmitTopic extends FragmentBase {
         mSubmitFormBtnCancel.setVisibility(View.GONE);
         mSubmitFormBtnRetry.setVisibility(View.GONE);
 
+        BaseService.PostFile(this.getActivityRef(ActivityMain.class), Common.getSampleRecordPath());
 
         Post p = null;
         int current_topic = ((ActivityMain)this.getActivity()).mCurrentTopicIndex;
@@ -135,7 +140,10 @@ public class FragmentSubmitTopic extends FragmentBase {
         p.setCreated_by(FirebaseService.authData.getUid());
         p.setCreated_date(System.currentTimeMillis());
         p.setAnswer_audio("");
-        FirebaseService.newRef("posts").push().setValue(p);
+        p.setStatus(0);
+
+        Firebase newPostRef = FirebaseService.newRef("posts").push();
+        newPostRef.setValue(p);
         sayThankYou();
 
         ///TODO: should handle submit error status via onSubmitError();

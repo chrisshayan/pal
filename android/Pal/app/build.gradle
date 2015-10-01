@@ -32,5 +32,5 @@ dependencies {
     compile 'com.android.support:palette-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
     compile 'com.mcxiaoke.volley:library:1.0.19'
-    compile 'com.firebase:firebase-client-android:2.4.0+'
+    compile 'com.firebase:firebase-client-android:2.4.0'
 }
