@@ -35,6 +35,11 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         templateUrl: "app/advisors/advisors.html",
         data: { pageTitle: 'Advisors view' }
     })
+    .state('index.topics', {
+        url: "/topics",
+        templateUrl: "app/topics/topics.html",
+        data: { pageTitle: 'Topics view' }
+    })
     .state('index.create_post', {
         url: "/create_post",
         templateUrl: "app/create_post/create_post.html",
