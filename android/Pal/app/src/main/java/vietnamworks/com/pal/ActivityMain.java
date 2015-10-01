@@ -3,18 +3,21 @@ package vietnamworks.com.pal;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import vietnamworks.com.pal.models.AppModel;
+import vietnamworks.com.pal.ui.fragments.FragmentRecentTopic;
+import vietnamworks.com.pal.ui.fragments.FragmentRecorder;
+import vietnamworks.com.pal.ui.fragments.FragmentSubmitTopic;
+import vietnamworks.com.pal.ui.fragments.FragmentTalkWithMe;
 
 /**
  * Created by duynk on 9/15/15.
  */
-public class MainActivity extends AppCompatActivity {
+public class ActivityMain extends ActivityBase {
     private Menu menu;
     public int mCurrentTopicIndex;
 
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState != null) {
                 return;
             }
-            TalkWithMeFragment fragment = TalkWithMeFragment.create();
+            FragmentTalkWithMe fragment = FragmentTalkWithMe.create();
             fragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.main_fragment_container, fragment).commit();
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (id == R.id.action_show_recent_list) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            RecentTopicFragment next = new RecentTopicFragment();
+            FragmentRecentTopic next = new FragmentRecentTopic();
             transaction.replace(R.id.main_fragment_container, next);
             transaction.addToBackStack(null);
             transaction.commit();
@@ -95,13 +98,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onRetryToLoadTopic(View v) {
-        TalkWithMeFragment fragment = (TalkWithMeFragment) getActiveFragment();
+        FragmentTalkWithMe fragment = (FragmentTalkWithMe) getActiveFragment();
         fragment.refreshTopics();
     }
 
     public void onSelectTopic(View v) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        RecorderFragment next = RecorderFragment.create(this, AppModel.topics.getData().get(this.mCurrentTopicIndex).mTitle);
+        FragmentRecorder next = FragmentRecorder.create(this, AppModel.topics.getData().get(this.mCurrentTopicIndex).mTitle);
         transaction.replace(R.id.main_fragment_container, next);
         //transaction.addToBackStack(null);
         transaction.commit();
@@ -114,25 +117,25 @@ public class MainActivity extends AppCompatActivity {
         if (this.mCurrentTopicIndex >= 0) {
             title = AppModel.topics.getData().get(this.mCurrentTopicIndex).mTitle;
         }
-        RecorderFragment next = RecorderFragment.create(this, title);
+        FragmentRecorder next = FragmentRecorder.create(this, title);
         transaction.replace(R.id.main_fragment_container, next);
         //transaction.addToBackStack(null);
         transaction.commit();
     }
 
     public void onToggleRecorder(View v) {
-        RecorderFragment f = (RecorderFragment)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        FragmentRecorder f = (FragmentRecorder)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
         f.onToggleRecorder();
     }
 
     public void onCancelRecorder(View v) {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
-        if (f instanceof RecorderFragment) {
-            ( (RecorderFragment)f).stopPlayer();
+        if (f instanceof FragmentRecorder) {
+            ( (FragmentRecorder)f).stopPlayer();
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        TalkWithMeFragment next = TalkWithMeFragment.create();
+        FragmentTalkWithMe next = FragmentTalkWithMe.create();
         transaction.replace(R.id.main_fragment_container, next);
         //transaction.addToBackStack(null);
         transaction.commit();
@@ -140,29 +143,29 @@ public class MainActivity extends AppCompatActivity {
 
     public void onSubmitRecord(View v) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SubmitTopicFragment next = SubmitTopicFragment.create(this, mCurrentTopicIndex);
+        FragmentSubmitTopic next = FragmentSubmitTopic.create(this, mCurrentTopicIndex);
         transaction.replace(R.id.main_fragment_container, next);
         //transaction.addToBackStack(null);
         transaction.commit();
     }
 
     public void onReplay(View v) {
-        RecorderFragment f = (RecorderFragment)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        FragmentRecorder f = (FragmentRecorder)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
         f.onReplay();
     }
 
     public void onConfirmTopicAndSubmitData(View v) {
-        SubmitTopicFragment f = (SubmitTopicFragment)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        FragmentSubmitTopic f = (FragmentSubmitTopic)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
         f.onSubmit();
     }
 
     public void onRetrySubmitData(View v) {
-        SubmitTopicFragment f = (SubmitTopicFragment)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        FragmentSubmitTopic f = (FragmentSubmitTopic)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
         f.onRetry();
     }
 
     public void onCancelSubmitData(View v) {
-        SubmitTopicFragment f = (SubmitTopicFragment)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+        FragmentSubmitTopic f = (FragmentSubmitTopic)getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
         f.onCancel();
     }
 }

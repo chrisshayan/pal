@@ -1,4 +1,4 @@
-package vietnamworks.com.pal;
+package vietnamworks.com.pal.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,13 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TopicLoaderFragment extends Fragment {
+import vietnamworks.com.pal.R;
+
+public class FragmentTopicLoader extends Fragment {
 
     ViewGroup mProcessingGroup;
     ViewGroup mFailGroup;
     private boolean isLoadingFail = false;
 
-    public TopicLoaderFragment() {}
+    public FragmentTopicLoader() {}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

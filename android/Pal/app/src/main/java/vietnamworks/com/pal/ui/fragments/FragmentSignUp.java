@@ -1,4 +1,4 @@
-package vietnamworks.com.pal;
+package vietnamworks.com.pal.ui.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,18 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import vietnamworks.com.pal.R;
+
 /**
  * A placeholder fragment containing a simple view.
  */
-public class SignUpFragment extends Fragment {
+public class FragmentSignUp extends Fragment {
     Activity mRefActivity;
     EditText mTxtEmail;
 
-    public SignUpFragment() {
+    public FragmentSignUp() {
     }
 
-    public static SignUpFragment create(Activity act) {
-        SignUpFragment fragment = new SignUpFragment();
+    public static FragmentSignUp create(Activity act) {
+        FragmentSignUp fragment = new FragmentSignUp();
         fragment.mRefActivity = act;
         return fragment;
     }

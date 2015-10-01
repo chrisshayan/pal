@@ -8,17 +8,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.ui.fragments.FragmentLogin;
+import vietnamworks.com.pal.ui.fragments.FragmentTutorial;
 
-public class TutorialActivity extends AppCompatActivity {
+public class ActivityTutorial extends ActivityBase {
 
-    private static TutorialActivity sInstance;
+    private static ActivityTutorial sInstance;
     private static int sNumPages;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -88,9 +89,9 @@ public class TutorialActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position < sNumPages - 1) {
-                return TutorialFragment.create(position, sNumPages);
+                return FragmentTutorial.create(position, sNumPages);
             } else {
-                return LoginFragment.create(sInstance);
+                return FragmentLogin.create(sInstance);
             }
         }
 
@@ -115,10 +116,10 @@ public class TutorialActivity extends AppCompatActivity {
     }
 
     public void onLogin(View v) {
-        ((LoginFragment)mCurrentFragment).onLogin();
+        ((FragmentLogin)mCurrentFragment).onLogin();
     }
 
     public void onSignUp(View v) {
-        ((LoginFragment)mCurrentFragment).onSignUp();
+        ((FragmentLogin)mCurrentFragment).onSignUp();
     }
 }

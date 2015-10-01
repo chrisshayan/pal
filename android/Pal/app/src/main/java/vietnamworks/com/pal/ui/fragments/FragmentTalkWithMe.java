@@ -1,4 +1,4 @@
-package vietnamworks.com.pal;
+package vietnamworks.com.pal.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,29 +10,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import vietnamworks.com.pal.ActivityMain;
+import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.components.CustomViewPager;
 import vietnamworks.com.pal.models.AbstractContainer;
 import vietnamworks.com.pal.models.AppModel;
 
 /**
  * Created by duynk on 9/16/15.
  */
-public class TalkWithMeFragment extends Fragment {
+public class FragmentTalkWithMe extends Fragment {
     private CustomViewPager mPager;
     private ScreenSlidePagerAdapter mPagerAdapter;
 
-    public TalkWithMeFragment() {
+    public FragmentTalkWithMe() {
     }
 
-    public static TalkWithMeFragment create() {
-        TalkWithMeFragment fragment = new TalkWithMeFragment();
+    public static FragmentTalkWithMe create() {
+        FragmentTalkWithMe fragment = new FragmentTalkWithMe();
         return fragment;
     }
 
     public static boolean isThis(Context context) {
-        if (context instanceof MainActivity && !((MainActivity) context).isFinishing()) {
-            Fragment fragment = ((MainActivity) context).getActiveFragment();
-            if (fragment instanceof TalkWithMeFragment) {
-                TalkWithMeFragment f = (TalkWithMeFragment) fragment;
+        if (context instanceof ActivityMain && !((ActivityMain) context).isFinishing()) {
+            Fragment fragment = ((ActivityMain) context).getActiveFragment();
+            if (fragment instanceof FragmentTalkWithMe) {
+                FragmentTalkWithMe f = (FragmentTalkWithMe) fragment;
                 if (f.isVisible()) {
                     return true;
                 }
@@ -45,16 +48,16 @@ public class TalkWithMeFragment extends Fragment {
         AppModel.topics.loadAsync(this.getActivity(), new AbstractContainer.OnLoadAsyncCallback() {
             @Override
             public void onSuccess(Context context) {
-                if (TalkWithMeFragment.isThis(context)) {
+                if (FragmentTalkWithMe.isThis(context)) {
                     refreshTopics();
                 }
             }
 
             @Override
             public void onError(Context context) {
-                if (TalkWithMeFragment.isThis(context)) {
+                if (FragmentTalkWithMe.isThis(context)) {
                     if (mPagerAdapter != null) {
-                        TopicLoaderFragment loader = mPagerAdapter.getTopicLoaderFragment();
+                        FragmentTopicLoader loader = mPagerAdapter.getTopicLoaderFragment();
                         if (loader != null) {
                             loader.onLoadingFail();
                         }
@@ -73,8 +76,8 @@ public class TalkWithMeFragment extends Fragment {
 
         mPager = (CustomViewPager) rootView.findViewById(R.id.pager);
 
-        ((MainActivity) this.getActivity()).getSupportActionBar().show();
-        ((MainActivity) this.getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((ActivityMain) this.getActivity()).getSupportActionBar().show();
+        ((ActivityMain) this.getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         mPager.clearOnPageChangeListeners();
         mPager.addOnPageChangeListener(new CustomViewPager.OnPageChangeListener() {
@@ -89,7 +92,7 @@ public class TalkWithMeFragment extends Fragment {
                 if (adapter != null && position == adapter.getCount() - 1) {
                     loadData();
                 } else {
-                    ((MainActivity) getActivity()).mCurrentTopicIndex = position;
+                    ((ActivityMain) getActivity()).mCurrentTopicIndex = position;
                 }
             }
 
@@ -99,7 +102,7 @@ public class TalkWithMeFragment extends Fragment {
         });
 
 
-        ((MainActivity) this.getActivity()).resetMenuItem();
+        ((ActivityMain) this.getActivity()).resetMenuItem();
         this.refreshTopics();
 
         return rootView;
@@ -111,12 +114,12 @@ public class TalkWithMeFragment extends Fragment {
             super(fm);
         }
         private int mCurrentPosition;
-        TopicLoaderFragment loader =  new TopicLoaderFragment();
+        FragmentTopicLoader loader =  new FragmentTopicLoader();
         @Override
         public Fragment getItem(int position) {
             int count = this.getCount();
             if (position < count - 1) {
-                return TopicFragment.create(position);
+                return FragmentTopic.create(position);
             } else {
                 return loader;
             }
@@ -138,14 +141,7 @@ public class TalkWithMeFragment extends Fragment {
             this.notifyDataSetChanged();
         }
 
-        public TopicLoaderFragment getTopicLoaderFragment() {
-            /*
-            Fragment f = this.getItem(mCurrentPosition);
-            if (f instanceof  TopicLoaderFragment) {
-                return (TopicLoaderFragment)f;
-            }
-            return null;
-            */
+        public FragmentTopicLoader getTopicLoaderFragment() {
             return loader;
         }
     }
@@ -158,7 +154,7 @@ public class TalkWithMeFragment extends Fragment {
         }
 
         if (delay) {
-            final TopicLoaderFragment loader = mPagerAdapter.getTopicLoaderFragment();
+            final FragmentTopicLoader loader = mPagerAdapter.getTopicLoaderFragment();
             if (loader != null) {
                 loader.onStartLoading();
             }
@@ -167,7 +163,7 @@ public class TalkWithMeFragment extends Fragment {
                 @Override
                 public void run() {
                     Context context = getActivity();
-                    if (TalkWithMeFragment.isThis(context)) {
+                    if (FragmentTalkWithMe.isThis(context)) {
                         mPager.setAdapter(null);
                         mPagerAdapter.setCount(AppModel.topics.getData().size());
                         mPager.setAdapter(mPagerAdapter);

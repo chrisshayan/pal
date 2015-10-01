@@ -1,4 +1,4 @@
-package vietnamworks.com.pal;
+package vietnamworks.com.pal.ui.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,22 +10,23 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.utils.Common;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class SignUpProcessingFragment extends Fragment {
+public class FragmentSignUpProcessing extends Fragment {
     Activity mRefActivity;
     TextView mLabelMessage;
     ProgressBar mProcessingBar;
     Button mTryAgain;
 
-    public SignUpProcessingFragment() {
+    public FragmentSignUpProcessing() {
     }
 
-    public static SignUpProcessingFragment create(Activity act) {
-        SignUpProcessingFragment fragment = new SignUpProcessingFragment();
+    public static FragmentSignUpProcessing create(Activity act) {
+        FragmentSignUpProcessing fragment = new FragmentSignUpProcessing();
         fragment.mRefActivity = act;
         return fragment;
     }

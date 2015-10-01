@@ -1,4 +1,4 @@
-package vietnamworks.com.pal;
+package vietnamworks.com.pal.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,13 +10,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import vietnamworks.com.pal.ActivityMain;
+import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.utils.Common;
 
 /**
  * Created by duynk on 9/17/15.
  */
-public class SubmitTopicFragment extends Fragment {
-    MainActivity mRefActivity;
+public class FragmentSubmitTopic extends Fragment {
+    ActivityMain mRefActivity;
     ProgressBar mProgressBar;
     ViewGroup mSubmitForm;
     ViewGroup mSubmitFormBtnOk;
@@ -29,8 +31,8 @@ public class SubmitTopicFragment extends Fragment {
 
     private int mArticleIndex;
 
-    public static SubmitTopicFragment create(MainActivity act, int article_index) {
-        SubmitTopicFragment fragment = new SubmitTopicFragment();
+    public static FragmentSubmitTopic create(ActivityMain act, int article_index) {
+        FragmentSubmitTopic fragment = new FragmentSubmitTopic();
         fragment.mRefActivity = act;
 
         Bundle args = new Bundle();

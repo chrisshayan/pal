@@ -1,4 +1,4 @@
-package vietnamworks.com.pal;
+package vietnamworks.com.pal.ui.fragments;
 
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -13,11 +13,14 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
+import vietnamworks.com.pal.ActivityMain;
+import vietnamworks.com.pal.R;
+
 /**
  * Created by duynk on 9/16/15.
  */
-public class RecorderFragment extends Fragment {
-    MainActivity mRefActivity;
+public class FragmentRecorder extends Fragment {
+    ActivityMain mRefActivity;
 
     public final static int BTN_RECORDER_STATE__INIT = 0;
     public final static int BTN_RECORDER_STATE__RECORDING = 1;
@@ -35,12 +38,12 @@ public class RecorderFragment extends Fragment {
     ViewGroup mBtnPlayGroup;
     ImageView mBtnPlayIcon;
 
-    public RecorderFragment() {
+    public FragmentRecorder() {
         outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";;
     }
 
-    public static RecorderFragment create(MainActivity act, String title) {
-        RecorderFragment fragment = new RecorderFragment();
+    public static FragmentRecorder create(ActivityMain act, String title) {
+        FragmentRecorder fragment = new FragmentRecorder();
         fragment.mRefActivity = act;
         fragment.mTitle = title;
         return fragment;

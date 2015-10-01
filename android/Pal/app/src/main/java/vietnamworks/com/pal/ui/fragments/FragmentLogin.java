@@ -1,4 +1,4 @@
-package vietnamworks.com.pal;
+package vietnamworks.com.pal.ui.fragments;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import vietnamworks.com.pal.ActivityAuth;
+import vietnamworks.com.pal.ActivityMain;
+import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.utils.Common;
@@ -23,7 +26,7 @@ import vietnamworks.com.pal.utils.Common;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class LoginFragment extends Fragment {
+public class FragmentLogin extends Fragment {
 
     EditText mTxtEmail;
     EditText mTxtPassword;
@@ -35,7 +38,7 @@ public class LoginFragment extends Fragment {
 
     ObjectAnimator loginButtonObjectAnimator;
 
-    public LoginFragment() {
+    public FragmentLogin() {
     }
 
     @Override
@@ -64,8 +67,8 @@ public class LoginFragment extends Fragment {
     }
 
 
-    public static LoginFragment create(Activity act) {
-        LoginFragment fragment = new LoginFragment();
+    public static FragmentLogin create(Activity act) {
+        FragmentLogin fragment = new FragmentLogin();
         fragment.mRefActivity = act;
         fragment.mToast = Toast.makeText(act, "", Toast.LENGTH_SHORT);
         return fragment;
@@ -176,12 +179,12 @@ public class LoginFragment extends Fragment {
     }
 
     public void onLoginSuccess() {
-        Intent intent = new Intent(mRefActivity, MainActivity.class);
+        Intent intent = new Intent(mRefActivity, ActivityMain.class);
         startActivity(intent);
     }
 
     public void onSignUp() {
-        Intent intent = new Intent(mRefActivity, AuthActivity.class);
+        Intent intent = new Intent(mRefActivity, ActivityAuth.class);
         startActivity(intent);
     }
 

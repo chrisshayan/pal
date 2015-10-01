@@ -1,4 +1,4 @@
-package vietnamworks.com.pal;
+package vietnamworks.com.pal.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import vietnamworks.com.pal.R;
+
 /**
  * A placeholder fragment containing a simple view.
  */
-public class TutorialFragment extends Fragment {
+public class FragmentTutorial extends Fragment {
 
-    public TutorialFragment() {
+    public FragmentTutorial() {
     }
 
     public static final String ARG_PAGE = "page";
@@ -21,8 +23,8 @@ public class TutorialFragment extends Fragment {
     private int mPageNumber;
     private int mTotalPage;
 
-    public static TutorialFragment create(int pageNumber, int totalPage) {
-        TutorialFragment fragment = new TutorialFragment();
+    public static FragmentTutorial create(int pageNumber, int totalPage) {
+        FragmentTutorial fragment = new FragmentTutorial();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNumber);
         args.putInt(ARG_TOTAL_PAGE, totalPage);

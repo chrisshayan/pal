@@ -1,4 +1,4 @@
-package vietnamworks.com.pal;
+package vietnamworks.com.pal.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import vietnamworks.com.pal.ActivityMain;
+import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.components.RecentThreadListAdapter;
 
 /**
  * Created by duynk on 9/17/15.
  */
-public class RecentTopicFragment extends Fragment {
+public class FragmentRecentTopic extends Fragment {
 
     private RecyclerView mRecyclerView;
     private StaggeredGridLayoutManager mStaggeredLayoutManager;
@@ -39,8 +41,8 @@ public class RecentTopicFragment extends Fragment {
         };
         mAdapter.setOnItemClickListener(onItemClickListener);
 
-        ((MainActivity) this.getActivity()).hideListMenuItem();
-        ((MainActivity) this.getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((ActivityMain) this.getActivity()).hideListMenuItem();
+        ((ActivityMain) this.getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return rootView;
     }
 
