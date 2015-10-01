@@ -18,8 +18,6 @@ import vietnamworks.com.pal.ui.fragments.FragmentLogin;
 import vietnamworks.com.pal.ui.fragments.FragmentTutorial;
 
 public class ActivityTutorial extends ActivityBase {
-
-    private static ActivityTutorial sInstance;
     private static int sNumPages;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -34,12 +32,10 @@ public class ActivityTutorial extends ActivityBase {
         sNumPages = getResources().getStringArray(R.array.tutor).length;
 
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPagerAdapter = new TutorScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
-        sInstance = this;
-
-        sInstance.SetPageIndex(0);
+        ((ActivityTutorial)sInstance).SetPageIndex(0);
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -47,7 +43,7 @@ public class ActivityTutorial extends ActivityBase {
 
             @Override
             public void onPageSelected(int position) {
-                sInstance.SetPageIndex(position);
+                ((ActivityTutorial)sInstance).SetPageIndex(position);
             }
 
             @Override
@@ -81,8 +77,8 @@ public class ActivityTutorial extends ActivityBase {
         }
     }
 
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter( FragmentManager fm) {
+    private class TutorScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public TutorScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -112,7 +108,6 @@ public class ActivityTutorial extends ActivityBase {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sInstance = null;
     }
 
     public void onLogin(View v) {
