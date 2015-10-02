@@ -3,10 +3,10 @@ var sys = require('sys');
 var crypto = require('crypto');
 var exec = require('child_process').exec;
 
-var ffmpeg;
-if (/^linux/.test(process.platform)) {
-    ffmpeg = require('fluent-ffmpeg');
-}
+// var ffmpeg;
+// if (/^linux/.test(process.platform)) {
+//     ffmpeg = require('fluent-ffmpeg');
+// }
 
 function saveFile(file) {
     var fileRootName = file.name.split('.').shift(),
@@ -40,13 +40,13 @@ module.exports = function (req, res) {
 			fstream.on('close', function () {
 				console.log("Done : " + filename);
 
-                if (/^linux/.test(process.platform)) {
-                    //convert .3gp to mp3
-                    var FfmpegCommand = require('fluent-ffmpeg');
-                    var command = new FfmpegCommand();
-                }
-                var command  = ffmpeg(des_path).format('mp3');
-                command.save(des_path.replace(".3gp", ".mp3"));
+                // if (/^linux/.test(process.platform)) {
+                //     //convert .3gp to mp3
+                //     var FfmpegCommand = require('fluent-ffmpeg');
+                //     var command = new FfmpegCommand();
+                // }
+                // var command  = ffmpeg(des_path).format('mp3');
+                // command.save(des_path.replace(".3gp", ".mp3"));
 				res.json({"url": HOST + filename});
 			});
 		}
