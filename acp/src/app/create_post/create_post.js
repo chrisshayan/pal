@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('inspinia').controller('CreateTopicCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval) {
+angular.module('inspinia').controller('CreatePostCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval) {
     $scope.addTopicTitle = "";
     $scope.addTopicAudioURL = "";
     $scope.onPost = function() {
