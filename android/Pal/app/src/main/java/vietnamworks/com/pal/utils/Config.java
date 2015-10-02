@@ -8,6 +8,6 @@ public interface Config {
     public final static String SampleRecorderFilename = "recording" + RecorderFileExt;
 
     //public final static String AudioServerBaseURL = "http://172.18.2.150:4040";
-    public final static String AudioServerBaseURL = "http://iamprogrammer.work:4040";
+    public final static String AudioServerBaseURL = "https://iamprogrammer.work:4040";
     public final static String AudioUploadURL = AudioServerBaseURL + "/post_audio_android";
 }
