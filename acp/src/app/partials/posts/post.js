@@ -31,8 +31,8 @@ angular.module('inspinia')
             $scope.playPause = function(){
                 if (!$scope.audio) {
                     $scope.audio = new Audio();
-                    $scope.audio.src = $scope.data.audio.replace(".3gp", ".mp3");
-                    console.log($scope.data.audio);
+                    $scope.audio.src = "https://api.cloudconvert.com/convert?apikey=3suj4KZn3UoTKbksedeKLiDLIBQ9JBl0CBzVQ6FV_IKknHzkcHTEUT_DP6O2DopvIWSM4-nL1w0xIZCd1INaJQ&input=download&download=inline&inputformat=3gp&outputformat=mp3&file=" + $scope.data.audio;
+                    console.log($scope.audio.src);
 
                     $scope.audio.addEventListener('timeupdate', function(event){
                     });
