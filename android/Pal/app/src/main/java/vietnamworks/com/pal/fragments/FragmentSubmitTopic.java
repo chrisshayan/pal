@@ -18,7 +18,7 @@ import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.services.BaseService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.utils.Common;
-import vietnamworks.com.pal.utils.Config;
+import vietnamworks.com.pal.Config;
 
 /**
  * Created by duynk on 9/17/15.

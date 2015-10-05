@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Random;
 
 import vietnamworks.com.pal.ActivityBase;
+import vietnamworks.com.pal.Config;
 
 /**
  * Created by duynk on 9/11/15.

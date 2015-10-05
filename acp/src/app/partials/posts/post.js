@@ -7,7 +7,7 @@ angular.module('inspinia')
             ref: '=',
             group: '@'
         },
-        controller: function($scope, firebaseHelper, $sce, $rootScope, cs, $http) {
+        controller: function($scope, firebaseHelper, $sce, $rootScope, cs, $http, parseHelper) {
             $scope.formatTime = cs.formatTime;
             $scope.formatDate = cs.formatDate;
             $scope.formatDateTime = cs.formatDateTime;
@@ -139,6 +139,7 @@ angular.module('inspinia')
                                 } else {
                                     firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID(), $scope.ref.$id]).set(snapshot.val().status);
                                     $rootScope.notifySuccess("You have solved a task");
+                                    parseHelper.push($scope.data.created_by, "You've got new feedback from advisor");
                                 }
                                 $scope.isSubmitting = false;
                                 $scope.$apply();

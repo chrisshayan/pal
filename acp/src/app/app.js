@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'ui.bootstrap', 'firebase', 'firebaseHelper', 'cgNotify', 'cs'])
+angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'ui.bootstrap', 'firebase', 'firebaseHelper', 'cgNotify', 'cs', 'parseHelper'])
 
-.config(function ($stateProvider, $urlRouterProvider, firebaseHelperConfigProvider) {
+.config(function ($stateProvider, $urlRouterProvider, firebaseHelperConfigProvider, parseHelperConfigProvider) {
     firebaseHelperConfigProvider.setURL("https://pal-dev.firebaseio.com");
+    parseHelperConfigProvider.init("WRcgKehX6zd2idIpSUj6GGmwtcMipq7Y0tXzwJ2s", "1ORxyTaVj2qzjtFuJS7dMuIgRDnbhhOSo9FIDxV6");
+
     $stateProvider
 
     .state('login', {

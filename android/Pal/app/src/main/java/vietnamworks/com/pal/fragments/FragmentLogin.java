@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.parse.ParseInstallation;
+
 import vietnamworks.com.pal.ActivityAuth;
 import vietnamworks.com.pal.ActivityMain;
 import vietnamworks.com.pal.R;
@@ -161,6 +163,9 @@ public class FragmentLogin extends Fragment {
             @Override
             public void onSuccess(Context ctx, Object obj) {
                 endProcessing();
+                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                installation.put("user_id", FirebaseService.authData.getUid());
+                installation.saveInBackground();
                 onLoginSuccess();
             }
 
