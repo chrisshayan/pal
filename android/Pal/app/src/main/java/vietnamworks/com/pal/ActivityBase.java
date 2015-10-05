@@ -32,7 +32,7 @@ public class ActivityBase extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityBase.sInstance = null;
+        //ActivityBase.sInstance = null;
         FirebaseService.setContext(null);
     }
 
