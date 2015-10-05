@@ -14,11 +14,16 @@ import vietnamworks.com.pal.services.FirebaseService;
 
 public class ActivityBase extends AppCompatActivity {
     public static String applicationDataPath = "";
+
+    public ActivityBase() {
+        super();
+        ActivityBase.sInstance = this;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseService.setContext(this);
-        ActivityBase.sInstance = this;
         if (applicationDataPath.length() == 0) {
             applicationDataPath = this.getApplicationInfo().dataDir;
         }
