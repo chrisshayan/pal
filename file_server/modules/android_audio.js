@@ -23,6 +23,7 @@ function saveFile(file) {
 }
 
 module.exports = function (req, res) {
+    console.log("Receive upload request");
     var fstream;
 	req.pipe(req.busboy);
 	req.busboy.on('file', function (fieldname, file, filename) {
