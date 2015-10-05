@@ -35,4 +35,9 @@ angular.module('cs', []).service('cs', function () {
         if (sec < 10) {sec = "0" + sec};
         return hour + ":" + minute + ":" + sec;
     };
+
+    this.purify = function(input) {
+        var obj = JSON.parse(angular.toJson(input));
+        return obj;
+    }
 });

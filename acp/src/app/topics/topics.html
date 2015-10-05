@@ -23,11 +23,18 @@
                     <form role="form" ng-submit="onAddTopic()">
                         <div class="form-group">
                             <label>Title</label>
-                            <textarea ng-model="addTopicTitle" placeholder="Enter topic" class="form-control" require=""></textarea>
+                            <textarea ng-model="newTopic.title" placeholder="Enter topic" class="form-control" require=""></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Type</label>
+                            <select class="form-control m-b" ng-model="newTopic.type">
+                                <option value="0">audio</option>
+                                <option value="1">text</option>
+                            </select>
                         </div>
                         <div class="pull-right" >
                             <button ng-click="onCancelAddTopic()" class="btn btn-sm btn-primary m-t-n-xs"><strong>Cancel</strong></button>
-                            <button ng-disabled="!addTopicTitle" class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Add</strong></button>
+                            <button ng-disabled="!newTopic.title" class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Add</strong></button>
                         </div>
                         <label> &nbsp; </label>
                     </form>
@@ -46,6 +53,7 @@
                             <thead>
                                 <tr>
                                     <th>Title</th>
+                                    <th>Type</th>
                                     <th class="text-right">Action</th>
                                 </tr>
                             </thead>
@@ -55,6 +63,10 @@
                                         <i ng-if="r.status == 1" class="fa fa-fw fa-check-circle text-success"></i>
                                         <i ng-if="r.status == 0" class="fa fa-fw fa-times-circle text-danger"></i>
                                         {{r.title}}
+                                    </td>
+                                    <td>
+                                        <span ng-if="r.type==0">Audio</span>
+                                        <span ng-if="r.type==1">Text</span>
                                     </td>
                                     <td class="text-right">
                                         <button ng-show="r.status == 1" ng-click="onSetTopicStatus(r.$id, 0)" class="btn btn-success btn-xs"> Disable</button>

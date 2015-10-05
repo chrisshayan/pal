@@ -1,24 +1,29 @@
 'use strict';
 
 angular.module('inspinia').controller('CreatePostCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval) {
-    $scope.addTopicTitle = "";
-    $scope.addTopicAudioURL = "";
+
+
+    var init = function() {
+        $scope.post = {
+            title: "",
+            audio: "",
+            text: "",
+            type: 0, //audio
+            prev: 0,
+            status: 0 //pending
+        }
+    }
+    init();
+
     $scope.onPost = function() {
         if (firebaseHelper.getUID()) {
-            var topic = $scope.addTopicTitle;
-            var url = $scope.addTopicAudioURL;
-            if (topic && url) {
-                firebaseHelper.pushItemOne("posts", "users", firebaseHelper.getUID(), {
-                    created_date: Date.now(),
-                    created_by: firebaseHelper.getUID(),
-                    title: topic,
-                    audio: url,
-                    status: 0
-                }, {
+            $scope.post.created_date = Date.now();
+            $scope.post.created_by = firebaseHelper.getUID();
+            if ($scope.post.title) {
+                firebaseHelper.pushItemOne("posts", "users", firebaseHelper.getUID(), cs.purify($scope.post), {
                     success: function() {
                         $rootScope.notifySuccess();
-                        $scope.addTopicTitle = "";
-                        $scope.addTopicAudioURL = "";
+                        init();
                         $scope.$apply();
                     }
                 });
