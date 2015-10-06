@@ -109,16 +109,20 @@ public class CustomCardStackView extends FrameLayout {
     public final static int STATE_SCROLL_BACK = STATE_DRAG_OUT + 1;
     public final static int STATE_REORDER = STATE_SCROLL_BACK + 1;
     public final static int STATE_FLY_IN = STATE_REORDER + 1;
+    public final static int STATE_PRE_SELECT_ANIM = STATE_FLY_IN + 1;
+    public final static int STATE_SELECT_ANIM = STATE_PRE_SELECT_ANIM + 1;
 
-    public final String[] STATE_NAME = {"none", "pre", "idle", "drag", "drag-out", "scroll back", "reorder", "fly-in"};
+    public final String[] STATE_NAME = {"none", "pre", "idle", "drag", "drag-out", "scroll back", "reorder", "fly-in", "pre-select", "select"};
 
     public final static float CARD_MARGIN = 10f;
     public final static float CARD_MARGIN_DELTA = 0f;
     public final static float SWIPE_MIN_DISTANCE = 50f;
     public final static float SWIPE_MIN_DT = 500;
+    public final static float MOVE_MIN_DISTANCE = 3f;
     public final static float CARD_SCALE_STEP = 0.05f;
     public final static float CARD_TRIGGER_PERCENT = 0.25f;
     public final static float MAX_ROTATE_ANGLE = 10.0f;
+    public final static int   TOUCH_FEEDBACK_DT = 100;
 
 
     private float mDownX;
@@ -127,9 +131,15 @@ public class CustomCardStackView extends FrameLayout {
     private int nextState = STATE_NONE;
     private int lastState = STATE_NONE;
     private int targetScrollX;
+
     private int targetScaleDt = 0;
+    private int currentScaleDt = 0;
+    private float scaleAmp = 0.1f;
+
     private boolean isFakeDrag = false;
     private long lastTimeTouch = 0;
+    private long frameDt;
+    private long lastUpdate;
 
     private void switchState(int state) {nextState = state;}
 
@@ -148,14 +158,18 @@ public class CustomCardStackView extends FrameLayout {
                         switchState(STATE_DRAG);
                         isFakeDrag = true;
                     } else {
-                        switchState(STATE_SCROLL_BACK);
+                        if (Math.abs(distance) < MOVE_MIN_DISTANCE*density) {
+                            switchState(STATE_PRE_SELECT_ANIM);
+                        } else {
+                            switchState(STATE_SCROLL_BACK);
+                        }
                     }
                 }
             }
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
                     lastTimeTouch = System.currentTimeMillis();
-                    targetScaleDt = 100;
+                    startScaleAnim(TOUCH_FEEDBACK_DT, 0.01f);
                     mDownX = ev.getRawX();
                     originLayoutMargin = frontLayout.leftMargin;
                     if (state != STATE_DRAG && state != STATE_DRAG_OUT) {
@@ -169,6 +183,12 @@ public class CustomCardStackView extends FrameLayout {
                 }
             }
         }
+    }
+
+    private void startScaleAnim(int milis, float amp) {
+        currentScaleDt = milis;
+        targetScaleDt = milis;
+        scaleAmp = amp;
     }
 
     private void initLayout() {
@@ -233,6 +253,8 @@ public class CustomCardStackView extends FrameLayout {
     public CustomCardView getMid() {return this.mid;}
 
     private void update() {
+        frameDt = Math.min(System.currentTimeMillis() - lastUpdate, 100);
+        lastUpdate = System.currentTimeMillis();
         if (state != nextState) {
             System.out.println("CHANGE TO STATE ... " + STATE_NAME[nextState]);
             switch (nextState) {
@@ -240,7 +262,11 @@ public class CustomCardStackView extends FrameLayout {
                     isFakeDrag = false;
                     break;
                 case STATE_SCROLL_BACK:
+                case STATE_PRE_SELECT_ANIM:
                     targetScrollX = 0;
+                    break;
+                case STATE_SELECT_ANIM:
+                    startScaleAnim(TOUCH_FEEDBACK_DT*4, 0.02f);
                     break;
                 case STATE_FLY_IN:
                     backLayout.leftMargin = targetScrollX;
@@ -273,6 +299,7 @@ public class CustomCardStackView extends FrameLayout {
             case STATE_DRAG:
             case STATE_SCROLL_BACK:
             case STATE_DRAG_OUT:
+            case STATE_PRE_SELECT_ANIM:
                 if (frontLayout.leftMargin != targetScrollX) {
                     frontLayout.leftMargin = Common.lerp(frontLayout.leftMargin, targetScrollX, 0.5f);
                     requiredUpdateLayout = true;
@@ -288,6 +315,9 @@ public class CustomCardStackView extends FrameLayout {
 
                 if (frontLayout.leftMargin == 0 && state == STATE_SCROLL_BACK) {
                     switchState(STATE_IDLE);
+                }
+                if (frontLayout.leftMargin == 0 && state == STATE_PRE_SELECT_ANIM) {
+                    switchState(STATE_SELECT_ANIM);
                 }
 
                 if (isFakeDrag && state == STATE_DRAG_OUT) {
@@ -327,8 +357,30 @@ public class CustomCardStackView extends FrameLayout {
                 break;
         }
 
+        //update scale anim
+        if (currentScaleDt > 0) {
+            float scale = 0;
+            if (state == STATE_SELECT_ANIM) {
+                scale = (float)Common.swingSin(scaleAmp, 1.0f, 0, (float)(Math.PI*2*currentScaleDt/targetScaleDt));
+            } else {
+                scale = (float)Common.swingSin(scaleAmp, 1.0f, 0, (float)(Math.PI*0.5*currentScaleDt/targetScaleDt));
+            }
+            front.setScaleX(1 + scale);
+            front.setScaleY(1 + scale);
+            currentScaleDt -= frameDt;
+            if (currentScaleDt <= 0) {
+                front.setScaleX(1);
+                front.setScaleY(1);
+                if (state == STATE_SELECT_ANIM) {
+                    switchState(STATE_IDLE);
+                }
+            }
+        } else {
+            currentScaleDt = 0;
+        }
+
+
         final float movingScale = movingPercent;
-        final boolean reorder = state == STATE_REORDER;
         final int _state = this.state;
 
         if (requiredUpdateLayout) {
@@ -344,7 +396,7 @@ public class CustomCardStackView extends FrameLayout {
                         switchState(STATE_IDLE);
                         return;
                     }
-                    if (!reorder) {
+                    if (_state != STATE_REORDER && _state != STATE_SELECT_ANIM) {
                         final float density = getResources().getDisplayMetrics().density;
                         front.setLayoutParams(frontLayout);
                         if (movingScale >= 1.0f) {
@@ -353,7 +405,6 @@ public class CustomCardStackView extends FrameLayout {
                             front.resetBackgroundColor();
                         }
                         front.setRotation(movingScale*MAX_ROTATE_ANGLE * Common.sign(frontLayout.leftMargin));
-
 
                         float mid_scalingFactor = (1.0f - CARD_SCALE_STEP) + CARD_SCALE_STEP * movingScale;
                         mid.setScaleX(mid_scalingFactor);
