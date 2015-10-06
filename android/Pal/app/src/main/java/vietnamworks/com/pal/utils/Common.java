@@ -67,4 +67,16 @@ public class Common {
     public static String getAudioServerFileName(String user_id, String post_id) {
         return "user_" + user_id + "_" + post_id + "_" + System.currentTimeMillis() + Config.RecorderFileExt;
     }
+
+    public static float lerp(float start, float end, float percent) {
+        return (start + percent*(end - start));
+    }
+
+    public static int lerp(int start, int end, float percent) {
+        return (int)(start + percent*(end - start));
+    }
+
+    public static int sign(float a) {
+        return a > 0?1:(a<0?-1:0);
+    }
 }

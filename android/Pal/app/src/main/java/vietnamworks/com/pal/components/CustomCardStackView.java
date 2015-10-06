@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 
 import vietnamworks.com.pal.ActivityBase;
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.utils.Common;
 
 /**
  * Created by duynk on 10/6/15.
@@ -143,7 +144,7 @@ public class CustomCardStackView extends FrameLayout {
                     System.out.println("xxxx " + distance + " " + dt + " " + density*SWIPE_MIN_DISTANCE + " " + (dt < SWIPE_MIN_DT && Math.abs(distance) > density*SWIPE_MIN_DISTANCE));
                     if (dt < SWIPE_MIN_DT && Math.abs(distance) > density*SWIPE_MIN_DISTANCE) {
                         //is swipe
-                        targetScrollX = (int)((front.getWidth()*CARD_TRIGGER_PERCENT*2) * (distance > 0?1:-1));
+                        targetScrollX = (int)((front.getWidth()*CARD_TRIGGER_PERCENT*2) * Common.sign(distance));
                         switchState(STATE_DRAG);
                         isFakeDrag = true;
                     } else {
@@ -275,7 +276,7 @@ public class CustomCardStackView extends FrameLayout {
                     frontLayout.leftMargin = targetScrollX;
                     requiredUpdateLayout = true;
                 } else if (frontLayout.leftMargin != targetScrollX) {
-                    frontLayout.leftMargin = lerp(frontLayout.leftMargin, targetScrollX, 0.8f);
+                    frontLayout.leftMargin = Common.lerp(frontLayout.leftMargin, targetScrollX, 0.5f);
                     requiredUpdateLayout = true;
                 }
                 if (requiredUpdateLayout) {
@@ -291,7 +292,10 @@ public class CustomCardStackView extends FrameLayout {
                     switchState(STATE_IDLE);
                 }
 
-                if ( isFakeDrag && state == STATE_DRAG_OUT && Math.abs(frontLayout.leftMargin) >= front.getWidth()*CARD_TRIGGER_PERCENT*2) {
+                if (isFakeDrag && state == STATE_DRAG_OUT) {
+                    System.out.println(Math.abs(frontLayout.leftMargin) + " " + front.getWidth()*CARD_TRIGGER_PERCENT*2);
+                }
+                if ( isFakeDrag && state == STATE_DRAG_OUT && Math.abs(frontLayout.leftMargin) >= (int)(front.getWidth()*CARD_TRIGGER_PERCENT*2)) {
                     switchState(STATE_REORDER);
                 }
 
@@ -301,7 +305,7 @@ public class CustomCardStackView extends FrameLayout {
                     backLayout.leftMargin = targetScrollX;
                     requiredUpdateLayout = true;
                 } else if (backLayout.leftMargin != targetScrollX) {
-                    backLayout.leftMargin = lerp(backLayout.leftMargin, targetScrollX, 0.8f);
+                    backLayout.leftMargin = Common.lerp(backLayout.leftMargin, targetScrollX, 0.5f);
                     requiredUpdateLayout = true;
                 }
                 if (targetScrollX == backLayout.leftMargin) {
@@ -353,7 +357,7 @@ public class CustomCardStackView extends FrameLayout {
                         } else {
                             front.resetBackgroundColor();
                         }
-                        front.setRotation(movingScale*MAX_ROTATE_ANGLE * (frontLayout.leftMargin > 0?1f:-1f));
+                        front.setRotation(movingScale*MAX_ROTATE_ANGLE * Common.sign(frontLayout.leftMargin));
 
 
                         float mid_scalingFactor = (1.0f - CARD_SCALE_STEP) + CARD_SCALE_STEP * movingScale;
@@ -389,11 +393,6 @@ public class CustomCardStackView extends FrameLayout {
                 }
             });
         }
-    }
-
-    int lerp(int start, int end, float percent)
-    {
-        return (int)(start + percent*(end - start));
     }
 }
 
