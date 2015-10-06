@@ -117,6 +117,7 @@ public class CustomCardStackView extends FrameLayout {
     public final static float SWIPE_MIN_DT = 500;
     public final static float CARD_SCALE_STEP = 0.05f;
     public final static float CARD_TRIGGER_PERCENT = 0.25f;
+    public final static float MAX_ROTATE_ANGLE = 10.0f;
 
 
     private float mDownX;
@@ -352,6 +353,9 @@ public class CustomCardStackView extends FrameLayout {
                         } else {
                             front.resetBackgroundColor();
                         }
+                        front.setRotation(movingScale*MAX_ROTATE_ANGLE * (frontLayout.leftMargin > 0?1f:-1f));
+
+
                         float mid_scalingFactor = (1.0f - CARD_SCALE_STEP) + CARD_SCALE_STEP * movingScale;
                         mid.setScaleX(mid_scalingFactor);
                         mid.setScaleY(mid_scalingFactor);
@@ -370,6 +374,7 @@ public class CustomCardStackView extends FrameLayout {
                         holder.addView(mid);
 
                         front.resetBackgroundColor();
+                        front.setRotation(0);
                         mid.setHolderRef(front.getHolderRef());
                         front.setHolderRef(null);
 
