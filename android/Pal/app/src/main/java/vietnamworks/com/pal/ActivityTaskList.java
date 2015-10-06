@@ -30,11 +30,14 @@ public class ActivityTaskList extends ActivityBase {
 class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     @Override
     public void onLaunched(final CustomCardStackView ccsv) {
+        System.out.println("onLaunched");
         //start loading
         ccsv.getFront().setData(R.drawable.ic_launcher, "", "Loading");
+        ccsv.lock();
         AppModel.topics.loadAsync(ActivityBase.sInstance, new AsyncCallback() {
             @Override
             public void onSuccess(Context context, Object obj) {
+                System.out.println("onSuccess");
                 int count = AppModel.topics.getData().size();
                 if (count > 0) {
                     Topic p = AppModel.topics.getData().get(0);
@@ -52,10 +55,15 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
                     ccsv.getBack().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone:R.drawable.ic_conversation, p.getTypeName(), p.getTitle());
                 }
                 ccsv.refresh();
+                ccsv.unlock();
             }
 
             @Override
             public void onError(Context context, int code, String message) {
+                System.out.println("Fail to load data " + message);
+                ccsv.getFront().setData(R.drawable.ic_launcher, "", "Fail to load data. Touch to retry");
+                ccsv.unlock();
+                ccsv.snooze();
             }
         });
     }
@@ -77,12 +85,17 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
 
     @Override
     public void onSelectItem(int index, final CustomCardStackView ccsv) {
-        new android.os.Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ccsv.closeCard();
-            }
-        }, 3000);
+        System.out.println("onSelectItem " + index);
+        if (index >= 0) {
+            new android.os.Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ccsv.closeCard();
+                }
+            }, 3000);
+        } else {
+            this.onLaunched(ccsv);
+        }
     }
 }
 

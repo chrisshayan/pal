@@ -18,7 +18,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:id="@+id/cc_header">
 
                 <ImageView
                     android:layout_width="80dp"
@@ -34,7 +35,8 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
-                android:background="#FFCCCCCC" />
+                android:background="#FFCCCCCC"
+                android:id="@+id/cc_hr" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent">

@@ -5,6 +5,7 @@ import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,8 @@ public class CustomCardView extends FrameLayout {
     private CustomCardStackView refStack;
     private CardView cardView;
     private int originBackgroundColor;
+    private View header;
+    private View hr;
 
     private ImageView icon;
     private TextView body;
@@ -50,6 +53,8 @@ public class CustomCardView extends FrameLayout {
         icon = (ImageView)this.findViewById(R.id.cc_icon);
         body = (TextView)this.findViewById(R.id.cc_body);
         title = (TextView)this.findViewById(R.id.cc_title);
+        header = (View)this.findViewById(R.id.cc_header);
+        hr = (View)this.findViewById(R.id.cc_hr);
 
         originBackgroundColor = getResources().getColor(R.color.icons);
     }
@@ -58,6 +63,14 @@ public class CustomCardView extends FrameLayout {
         this.icon.setImageResource(icon);
         this.title.setText(title);
         this.body.setText(text);
+        hr.setVisibility(VISIBLE);
+        header.setVisibility(VISIBLE);
+    }
+
+    public void setData(String text) {
+        hr.setVisibility(GONE);
+        header.setVisibility(GONE);
+        body.setText(text);
     }
 
     public void setBackgroundColor(int color) {
