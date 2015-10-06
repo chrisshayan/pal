@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
+import vietnamworks.com.pal.ActivityBase;
 import vietnamworks.com.pal.R;
 
 /**
@@ -23,6 +24,8 @@ public class CustomCardStackView extends FrameLayout {
     private int itemIndex = 0;
     private int totalItem = 0;
     private CustomCardStackViewDelegate delegate;
+
+    private float density;
 
     Thread thread;
     private boolean isAlive = true;
@@ -66,6 +69,10 @@ public class CustomCardStackView extends FrameLayout {
         back = (CustomCardView) this.findViewById(R.id.ccs_back);
         holder = (FrameLayout) this.findViewById(R.id.ccs_holder);
 
+        front.setVisibility(INVISIBLE);
+        mid.setVisibility(INVISIBLE);
+        back.setVisibility(INVISIBLE);
+
         front.setHolderRef(this);
 
         thread = new Thread() {
@@ -104,9 +111,13 @@ public class CustomCardStackView extends FrameLayout {
 
     public final String[] STATE_NAME = {"none", "pre", "idle", "drag", "drag-out", "scroll back", "reorder", "fly-in"};
 
-    public final static float CARD_MARGIN = 30f;
-    public final static float CARD_MARGIN_DELTA = 3f;
-    public final static float CARD_SCALE_STEP = 0.1f;
+    public final static float CARD_MARGIN = 10f;
+    public final static float CARD_MARGIN_DELTA = 0f;
+    public final static float SWIPE_MIN_DISTANCE = 50f;
+    public final static float SWIPE_MIN_DT = 500;
+    public final static float CARD_SCALE_STEP = 0.05f;
+    public final static float CARD_TRIGGER_PERCENT = 0.25f;
+
 
     private float mDownX;
     private int originLayoutMargin;
@@ -114,21 +125,34 @@ public class CustomCardStackView extends FrameLayout {
     private int nextState = STATE_NONE;
     private int lastState = STATE_NONE;
     private int targetScrollX;
+    private boolean isFakeDrag = false;
+    private long lastTimeTouch = 0;
 
     private void switchState(int state) {nextState = state;}
 
     public void onChildTouchEvent(CustomCardView child, MotionEvent ev) {
-        if (!isLocked && (state == STATE_IDLE || state == STATE_DRAG || state == STATE_DRAG_OUT)) {
+        if (!isLocked && !isFakeDrag && (state == STATE_IDLE || state == STATE_DRAG || state == STATE_DRAG_OUT)) {
             final int action = MotionEventCompat.getActionMasked(ev);
             if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
                 if (state == STATE_DRAG_OUT) {
                     switchState(STATE_REORDER);
                 } else {
-                    switchState(STATE_SCROLL_BACK);
+                    int distance = (int) (ev.getRawX() - mDownX);
+                    long dt = System.currentTimeMillis() - lastTimeTouch;
+                    System.out.println("xxxx " + distance + " " + dt + " " + density*SWIPE_MIN_DISTANCE + " " + (dt < SWIPE_MIN_DT && Math.abs(distance) > density*SWIPE_MIN_DISTANCE));
+                    if (dt < SWIPE_MIN_DT && Math.abs(distance) > density*SWIPE_MIN_DISTANCE) {
+                        //is swipe
+                        targetScrollX = (int)((front.getWidth()*CARD_TRIGGER_PERCENT*2) * (distance > 0?1:-1));
+                        switchState(STATE_DRAG);
+                        isFakeDrag = true;
+                    } else {
+                        switchState(STATE_SCROLL_BACK);
+                    }
                 }
             }
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
+                    lastTimeTouch = System.currentTimeMillis();
                     mDownX = ev.getRawX();
                     originLayoutMargin = frontLayout.leftMargin;
                     if (state != STATE_DRAG && state != STATE_DRAG_OUT) {
@@ -145,26 +169,36 @@ public class CustomCardStackView extends FrameLayout {
     }
 
     private void initLayout() {
-        final float density = this.getResources().getDisplayMetrics().density;
+        int[] screen_size = ActivityBase.getScreenSize();
+
+        density = this.getResources().getDisplayMetrics().density;
         frontLayout = (FrameLayout.LayoutParams)front.getLayoutParams();
         frontLayout.setMargins(0, (int) (2*CARD_MARGIN*density), 0, 0);
+        frontLayout.width = (int)(screen_size[0]*0.9f);
+        frontLayout.height = (int)(frontLayout.width*3.0f/4.0f);
         front.setScaleX(1.0f);
         front.setScaleY(1.0f);
         front.setLayoutParams(frontLayout);
         front.setBackgroundColor(getResources().getColor(R.color.icons));
 
         midLayout = (FrameLayout.LayoutParams)mid.getLayoutParams();
-        midLayout.setMargins(0, (int) (CARD_MARGIN*density), 0, 0);
+        midLayout.setMargins(0, (int) (CARD_MARGIN * density), 0, 0);
+        midLayout.width = (int)(screen_size[0]*0.9f);
+        midLayout.height = (int)(frontLayout.width*3.0f/4.0f);
         mid.setScaleX(1.0f - CARD_SCALE_STEP);
         mid.setScaleY(1.0f - CARD_SCALE_STEP);
         mid.setLayoutParams(midLayout);
 
-        backLayout = (FrameLayout.LayoutParams)back.getLayoutParams();
+        backLayout = (FrameLayout.LayoutParams) back.getLayoutParams();
         backLayout.setMargins(backLayout.leftMargin, 0, 0, 0);
+        backLayout.width = (int)(screen_size[0]*0.9f);
+        backLayout.height = (int)(frontLayout.width*3.0f/4.0f);
         back.setScaleX(1.0f - CARD_SCALE_STEP * 2.0f);
         back.setScaleY(1.0f - CARD_SCALE_STEP * 2.0f);
         back.setLayoutParams(backLayout);
 
+
+        front.setVisibility(VISIBLE);
         if (this.totalItem < 1) {
             mid.setVisibility(INVISIBLE);
             back.setVisibility(INVISIBLE);
@@ -199,6 +233,9 @@ public class CustomCardStackView extends FrameLayout {
         if (state != nextState) {
             System.out.println("CHANGE TO STATE ... " + STATE_NAME[nextState]);
             switch (nextState) {
+                case STATE_IDLE:
+                    isFakeDrag = false;
+                    break;
                 case STATE_SCROLL_BACK:
                     targetScrollX = 0;
                     break;
@@ -237,11 +274,11 @@ public class CustomCardStackView extends FrameLayout {
                     frontLayout.leftMargin = targetScrollX;
                     requiredUpdateLayout = true;
                 } else if (frontLayout.leftMargin != targetScrollX) {
-                    frontLayout.leftMargin = lerp(frontLayout.leftMargin, targetScrollX, 0.5f);
+                    frontLayout.leftMargin = lerp(frontLayout.leftMargin, targetScrollX, 0.8f);
                     requiredUpdateLayout = true;
                 }
                 if (requiredUpdateLayout) {
-                    movingPercent = Math.min(Math.abs(frontLayout.leftMargin) / (front.getWidth()*0.5f), 1.0f);
+                    movingPercent = Math.min(Math.abs(frontLayout.leftMargin) / (front.getWidth()*CARD_TRIGGER_PERCENT), 1.0f);
                     if (movingPercent >= 1.0f) {
                         switchState(STATE_DRAG_OUT);
                     } else if (movingPercent > 0 && state == STATE_DRAG_OUT) {
@@ -252,13 +289,18 @@ public class CustomCardStackView extends FrameLayout {
                 if (frontLayout.leftMargin == 0 && state == STATE_SCROLL_BACK) {
                     switchState(STATE_IDLE);
                 }
+
+                if ( isFakeDrag && state == STATE_DRAG_OUT && Math.abs(frontLayout.leftMargin) >= front.getWidth()*CARD_TRIGGER_PERCENT*2) {
+                    switchState(STATE_REORDER);
+                }
+
                 break;
             case STATE_FLY_IN:
                 if (Math.abs(backLayout.leftMargin - targetScrollX) < 10) {
                     backLayout.leftMargin = targetScrollX;
                     requiredUpdateLayout = true;
                 } else if (backLayout.leftMargin != targetScrollX) {
-                    backLayout.leftMargin = lerp(backLayout.leftMargin, targetScrollX, 0.5f);
+                    backLayout.leftMargin = lerp(backLayout.leftMargin, targetScrollX, 0.8f);
                     requiredUpdateLayout = true;
                 }
                 if (targetScrollX == backLayout.leftMargin) {
@@ -306,7 +348,7 @@ public class CustomCardStackView extends FrameLayout {
                         final float density = getResources().getDisplayMetrics().density;
                         front.setLayoutParams(frontLayout);
                         if (movingScale >= 1.0f) {
-                            front.setBackgroundColor(getResources().getColor(android.support.design.R.color.material_grey_300));
+                            front.setBackgroundColor(getResources().getColor(android.support.design.R.color.material_grey_50));
                         } else {
                             front.resetBackgroundColor();
                         }

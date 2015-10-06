@@ -1,10 +1,12 @@
 package vietnamworks.com.pal;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 
 import vietnamworks.com.pal.services.FirebaseService;
 
@@ -66,6 +68,16 @@ public class ActivityBase extends AppCompatActivity {
         if (bar != null) {
             bar.hide();
         }
+    }
+
+    public static int[] getScreenSize() {
+        Display display = ActivityBase.sInstance.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int s[] = new int[2];
+        s[0] = size.x;
+        s[1] = size.y;
+        return s;
     }
 
     public static ActivityBase sInstance;
