@@ -98,4 +98,8 @@ public class CustomCardView extends FrameLayout {
     public TextView getTitle() {
         return title;
     }
+
+    public CardView getCardView() {
+        return cardView;
+    }
 }

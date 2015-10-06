@@ -74,5 +74,15 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     public int getTotalRecords() {
         return AppModel.topics.getData().size();
     }
+
+    @Override
+    public void onSelectItem(int index, final CustomCardStackView ccsv) {
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ccsv.closeCard();
+            }
+        }, 3000);
+    }
 }
 

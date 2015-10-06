@@ -1,5 +1,6 @@
 package vietnamworks.com.pal.components;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
@@ -111,8 +112,10 @@ public class CustomCardStackView extends FrameLayout {
     public final static int STATE_FLY_IN = STATE_REORDER + 1;
     public final static int STATE_PRE_SELECT_ANIM = STATE_FLY_IN + 1;
     public final static int STATE_SELECT_ANIM = STATE_PRE_SELECT_ANIM + 1;
+    public final static int STATE_TRANS_OPEN_CARD = STATE_SELECT_ANIM + 1;
+    public final static int STATE_TRANS_CLOSE_CARD = STATE_TRANS_OPEN_CARD + 1;
 
-    public final String[] STATE_NAME = {"none", "pre", "idle", "drag", "drag-out", "scroll back", "reorder", "fly-in", "pre-select", "select"};
+    public final String[] STATE_NAME = {"none", "pre", "idle", "drag", "drag-out", "scroll back", "reorder", "fly-in", "pre-select", "select", "open-card", "close-card"};
 
     public final static float CARD_MARGIN = 10f;
     public final static float CARD_MARGIN_DELTA = 0f;
@@ -142,6 +145,12 @@ public class CustomCardStackView extends FrameLayout {
     private long lastUpdate;
 
     private void switchState(int state) {nextState = state;}
+
+    public void closeCard() {
+        if (state == STATE_TRANS_OPEN_CARD) {
+            switchState(STATE_TRANS_CLOSE_CARD);
+        }
+    }
 
     public void onChildTouchEvent(CustomCardView child, MotionEvent ev) {
         if (!isLocked && !isFakeDrag && (state == STATE_IDLE || state == STATE_DRAG || state == STATE_DRAG_OUT)) {
@@ -284,6 +293,54 @@ public class CustomCardStackView extends FrameLayout {
 
                     }
                     break;
+                case STATE_TRANS_OPEN_CARD:
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            back.setVisibility(GONE);
+                            mid.setVisibility(GONE);
+                            int[] screen_size = ActivityBase.getScreenSize();
+                            float scale = screen_size[0]*1.0f/front.getWidth();
+                            front.animate().translationY(-screen_size[1]/2 + front.getHeight()/2).scaleX(scale).scaleY(scale).setListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {}
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    if (delegate != null) {
+                                        delegate.onSelectItem(itemIndex % delegate.getTotalRecords(), CustomCardStackView.this);
+                                    }
+                                }
+                                @Override
+                                public void onAnimationCancel(Animator animation) {}
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {}
+                            }).start();
+                        }
+                    });
+                    break;
+                case STATE_TRANS_CLOSE_CARD:
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            int[] screen_size = ActivityBase.getScreenSize();
+                            float scale = screen_size[0]*1.0f/front.getWidth();
+                            front.animate().translationY(0).scaleX(1).scaleY(1).setListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {}
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    back.setVisibility(VISIBLE);
+                                    mid.setVisibility(VISIBLE);
+                                    switchState(STATE_IDLE);
+                                }
+                                @Override
+                                public void onAnimationCancel(Animator animation) {}
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {}
+                            }).start();
+                        }
+                    });
+                    break;
             }
 
             lastState = state;
@@ -372,7 +429,7 @@ public class CustomCardStackView extends FrameLayout {
                 front.setScaleX(1);
                 front.setScaleY(1);
                 if (state == STATE_SELECT_ANIM) {
-                    switchState(STATE_IDLE);
+                    switchState(STATE_TRANS_OPEN_CARD);
                 }
             }
         } else {
@@ -404,18 +461,18 @@ public class CustomCardStackView extends FrameLayout {
                         } else {
                             front.resetBackgroundColor();
                         }
-                        front.setRotation(movingScale*MAX_ROTATE_ANGLE * Common.sign(frontLayout.leftMargin));
+                        front.setRotation(movingScale * MAX_ROTATE_ANGLE * Common.sign(frontLayout.leftMargin));
 
                         float mid_scalingFactor = (1.0f - CARD_SCALE_STEP) + CARD_SCALE_STEP * movingScale;
                         mid.setScaleX(mid_scalingFactor);
                         mid.setScaleY(mid_scalingFactor);
-                        midLayout.setMargins(0, (int)((CARD_MARGIN + (CARD_MARGIN - CARD_MARGIN_DELTA) * movingScale)*density), 0, 0);
+                        midLayout.setMargins(0, (int) ((CARD_MARGIN + (CARD_MARGIN - CARD_MARGIN_DELTA) * movingScale) * density), 0, 0);
                         mid.setLayoutParams(midLayout);
 
-                        float back_scalingFactor = (1.0f - CARD_SCALE_STEP*2.0f) + CARD_SCALE_STEP * movingScale;
+                        float back_scalingFactor = (1.0f - CARD_SCALE_STEP * 2.0f) + CARD_SCALE_STEP * movingScale;
                         back.setScaleX(back_scalingFactor);
                         back.setScaleY(back_scalingFactor);
-                        backLayout.setMargins(backLayout.leftMargin, (int)(((CARD_MARGIN - CARD_MARGIN_DELTA) * movingScale)*density), 0, 0);
+                        backLayout.setMargins(backLayout.leftMargin, (int) (((CARD_MARGIN - CARD_MARGIN_DELTA) * movingScale) * density), 0, 0);
                         back.setLayoutParams(backLayout);
                     } else {
                         holder.removeAllViews();
