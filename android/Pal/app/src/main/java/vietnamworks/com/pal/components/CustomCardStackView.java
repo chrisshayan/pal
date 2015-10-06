@@ -283,25 +283,31 @@ public class CustomCardStackView extends FrameLayout {
                             back.setVisibility(GONE);
                             mid.setVisibility(GONE);
                             int[] screen_size = ActivityBase.getScreenSize();
-                            float scale = screen_size[0]*1.0f/front.getWidth();
-                            front.animate().translationY(-screen_size[1]/2 + front.getHeight()/2).scaleX(scale).scaleY(scale).setDuration(100).setListener(new Animator.AnimatorListener() {
+                            front.animate().translationY(-screen_size[1]/2 + front.getHeight()/2).setDuration(100).setListener(new Animator.AnimatorListener() {
                                 @Override
-                                public void onAnimationStart(Animator animation) {
-                                }
-
+                                public void onAnimationStart(Animator animation) {}
+                                @Override
+                                public void onAnimationCancel(Animator animation) {}
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {}
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
-                                    if (delegate != null) {
-                                        delegate.onSelectItem(itemIndex % delegate.getTotalRecords(), CustomCardStackView.this);
-                                    }
-                                }
-
-                                @Override
-                                public void onAnimationCancel(Animator animation) {
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animator animation) {
+                                    int[] screen_size = ActivityBase.getScreenSize();
+                                    float scale = screen_size[0]*1.0f/front.getWidth();
+                                    front.animate().scaleX(scale).scaleY(scale).setDuration(100).setListener(new Animator.AnimatorListener() {
+                                        @Override
+                                        public void onAnimationStart(Animator animation) {}
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            if (delegate != null) {
+                                                delegate.onSelectItem(itemIndex % delegate.getTotalRecords(), CustomCardStackView.this);
+                                            }
+                                        }
+                                        @Override
+                                        public void onAnimationCancel(Animator animation) {}
+                                        @Override
+                                        public void onAnimationRepeat(Animator animation) {}
+                                    }).start();
                                 }
                             }).start();
                         }
@@ -311,18 +317,27 @@ public class CustomCardStackView extends FrameLayout {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            int[] screen_size = ActivityBase.getScreenSize();
-                            float scale = screen_size[0]*1.0f/front.getWidth();
-                            front.animate().translationY(0).scaleX(1).scaleY(1).setDuration(100).setListener(new Animator.AnimatorListener() {
+                            front.animate().scaleX(1).scaleY(1).setDuration(100).setListener(new Animator.AnimatorListener() {
                                 @Override
                                 public void onAnimationStart(Animator animation) {
                                 }
 
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
-                                    back.setVisibility(VISIBLE);
-                                    mid.setVisibility(VISIBLE);
-                                    switchState(STATE_IDLE);
+                                    front.animate().translationY(0).setDuration(100).setListener(new Animator.AnimatorListener() {
+                                        @Override
+                                        public void onAnimationStart(Animator animation) {}
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            back.setVisibility(VISIBLE);
+                                            mid.setVisibility(VISIBLE);
+                                            switchState(STATE_IDLE);
+                                        }
+                                        @Override
+                                        public void onAnimationCancel(Animator animation) {}
+                                        @Override
+                                        public void onAnimationRepeat(Animator animation) {}
+                                    }).start();
                                 }
 
                                 @Override
