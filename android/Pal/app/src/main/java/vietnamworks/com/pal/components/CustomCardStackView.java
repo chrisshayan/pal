@@ -21,7 +21,8 @@ public class CustomCardStackView extends FrameLayout {
     private boolean isLocked = false;
 
     private int itemIndex = 0;
-    private EventCallback callback;
+    private int totalItem = 0;
+    private CustomCardStackViewDelegate delegate;
 
     Thread thread;
     private boolean isAlive = true;
@@ -51,8 +52,8 @@ public class CustomCardStackView extends FrameLayout {
     public void Lock() {this.isLocked = true;}
     public void Unlock() {this.isLocked = false;}
 
-    public void setCallback() {
-        this.callback = callback;
+    public void setDelegate(CustomCardStackViewDelegate delegate) {
+        this.delegate = delegate;
     }
 
     @Override
@@ -82,6 +83,7 @@ public class CustomCardStackView extends FrameLayout {
         };
         itemIndex = 0;
         switchState(STATE_PRE_INIT);
+        this.Lock();
 
         thread.start();
     }
@@ -162,8 +164,36 @@ public class CustomCardStackView extends FrameLayout {
         back.setScaleX(1.0f - CARD_SCALE_STEP * 2.0f);
         back.setScaleY(1.0f - CARD_SCALE_STEP * 2.0f);
         back.setLayoutParams(backLayout);
+
+        if (this.totalItem < 1) {
+            mid.setVisibility(INVISIBLE);
+            back.setVisibility(INVISIBLE);
+            this.Lock();
+        } else {
+            mid.setVisibility(VISIBLE);
+            back.setVisibility(VISIBLE);
+            this.Unlock();
+        }
     }
 
+    public void refresh() {
+        if (delegate != null) {
+            this.totalItem = this.delegate.getTotalRecords();
+        }
+        if (this.totalItem < 1) {
+            mid.setVisibility(INVISIBLE);
+            back.setVisibility(INVISIBLE);
+            this.Lock();
+        } else {
+            mid.setVisibility(VISIBLE);
+            back.setVisibility(VISIBLE);
+            this.Unlock();
+        }
+    }
+
+    public CustomCardView getFront() {return this.front;}
+    public CustomCardView getBack() {return this.back;}
+    public CustomCardView getMid() {return this.mid;}
 
     private void update() {
         if (state != nextState) {
@@ -175,6 +205,18 @@ public class CustomCardStackView extends FrameLayout {
                 case STATE_FLY_IN:
                     backLayout.leftMargin = targetScrollX;
                     targetScrollX = 0;
+                    if (delegate != null) {
+                        final int total = delegate.getTotalRecords();
+                        if (total > 0) {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    delegate.onBeforeChangedActiveItem( (itemIndex + 1) % total, ((itemIndex + 1) + 2) % total, CustomCardStackView.this);
+                                }
+                            });
+                        }
+
+                    }
                     break;
             }
 
@@ -221,6 +263,19 @@ public class CustomCardStackView extends FrameLayout {
                 }
                 if (targetScrollX == backLayout.leftMargin) {
                     switchState(STATE_IDLE);
+                    if (delegate != null) {
+                        itemIndex ++;
+                        final int total = delegate.getTotalRecords();
+                        if (total > 0) {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    delegate.onChangedActiveItem(itemIndex % total, (itemIndex + 2) % total, CustomCardStackView.this);
+                                }
+                            });
+                        }
+
+                    }
                 }
                 break;
             case STATE_REORDER:
@@ -240,6 +295,10 @@ public class CustomCardStackView extends FrameLayout {
                 public void run() {
                     if (_state == STATE_PRE_INIT) {
                         initLayout();
+                        if (delegate != null) {
+                            delegate.onLaunched(CustomCardStackView.this);
+                            refresh();
+                        }
                         switchState(STATE_IDLE);
                         return;
                     }
@@ -289,17 +348,5 @@ public class CustomCardStackView extends FrameLayout {
     {
         return (int)(start + percent*(end - start));
     }
-
-    public class EventCallback {
-        public void onLaunched() {
-
-        }
-        public void onActive(int index, CustomCardView obj) {
-
-        }
-        public void onPrepare(int index, CustomCardView obj) {
-
-        }
-    }
-
 }
+

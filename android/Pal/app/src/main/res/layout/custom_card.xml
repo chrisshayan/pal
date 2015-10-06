@@ -25,15 +25,13 @@
                 <ImageView
                     android:layout_width="81dp"
                     android:layout_height="47dp"
-                    android:id="@+id/imageView7"
-                    android:src="@drawable/ic_microphone" />
+                    android:id="@+id/cc_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Speaking"
-                    android:id="@+id/textView7" />
+                    android:id="@+id/cc_title" />
             </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -42,8 +40,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Say something about yourself"
-                    android:id="@+id/textView8"
+                    android:id="@+id/cc_body"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/base_padding"
