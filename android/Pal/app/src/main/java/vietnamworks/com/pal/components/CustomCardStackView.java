@@ -127,6 +127,7 @@ public class CustomCardStackView extends FrameLayout {
     private int nextState = STATE_NONE;
     private int lastState = STATE_NONE;
     private int targetScrollX;
+    private int targetScaleDt = 0;
     private boolean isFakeDrag = false;
     private long lastTimeTouch = 0;
 
@@ -141,7 +142,6 @@ public class CustomCardStackView extends FrameLayout {
                 } else {
                     int distance = (int) (ev.getRawX() - mDownX);
                     long dt = System.currentTimeMillis() - lastTimeTouch;
-                    System.out.println("xxxx " + distance + " " + dt + " " + density*SWIPE_MIN_DISTANCE + " " + (dt < SWIPE_MIN_DT && Math.abs(distance) > density*SWIPE_MIN_DISTANCE));
                     if (dt < SWIPE_MIN_DT && Math.abs(distance) > density*SWIPE_MIN_DISTANCE) {
                         //is swipe
                         targetScrollX = (int)((front.getWidth()*CARD_TRIGGER_PERCENT*2) * Common.sign(distance));
@@ -155,6 +155,7 @@ public class CustomCardStackView extends FrameLayout {
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
                     lastTimeTouch = System.currentTimeMillis();
+                    targetScaleDt = 100;
                     mDownX = ev.getRawX();
                     originLayoutMargin = frontLayout.leftMargin;
                     if (state != STATE_DRAG && state != STATE_DRAG_OUT) {
@@ -272,10 +273,7 @@ public class CustomCardStackView extends FrameLayout {
             case STATE_DRAG:
             case STATE_SCROLL_BACK:
             case STATE_DRAG_OUT:
-                if (Math.abs(frontLayout.leftMargin - targetScrollX) < 10) {
-                    frontLayout.leftMargin = targetScrollX;
-                    requiredUpdateLayout = true;
-                } else if (frontLayout.leftMargin != targetScrollX) {
+                if (frontLayout.leftMargin != targetScrollX) {
                     frontLayout.leftMargin = Common.lerp(frontLayout.leftMargin, targetScrollX, 0.5f);
                     requiredUpdateLayout = true;
                 }
@@ -301,10 +299,7 @@ public class CustomCardStackView extends FrameLayout {
 
                 break;
             case STATE_FLY_IN:
-                if (Math.abs(backLayout.leftMargin - targetScrollX) < 10) {
-                    backLayout.leftMargin = targetScrollX;
-                    requiredUpdateLayout = true;
-                } else if (backLayout.leftMargin != targetScrollX) {
+                if (backLayout.leftMargin != targetScrollX) {
                     backLayout.leftMargin = Common.lerp(backLayout.leftMargin, targetScrollX, 0.5f);
                     requiredUpdateLayout = true;
                 }
