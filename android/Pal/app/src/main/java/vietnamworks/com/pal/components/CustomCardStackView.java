@@ -117,7 +117,6 @@ public class CustomCardStackView extends FrameLayout {
     public final String[] STATE_NAME = {"none", "pre", "idle", "drag", "drag-out", "scroll back", "reorder", "fly-in", "pre-select", "select", "open-card", "close-card"};
 
     public final static float CARD_MARGIN = 10f;
-    public final static float CARD_MARGIN_DELTA = 0f;
     public final static float SWIPE_MIN_DISTANCE = 50f;
     public final static float SWIPE_MIN_DT = 500;
     public final static float MOVE_MIN_DISTANCE = 3f;
@@ -191,7 +190,7 @@ public class CustomCardStackView extends FrameLayout {
 
         density = this.getResources().getDisplayMetrics().density;
         frontLayout = (FrameLayout.LayoutParams)front.getLayoutParams();
-        frontLayout.setMargins(0, (int) (2*CARD_MARGIN*density), 0, 0);
+        frontLayout.setMargins(0, 0, 0, 0);
         frontLayout.width = (int)(screen_size[0]*0.9f);
         frontLayout.height = (int)(frontLayout.width*3.0f/4.0f);
         front.setScaleX(1.0f);
@@ -200,7 +199,7 @@ public class CustomCardStackView extends FrameLayout {
         front.setBackgroundColor(getResources().getColor(R.color.icons));
 
         midLayout = (FrameLayout.LayoutParams)mid.getLayoutParams();
-        midLayout.setMargins(0, (int) (CARD_MARGIN * density), 0, 0);
+        midLayout.setMargins(0, (int) (-CARD_MARGIN * density), 0, 0);
         midLayout.width = (int)(screen_size[0]*0.9f);
         midLayout.height = (int)(frontLayout.width*3.0f/4.0f);
         mid.setScaleX(1.0f - CARD_SCALE_STEP);
@@ -208,7 +207,7 @@ public class CustomCardStackView extends FrameLayout {
         mid.setLayoutParams(midLayout);
 
         backLayout = (FrameLayout.LayoutParams) back.getLayoutParams();
-        backLayout.setMargins(backLayout.leftMargin, 0, 0, 0);
+        backLayout.setMargins(backLayout.leftMargin, (int) (-2*CARD_MARGIN * density), 0, 0);
         backLayout.width = (int)(screen_size[0]*0.9f);
         backLayout.height = (int)(frontLayout.width*3.0f/4.0f);
         back.setScaleX(1.0f - CARD_SCALE_STEP * 2.0f);
@@ -283,7 +282,7 @@ public class CustomCardStackView extends FrameLayout {
                             back.setVisibility(GONE);
                             mid.setVisibility(GONE);
                             int[] screen_size = ActivityBase.getScreenSize();
-                            front.animate().translationY(-screen_size[1]/2 + front.getHeight()/2).setDuration(100).setListener(new Animator.AnimatorListener() {
+                            front.animate().translationY(-screen_size[1]/2 + front.getHeight()/2 + ActivityBase.sInstance.getStatusBarHeight()).setDuration(100).setListener(new Animator.AnimatorListener() {
                                 @Override
                                 public void onAnimationStart(Animator animation) {}
                                 @Override
@@ -453,13 +452,13 @@ public class CustomCardStackView extends FrameLayout {
                         float mid_scalingFactor = (1.0f - CARD_SCALE_STEP) + CARD_SCALE_STEP * movingScale;
                         mid.setScaleX(mid_scalingFactor);
                         mid.setScaleY(mid_scalingFactor);
-                        midLayout.setMargins(0, (int) ((CARD_MARGIN + (CARD_MARGIN - CARD_MARGIN_DELTA) * movingScale) * density), 0, 0);
+                        midLayout.setMargins(0, (int) ((-CARD_MARGIN  + CARD_MARGIN * movingScale) * density), 0, 0);
                         mid.setLayoutParams(midLayout);
 
                         float back_scalingFactor = (1.0f - CARD_SCALE_STEP * 2.0f) + CARD_SCALE_STEP * movingScale;
                         back.setScaleX(back_scalingFactor);
                         back.setScaleY(back_scalingFactor);
-                        backLayout.setMargins(backLayout.leftMargin, (int) (((CARD_MARGIN - CARD_MARGIN_DELTA) * movingScale) * density), 0, 0);
+                        backLayout.setMargins(backLayout.leftMargin, (int) ((-2*CARD_MARGIN + CARD_MARGIN * movingScale) * density), 0, 0);
                         back.setLayoutParams(backLayout);
                     } else {
                         holder.removeAllViews();
