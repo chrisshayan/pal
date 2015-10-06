@@ -3,18 +3,18 @@
     android:layout_width="match_parent" android:layout_height="match_parent" android:id="@+id/ccs_holder">
 
     <vietnamworks.com.pal.components.CustomCardView
-        android:layout_width="400dp"
-        android:layout_height="300dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/ccs_back"/>
     <vietnamworks.com.pal.components.CustomCardView
-        android:layout_width="400dp"
-        android:layout_height="300dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/ccs_mid"/>
     <vietnamworks.com.pal.components.CustomCardView
-        android:layout_width="400dp"
-        android:layout_height="300dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/ccs_front" />
 </FrameLayout>
