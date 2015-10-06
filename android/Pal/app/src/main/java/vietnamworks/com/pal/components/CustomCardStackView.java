@@ -189,10 +189,13 @@ public class CustomCardStackView extends FrameLayout {
         int[] screen_size = ActivityBase.getScreenSize();
 
         density = this.getResources().getDisplayMetrics().density;
+        int card_width = (int)(screen_size[0]*0.9f);
+        int card_height = (int)(card_width*9.0f/16.0f);
+
         frontLayout = (FrameLayout.LayoutParams)front.getLayoutParams();
         frontLayout.setMargins(0, 0, 0, 0);
-        frontLayout.width = (int)(screen_size[0]*0.9f);
-        frontLayout.height = (int)(frontLayout.width*3.0f/4.0f);
+        frontLayout.width = card_width;
+        frontLayout.height = card_height;
         front.setScaleX(1.0f);
         front.setScaleY(1.0f);
         front.setLayoutParams(frontLayout);
@@ -200,16 +203,16 @@ public class CustomCardStackView extends FrameLayout {
 
         midLayout = (FrameLayout.LayoutParams)mid.getLayoutParams();
         midLayout.setMargins(0, (int) (-CARD_MARGIN * density), 0, 0);
-        midLayout.width = (int)(screen_size[0]*0.9f);
-        midLayout.height = (int)(frontLayout.width*3.0f/4.0f);
+        midLayout.width = card_width;
+        midLayout.height = card_height;
         mid.setScaleX(1.0f - CARD_SCALE_STEP);
         mid.setScaleY(1.0f - CARD_SCALE_STEP);
         mid.setLayoutParams(midLayout);
 
         backLayout = (FrameLayout.LayoutParams) back.getLayoutParams();
         backLayout.setMargins(backLayout.leftMargin, (int) (-2*CARD_MARGIN * density), 0, 0);
-        backLayout.width = (int)(screen_size[0]*0.9f);
-        backLayout.height = (int)(frontLayout.width*3.0f/4.0f);
+        backLayout.width = card_width;
+        backLayout.height = card_height;
         back.setScaleX(1.0f - CARD_SCALE_STEP * 2.0f);
         back.setScaleY(1.0f - CARD_SCALE_STEP * 2.0f);
         back.setLayoutParams(backLayout);
