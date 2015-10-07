@@ -65,7 +65,7 @@ public class ActivityTaskList extends ActivityBase {
 
     public void onToggleReplay(View v) {
         FragmentRecording currentFragment = (FragmentRecording)getSupportFragmentManager().findFragmentById(R.id.fragment_speaking);
-        currentFragment.toggleReply();
+        currentFragment.toggleReplay();
     }
 }
 
