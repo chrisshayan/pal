@@ -520,7 +520,7 @@ public class CustomCardStackView extends FrameLayout {
                 break;
             case STATE_FLY_IN:
                 if (backLayout.leftMargin != targetScrollX) {
-                    backLayout.leftMargin = Common.lerp(backLayout.leftMargin, targetScrollX, 0.5f);
+                    backLayout.leftMargin = Common.lerp(backLayout.leftMargin, targetScrollX, 0.8f);
                     requiredUpdateLayout = true;
                 }
                 if (targetScrollX == backLayout.leftMargin) {
