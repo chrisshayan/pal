@@ -17,8 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:background="@color/primary">
+            android:layout_margin="5dp">
 
             <ImageButton
                 android:layout_width="50dp"
@@ -66,7 +65,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textAnswerButtons"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/primary_dark"
+        android:elevation="3dp">
 
         <Button
             android:layout_width="wrap_content"
@@ -74,7 +75,9 @@
             android:text="Cancel"
             android:id="@+id/button3"
             android:layout_weight="1"
-            android:onClick="onCancelSubmitAudio" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="onCancelSubmitAudio"
+            android:textColor="@color/icons" />
 
         <Button
             android:layout_width="wrap_content"
@@ -82,7 +85,9 @@
             android:text="Submit"
             android:id="@+id/button4"
             android:layout_weight="1"
-            android:onClick="onSubmitAudio" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="onSubmitAudio"
+            android:textColor="@color/icons" />
     </LinearLayout>
 
 </LinearLayout>

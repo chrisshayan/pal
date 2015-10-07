@@ -14,22 +14,24 @@
         android:ems="10"
         android:id="@+id/textAnswer"
         android:layout_gravity="center_horizontal"
-        android:background="@color/primary"
         android:gravity="top"
         android:padding="@dimen/base_padding"
         android:hint="Enter your answer here"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/base_padding"
         android:enabled="true"
         android:textColor="@color/icons"
-        android:textColorHint="@color/icons"
-        android:layout_weight="1" />
+        android:textColorHint="@color/secondary_text"
+        android:layout_weight="1"
+        android:background="@color/primary_light" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textAnswerButtons"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/primary_dark"
+        android:elevation="3dp">
 
         <Button
             android:layout_width="wrap_content"
@@ -37,7 +39,9 @@
             android:text="Cancel"
             android:id="@+id/button3"
             android:layout_weight="1"
-            android:onClick="onCancelSubmitText" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="onCancelSubmitText"
+            android:textColor="@color/icons" />
 
         <Button
             android:layout_width="wrap_content"
@@ -45,7 +49,9 @@
             android:text="Submit"
             android:id="@+id/button4"
             android:layout_weight="1"
-            android:onClick="onSubmitText" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="onSubmitText"
+            android:textColor="@color/icons" />
     </LinearLayout>
 
 </LinearLayout>
