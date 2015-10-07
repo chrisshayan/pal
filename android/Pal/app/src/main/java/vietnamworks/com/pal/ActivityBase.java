@@ -16,6 +16,7 @@ import vietnamworks.com.pal.services.FirebaseService;
 
 public class ActivityBase extends AppCompatActivity {
     public static String applicationDataPath = "";
+    public static float density;
 
     public ActivityBase() {
         super();
@@ -29,6 +30,7 @@ public class ActivityBase extends AppCompatActivity {
         if (applicationDataPath.length() == 0) {
             applicationDataPath = this.getApplicationInfo().dataDir;
         }
+        density = this.getResources().getDisplayMetrics().density;
     }
 
     @Override

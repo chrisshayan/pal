@@ -2,6 +2,9 @@ package vietnamworks.com.pal;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import vietnamworks.com.pal.components.CustomCardStackView;
 import vietnamworks.com.pal.components.CustomCardStackViewDelegate;
@@ -14,6 +17,8 @@ import vietnamworks.com.pal.services.AsyncCallback;
  */
 public class ActivityTaskList extends ActivityBase {
     private CustomCardStackView stackView;
+    public ViewGroup textInputView;
+
 
     public ActivityTaskList() {}
 
@@ -24,6 +29,17 @@ public class ActivityTaskList extends ActivityBase {
 
         stackView = (CustomCardStackView)this.findViewById(R.id.cards_stack_view);
         stackView.setDelegate(new MyCustomCardStackViewDelegate());
+        textInputView = (ViewGroup)this.findViewById(R.id.submitText);
+    }
+
+    public void onSubmitText(View v) {
+        this.textInputView.setVisibility(View.INVISIBLE);
+        stackView.closeCard();
+    }
+
+    public void onCancelSubmitText(View v) {
+        this.textInputView.setVisibility(View.INVISIBLE);
+        stackView.closeCard();
     }
 }
 
@@ -87,12 +103,26 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     public void onSelectItem(int index, final CustomCardStackView ccsv) {
         System.out.println("onSelectItem " + index);
         if (index >= 0) {
-            new android.os.Handler().postDelayed(new Runnable() {
+            new android.os.Handler().post(new Runnable() {
                 @Override
                 public void run() {
-                    ccsv.closeCard();
+                    ActivityTaskList act = (ActivityTaskList)ActivityTaskList.sInstance;
+                    act.textInputView.setVisibility(View.VISIBLE);
+
+                    EditText textbox = (EditText)act.textInputView.findViewById(R.id.textAnswer);
+                    ViewGroup buttons = (ViewGroup)act.textInputView.findViewById(R.id.textAnswerButtons);
+
+                    int[] screen_size = ActivityBase.getScreenSize();
+                    int card_height = (int)(screen_size[0]*9.0f/16.0f);
+                    int view_height = screen_size[1] - ActivityBase.sInstance.getStatusBarHeight() - card_height - buttons.getHeight() - (int)(16*ActivityBase.density);
+
+                    ViewGroup.LayoutParams  layout = (ViewGroup.LayoutParams )textbox.getLayoutParams();
+                    layout.height = (int)(view_height);
+                    textbox.setLayoutParams(layout);
+
+                    //ccsv.closeCard();
                 }
-            }, 3000);
+            });
         } else {
             this.onLaunched(ccsv);
         }

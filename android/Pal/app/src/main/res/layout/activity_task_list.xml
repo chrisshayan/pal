@@ -12,5 +12,57 @@
         android:id="@+id/cards_stack_view"
         android:layout_gravity="center_horizontal"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:focusable="false" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:weightSum="1"
+        android:id="@+id/submitText"
+        android:visibility="invisible">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/textAnswer"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/primary"
+            android:gravity="top"
+            android:padding="@dimen/base_padding"
+            android:hint="Enter your answer here"
+            android:layout_margin="5dp"
+            android:enabled="true"
+            android:textColor="@color/icons"
+            android:textColorHint="@color/icons" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textAnswerButtons">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:id="@+id/button3"
+                android:layout_weight="1"
+                android:onClick="onCancelSubmitText" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:id="@+id/button4"
+                android:layout_weight="1"
+                android:onClick="onSubmitText" />
+        </LinearLayout>
+
+    </LinearLayout>
 </RelativeLayout>
