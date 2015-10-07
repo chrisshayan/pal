@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import vietnamworks.com.pal.components.CustomCardStackView;
 import vietnamworks.com.pal.components.CustomCardStackViewDelegate;
 import vietnamworks.com.pal.entities.Topic;
+import vietnamworks.com.pal.fragments.FragmentRecording;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.services.AsyncCallback;
 
@@ -17,6 +18,7 @@ import vietnamworks.com.pal.services.AsyncCallback;
 public class ActivityTaskList extends ActivityBase {
     private CustomCardStackView stackView;
     public View fragment_writing;
+    public View fragment_speaking;
 
     public ActivityTaskList() {}
 
@@ -29,17 +31,41 @@ public class ActivityTaskList extends ActivityBase {
         stackView.setDelegate(new MyCustomCardStackViewDelegate());
 
         fragment_writing = (View)this.findViewById(R.id.fragment_writing);
-        fragment_writing.setVisibility(View.INVISIBLE);
+        fragment_writing.setVisibility(View.GONE);
+
+        fragment_speaking = (View)this.findViewById(R.id.fragment_speaking);
+        fragment_speaking.setVisibility(View.GONE);
     }
 
     public void onSubmitText(View v) {
-        this.fragment_writing.setVisibility(View.INVISIBLE);
+        this.fragment_writing.setVisibility(View.GONE);
         stackView.closeCard();
     }
 
     public void onCancelSubmitText(View v) {
-        this.fragment_writing.setVisibility(View.INVISIBLE);
+        this.fragment_writing.setVisibility(View.GONE);
         stackView.closeCard();
+    }
+
+    public void onSubmitAudio(View v) {
+        this.fragment_speaking.setVisibility(View.GONE);
+        stackView.closeCard();
+    }
+
+    public void onCancelSubmitAudio(View v) {
+        this.fragment_speaking.setVisibility(View.GONE);
+        stackView.closeCard();
+    }
+
+    public void onToggleRecorder(View v) {
+        FragmentRecording currentFragment = (FragmentRecording)getSupportFragmentManager().findFragmentById(R.id.fragment_speaking);
+        currentFragment.toggleRecording();
+
+    }
+
+    public void onToggleReplay(View v) {
+        FragmentRecording currentFragment = (FragmentRecording)getSupportFragmentManager().findFragmentById(R.id.fragment_speaking);
+        currentFragment.toggleReply();
     }
 }
 
@@ -103,15 +129,23 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     public void onSelectItem(int index, final CustomCardStackView ccsv) {
         System.out.println("onSelectItem " + index);
         if (index >= 0) {
+            final int _index = index;
             new android.os.Handler().post(new Runnable() {
                 @Override
                 public void run() {
                     ActivityTaskList act = (ActivityTaskList)ActivityTaskList.sInstance;
-                    act.fragment_writing.setVisibility(View.VISIBLE);
-
-                    ViewGroup.LayoutParams layout = (ViewGroup.LayoutParams) act.fragment_writing.getLayoutParams();
-                    layout.height = (int) (ActivityBase.getScreenHeight() - ActivityBase.getStatusBarHeight() - ccsv.getFront().getHeight()*ccsv.getFront().getScaleX());
-                    act.fragment_writing.setLayoutParams(layout);
+                    int type = AppModel.topics.getData().get(_index).getType();
+                    if (type == Topic.TYPE_SPEAKING) {
+                        act.fragment_speaking.setVisibility(View.VISIBLE);
+                        ViewGroup.LayoutParams layout = (ViewGroup.LayoutParams) act.fragment_speaking.getLayoutParams();
+                        layout.height = (int) (ActivityBase.getScreenHeight() - ActivityBase.getStatusBarHeight() - ccsv.getFront().getHeight() * ccsv.getFront().getScaleX());
+                        act.fragment_speaking.setLayoutParams(layout);
+                    } else {
+                        act.fragment_writing.setVisibility(View.VISIBLE);
+                        ViewGroup.LayoutParams layout = (ViewGroup.LayoutParams) act.fragment_writing.getLayoutParams();
+                        layout.height = (int) (ActivityBase.getScreenHeight() - ActivityBase.getStatusBarHeight() - ccsv.getFront().getHeight() * ccsv.getFront().getScaleX());
+                        act.fragment_writing.setLayoutParams(layout);
+                    }
                 }
             });
         } else {

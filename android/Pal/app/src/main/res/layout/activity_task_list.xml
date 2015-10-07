@@ -22,4 +22,11 @@
         android:layout_alignParentBottom="true"
         class="vietnamworks.com.pal.fragments.FragmentWriting" ></fragment>
 
+    <fragment
+        android:id="@+id/fragment_speaking"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        class="vietnamworks.com.pal.fragments.FragmentRecording" ></fragment>
+
 </RelativeLayout>
