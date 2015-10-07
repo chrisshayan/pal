@@ -132,7 +132,7 @@ public class CustomCardStackView extends FrameLayout {
     public final static float MOVE_MIN_DISTANCE = 3f;
     public final static float CARD_SCALE_STEP = 0.05f;
     public final static float CARD_TRIGGER_PERCENT = 0.25f;
-    public final static float MAX_ROTATE_ANGLE = 10.0f;
+    public final static float MAX_ROTATE_ANGLE = 5.0f;
 
 
     private float mDownX;
