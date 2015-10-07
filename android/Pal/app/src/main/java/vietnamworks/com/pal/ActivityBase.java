@@ -82,11 +82,25 @@ public class ActivityBase extends AppCompatActivity {
         return s;
     }
 
-    public int getStatusBarHeight() {
+    public static int getScreenHeight() {
+        Display display = ActivityBase.sInstance.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.y;
+    }
+
+    public static int getScreenWidth() {
+        Display display = ActivityBase.sInstance.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.x;
+    }
+
+    public static int getStatusBarHeight() {
         int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = ActivityBase.sInstance.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
+            result = ActivityBase.sInstance.getResources().getDimensionPixelSize(resourceId);
         }
         return result;
     }
