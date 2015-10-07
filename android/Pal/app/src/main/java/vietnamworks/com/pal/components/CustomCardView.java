@@ -1,11 +1,11 @@
 package vietnamworks.com.pal.components;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,7 +17,7 @@ import vietnamworks.com.pal.R;
  */
 public class CustomCardView extends FrameLayout {
     private CustomCardStackView refStack;
-    private CardView cardView;
+    private ViewGroup cardView;
     private int originBackgroundColor;
     private View header;
     private View hr;
@@ -49,7 +49,7 @@ public class CustomCardView extends FrameLayout {
 
     protected void onFinishInflate() {
         super.onFinishInflate();
-        cardView = (CardView) this.findViewById(R.id.card_view);
+        cardView = (ViewGroup) this.findViewById(R.id.card_view);
         icon = (ImageView)this.findViewById(R.id.cc_icon);
         body = (TextView)this.findViewById(R.id.cc_body);
         title = (TextView)this.findViewById(R.id.cc_title);
@@ -71,14 +71,6 @@ public class CustomCardView extends FrameLayout {
         hr.setVisibility(GONE);
         header.setVisibility(GONE);
         body.setText(text);
-    }
-
-    public void setBackgroundColor(int color) {
-        cardView.setCardBackgroundColor(color);
-    }
-
-    public void resetBackgroundColor() {
-        cardView.setCardBackgroundColor(originBackgroundColor);
     }
 
     public void setDefaultBackgroundColor(int color) {
@@ -112,7 +104,7 @@ public class CustomCardView extends FrameLayout {
         return title;
     }
 
-    public CardView getCardView() {
+    public ViewGroup getCardView() {
         return cardView;
     }
 }

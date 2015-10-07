@@ -209,7 +209,8 @@ public class CustomCardStackView extends FrameLayout {
         front.setScaleX(1.0f);
         front.setScaleY(1.0f);
         front.setLayoutParams(frontLayout);
-        front.setBackgroundColor(getResources().getColor(R.color.icons));
+        //front.setBackgroundColor(getResources().getColor(R.color.icons));
+        front.setBackgroundResource(R.drawable.layout_corner_bg);
 
         midLayout = (FrameLayout.LayoutParams)mid.getLayoutParams();
         midLayout.setMargins(0, (int) (-CARD_MARGIN * density), 0, 0);
@@ -218,6 +219,7 @@ public class CustomCardStackView extends FrameLayout {
         mid.setScaleX(1.0f - CARD_SCALE_STEP);
         mid.setScaleY(1.0f - CARD_SCALE_STEP);
         mid.setLayoutParams(midLayout);
+        mid.setBackgroundResource(R.drawable.layout_corner_bg);
 
         backLayout = (FrameLayout.LayoutParams) back.getLayoutParams();
         backLayout.setMargins(backLayout.leftMargin, (int) (-2*CARD_MARGIN * density), 0, 0);
@@ -226,6 +228,7 @@ public class CustomCardStackView extends FrameLayout {
         back.setScaleX(1.0f - CARD_SCALE_STEP * 2.0f);
         back.setScaleY(1.0f - CARD_SCALE_STEP * 2.0f);
         back.setLayoutParams(backLayout);
+        back.setBackgroundResource(R.drawable.layout_corner_bg);
 
 
         front.setVisibility(VISIBLE);
@@ -320,6 +323,7 @@ public class CustomCardStackView extends FrameLayout {
 
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
+                                    front.setBackgroundResource(R.drawable.layout_flat_bg);
                                     if (delegate != null) {
                                         delegate.onSelectItem(itemIndex % delegate.getTotalRecords(), CustomCardStackView.this);
                                     }
@@ -339,6 +343,7 @@ public class CustomCardStackView extends FrameLayout {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+                            front.setBackgroundResource(R.drawable.layout_corner_bg);
                             ObjectAnimator anim1 = ObjectAnimator.ofFloat(front, "translationY", 0);
                             ObjectAnimator anim2 = ObjectAnimator.ofFloat(front, "scaleX", 1);
                             ObjectAnimator anim3 = ObjectAnimator.ofFloat(front, "scaleY", 1);
@@ -557,11 +562,14 @@ public class CustomCardStackView extends FrameLayout {
                     if (_state != STATE_REORDER) {
                         final float density = getResources().getDisplayMetrics().density;
                         front.setLayoutParams(frontLayout);
+
+                        /*
                         if (movingScale >= 1.0f) {
                             front.setBackgroundColor(getResources().getColor(android.support.design.R.color.material_grey_50));
                         } else {
                             front.resetBackgroundColor();
                         }
+                        */
                         front.setRotation(movingScale * MAX_ROTATE_ANGLE * Common.sign(frontLayout.leftMargin));
 
                         float mid_scalingFactor = (1.0f - CARD_SCALE_STEP) + CARD_SCALE_STEP * movingScale;
@@ -581,7 +589,7 @@ public class CustomCardStackView extends FrameLayout {
                         holder.addView(back);
                         holder.addView(mid);
 
-                        front.resetBackgroundColor();
+                        //front.resetBackgroundColor();
                         front.setRotation(0);
                         mid.setHolderRef(front.getHolderRef());
                         front.setHolderRef(null);
