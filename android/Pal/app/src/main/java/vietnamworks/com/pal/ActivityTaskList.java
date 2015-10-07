@@ -88,18 +88,18 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
                 int count = AppModel.topics.getData().size();
                 if (count > 0) {
                     Topic p = AppModel.topics.getData().get(0);
-                    ccsv.getFront().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone:R.drawable.ic_conversation, p.getTypeName(), p.getTitle());
+                    ccsv.getFront().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone_grey:R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
                 }
                 if (count > 1) {
                     Topic p = AppModel.topics.getData().get(1);
-                    ccsv.getMid().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone:R.drawable.ic_conversation, p.getTypeName(), p.getTitle());
+                    ccsv.getMid().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone_grey:R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
                 }
                 if (count > 2) {
                     Topic p = AppModel.topics.getData().get(2);
-                    ccsv.getBack().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone:R.drawable.ic_conversation, p.getTypeName(), p.getTitle());
+                    ccsv.getBack().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone_grey:R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
                 } else {
                     Topic p = AppModel.topics.getData().get(0);
-                    ccsv.getBack().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone:R.drawable.ic_conversation, p.getTypeName(), p.getTitle());
+                    ccsv.getBack().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone_grey:R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
                 }
                 ccsv.refresh();
                 ccsv.unlock();
@@ -122,7 +122,7 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     @Override
     public void onBeforeChangedActiveItem(int front, int back, CustomCardStackView ccsv) {
         Topic p = AppModel.topics.getData().get(back);
-        ccsv.getBack().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone:R.drawable.ic_conversation, p.getTypeName(), p.getTitle());
+        ccsv.getBack().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone_grey:R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
     }
 
     @Override

@@ -310,7 +310,7 @@ public class CustomCardStackView extends FrameLayout {
 
                             ObjectAnimator anim1 = ObjectAnimator.ofFloat(mid, "translationY", CARD_MARGIN*density);
                             ObjectAnimator anim2 = ObjectAnimator.ofFloat(back, "translationY", 2*CARD_MARGIN*density);
-                            ObjectAnimator anim3 = ObjectAnimator.ofFloat(front, "translationY", -screen_size[1]/2 + front.getHeight()/2 + ActivityBase.sInstance.getStatusBarHeight());
+                            ObjectAnimator anim3 = ObjectAnimator.ofFloat(front, "translationY", -screen_size[1]/2 + (front.getHeight()/scale)/2 + ActivityBase.sInstance.getStatusBarHeight());
                             ObjectAnimator anim4 = ObjectAnimator.ofFloat(front, "scaleX", scale);
                             ObjectAnimator anim5 = ObjectAnimator.ofFloat(front, "scaleY", scale);
                             AnimatorSet set = new AnimatorSet();
@@ -510,7 +510,7 @@ public class CustomCardStackView extends FrameLayout {
                 if (frontLayout.leftMargin == 0 && state == STATE_PRE_SELECT_ANIM) {
                     boolean open_card = true;
                     if (delegate != null) {
-                        open_card = open_card && (delegate.getTotalRecords() > 0);
+                        open_card = (delegate.getTotalRecords() > 0);
                     }
                     switchState(!open_card?STATE_SNOOZE:STATE_TRANS_OPEN_CARD);
                 }
