@@ -303,33 +303,35 @@ public class CustomCardStackView extends FrameLayout {
                             back.setVisibility(GONE);
                             mid.setVisibility(GONE);
                             int[] screen_size = ActivityBase.getScreenSize();
-                            front.animate().translationY(-screen_size[1]/2 + front.getHeight()/2 + ActivityBase.sInstance.getStatusBarHeight()).setDuration(100).setListener(new Animator.AnimatorListener() {
+                            float scale = screen_size[0]*1.0f/front.getWidth();
+
+                            ObjectAnimator anim1 = ObjectAnimator.ofFloat(mid, "translationY", CARD_MARGIN*density);
+                            ObjectAnimator anim2 = ObjectAnimator.ofFloat(back, "translationY", 2*CARD_MARGIN*density);
+                            ObjectAnimator anim3 = ObjectAnimator.ofFloat(front, "translationY", -screen_size[1]/2 + front.getHeight()/2 + ActivityBase.sInstance.getStatusBarHeight());
+                            ObjectAnimator anim4 = ObjectAnimator.ofFloat(front, "scaleX", scale);
+                            ObjectAnimator anim5 = ObjectAnimator.ofFloat(front, "scaleY", scale);
+                            AnimatorSet set = new AnimatorSet();
+                            set.play(anim1).with(anim2).with(anim3);
+                            set.play(anim4).with(anim5).after(anim3);
+                            set.setDuration(250);
+                            set.addListener(new Animator.AnimatorListener() {
                                 @Override
                                 public void onAnimationStart(Animator animation) {}
-                                @Override
-                                public void onAnimationCancel(Animator animation) {}
-                                @Override
-                                public void onAnimationRepeat(Animator animation) {}
+
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
-                                    int[] screen_size = ActivityBase.getScreenSize();
-                                    float scale = screen_size[0]*1.0f/front.getWidth();
-                                    front.animate().scaleX(scale).scaleY(scale).setDuration(100).setListener(new Animator.AnimatorListener() {
-                                        @Override
-                                        public void onAnimationStart(Animator animation) {}
-                                        @Override
-                                        public void onAnimationEnd(Animator animation) {
-                                            if (delegate != null) {
-                                                delegate.onSelectItem(itemIndex % delegate.getTotalRecords(), CustomCardStackView.this);
-                                            }
-                                        }
-                                        @Override
-                                        public void onAnimationCancel(Animator animation) {}
-                                        @Override
-                                        public void onAnimationRepeat(Animator animation) {}
-                                    }).start();
+                                    if (delegate != null) {
+                                        delegate.onSelectItem(itemIndex % delegate.getTotalRecords(), CustomCardStackView.this);
+                                    }
                                 }
-                            }).start();
+
+                                @Override
+                                public void onAnimationCancel(Animator animation) {}
+
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {}
+                            });
+                            set.start();
                         }
                     });
                     break;
@@ -337,37 +339,38 @@ public class CustomCardStackView extends FrameLayout {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            front.animate().scaleX(1).scaleY(1).setDuration(100).setListener(new Animator.AnimatorListener() {
+                            ObjectAnimator anim1 = ObjectAnimator.ofFloat(front, "translationY", 0);
+                            ObjectAnimator anim2 = ObjectAnimator.ofFloat(front, "scaleX", 1);
+                            ObjectAnimator anim3 = ObjectAnimator.ofFloat(front, "scaleY", 1);
+                            AnimatorSet set = new AnimatorSet();
+                            set.play(anim2).with(anim3).before(anim1);
+                            set.setDuration(250);
+                            set.addListener(new Animator.AnimatorListener() {
                                 @Override
-                                public void onAnimationStart(Animator animation) {
-                                }
+                                public void onAnimationStart(Animator animation) {}
 
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
-                                    front.animate().translationY(0).setDuration(100).setListener(new Animator.AnimatorListener() {
-                                        @Override
-                                        public void onAnimationStart(Animator animation) {}
-                                        @Override
-                                        public void onAnimationEnd(Animator animation) {
-                                            back.setVisibility(VISIBLE);
-                                            mid.setVisibility(VISIBLE);
-                                            switchState(STATE_IDLE);
-                                        }
-                                        @Override
-                                        public void onAnimationCancel(Animator animation) {}
-                                        @Override
-                                        public void onAnimationRepeat(Animator animation) {}
-                                    }).start();
+                                    back.setVisibility(VISIBLE);
+                                    mid.setVisibility(VISIBLE);
+                                    ObjectAnimator anim1 = ObjectAnimator.ofFloat(mid, "translationY", 0);
+                                    anim1.setDuration(100);
+                                    anim1.start();
+
+                                    ObjectAnimator anim2 = ObjectAnimator.ofFloat(back, "translationY", 0);
+                                    anim2.setDuration(100);
+                                    anim2.start();
+
+                                    switchState(STATE_IDLE);
                                 }
 
                                 @Override
-                                public void onAnimationCancel(Animator animation) {
-                                }
+                                public void onAnimationCancel(Animator animation) {}
 
                                 @Override
-                                public void onAnimationRepeat(Animator animation) {
-                                }
-                            }).start();
+                                public void onAnimationRepeat(Animator animation) {}
+                            });
+                            set.start();
                         }
                     });
                     break;
