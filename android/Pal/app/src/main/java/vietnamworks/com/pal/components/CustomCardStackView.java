@@ -487,7 +487,7 @@ public class CustomCardStackView extends FrameLayout {
             case STATE_DRAG_OUT:
             case STATE_PRE_SELECT_ANIM:
                 if (frontLayout.leftMargin != targetScrollX) {
-                    frontLayout.leftMargin = Common.lerp(frontLayout.leftMargin, targetScrollX, 0.5f);
+                    frontLayout.leftMargin = Common.lerp(frontLayout.leftMargin, targetScrollX, 0.8f);
                     requiredUpdateLayout = true;
                 }
                 if (requiredUpdateLayout) {

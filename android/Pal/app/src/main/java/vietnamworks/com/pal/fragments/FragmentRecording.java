@@ -53,6 +53,12 @@ public class FragmentRecording extends FragmentBase {
         return rootView;
     }
 
+    public void reset() {
+        stopPlayer();
+        startRecording();
+        setState(STATE_EMPTY);
+    }
+
     public void setState(int state) {
         this.state = state;
         if (state == STATE_EMPTY) {
@@ -102,80 +108,9 @@ public class FragmentRecording extends FragmentBase {
 
     public void toggleRecording() {
         if (this.state != STATE_RECORDING) {
-            this.stopPlayer();
-            this.setState(STATE_RECORDING);
-            Common.newSampleRecord();
-            myAudioRecorder=new MediaRecorder();
-            myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-            myAudioRecorder.setOutputFile(Common.getSampleRecordPath());
-            recorderTimerCounter = 0;
-
-            try {
-                myAudioRecorder.prepare();
-                myAudioRecorder.start();
-
-                myAudioRecorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
-                    @Override
-                    public void onError(MediaRecorder mr, int what, int extra) {
-                        if (recorderTimer != null) {
-                            recorderTimer.cancel();
-                            recorderTimer.purge();
-                            recorderTimer = null;
-                        }
-                        myAudioRecorder = null;
-                        setState(STATE_EMPTY);
-                    }
-                });
-
-                if (recorderTimer != null) {
-                    recorderTimer.cancel();
-                    recorderTimer.purge();
-                    recorderTimer = null;
-                }
-
-                recorderTimer = new Timer();
-                recorderTimer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        int minute = (int) recorderTimerCounter / 60;
-                        int sec = recorderTimerCounter % 60;
-                        String _m = (int) (minute / 10) + "" + (int) (minute % 10);
-                        String _s = (int) (sec / 10) + "" + (int) (sec % 10);
-                        final String timer = _m + ":" + _s;
-                        handler.post(new Runnable() {
-                                         @Override
-                                         public void run() {
-                                             recordingStatus.setText(timer);
-                                         }});
-                        recorderTimerCounter++;
-                    }
-                },0 , 1000);
-
-            }catch (Exception e) {
-                myAudioRecorder = null;
-                e.printStackTrace();
-                this.setState(STATE_EMPTY);
-            }
+            startRecording();
         } else {
-            if (recorderTimer != null) {
-                recorderTimer.cancel();
-                recorderTimer.purge();
-                recorderTimer = null;
-            }
-            try {
-                if (myAudioRecorder != null) {
-                    myAudioRecorder.stop();
-                    myAudioRecorder.reset();
-                    myAudioRecorder.release();
-                    myAudioRecorder = null;
-                }
-                this.setState(STATE_IDLE);
-            }catch (Exception E) {
-                E.printStackTrace();
-                this.setState(STATE_EMPTY);
-            }
+            stopRecording();
         }
     }
 
@@ -189,6 +124,85 @@ public class FragmentRecording extends FragmentBase {
         } else {
             this.setState(STATE_IDLE);
             stopPlayer();
+        }
+    }
+
+    private void startRecording() {
+        this.stopPlayer();
+        this.setState(STATE_RECORDING);
+        Common.newSampleRecord();
+        myAudioRecorder=new MediaRecorder();
+        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        myAudioRecorder.setOutputFile(Common.getSampleRecordPath());
+        recorderTimerCounter = 0;
+
+        try {
+            myAudioRecorder.prepare();
+            myAudioRecorder.start();
+
+            myAudioRecorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
+                @Override
+                public void onError(MediaRecorder mr, int what, int extra) {
+                    if (recorderTimer != null) {
+                        recorderTimer.cancel();
+                        recorderTimer.purge();
+                        recorderTimer = null;
+                    }
+                    myAudioRecorder = null;
+                    setState(STATE_EMPTY);
+                }
+            });
+
+            if (recorderTimer != null) {
+                recorderTimer.cancel();
+                recorderTimer.purge();
+                recorderTimer = null;
+            }
+
+            recorderTimer = new Timer();
+            recorderTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    int minute = (int) recorderTimerCounter / 60;
+                    int sec = recorderTimerCounter % 60;
+                    String _m = (int) (minute / 10) + "" + (int) (minute % 10);
+                    String _s = (int) (sec / 10) + "" + (int) (sec % 10);
+                    final String timer = _m + ":" + _s;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            recordingStatus.setText(timer);
+                        }});
+                    recorderTimerCounter++;
+                }
+            },0 , 1000);
+
+        }catch (Exception e) {
+            myAudioRecorder = null;
+            e.printStackTrace();
+            this.setState(STATE_EMPTY);
+        }
+    }
+
+    private void stopRecording() {
+        if (recorderTimer != null) {
+            recorderTimer.cancel();
+            recorderTimer.purge();
+            recorderTimer = null;
+        }
+        try {
+            if (myAudioRecorder != null) {
+                myAudioRecorder.stop();
+                myAudioRecorder.reset();
+                myAudioRecorder.release();
+                myAudioRecorder = null;
+            }
+            this.setState(STATE_IDLE);
+        }catch (Exception E) {
+            E.printStackTrace();
+            this.setState(STATE_EMPTY);
         }
     }
 
@@ -211,6 +225,7 @@ public class FragmentRecording extends FragmentBase {
                     mPlayer.reset();
                     mPlayer.release();
                     mPlayer = null;
+                    setState(STATE_IDLE);
                 }
             });
             try {

@@ -9,6 +9,7 @@ import vietnamworks.com.pal.components.CustomCardStackView;
 import vietnamworks.com.pal.components.CustomCardStackViewDelegate;
 import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.fragments.FragmentRecording;
+import vietnamworks.com.pal.fragments.FragmentWriting;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.services.AsyncCallback;
 
@@ -39,21 +40,25 @@ public class ActivityTaskList extends ActivityBase {
 
     public void onSubmitText(View v) {
         this.fragment_writing.setVisibility(View.GONE);
+        ((FragmentWriting)getSupportFragmentManager().findFragmentById(R.id.fragment_writing)).reset();
         stackView.closeCard();
     }
 
     public void onCancelSubmitText(View v) {
         this.fragment_writing.setVisibility(View.GONE);
+        ((FragmentWriting)getSupportFragmentManager().findFragmentById(R.id.fragment_writing)).reset();
         stackView.closeCard();
     }
 
     public void onSubmitAudio(View v) {
         this.fragment_speaking.setVisibility(View.GONE);
+        ((FragmentRecording)getSupportFragmentManager().findFragmentById(R.id.fragment_speaking)).reset();
         stackView.closeCard();
     }
 
     public void onCancelSubmitAudio(View v) {
         this.fragment_speaking.setVisibility(View.GONE);
+        ((FragmentRecording)getSupportFragmentManager().findFragmentById(R.id.fragment_speaking)).reset();
         stackView.closeCard();
     }
 
