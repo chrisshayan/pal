@@ -19,7 +19,7 @@
         android:hint="Enter your answer here"
         android:layout_margin="@dimen/base_padding"
         android:enabled="true"
-        android:textColor="@color/icons"
+        android:textColor="@color/primary_text"
         android:textColorHint="@color/secondary_text"
         android:layout_weight="1"
         android:background="@color/primary_light" />

@@ -45,6 +45,6 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/base_padding"
             android:gravity="center"
-            android:textColor="@color/secondary_text" />
+            android:textColor="@color/primary_text" />
     </RelativeLayout>
 </LinearLayout>
