@@ -3,6 +3,7 @@ package vietnamworks.com.pal.models;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import vietnamworks.com.pal.services.AsyncCallback;
 
@@ -24,6 +25,10 @@ public abstract class AbstractContainer<T> {
         this.data = data;
     }
     public void loadAsync(Context context, AsyncCallback callback) {
+        mActiveIndex = SELECTED_ITEM_NONE;
+    }
+
+    public void loadAsync(Context context, Map<String, Object>params, AsyncCallback callback) {
         mActiveIndex = SELECTED_ITEM_NONE;
     }
 

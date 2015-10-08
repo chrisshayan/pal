@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import vietnamworks.com.pal.components.CustomCardStackView;
 import vietnamworks.com.pal.components.CustomCardStackViewDelegate;
 import vietnamworks.com.pal.entities.Topic;
@@ -51,8 +54,9 @@ public class ActivityTaskList extends ActivityBase {
             @Override
             public void run() {
                 ((ActivityTaskList) (ActivityTaskList.sInstance)).showSaySomethingGroup();
+                startLoadingTask();
             }
-        }, 1000);
+        }, 500);
 
     }
 
@@ -145,48 +149,70 @@ public class ActivityTaskList extends ActivityBase {
     public void onToggleAudioMode(View v) {
         this.isUseAudioTask = !this.isUseAudioTask;
         ((FragmentToolbar)getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar)).setAudioMode(this.isUseAudioTask);
+        startLoadingTask();
+    }
+
+    private AsyncCallback loadDataCallback = new AsyncCallback() {
+        @Override
+        public void onSuccess(Context context, Object obj) {
+            setTimeout(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("onSuccess");
+                    int count = AppModel.topics.getData().size();
+                    if (count > 0) {
+                        Topic p = AppModel.topics.getData().get(0);
+                        stackView.getFront().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
+                    }
+                    if (count > 1) {
+                        Topic p = AppModel.topics.getData().get(1);
+                        stackView.getMid().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
+                    }
+                    if (count > 2) {
+                        Topic p = AppModel.topics.getData().get(2);
+                        stackView.getBack().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
+                    } else {
+                        Topic p = AppModel.topics.getData().get(0);
+                        stackView.getBack().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
+                    }
+                    
+                    stackView.refresh();
+                    stackView.unlock();
+                    ((FragmentToolbar) getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar)).enableAudioButton(true);
+                }
+            }, 1000);
+        }
+
+        @Override
+        public void onError(Context context, int code, String message) {
+            System.out.println("Fail to load data " + message);
+            stackView.getFront().setData(R.drawable.ic_launcher, "", "Fail to load data. Touch to retry");
+            stackView.unlock();
+            stackView.snooze();
+            ((FragmentToolbar) getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar)).enableAudioButton(true);
+        }
+    };
+
+    public void startLoadingTask() {
+        AppModel.topics.getData().clear();
+        stackView.refresh();
+        stackView.getFront().setData(R.drawable.ic_launcher, "", "Loading");
+        setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                stackView.lock();
+                Map<String, Object> cnd = new HashMap<>();
+                cnd.put("audio", isUseAudioTask);
+                AppModel.topics.loadAsync(ActivityBase.sInstance, cnd, loadDataCallback);
+                ((FragmentToolbar) getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar)).enableAudioButton(false);
+            }
+        });
     }
 }
 
 class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     @Override
     public void onLaunched(final CustomCardStackView ccsv) {
-        System.out.println("onLaunched");
-        //start loading
-        ccsv.getFront().setData(R.drawable.ic_launcher, "", "Loading");
-        ccsv.lock();
-        AppModel.topics.loadAsync(ActivityBase.sInstance, new AsyncCallback() {
-            @Override
-            public void onSuccess(Context context, Object obj) {
-                System.out.println("onSuccess");
-                int count = AppModel.topics.getData().size();
-                if (count > 0) {
-                    Topic p = AppModel.topics.getData().get(0);
-                    ccsv.getFront().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
-                }
-                if (count > 1) {
-                    Topic p = AppModel.topics.getData().get(1);
-                    ccsv.getMid().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
-                }
-                if (count > 2) {
-                    Topic p = AppModel.topics.getData().get(2);
-                    ccsv.getBack().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
-                } else {
-                    Topic p = AppModel.topics.getData().get(0);
-                    ccsv.getBack().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
-                }
-                ccsv.refresh();
-                ccsv.unlock();
-            }
-
-            @Override
-            public void onError(Context context, int code, String message) {
-                System.out.println("Fail to load data " + message);
-                ccsv.getFront().setData(R.drawable.ic_launcher, "", "Fail to load data. Touch to retry");
-                ccsv.unlock();
-                ccsv.snooze();
-            }
-        });
     }
 
     @Override
