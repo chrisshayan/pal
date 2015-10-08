@@ -46,6 +46,14 @@ public class ActivityTaskList extends ActivityBase {
 
         fragment_speaking = (View)this.findViewById(R.id.fragment_speaking);
         fragment_speaking.setVisibility(View.GONE);
+
+        this.setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                ((ActivityTaskList) (ActivityTaskList.sInstance)).showSaySomethingGroup();
+            }
+        }, 1000);
+
     }
 
     public void onSubmitText(View v) {
@@ -104,7 +112,7 @@ public class ActivityTaskList extends ActivityBase {
         ObjectAnimator animY1 = ObjectAnimator.ofFloat(groupSaySomething, "translationY", groupSaySomething.getHeight());
         animY1.setDuration(0);
         ObjectAnimator animY2 = ObjectAnimator.ofFloat(groupSaySomething, "translationY", 0);
-        animY2.setDuration(500);
+        animY2.setDuration(200);
         AnimatorSet set = new AnimatorSet();
         set.play(animY1).before(animY2);
         set.start();
@@ -169,7 +177,6 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
                 }
                 ccsv.refresh();
                 ccsv.unlock();
-                ((ActivityTaskList)(ActivityTaskList.sInstance)).showSaySomethingGroup();
             }
 
             @Override
