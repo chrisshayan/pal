@@ -18,6 +18,7 @@ public class FragmentToolbar extends FragmentBase {
     }
     ImageButton btnAudioMode;
     boolean useAudio = true;
+    boolean hasDisable = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,15 +31,16 @@ public class FragmentToolbar extends FragmentBase {
 
     public void setAudioMode(boolean val) {
         useAudio = val;
-        btnAudioMode.setImageResource(val?R.drawable.ic_microphone_borderless_lightblue:R.drawable.ic_microphone_disable_borderless_lightblue);
+        if (hasDisable) {
+            btnAudioMode.setImageResource(val ? R.drawable.ic_microphone_borderless_grey : R.drawable.ic_microphone_disable_borderless_grey);
+        } else {
+            btnAudioMode.setImageResource(val ? R.drawable.ic_microphone_borderless_lightblue : R.drawable.ic_microphone_disable_borderless_lightblue);
+        }
     }
 
     public void enableAudioButton(boolean val) {
         btnAudioMode.setEnabled(val);
-        if (val) {
-            setAudioMode(useAudio);
-        } else {
-            btnAudioMode.setImageResource(R.drawable.ic_microphone_borderless_grey);
-        }
+        hasDisable = !val;
+        setAudioMode(useAudio);
     }
 }

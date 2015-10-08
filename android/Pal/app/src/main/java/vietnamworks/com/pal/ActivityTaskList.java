@@ -175,7 +175,7 @@ public class ActivityTaskList extends ActivityBase {
                         Topic p = AppModel.topics.getData().get(0);
                         stackView.getBack().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
                     }
-                    
+
                     stackView.refresh();
                     stackView.unlock();
                     ((FragmentToolbar) getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar)).enableAudioButton(true);
@@ -196,7 +196,7 @@ public class ActivityTaskList extends ActivityBase {
     public void startLoadingTask() {
         AppModel.topics.getData().clear();
         stackView.refresh();
-        stackView.getFront().setData(R.drawable.ic_launcher, "", "Loading");
+        stackView.getFront().startLoading();
         setTimeout(new Runnable() {
             @Override
             public void run() {

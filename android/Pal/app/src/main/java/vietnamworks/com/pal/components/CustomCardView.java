@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import vietnamworks.com.pal.ActivityBase;
@@ -21,6 +22,7 @@ public class CustomCardView extends FrameLayout {
     private ViewGroup cardView;
     private View header;
     private View hr;
+    ProgressBar progressBar;
 
     private ImageView icon;
     private TextView body;
@@ -55,8 +57,16 @@ public class CustomCardView extends FrameLayout {
         title = (TextView)this.findViewById(R.id.cc_title);
         header = (View)this.findViewById(R.id.cc_header);
         hr = (View)this.findViewById(R.id.cc_hr);
-
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         ActivityBase.applyFont(this);
+        progressBar.setVisibility(GONE);
+    }
+
+    public void startLoading() {
+        icon.setImageResource(R.drawable.ic_search_grey);
+        title.setText(getResources().getString(R.string.message_loading));
+        body.setVisibility(GONE);
+        progressBar.setVisibility(VISIBLE);
     }
 
     public void setData(int icon, String title, String text) {
@@ -65,12 +75,16 @@ public class CustomCardView extends FrameLayout {
         this.body.setText(text);
         hr.setVisibility(VISIBLE);
         header.setVisibility(VISIBLE);
+        body.setVisibility(VISIBLE);
+        progressBar.setVisibility(GONE);
     }
 
     public void setData(String text) {
         hr.setVisibility(GONE);
         header.setVisibility(GONE);
         body.setText(text);
+        body.setVisibility(VISIBLE);
+        progressBar.setVisibility(GONE);
     }
 
     public void setHolderRef(CustomCardStackView ref) {
