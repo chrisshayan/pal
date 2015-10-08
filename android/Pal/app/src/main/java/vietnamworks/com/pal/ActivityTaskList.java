@@ -167,7 +167,11 @@ public class ActivityTaskList extends ActivityBase {
                     if (count > 1) {
                         Topic p = AppModel.topics.getData().get(1);
                         stackView.getMid().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
+                    } else {
+                        Topic p = AppModel.topics.getData().get(0);
+                        stackView.getMid().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
                     }
+
                     if (count > 2) {
                         Topic p = AppModel.topics.getData().get(2);
                         stackView.getBack().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
