@@ -57,7 +57,6 @@ public class ActivityTaskList extends ActivityBase {
                 startLoadingTask();
             }
         }, 500);
-
     }
 
     public void onSubmitText(View v) {
