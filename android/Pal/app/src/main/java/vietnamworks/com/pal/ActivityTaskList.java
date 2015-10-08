@@ -1,5 +1,8 @@
 package vietnamworks.com.pal;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +23,7 @@ public class ActivityTaskList extends ActivityBase {
     private CustomCardStackView stackView;
     public View fragment_writing;
     public View fragment_speaking;
+    public ViewGroup groupSaySomething;
 
     public ActivityTaskList() {}
 
@@ -30,6 +34,9 @@ public class ActivityTaskList extends ActivityBase {
 
         stackView = (CustomCardStackView)this.findViewById(R.id.cards_stack_view);
         stackView.setDelegate(new MyCustomCardStackViewDelegate());
+
+        groupSaySomething = (ViewGroup)this.findViewById(R.id.group_say_something);
+        groupSaySomething.setVisibility(View.INVISIBLE);
 
         fragment_writing = (View)this.findViewById(R.id.fragment_writing);
         fragment_writing.setVisibility(View.GONE);
@@ -46,26 +53,35 @@ public class ActivityTaskList extends ActivityBase {
                 fragment_writing.setVisibility(View.GONE);
                 ((FragmentWriting) getSupportFragmentManager().findFragmentById(R.id.fragment_writing)).reset();
                 stackView.closeCard();
+                showSaySomethingGroup();
             }
         }, 1000);
     }
 
     public void onCancelSubmitText(View v) {
         this.hideKeyboard();
-        this.fragment_writing.setVisibility(View.GONE);
-        ((FragmentWriting)getSupportFragmentManager().findFragmentById(R.id.fragment_writing)).reset();
-        stackView.closeCard();
+        setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                fragment_writing.setVisibility(View.GONE);
+                ((FragmentWriting) getSupportFragmentManager().findFragmentById(R.id.fragment_writing)).reset();
+                stackView.closeCard();
+                showSaySomethingGroup();
+            }
+        }, 1000);
     }
 
     public void onSubmitAudio(View v) {
         this.fragment_speaking.setVisibility(View.GONE);
         ((FragmentRecording)getSupportFragmentManager().findFragmentById(R.id.fragment_speaking)).reset();
+        showSaySomethingGroup();
         stackView.closeCard();
     }
 
     public void onCancelSubmitAudio(View v) {
         this.fragment_speaking.setVisibility(View.GONE);
         ((FragmentRecording)getSupportFragmentManager().findFragmentById(R.id.fragment_speaking)).reset();
+        showSaySomethingGroup();
         stackView.closeCard();
     }
 
@@ -78,6 +94,41 @@ public class ActivityTaskList extends ActivityBase {
     public void onToggleReplay(View v) {
         FragmentRecording currentFragment = (FragmentRecording)getSupportFragmentManager().findFragmentById(R.id.fragment_speaking);
         currentFragment.toggleReplay();
+    }
+
+    public void showSaySomethingGroup() {
+        groupSaySomething.setVisibility(View.VISIBLE);
+        ObjectAnimator animY1 = ObjectAnimator.ofFloat(groupSaySomething, "translationY", groupSaySomething.getHeight());
+        animY1.setDuration(0);
+        ObjectAnimator animY2 = ObjectAnimator.ofFloat(groupSaySomething, "translationY", 0);
+        animY2.setDuration(500);
+        AnimatorSet set = new AnimatorSet();
+        set.play(animY1).before(animY2);
+        set.start();
+    }
+
+    public void hideSaySomethingGroup() {
+        groupSaySomething.animate().translationY(groupSaySomething.getHeight()).setDuration(100).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                groupSaySomething.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        }).start();
     }
 }
 
@@ -95,21 +146,22 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
                 int count = AppModel.topics.getData().size();
                 if (count > 0) {
                     Topic p = AppModel.topics.getData().get(0);
-                    ccsv.getFront().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone_grey:R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
+                    ccsv.getFront().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
                 }
                 if (count > 1) {
                     Topic p = AppModel.topics.getData().get(1);
-                    ccsv.getMid().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone_grey:R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
+                    ccsv.getMid().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
                 }
                 if (count > 2) {
                     Topic p = AppModel.topics.getData().get(2);
-                    ccsv.getBack().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone_grey:R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
+                    ccsv.getBack().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
                 } else {
                     Topic p = AppModel.topics.getData().get(0);
-                    ccsv.getBack().setData(p.getType()==Topic.TYPE_SPEAKING?R.drawable.ic_microphone_grey:R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
+                    ccsv.getBack().setData(p.getType() == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, p.getTypeName(), p.getTitle());
                 }
                 ccsv.refresh();
                 ccsv.unlock();
+                ((ActivityTaskList)(ActivityTaskList.sInstance)).showSaySomethingGroup();
             }
 
             @Override
@@ -137,10 +189,17 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
         return AppModel.topics.getData().size();
     }
 
+
+    @Override
+    public void onBeforeSelectItem(int index, final CustomCardStackView ccsv) {
+        ((ActivityTaskList)(ActivityTaskList.sInstance)).hideSaySomethingGroup();
+    }
+
     @Override
     public void onSelectItem(int index, final CustomCardStackView ccsv) {
         System.out.println("onSelectItem " + index);
         if (index >= 0) {
+
             final int _index = index;
             ActivityBase.sInstance.setTimeout(new Runnable() {
                 @Override

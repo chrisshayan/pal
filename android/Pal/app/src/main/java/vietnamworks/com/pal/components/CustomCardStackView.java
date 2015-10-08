@@ -319,7 +319,11 @@ public class CustomCardStackView extends FrameLayout {
                             set.setDuration(250);
                             set.addListener(new Animator.AnimatorListener() {
                                 @Override
-                                public void onAnimationStart(Animator animation) {}
+                                public void onAnimationStart(Animator animation) {
+                                    if (delegate != null) {
+                                        delegate.onBeforeSelectItem(itemIndex % delegate.getTotalRecords(), CustomCardStackView.this);
+                                    }
+                                }
 
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
@@ -402,7 +406,14 @@ public class CustomCardStackView extends FrameLayout {
                             set.addListener(new Animator.AnimatorListener() {
                                 @Override
                                 public void onAnimationStart(Animator animation) {
-
+                                    if (delegate != null) {
+                                        int count = delegate.getTotalRecords();
+                                        if (count == 0) {
+                                            delegate.onBeforeSelectItem(-1, CustomCardStackView.this);
+                                        } else {
+                                            delegate.onBeforeSelectItem(itemIndex % delegate.getTotalRecords(), CustomCardStackView.this);
+                                        }
+                                    }
                                 }
 
                                 @Override
