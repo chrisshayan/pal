@@ -39,12 +39,19 @@ public class ActivityTaskList extends ActivityBase {
     }
 
     public void onSubmitText(View v) {
-        this.fragment_writing.setVisibility(View.GONE);
-        ((FragmentWriting)getSupportFragmentManager().findFragmentById(R.id.fragment_writing)).reset();
-        stackView.closeCard();
+        this.hideKeyboard();
+        setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                fragment_writing.setVisibility(View.GONE);
+                ((FragmentWriting) getSupportFragmentManager().findFragmentById(R.id.fragment_writing)).reset();
+                stackView.closeCard();
+            }
+        }, 1000);
     }
 
     public void onCancelSubmitText(View v) {
+        this.hideKeyboard();
         this.fragment_writing.setVisibility(View.GONE);
         ((FragmentWriting)getSupportFragmentManager().findFragmentById(R.id.fragment_writing)).reset();
         stackView.closeCard();
