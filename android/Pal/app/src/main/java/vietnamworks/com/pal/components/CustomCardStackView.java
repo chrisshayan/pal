@@ -280,10 +280,12 @@ public class CustomCardStackView extends FrameLayout {
                 }
 
                 @Override
-                public void onAnimationCancel(Animator animation) {}
+                public void onAnimationCancel(Animator animation) {
+                }
 
                 @Override
-                public void onAnimationRepeat(Animator animation) {}
+                public void onAnimationRepeat(Animator animation) {
+                }
             });
             set.start();
 
@@ -548,7 +550,7 @@ public class CustomCardStackView extends FrameLayout {
         }
 
         boolean requiredUpdateLayout = false;
-        float movingPercent = 0f;
+        float movingPercent = 0f, overMovingPercent = 0f;
         switch (state) {
             case STATE_PRE_INIT:
                 break;
@@ -561,7 +563,9 @@ public class CustomCardStackView extends FrameLayout {
                     requiredUpdateLayout = true;
                 }
                 if (requiredUpdateLayout) {
-                    movingPercent = Math.min(Math.abs(frontLayout.leftMargin) / (front.getWidth()*CARD_TRIGGER_PERCENT), 1.0f);
+                    float p = Math.abs(frontLayout.leftMargin) / (front.getWidth()*CARD_TRIGGER_PERCENT);
+                    movingPercent = Math.min(p, 1.0f);
+                    overMovingPercent = Math.max(Math.min(p - 1.0f, 1.0f), 0f);
                     if (movingPercent >= 1.0f) {
                         switchState(STATE_DRAG_OUT);
                     } else if (movingPercent > 0 && state == STATE_DRAG_OUT) {
@@ -618,6 +622,7 @@ public class CustomCardStackView extends FrameLayout {
         }
 
         final float movingScale = movingPercent;
+        final float _overMovingPercent = overMovingPercent;
         final int _state = this.state;
 
         if (requiredUpdateLayout) {
@@ -635,7 +640,7 @@ public class CustomCardStackView extends FrameLayout {
                             front.resetBackgroundColor();
                         }
                         */
-                        front.setRotation(movingScale * FIRST_CARD_MAX_ROTATE_ANGLE * Common.sign(frontLayout.leftMargin));
+                        front.setRotation(_overMovingPercent * FIRST_CARD_MAX_ROTATE_ANGLE * Common.sign(frontLayout.leftMargin));
 
                         float mid_scalingFactor = (1.0f - cardScale) + cardScale * movingScale;
                         mid.setScaleX(mid_scalingFactor);
