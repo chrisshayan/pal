@@ -159,11 +159,13 @@ public class CustomCardStackView extends FrameLayout {
     public void onChildTouchEvent(CustomCardView child, MotionEvent ev) {
         if (!isLocked && !isFakeDrag && (state == STATE_IDLE || state == STATE_DRAG || state == STATE_DRAG_OUT)) {
             final int action = MotionEventCompat.getActionMasked(ev);
+            int distance = (int) (ev.getRawX() - mDownX);
+
             if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
                 if (state == STATE_DRAG_OUT) {
-                    switchState(STATE_REORDER);
+                    targetScrollX = (int)((front.getWidth()*CARD_TRIGGER_PERCENT*2) * Common.sign(distance));
+                    isFakeDrag = true;
                 } else {
-                    int distance = (int) (ev.getRawX() - mDownX);
                     long dt = System.currentTimeMillis() - lastTimeTouch;
                     if (dt < SWIPE_MIN_DT && Math.abs(distance) > density*SWIPE_MIN_DISTANCE) {
                         //is swipe
