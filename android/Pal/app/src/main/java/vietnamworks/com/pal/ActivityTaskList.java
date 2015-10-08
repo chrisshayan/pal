@@ -142,10 +142,10 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
         System.out.println("onSelectItem " + index);
         if (index >= 0) {
             final int _index = index;
-            new android.os.Handler().post(new Runnable() {
+            ActivityBase.sInstance.setTimeout(new Runnable() {
                 @Override
                 public void run() {
-                    ActivityTaskList act = (ActivityTaskList)ActivityTaskList.sInstance;
+                    ActivityTaskList act = (ActivityTaskList) ActivityTaskList.sInstance;
                     int type = AppModel.topics.getData().get(_index).getType();
                     if (type == Topic.TYPE_SPEAKING) {
                         act.fragment_speaking.setVisibility(View.VISIBLE);
