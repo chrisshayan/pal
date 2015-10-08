@@ -3,11 +3,13 @@ package vietnamworks.com.pal.components;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 
 import vietnamworks.com.pal.ActivityBase;
@@ -134,6 +136,10 @@ public class CustomCardStackView extends FrameLayout {
     public final static float CARD_TRIGGER_PERCENT = 0.25f;
     public final static float FIRST_CARD_MAX_ROTATE_ANGLE = 5.0f;
     public final static float HIDDEN_CARD_ROTATE_ANGLE = 1.0f;
+    public final static float CARD_WIDTH = 0.9f;
+    public final static float CARD_HEIGHT = 0.65f;
+
+
 
 
     private float mDownX;
@@ -203,9 +209,8 @@ public class CustomCardStackView extends FrameLayout {
         int[] screen_size = ActivityBase.getScreenSize();
 
         density = this.getResources().getDisplayMetrics().density;
-        int card_width = (int)(screen_size[0]*0.9f);
-        //int card_height = (int)(card_width*9.0f/16.0f);
-        int card_height = (int)(screen_size[1]*0.65f);
+        int card_width = (int)(screen_size[0]*CARD_WIDTH);
+        int card_height = (int)(screen_size[1]*CARD_HEIGHT);
 
         int card_scale_px = (int)(CARD_SCALE_STEP*density);
         cardScale = 1 - ((card_height - card_scale_px)*1.0f/card_height);
@@ -362,17 +367,35 @@ public class CustomCardStackView extends FrameLayout {
                             back.setVisibility(GONE);
                             mid.setVisibility(GONE);
                             int[] screen_size = ActivityBase.getScreenSize();
-                            float scale = screen_size[0]*1.0f/front.getWidth();
+                            int new_height = (int)(screen_size[0]*9.0f/16.0f);
 
-                            ObjectAnimator anim1 = ObjectAnimator.ofFloat(mid, "translationY", CARD_MARGIN*density);
-                            ObjectAnimator anim2 = ObjectAnimator.ofFloat(back, "translationY", 2*CARD_MARGIN*density);
-                            ObjectAnimator anim3 = ObjectAnimator.ofFloat(front, "translationY", -screen_size[1]/2 + (front.getHeight()/scale)/2 + ActivityBase.sInstance.getStatusBarHeight());
-                            ObjectAnimator anim4 = ObjectAnimator.ofFloat(front, "scaleX", scale);
-                            ObjectAnimator anim5 = ObjectAnimator.ofFloat(front, "scaleY", scale);
                             AnimatorSet set = new AnimatorSet();
-                            set.play(anim1).with(anim2).with(anim3);
-                            set.play(anim4).with(anim5).after(anim3);
-                            set.setDuration(250);
+
+                            ValueAnimator a1 = ValueAnimator.ofInt(front.getHeight(), new_height).setDuration(100);
+                            a1.setInterpolator(new AccelerateDecelerateInterpolator());
+                            a1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                public void onAnimationUpdate(ValueAnimator animation) {
+                                    frontLayout.height = (int) animation.getAnimatedValue();
+                                    front.setLayoutParams(frontLayout);
+                                }
+                            });
+
+
+                            ValueAnimator a2 = ValueAnimator.ofInt(front.getWidth(), screen_size[0]).setDuration(100);
+                            a2.setInterpolator(new AccelerateDecelerateInterpolator());
+                            a2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                public void onAnimationUpdate(ValueAnimator animation) {
+                                    frontLayout.width = (int) animation.getAnimatedValue();
+                                    front.setLayoutParams(frontLayout);
+                                }
+                            });
+
+                            ObjectAnimator a3 = ObjectAnimator.ofFloat(front, "y", 0);
+                            a3.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                            set.play(a1).before(a3);
+                            set.play(a2).after(a3);
+
                             set.addListener(new Animator.AnimatorListener() {
                                 @Override
                                 public void onAnimationStart(Animator animation) {
@@ -404,28 +427,45 @@ public class CustomCardStackView extends FrameLayout {
                         @Override
                         public void run() {
                             front.setBackgroundResource(R.drawable.layout_corner_bg);
-                            ObjectAnimator anim1 = ObjectAnimator.ofFloat(front, "translationY", 0);
-                            ObjectAnimator anim2 = ObjectAnimator.ofFloat(front, "scaleX", 1);
-                            ObjectAnimator anim3 = ObjectAnimator.ofFloat(front, "scaleY", 1);
+                            int[] screen_size = ActivityBase.getScreenSize();
+                            int new_width = (int)(screen_size[0]*CARD_WIDTH);
+                            int new_height = (int)(screen_size[1]*CARD_HEIGHT);
+
                             AnimatorSet set = new AnimatorSet();
-                            set.play(anim2).with(anim3).before(anim1);
-                            set.setDuration(250);
+
+                            ValueAnimator a1 = ValueAnimator.ofInt(front.getHeight(), new_height).setDuration(100);
+                            a1.setInterpolator(new AccelerateDecelerateInterpolator());
+                            a1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                public void onAnimationUpdate(ValueAnimator animation) {
+                                    frontLayout.height = (int) animation.getAnimatedValue();
+                                    front.setLayoutParams(frontLayout);
+                                }
+                            });
+
+
+                            ValueAnimator a2 = ValueAnimator.ofInt(front.getWidth(), new_width).setDuration(100);
+                            a2.setInterpolator(new AccelerateDecelerateInterpolator());
+                            a2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                public void onAnimationUpdate(ValueAnimator animation) {
+                                    frontLayout.width = (int) animation.getAnimatedValue();
+                                    front.setLayoutParams(frontLayout);
+                                }
+                            });
+                            ObjectAnimator a3 = ObjectAnimator.ofFloat(front, "translationY", 0);
+                            a3.setInterpolator(new AccelerateDecelerateInterpolator());
+
+                            set.play(a2).before(a3);
+                            set.play(a1).after(a3);
+
                             set.addListener(new Animator.AnimatorListener() {
                                 @Override
-                                public void onAnimationStart(Animator animation) {}
+                                public void onAnimationStart(Animator animation) {
+                                }
 
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
                                     back.setVisibility(VISIBLE);
                                     mid.setVisibility(VISIBLE);
-                                    ObjectAnimator anim1 = ObjectAnimator.ofFloat(mid, "translationY", 0);
-                                    anim1.setDuration(100);
-                                    anim1.start();
-
-                                    ObjectAnimator anim2 = ObjectAnimator.ofFloat(back, "translationY", 0);
-                                    anim2.setDuration(100);
-                                    anim2.start();
-
                                     switchState(STATE_IDLE);
                                 }
 
@@ -647,14 +687,14 @@ public class CustomCardStackView extends FrameLayout {
                         mid.setScaleY(mid_scalingFactor);
                         mid.setRotation(HIDDEN_CARD_ROTATE_ANGLE * (1 - movingScale));
                         //midLayout.setMargins(0, (int) ((-CARD_MARGIN + CARD_MARGIN * movingScale) * density), 0, 0);
-                        mid.setLayoutParams(midLayout);
+                        //mid.setLayoutParams(midLayout);
 
                         float back_scalingFactor = (1.0f - cardScale * 2.0f) + cardScale * movingScale;
                         back.setScaleX(back_scalingFactor);
                         back.setScaleY(back_scalingFactor);
                         back.setRotation(HIDDEN_CARD_ROTATE_ANGLE + HIDDEN_CARD_ROTATE_ANGLE * (1 - movingScale));
                         //backLayout.setMargins(backLayout.leftMargin, (int) ((-2 * CARD_MARGIN + CARD_MARGIN * movingScale) * density), 0, 0);
-                        back.setLayoutParams(backLayout);
+                        //back.setLayoutParams(backLayout);
                     } else {
                         holder.removeAllViews();
                         holder.addView(front);
