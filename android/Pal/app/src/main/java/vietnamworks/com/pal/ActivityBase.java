@@ -3,6 +3,7 @@ package vietnamworks.com.pal;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
@@ -10,7 +11,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import vietnamworks.com.pal.services.FirebaseService;
 
@@ -21,7 +24,14 @@ import vietnamworks.com.pal.services.FirebaseService;
 public class ActivityBase extends AppCompatActivity {
     public static String applicationDataPath = "";
     public static float density;
-    private Handler handler;
+    private Handler handler = new Handler();
+
+    public static Typeface RobotoL;
+    public static Typeface RobotoR;
+    public static Typeface RobotoB;
+    public static Typeface RobotoBI;
+    public static Typeface RobotoI;
+    public static Typeface RobotoLI;
 
     public ActivityBase() {
         super();
@@ -36,6 +46,13 @@ public class ActivityBase extends AppCompatActivity {
             applicationDataPath = this.getApplicationInfo().dataDir;
         }
         density = this.getResources().getDisplayMetrics().density;
+
+        RobotoL = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
+        RobotoLI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-LightItalic.ttf");
+        RobotoR = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        RobotoB = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
+        RobotoBI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-BoldItalic.ttf");
+        RobotoI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Italic.ttf");
     }
 
     @Override
@@ -43,6 +60,66 @@ public class ActivityBase extends AppCompatActivity {
         super.onDestroy();
         //ActivityBase.sInstance = null;
         FirebaseService.setContext(null);
+    }
+
+    public static void applyFont(final View v) {
+        applyFont(v,RobotoL);
+    }
+
+    public static void applyFont(final View v, String font_des) {
+        Typeface t = RobotoL;
+        font_des = font_des.toLowerCase();
+        boolean isItalic = false;
+        boolean isBold = false;
+        boolean isRegular = false;
+        boolean isLight = false;
+        if (font_des.contains("i")) {
+            isItalic = true;
+        }
+        if (font_des.contains("b")) {
+            isBold = true;
+        }
+        if (font_des.contains("r")) {
+            isRegular = true;
+        }
+        if (font_des.contains("l")) {
+            isLight = true;
+        }
+
+        if (isBold) {
+            t = RobotoB;
+            if (isItalic) {
+                t = RobotoBI;
+            }
+        } else if (isLight) {
+            t = RobotoL;
+            if (isItalic) {
+                t = RobotoLI;
+            }
+        } else if (isRegular) {
+            t = RobotoR;
+        } else if (isItalic) {
+            t = RobotoI;
+        }
+        applyFont(v, t);
+    }
+
+    public static void applyFont(final View v, Typeface font) {
+        if (v != null) {
+            try {
+                if (v instanceof ViewGroup) {
+                    ViewGroup vg = (ViewGroup) v;
+                    for (int i = 0; i < vg.getChildCount(); i++) {
+                        View child = vg.getChildAt(i);
+                        applyFont(child, font);
+                    }
+                } else if (v instanceof TextView) {
+                    ((TextView)v).setTypeface(font);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void openFragment(android.support.v4.app.Fragment f, int holder_id, boolean addToBackStack) {

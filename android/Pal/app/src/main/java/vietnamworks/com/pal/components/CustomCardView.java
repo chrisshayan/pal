@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import vietnamworks.com.pal.ActivityBase;
 import vietnamworks.com.pal.R;
 
 /**
@@ -55,8 +56,9 @@ public class CustomCardView extends FrameLayout {
         title = (TextView)this.findViewById(R.id.cc_title);
         header = (View)this.findViewById(R.id.cc_header);
         hr = (View)this.findViewById(R.id.cc_hr);
-
         originBackgroundColor = getResources().getColor(R.color.icons);
+
+        ActivityBase.applyFont(this);
     }
 
     public void setData(int icon, String title, String text) {
