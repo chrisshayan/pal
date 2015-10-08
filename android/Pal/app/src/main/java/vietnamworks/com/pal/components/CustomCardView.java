@@ -19,7 +19,6 @@ import vietnamworks.com.pal.R;
 public class CustomCardView extends FrameLayout {
     private CustomCardStackView refStack;
     private ViewGroup cardView;
-    private int originBackgroundColor;
     private View header;
     private View hr;
 
@@ -56,7 +55,6 @@ public class CustomCardView extends FrameLayout {
         title = (TextView)this.findViewById(R.id.cc_title);
         header = (View)this.findViewById(R.id.cc_header);
         hr = (View)this.findViewById(R.id.cc_hr);
-        originBackgroundColor = getResources().getColor(R.color.icons);
 
         ActivityBase.applyFont(this);
     }
@@ -73,10 +71,6 @@ public class CustomCardView extends FrameLayout {
         hr.setVisibility(GONE);
         header.setVisibility(GONE);
         body.setText(text);
-    }
-
-    public void setDefaultBackgroundColor(int color) {
-        originBackgroundColor = color;
     }
 
     public void setHolderRef(CustomCardStackView ref) {
