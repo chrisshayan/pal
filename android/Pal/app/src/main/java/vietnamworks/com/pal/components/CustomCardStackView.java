@@ -130,7 +130,7 @@ public class CustomCardStackView extends FrameLayout {
     public final static float SWIPE_MIN_DISTANCE = 50f;
     public final static float SWIPE_MIN_DT = 500;
     public final static float MOVE_MIN_DISTANCE = 3f;
-    public final static float CARD_SCALE_STEP = 0.05f;
+    public final static float CARD_SCALE_STEP = 5f;
     public final static float CARD_TRIGGER_PERCENT = 0.25f;
     public final static float MAX_ROTATE_ANGLE = 5.0f;
 
@@ -145,6 +145,7 @@ public class CustomCardStackView extends FrameLayout {
     private long lastTimeTouch = 0;
     private long frameDt;
     private long lastUpdate;
+    private float cardScale;
 
     private void switchState(int state) {nextState = state;}
 
@@ -200,7 +201,11 @@ public class CustomCardStackView extends FrameLayout {
 
         density = this.getResources().getDisplayMetrics().density;
         int card_width = (int)(screen_size[0]*0.9f);
-        int card_height = (int)(card_width*9.0f/16.0f);
+        //int card_height = (int)(card_width*9.0f/16.0f);
+        int card_height = (int)(screen_size[1]*0.65f);
+
+        int card_scale_px = (int)(CARD_SCALE_STEP*density);
+        cardScale = 1 - ((card_height - card_scale_px)*1.0f/card_height);
 
         frontLayout = (FrameLayout.LayoutParams)front.getLayoutParams();
         frontLayout.setMargins(0, 0, 0, 0);
@@ -216,8 +221,8 @@ public class CustomCardStackView extends FrameLayout {
         midLayout.setMargins(0, (int) (-CARD_MARGIN * density), 0, 0);
         midLayout.width = card_width;
         midLayout.height = card_height;
-        mid.setScaleX(1.0f - CARD_SCALE_STEP);
-        mid.setScaleY(1.0f - CARD_SCALE_STEP);
+        mid.setScaleX(1.0f - cardScale);
+        mid.setScaleY(1.0f - cardScale);
         mid.setLayoutParams(midLayout);
         mid.setBackgroundResource(R.drawable.layout_corner_bg);
 
@@ -225,8 +230,8 @@ public class CustomCardStackView extends FrameLayout {
         backLayout.setMargins(backLayout.leftMargin, (int) (-2*CARD_MARGIN * density), 0, 0);
         backLayout.width = card_width;
         backLayout.height = card_height;
-        back.setScaleX(1.0f - CARD_SCALE_STEP * 2.0f);
-        back.setScaleY(1.0f - CARD_SCALE_STEP * 2.0f);
+        back.setScaleX(1.0f - cardScale * 2.0f);
+        back.setScaleY(1.0f - cardScale * 2.0f);
         back.setLayoutParams(backLayout);
         back.setBackgroundResource(R.drawable.layout_corner_bg);
 
@@ -583,13 +588,13 @@ public class CustomCardStackView extends FrameLayout {
                         */
                         front.setRotation(movingScale * MAX_ROTATE_ANGLE * Common.sign(frontLayout.leftMargin));
 
-                        float mid_scalingFactor = (1.0f - CARD_SCALE_STEP) + CARD_SCALE_STEP * movingScale;
+                        float mid_scalingFactor = (1.0f - cardScale) + cardScale * movingScale;
                         mid.setScaleX(mid_scalingFactor);
                         mid.setScaleY(mid_scalingFactor);
                         midLayout.setMargins(0, (int) ((-CARD_MARGIN + CARD_MARGIN * movingScale) * density), 0, 0);
                         mid.setLayoutParams(midLayout);
 
-                        float back_scalingFactor = (1.0f - CARD_SCALE_STEP * 2.0f) + CARD_SCALE_STEP * movingScale;
+                        float back_scalingFactor = (1.0f - cardScale * 2.0f) + cardScale * movingScale;
                         back.setScaleX(back_scalingFactor);
                         back.setScaleY(back_scalingFactor);
                         backLayout.setMargins(backLayout.leftMargin, (int) ((-2 * CARD_MARGIN + CARD_MARGIN * movingScale) * density), 0, 0);
