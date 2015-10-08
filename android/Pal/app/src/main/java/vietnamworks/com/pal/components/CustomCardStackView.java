@@ -130,9 +130,10 @@ public class CustomCardStackView extends FrameLayout {
     public final static float SWIPE_MIN_DISTANCE = 50f;
     public final static float SWIPE_MIN_DT = 500;
     public final static float MOVE_MIN_DISTANCE = 3f;
-    public final static float CARD_SCALE_STEP = 5f;
+    public final static float CARD_SCALE_STEP = 2f;
     public final static float CARD_TRIGGER_PERCENT = 0.25f;
-    public final static float MAX_ROTATE_ANGLE = 5.0f;
+    public final static float FIRST_CARD_MAX_ROTATE_ANGLE = 5.0f;
+    public final static float HIDDEN_CARD_ROTATE_ANGLE = 1.0f;
 
 
     private float mDownX;
@@ -216,25 +217,28 @@ public class CustomCardStackView extends FrameLayout {
         front.setLayoutParams(frontLayout);
         //front.setBackgroundColor(getResources().getColor(R.color.icons));
         front.setBackgroundResource(R.drawable.layout_corner_bg);
+        front.setRotation(0f);
 
         midLayout = (FrameLayout.LayoutParams)mid.getLayoutParams();
-        midLayout.setMargins(0, (int) (-CARD_MARGIN * density), 0, 0);
+        //midLayout.setMargins(0, (int) (-CARD_MARGIN * density), 0, 0);
         midLayout.width = card_width;
         midLayout.height = card_height;
         mid.setScaleX(1.0f - cardScale);
         mid.setScaleY(1.0f - cardScale);
         mid.setLayoutParams(midLayout);
         mid.setBackgroundResource(R.drawable.layout_corner_bg);
+        //mid.setRotation(HIDDEN_CARD_ROTATE_ANGLE);
+        mid.animate().rotation(HIDDEN_CARD_ROTATE_ANGLE).start();
 
         backLayout = (FrameLayout.LayoutParams) back.getLayoutParams();
-        backLayout.setMargins(backLayout.leftMargin, (int) (-2*CARD_MARGIN * density), 0, 0);
+        //backLayout.setMargins(backLayout.leftMargin, (int) (-2*CARD_MARGIN * density), 0, 0);
         backLayout.width = card_width;
         backLayout.height = card_height;
         back.setScaleX(1.0f - cardScale * 2.0f);
         back.setScaleY(1.0f - cardScale * 2.0f);
         back.setLayoutParams(backLayout);
         back.setBackgroundResource(R.drawable.layout_corner_bg);
-
+        //back.setRotation(HIDDEN_CARD_ROTATE_ANGLE*2);
 
         front.setVisibility(VISIBLE);
         if (this.totalItem < 1) {
@@ -251,11 +255,54 @@ public class CustomCardStackView extends FrameLayout {
             this.totalItem = this.delegate.getTotalRecords();
         }
         if (this.totalItem < 1) {
-            mid.setVisibility(INVISIBLE);
-            back.setVisibility(INVISIBLE);
+            AnimatorSet set = new AnimatorSet();
+            ObjectAnimator rotate1 = ObjectAnimator.ofFloat(mid, "rotation", HIDDEN_CARD_ROTATE_ANGLE, 0).setDuration(100);
+            ObjectAnimator rotate2 = ObjectAnimator.ofFloat(back, "rotation", HIDDEN_CARD_ROTATE_ANGLE*2, 0).setDuration(200);
+            set.play(rotate1).with(rotate2);
+
+            set.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mid.setVisibility(INVISIBLE);
+                            back.setVisibility(INVISIBLE);
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {}
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {}
+            });
+            set.start();
+
         } else {
             mid.setVisibility(VISIBLE);
             back.setVisibility(VISIBLE);
+            AnimatorSet set = new AnimatorSet();
+
+            ObjectAnimator scaleXAnimator_1 = ObjectAnimator.ofFloat(front, "scaleX", 0.99f).setDuration(100);
+            ObjectAnimator scaleXAnimator_2 = ObjectAnimator.ofFloat(front, "scaleX", 1.0f).setDuration(100);
+
+            ObjectAnimator scaleYAnimator_1 = ObjectAnimator.ofFloat(front, "scaleY", 0.99f).setDuration(100);
+            ObjectAnimator scaleYAnimator_2 = ObjectAnimator.ofFloat(front, "scaleY", 1.0f).setDuration(100);
+
+            ObjectAnimator rotate1 = ObjectAnimator.ofFloat(mid, "rotation", 0, HIDDEN_CARD_ROTATE_ANGLE).setDuration(100);
+            ObjectAnimator rotate2 = ObjectAnimator.ofFloat(back, "rotation", 0, HIDDEN_CARD_ROTATE_ANGLE*2).setDuration(200);
+
+            set.play(scaleXAnimator_1).with(scaleYAnimator_1);
+            set.play(scaleXAnimator_2).with(scaleYAnimator_2).after(scaleXAnimator_1);
+            set.play(rotate1).with(rotate2).after(scaleXAnimator_2);
+            set.start();
         }
     }
 
@@ -586,18 +633,20 @@ public class CustomCardStackView extends FrameLayout {
                             front.resetBackgroundColor();
                         }
                         */
-                        front.setRotation(movingScale * MAX_ROTATE_ANGLE * Common.sign(frontLayout.leftMargin));
+                        front.setRotation(movingScale * FIRST_CARD_MAX_ROTATE_ANGLE * Common.sign(frontLayout.leftMargin));
 
                         float mid_scalingFactor = (1.0f - cardScale) + cardScale * movingScale;
                         mid.setScaleX(mid_scalingFactor);
                         mid.setScaleY(mid_scalingFactor);
-                        midLayout.setMargins(0, (int) ((-CARD_MARGIN + CARD_MARGIN * movingScale) * density), 0, 0);
+                        mid.setRotation(HIDDEN_CARD_ROTATE_ANGLE * (1 - movingScale));
+                        //midLayout.setMargins(0, (int) ((-CARD_MARGIN + CARD_MARGIN * movingScale) * density), 0, 0);
                         mid.setLayoutParams(midLayout);
 
                         float back_scalingFactor = (1.0f - cardScale * 2.0f) + cardScale * movingScale;
                         back.setScaleX(back_scalingFactor);
                         back.setScaleY(back_scalingFactor);
-                        backLayout.setMargins(backLayout.leftMargin, (int) ((-2 * CARD_MARGIN + CARD_MARGIN * movingScale) * density), 0, 0);
+                        back.setRotation(HIDDEN_CARD_ROTATE_ANGLE + HIDDEN_CARD_ROTATE_ANGLE * (1 - movingScale));
+                        //backLayout.setMargins(backLayout.leftMargin, (int) ((-2 * CARD_MARGIN + CARD_MARGIN * movingScale) * density), 0, 0);
                         back.setLayoutParams(backLayout);
                     } else {
                         holder.removeAllViews();
