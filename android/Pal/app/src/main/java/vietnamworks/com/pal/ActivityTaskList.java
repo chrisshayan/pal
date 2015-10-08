@@ -12,6 +12,7 @@ import vietnamworks.com.pal.components.CustomCardStackView;
 import vietnamworks.com.pal.components.CustomCardStackViewDelegate;
 import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.fragments.FragmentRecording;
+import vietnamworks.com.pal.fragments.FragmentToolbar;
 import vietnamworks.com.pal.fragments.FragmentWriting;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.services.AsyncCallback;
@@ -24,6 +25,8 @@ public class ActivityTaskList extends ActivityBase {
     public View fragment_writing;
     public View fragment_speaking;
     public ViewGroup groupSaySomething;
+
+    private boolean isUseAudioTask = true;
 
     public ActivityTaskList() {}
 
@@ -129,6 +132,11 @@ public class ActivityTaskList extends ActivityBase {
 
             }
         }).start();
+    }
+
+    public void onToggleAudioMode(View v) {
+        this.isUseAudioTask = !this.isUseAudioTask;
+        ((FragmentToolbar)getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar)).setAudioMode(this.isUseAudioTask);
     }
 }
 
