@@ -30,9 +30,10 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
-        android:background="@color/divider"
+        android:background="@color/primary_light"
         android:id="@+id/cc_hr"
-        android:layout_marginLeft="5dp" />
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent">

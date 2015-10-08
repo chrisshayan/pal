@@ -48,6 +48,13 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:textColor="@color/icons" />
 
+        <View
+            android:layout_width="1px"
+            android:layout_height="fill_parent"
+            android:background="@color/divider"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
