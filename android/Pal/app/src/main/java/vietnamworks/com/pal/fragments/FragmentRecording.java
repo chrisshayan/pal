@@ -55,7 +55,7 @@ public class FragmentRecording extends FragmentBase {
 
     public void reset() {
         stopPlayer();
-        startRecording();
+        stopRecording();
         setState(STATE_EMPTY);
     }
 
