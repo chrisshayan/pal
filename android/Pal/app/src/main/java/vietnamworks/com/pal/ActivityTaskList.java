@@ -55,7 +55,7 @@ public class ActivityTaskList extends ActivityBase {
                 stackView.closeCard();
                 showSaySomethingGroup();
             }
-        }, 1000);
+        }, 100);
     }
 
     public void onCancelSubmitText(View v) {
@@ -68,7 +68,7 @@ public class ActivityTaskList extends ActivityBase {
                 stackView.closeCard();
                 showSaySomethingGroup();
             }
-        }, 1000);
+        }, 10);
     }
 
     public void onSubmitAudio(View v) {

@@ -131,6 +131,14 @@ public class FragmentRecording extends FragmentBase {
         this.stopPlayer();
         this.setState(STATE_RECORDING);
         Common.newSampleRecord();
+
+        if (myAudioRecorder != null) {
+            myAudioRecorder.stop();
+            myAudioRecorder.reset();
+            myAudioRecorder.release();
+            myAudioRecorder = null;
+        }
+
         myAudioRecorder=new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
