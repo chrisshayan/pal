@@ -68,6 +68,7 @@ public class ActivityTaskList extends ActivityBase {
                 ((FragmentWriting) getSupportFragmentManager().findFragmentById(R.id.fragment_writing)).reset();
                 stackView.closeCard();
                 showSaySomethingGroup();
+                enableAudioButton(true);
             }
         }, 100);
     }
@@ -81,6 +82,7 @@ public class ActivityTaskList extends ActivityBase {
                 ((FragmentWriting) getSupportFragmentManager().findFragmentById(R.id.fragment_writing)).reset();
                 stackView.closeCard();
                 showSaySomethingGroup();
+                enableAudioButton(true);
             }
         }, 10);
     }
@@ -90,6 +92,7 @@ public class ActivityTaskList extends ActivityBase {
         ((FragmentRecording)getSupportFragmentManager().findFragmentById(R.id.fragment_speaking)).reset();
         showSaySomethingGroup();
         stackView.closeCard();
+        enableAudioButton(true);
     }
 
     public void onCancelSubmitAudio(View v) {
@@ -97,6 +100,7 @@ public class ActivityTaskList extends ActivityBase {
         ((FragmentRecording)getSupportFragmentManager().findFragmentById(R.id.fragment_speaking)).reset();
         showSaySomethingGroup();
         stackView.closeCard();
+        enableAudioButton(true);
     }
 
     public void onToggleRecorder(View v) {
@@ -122,6 +126,7 @@ public class ActivityTaskList extends ActivityBase {
     }
 
     public void hideSaySomethingGroup() {
+        enableAudioButton(false);
         groupSaySomething.animate().translationY(groupSaySomething.getHeight()).setDuration(100).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -181,7 +186,7 @@ public class ActivityTaskList extends ActivityBase {
 
                     stackView.refresh();
                     stackView.unlock();
-                    ((FragmentToolbar) getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar)).enableAudioButton(true);
+                    enableAudioButton(true);
                 }
             }, 1000);
         }
@@ -192,7 +197,7 @@ public class ActivityTaskList extends ActivityBase {
             stackView.getFront().setData(R.drawable.ic_launcher, "", "Fail to load data. Touch to retry");
             stackView.unlock();
             stackView.snooze();
-            ((FragmentToolbar) getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar)).enableAudioButton(true);
+            enableAudioButton(true);
         }
     };
 
@@ -207,9 +212,13 @@ public class ActivityTaskList extends ActivityBase {
                 Map<String, Object> cnd = new HashMap<>();
                 cnd.put("audio", isUseAudioTask);
                 AppModel.topics.loadAsync(ActivityBase.sInstance, cnd, loadDataCallback);
-                ((FragmentToolbar) getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar)).enableAudioButton(false);
+                enableAudioButton(false);
             }
         });
+    }
+
+    private void enableAudioButton(boolean val) {
+        ((FragmentToolbar) getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar)).enableAudioButton(val);
     }
 }
 

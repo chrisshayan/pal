@@ -48,7 +48,7 @@ public class FragmentToolbar extends FragmentBase {
                         new Runnable() {
                             @Override
                             public void run() {
-                                if (!hasDisable && !hasShowDisableAudioTooltip) {
+                                if (!hasDisable && !hasShowDisableAudioTooltip && btnAudioMode.getVisibility() == View.VISIBLE) {
                                     hasShowDisableAudioTooltip = true;
                                     TooltipManager.getInstance()
                                             .create(ActivityBase.sInstance, R.id.btn_audio_mode)
@@ -65,7 +65,7 @@ public class FragmentToolbar extends FragmentBase {
                         new Runnable() {
                             @Override
                             public void run() {
-                                if (!hasDisable && !hasShowEnableAudioTooltip) {
+                                if (!hasDisable && !hasShowEnableAudioTooltip && btnAudioMode.getVisibility() == View.VISIBLE) {
                                     hasShowEnableAudioTooltip = true;
                                     TooltipManager.getInstance()
                                             .create(ActivityBase.sInstance, R.id.btn_audio_mode)

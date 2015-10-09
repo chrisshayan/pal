@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 
 import vietnamworks.com.pal.ActivityBase;
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.utils.Callback;
 import vietnamworks.com.pal.utils.Common;
 
 /**
@@ -26,7 +27,6 @@ public class CustomCardStackView extends FrameLayout {
     FrameLayout.LayoutParams backLayout;
     FrameLayout.LayoutParams midLayout;
     private boolean isLocked = false;
-    private boolean _preventOpenCard = false;
 
     private int itemIndex = 0;
     private int totalItem = 0;
@@ -61,7 +61,6 @@ public class CustomCardStackView extends FrameLayout {
 
     public void lock() {this.isLocked = true;}
     public void unlock() {this.isLocked = false;}
-    public void preventOpenCard(boolean val) {this._preventOpenCard = val;}
     public void snooze() {
         if (state == STATE_IDLE || state == STATE_SNOOZE) {
             this.switchState(STATE_SNOOZE2);
@@ -266,14 +265,9 @@ public class CustomCardStackView extends FrameLayout {
             ObjectAnimator rotate1 = ObjectAnimator.ofFloat(mid, "rotation", HIDDEN_CARD_ROTATE_ANGLE, 0).setDuration(100);
             ObjectAnimator rotate2 = ObjectAnimator.ofFloat(back, "rotation", HIDDEN_CARD_ROTATE_ANGLE*2, 0).setDuration(200);
             set.play(rotate1).with(rotate2);
-
-            set.addListener(new Animator.AnimatorListener() {
+            set.addListener(new AnimationEndedEvent(new Callback() {
                 @Override
-                public void onAnimationStart(Animator animation) {
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
+                public void run() {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -283,15 +277,7 @@ public class CustomCardStackView extends FrameLayout {
                         }
                     });
                 }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-                }
-            });
+            }));
             set.start();
 
         } else {
@@ -318,6 +304,10 @@ public class CustomCardStackView extends FrameLayout {
     public CustomCardView getFront() {return this.front;}
     public CustomCardView getBack() {return this.back;}
     public CustomCardView getMid() {return this.mid;}
+
+    public void doFlip() {
+
+    }
 
     private void update() {
         frameDt = Math.min(System.currentTimeMillis() - lastUpdate, 100);
@@ -456,25 +446,14 @@ public class CustomCardStackView extends FrameLayout {
 
                             set.play(a2).before(a3);
                             set.play(a1).after(a3);
-
-                            set.addListener(new Animator.AnimatorListener() {
+                            set.addListener(new AnimationEndedEvent(new Callback() {
                                 @Override
-                                public void onAnimationStart(Animator animation) {
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
+                                public void run() {
                                     back.setVisibility(VISIBLE);
                                     mid.setVisibility(VISIBLE);
                                     switchState(STATE_IDLE);
                                 }
-
-                                @Override
-                                public void onAnimationCancel(Animator animation) {}
-
-                                @Override
-                                public void onAnimationRepeat(Animator animation) {}
-                            });
+                            }));
                             set.start();
                         }
                     });
@@ -558,27 +537,12 @@ public class CustomCardStackView extends FrameLayout {
                             set.play(anim2).before(anim3);
                             set.play(anim3).before(anim4);
                             set.play(anim4).before(anim5);
-                            set.addListener(new Animator.AnimatorListener() {
+                            set.addListener(new AnimationEndedEvent(new Callback() {
                                 @Override
-                                public void onAnimationStart(Animator animation) {
-
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
+                                public void run() {
                                     switchState(STATE_IDLE);
                                 }
-
-                                @Override
-                                public void onAnimationCancel(Animator animation) {
-
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animator animation) {
-
-                                }
-                            });
+                            }));
                             set.start();
                         }
                     });
@@ -672,36 +636,23 @@ public class CustomCardStackView extends FrameLayout {
                     if (_state != STATE_REORDER) {
                         final float density = getResources().getDisplayMetrics().density;
                         front.setLayoutParams(frontLayout);
-
-                        /*
-                        if (movingScale >= 1.0f) {
-                            front.setBackgroundColor(getResources().getColor(android.support.design.R.color.material_grey_50));
-                        } else {
-                            front.resetBackgroundColor();
-                        }
-                        */
                         front.setRotation(_overMovingPercent * FIRST_CARD_MAX_ROTATE_ANGLE * Common.sign(frontLayout.leftMargin));
 
                         float mid_scalingFactor = (1.0f - cardScale) + cardScale * movingScale;
                         mid.setScaleX(mid_scalingFactor);
                         mid.setScaleY(mid_scalingFactor);
                         mid.setRotation(HIDDEN_CARD_ROTATE_ANGLE * (1 - movingScale));
-                        //midLayout.setMargins(0, (int) ((-CARD_MARGIN + CARD_MARGIN * movingScale) * density), 0, 0);
-                        //mid.setLayoutParams(midLayout);
 
                         float back_scalingFactor = (1.0f - cardScale * 2.0f) + cardScale * movingScale;
                         back.setScaleX(back_scalingFactor);
                         back.setScaleY(back_scalingFactor);
                         back.setRotation(HIDDEN_CARD_ROTATE_ANGLE + HIDDEN_CARD_ROTATE_ANGLE * (1 - movingScale));
-                        //backLayout.setMargins(backLayout.leftMargin, (int) ((-2 * CARD_MARGIN + CARD_MARGIN * movingScale) * density), 0, 0);
-                        //back.setLayoutParams(backLayout);
                     } else {
                         holder.removeAllViews();
                         holder.addView(front);
                         holder.addView(back);
                         holder.addView(mid);
 
-                        //front.resetBackgroundColor();
                         front.setRotation(0);
                         mid.setHolderRef(front.getHolderRef());
                         front.setHolderRef(null);
@@ -720,3 +671,24 @@ public class CustomCardStackView extends FrameLayout {
     }
 }
 
+class AnimationEndedEvent implements Animator.AnimatorListener {
+    Callback callback;
+    public AnimationEndedEvent(Callback callback) {this.callback = callback;}
+
+    @Override
+    public void onAnimationStart(Animator animation) {
+    }
+
+    @Override
+    public void onAnimationEnd(Animator animation) {
+        callback.run();
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animation) {
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator animation) {
+    }
+}
