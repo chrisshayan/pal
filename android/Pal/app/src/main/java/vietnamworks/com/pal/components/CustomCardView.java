@@ -1,6 +1,7 @@
 package vietnamworks.com.pal.components;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -12,13 +13,24 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 import vietnamworks.com.pal.ActivityBase;
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.utils.StateObject;
 
 /**
  * Created by duynk on 10/6/15.
  */
 public class CustomCardView extends FrameLayout {
+    public final static int STATE_LOADING = 0;
+    public final static int STATE_NORMAL = 1;
+    public final static int STATE_INPUT = 2;
+    public final static int STATE_MESSAGE = 3;
+
+    public StateObject stateData = new StateObject();
+
+
     private CustomCardStackView refStack;
     private ViewGroup cardView;
     private View header;
@@ -30,21 +42,37 @@ public class CustomCardView extends FrameLayout {
     private TextView title;
     private EditText input;
 
-    private int customType;
+    private int state = STATE_NORMAL;
 
     public CustomCardView(Context context) {
         super(context);
         initializeViews(context);
+        setupDefaultData();
+        setupUI();
     }
 
     public CustomCardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initializeViews(context);
+        setupDefaultData();
+        setupUI();
     }
 
     public CustomCardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initializeViews(context);
+        setupDefaultData();
+        setupUI();
+    }
+
+    private void setupDefaultData() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("icon", R.drawable.ic_launcher);
+        map.put("state", STATE_NORMAL);
+        map.put("body", "");
+        map.put("title", "");
+        map.put("type", -1);
+        stateData.pushState(map);
     }
 
     public void initializeViews(Context context) {
@@ -63,36 +91,7 @@ public class CustomCardView extends FrameLayout {
         hr = (View)this.findViewById(R.id.cc_hr);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         input = (EditText)findViewById(R.id.cc_input);
-
-
         ActivityBase.applyFont(this);
-        progressBar.setVisibility(GONE);
-    }
-
-    public void startLoading() {
-        icon.setImageResource(R.drawable.ic_search_grey);
-        title.setText(getResources().getString(R.string.message_loading));
-        body.setVisibility(GONE);
-        progressBar.setVisibility(VISIBLE);
-    }
-
-    public void setData(int type, int icon, String title, String text) {
-        this.customType = type;
-        this.icon.setImageResource(icon);
-        this.title.setText(title);
-        this.body.setText(text);
-        hr.setVisibility(VISIBLE);
-        header.setVisibility(VISIBLE);
-        progressBar.setVisibility(GONE);
-
-        if (text == null || text.trim().length() == 0) {
-            body.setVisibility(GONE);
-            body.setText("");
-            input.setVisibility(VISIBLE);
-        } else {
-            input.setVisibility(GONE);
-            body.setVisibility(VISIBLE);
-        }
     }
 
     public void setHolderRef(CustomCardStackView ref) {
@@ -126,19 +125,115 @@ public class CustomCardView extends FrameLayout {
         return cardView;
     }
 
-    public int getCustomType() {
-        return customType;
-    }
-
-    public void setCustomType(int customType) {
-        this.customType = customType;
-    }
-
     public String getText() {
         if (body.getText().length() == 0) {
             return input.getText().toString();
         } else {
             return body.getText().toString().trim();
         }
+    }
+
+    private void setData(int state, int type, int icon, String title, String text) {
+        stateData.setParam("icon", icon);
+        stateData.setParam("title", title);
+        stateData.setParam("state", state);
+        stateData.setParam("body", text);
+        stateData.setParam("type", type);
+    }
+    public void startLoading() {
+        stateData.cloneAndPushState();
+        setData(STATE_LOADING, -1, R.drawable.ic_search_grey, "", getResources().getString(R.string.message_loading));
+        setupUI();
+    }
+
+    public void showData(int type, int icon, String title, String text) {
+        setData(STATE_NORMAL, type, icon, title, text);
+        setupUI();
+    }
+
+    public void showMessage(String message) {
+        stateData.cloneAndPushState();
+        setData(STATE_MESSAGE, -1, R.drawable.ic_launcher, "Message", message);
+        setupUI();
+    }
+
+    public void showInput(int type, int icon, String title) {
+        stateData.cloneAndPushState();
+        setData(STATE_INPUT, type, icon, title, "");
+        setupUI();
+    }
+
+    public void appendData(int type, int icon, String title, String text) {
+        boolean isloading = stateData.getIntParam("state") == STATE_LOADING;
+        if (stateData.size() <= 1 || isloading) {
+            if (isloading) {
+                stateData.popState();
+            }
+            showData(type, icon, title, text);
+        } else {
+            //append
+            HashMap<String, Object> obj = (HashMap<String, Object>)stateData.getState().clone();
+            obj.put("icon", icon);
+            obj.put("state", STATE_NORMAL);
+            obj.put("body", text);
+            obj.put("title", title);
+            obj.put("type", type);
+            stateData.setState(1, obj);
+        }
+    }
+
+    public void rollback() {
+        stateData.popState();
+        setupUI();
+    }
+
+    private void setupUI() {
+        if (stateData.size() > 0) {
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    int state = (int) stateData.getIntParam("state");
+                    int iconId = (int) stateData.getIntParam("icon");
+                    String titleTxt = (String) stateData.getStringParam("title");
+                    String text = (String) stateData.getStringParam("body");
+
+                    icon.setImageResource(iconId);
+                    title.setText(text);
+                    body.setText(text);
+
+                    if (state == STATE_NORMAL) {
+                        body.setVisibility(VISIBLE);
+                        progressBar.setVisibility(GONE);
+                        input.setVisibility(GONE);
+                    } else if (state == STATE_INPUT) {
+                        body.setVisibility(GONE);
+                        progressBar.setVisibility(GONE);
+                        input.setVisibility(VISIBLE);
+                    } else if (state == STATE_LOADING) {
+                        icon.setImageResource(R.drawable.ic_search_grey);
+                        body.setVisibility(GONE);
+                        progressBar.setVisibility(VISIBLE);
+                        input.setVisibility(GONE);
+                    } else if (state == STATE_MESSAGE) {
+                        icon.setImageResource(R.drawable.ic_search_grey);
+                        body.setVisibility(VISIBLE);
+                        progressBar.setVisibility(GONE);
+                        input.setVisibility(GONE);
+                    }
+                }
+            });
+        }
+    }
+
+    public Object getStateData(String key) {
+        return stateData.getParam(key);
+    }
+
+    public int getStateIntData(String key) {
+        return (int)stateData.getParam(key);
+    }
+
+    public String getStateStringData(String key) {
+        return stateData.getParam(key).toString();
     }
 }

@@ -14,7 +14,6 @@ import java.util.Map;
 
 import vietnamworks.com.pal.components.CustomCardStackView;
 import vietnamworks.com.pal.components.CustomCardStackViewDelegate;
-import vietnamworks.com.pal.components.CustomCardView;
 import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.fragments.FragmentRecording;
 import vietnamworks.com.pal.fragments.FragmentToolbar;
@@ -27,7 +26,7 @@ import vietnamworks.com.pal.services.AsyncCallback;
  */
 public class ActivityTaskList extends ActivityBase {
 
-    private CustomCardStackView stackView;
+    public CustomCardStackView stackView;
     public View fragment_writing;
     public View fragment_speaking;
     public ViewGroup groupSaySomething;
@@ -163,18 +162,8 @@ public class ActivityTaskList extends ActivityBase {
         }).start();
     }
 
-    public void setCardData(CustomCardView card, int type, String title, String message) {
-        card.setData(type, type == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey, title, message);
-    }
-
-    public void setCardData(int type, String title, String message) {
-        setCardData(stackView.getFront(), type, title, message);
-    }
-    public void setCardData(CustomCardView card, Topic p) {
-        setCardData(card, p.getType(), p.getTypeName(), p.getTitle());
-    }
-    public void setCardData(Topic p) {
-        setCardData(stackView.getFront(), p.getType(), p.getTypeName(), p.getTitle());
+    public static int getCardIcon(int type) {
+        return type == Topic.TYPE_SPEAKING ? R.drawable.ic_microphone_grey : R.drawable.ic_keyboard_grey;
     }
 
     public void onToggleAudioMode(View v) {
@@ -184,12 +173,12 @@ public class ActivityTaskList extends ActivityBase {
     }
 
     public void onAskSomething(View v) {
-        setCardData(Topic.TYPE_WRITING, getResources().getString(R.string.btn_ask_something), "");
+        stackView.getFront().showInput(Topic.TYPE_WRITING, getCardIcon(Topic.TYPE_WRITING), getResources().getString(R.string.btn_ask_something));
         stackView.doManualSelect();
     }
 
     public void onSaySomething(View v) {
-        setCardData(Topic.TYPE_SPEAKING, getResources().getString(R.string.btn_say_something), "");
+        stackView.getFront().showInput(Topic.TYPE_SPEAKING, getCardIcon(Topic.TYPE_SPEAKING), getResources().getString(R.string.btn_say_something));
         stackView.doManualSelect();
     }
 
@@ -201,25 +190,24 @@ public class ActivityTaskList extends ActivityBase {
                 public void run() {
                     System.out.println("onSuccess");
                     int count = AppModel.topics.getData().size();
-                    if (count > 0 && stackView.getState() == CustomCardStackView.STATE_IDLE) {
-                        setCardData(AppModel.topics.getData().get(0));
+                    if (count > 0) {
+                        Topic p = AppModel.topics.getData().get(0);
+                        stackView.getFront().appendData(p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
                         enableAudioButton(true);
+                        stackView.refresh();
+                        stackView.unlock();
                     }
-                    setCardData(stackView.getMid(), AppModel.topics.getData().get(count>1?1:0));
-                    setCardData(stackView.getBack(), AppModel.topics.getData().get(count>2?2:0));
-                    stackView.refresh();
-                    stackView.unlock();
+                    Topic p = AppModel.topics.getData().get(count > 1 ? 1 : 0);
+                    stackView.getMid().showData(p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+                    p = AppModel.topics.getData().get(count>2?2:0);
+                    stackView.getBack().showData(p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
                 }
             }, 1000);
         }
 
         @Override
         public void onError(Context context, int code, String message) {
-            System.out.println("Fail to load data " + message);
-            stackView.getFront().setData(-1, R.drawable.ic_launcher, "", "Fail to load data. Touch to retry");
-            stackView.unlock();
-            stackView.snooze();
-            enableAudioButton(true);
+            //TODO: handle error event
         }
     };
 
@@ -242,6 +230,26 @@ public class ActivityTaskList extends ActivityBase {
     private void enableAudioButton(boolean val) {
         ((FragmentToolbar) getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar)).enableAudioButton(val);
     }
+
+    public void showTaskDetail(final int type) {
+        setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                if (type == Topic.TYPE_SPEAKING) {
+                    fragment_speaking.setVisibility(View.VISIBLE);
+                    ViewGroup.LayoutParams layout = fragment_speaking.getLayoutParams();
+                    layout.height = (int) (ActivityBase.getScreenHeight() - ActivityBase.getStatusBarHeight() - stackView.getFront().getHeight() * stackView.getFront().getScaleX());
+                    fragment_speaking.setLayoutParams(layout);
+                } else {
+                    fragment_writing.setVisibility(View.VISIBLE);
+                    ViewGroup.LayoutParams layout = fragment_writing.getLayoutParams();
+                    layout.height = (int) (ActivityBase.getScreenHeight() - ActivityBase.getStatusBarHeight() - stackView.getFront().getHeight() * stackView.getFront().getScaleX());
+                    fragment_writing.setLayoutParams(layout);
+                }
+            }
+        });
+
+    }
 }
 
 class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
@@ -256,7 +264,7 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     @Override
     public void onBeforeChangedActiveItem(int front, int back, CustomCardStackView ccsv) {
         Topic p = AppModel.topics.getData().get(back);
-        ((ActivityTaskList)(ActivityTaskList.sInstance)).setCardData(ccsv.getBack(), p);
+        ccsv.getFront().appendData(p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
     }
 
     @Override
@@ -273,24 +281,8 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     @Override
     public void onSelectItem(int index, final CustomCardStackView ccsv) {
         System.out.println("onSelectItem " + index);
-        ActivityBase.sInstance.setTimeout(new Runnable() {
-            @Override
-            public void run() {
-                ActivityTaskList act = (ActivityTaskList) ActivityTaskList.sInstance;
-                int type = ccsv.getFront().getCustomType();
-                if (type == Topic.TYPE_SPEAKING) {
-                    act.fragment_speaking.setVisibility(View.VISIBLE);
-                    ViewGroup.LayoutParams layout = (ViewGroup.LayoutParams) act.fragment_speaking.getLayoutParams();
-                    layout.height = (int) (ActivityBase.getScreenHeight() - ActivityBase.getStatusBarHeight() - ccsv.getFront().getHeight() * ccsv.getFront().getScaleX());
-                    act.fragment_speaking.setLayoutParams(layout);
-                } else {
-                    act.fragment_writing.setVisibility(View.VISIBLE);
-                    ViewGroup.LayoutParams layout = (ViewGroup.LayoutParams) act.fragment_writing.getLayoutParams();
-                    layout.height = (int) (ActivityBase.getScreenHeight() - ActivityBase.getStatusBarHeight() - ccsv.getFront().getHeight() * ccsv.getFront().getScaleX());
-                    act.fragment_writing.setLayoutParams(layout);
-                }
-            }
-        });
+        ActivityTaskList act = (ActivityTaskList) ActivityTaskList.sInstance;
+        act.showTaskDetail(ccsv.getFront().getStateIntData("type"));
     }
 
     @Override
@@ -298,7 +290,7 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
         System.out.println("onDeselectItem " + index);
         if (index >= 0) {
             Topic p = AppModel.topics.getData().get(index);
-            ((ActivityTaskList)(ActivityTaskList.sInstance)).setCardData(ccsv.getFront(), p);
+            ccsv.getFront().rollback();
         }
     }
 }
