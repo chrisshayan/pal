@@ -120,9 +120,9 @@ public class CustomCardStackView extends FrameLayout {
     public final static int STATE_REORDER = STATE_SCROLL_BACK + 1;
     public final static int STATE_FLY_IN = STATE_REORDER + 1;
     public final static int STATE_PRE_SELECT_ANIM = STATE_FLY_IN + 1;
-    public final static int STATE_TRANS_OPEN_CARD = STATE_PRE_SELECT_ANIM + 1;
-    public final static int STATE_TRANS_CLOSE_CARD = STATE_TRANS_OPEN_CARD + 1;
-    public final static int STATE_SNOOZE = STATE_TRANS_CLOSE_CARD + 1;
+    public final static int STATE_OPEN_CARD = STATE_PRE_SELECT_ANIM + 1;
+    public final static int STATE_CLOSE_CARD = STATE_OPEN_CARD + 1;
+    public final static int STATE_SNOOZE = STATE_CLOSE_CARD + 1;
     public final static int STATE_SNOOZE2 = STATE_SNOOZE + 1;
 
     public final String[] STATE_NAME = {"none", "pre", "idle", "drag", "drag-out", "scroll back", "reorder", "fly-in", "pre-select", "open-card", "close-card", "snooze", "snooze2"};
@@ -154,10 +154,13 @@ public class CustomCardStackView extends FrameLayout {
     private float cardScale;
 
     private void switchState(int state) {nextState = state;}
+    public int getState() {
+        return state;
+    }
 
     public void closeCard() {
-        if (state == STATE_TRANS_OPEN_CARD) {
-            switchState(STATE_TRANS_CLOSE_CARD);
+        if (state == STATE_OPEN_CARD) {
+            switchState(STATE_CLOSE_CARD);
         }
     }
 
@@ -261,7 +264,7 @@ public class CustomCardStackView extends FrameLayout {
             this.totalItem = this.delegate.getTotalRecords();
         }
         if (this.totalItem < 1) {
-            AnimatorSet set = new AnimatorSet();
+            final AnimatorSet set = new AnimatorSet();
             ObjectAnimator rotate1 = ObjectAnimator.ofFloat(mid, "rotation", HIDDEN_CARD_ROTATE_ANGLE, 0).setDuration(100);
             ObjectAnimator rotate2 = ObjectAnimator.ofFloat(back, "rotation", HIDDEN_CARD_ROTATE_ANGLE*2, 0).setDuration(200);
             set.play(rotate1).with(rotate2);
@@ -278,26 +281,41 @@ public class CustomCardStackView extends FrameLayout {
                     });
                 }
             }));
-            set.start();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    set.start();
+                }
+            });
+
 
         } else {
-            mid.setVisibility(VISIBLE);
-            back.setVisibility(VISIBLE);
-            AnimatorSet set = new AnimatorSet();
+            if (state == STATE_IDLE || state == STATE_CLOSE_CARD) {
+                mid.setVisibility(VISIBLE);
+                back.setVisibility(VISIBLE);
+                final AnimatorSet set = new AnimatorSet();
 
-            ObjectAnimator scaleXAnimator_1 = ObjectAnimator.ofFloat(front, "scaleX", 0.99f).setDuration(100);
-            ObjectAnimator scaleXAnimator_2 = ObjectAnimator.ofFloat(front, "scaleX", 1.0f).setDuration(100);
+                ObjectAnimator scaleXAnimator_1 = ObjectAnimator.ofFloat(front, "scaleX", 0.99f).setDuration(100);
+                ObjectAnimator scaleXAnimator_2 = ObjectAnimator.ofFloat(front, "scaleX", 1.0f).setDuration(100);
 
-            ObjectAnimator scaleYAnimator_1 = ObjectAnimator.ofFloat(front, "scaleY", 0.99f).setDuration(100);
-            ObjectAnimator scaleYAnimator_2 = ObjectAnimator.ofFloat(front, "scaleY", 1.0f).setDuration(100);
+                ObjectAnimator scaleYAnimator_1 = ObjectAnimator.ofFloat(front, "scaleY", 0.99f).setDuration(100);
+                ObjectAnimator scaleYAnimator_2 = ObjectAnimator.ofFloat(front, "scaleY", 1.0f).setDuration(100);
 
-            ObjectAnimator rotate1 = ObjectAnimator.ofFloat(mid, "rotation", 0, HIDDEN_CARD_ROTATE_ANGLE).setDuration(100);
-            ObjectAnimator rotate2 = ObjectAnimator.ofFloat(back, "rotation", 0, HIDDEN_CARD_ROTATE_ANGLE*2).setDuration(200);
+                ObjectAnimator rotate1 = ObjectAnimator.ofFloat(mid, "rotation", 0, HIDDEN_CARD_ROTATE_ANGLE).setDuration(100);
+                ObjectAnimator rotate2 = ObjectAnimator.ofFloat(back, "rotation", 0, HIDDEN_CARD_ROTATE_ANGLE * 2).setDuration(200);
 
-            set.play(scaleXAnimator_1).with(scaleYAnimator_1);
-            set.play(scaleXAnimator_2).with(scaleYAnimator_2).after(scaleXAnimator_1);
-            set.play(rotate1).with(rotate2).after(scaleXAnimator_2);
-            set.start();
+                set.play(scaleXAnimator_1).with(scaleYAnimator_1);
+                set.play(scaleXAnimator_2).with(scaleYAnimator_2).after(scaleXAnimator_1);
+                set.play(rotate1).with(rotate2).after(scaleXAnimator_2);
+
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        set.start();
+                    }
+                });
+            }
         }
     }
 
@@ -305,16 +323,23 @@ public class CustomCardStackView extends FrameLayout {
     public CustomCardView getBack() {return this.back;}
     public CustomCardView getMid() {return this.mid;}
 
-    public void doFlip() {
-
+    public void doManualSelect() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                switchState(STATE_OPEN_CARD);
+            }
+        });
     }
 
     private void update() {
         frameDt = Math.min(System.currentTimeMillis() - lastUpdate, 100);
         lastUpdate = System.currentTimeMillis();
         if (state != nextState) {
-            System.out.println("CHANGE TO STATE ... " + STATE_NAME[nextState]);
-            switch (nextState) {
+            lastState = state;
+            state = nextState;
+            System.out.println("CHANGE TO STATE ... " + STATE_NAME[state]);
+            switch (state) {
                 case STATE_PRE_INIT:
                     handler.post(new Runnable() {
                         @Override
@@ -329,6 +354,7 @@ public class CustomCardStackView extends FrameLayout {
                     });
                     break;
                 case STATE_IDLE:
+                    //refresh();
                     isFakeDrag = false;
                     break;
                 case STATE_SCROLL_BACK:
@@ -350,7 +376,7 @@ public class CustomCardStackView extends FrameLayout {
                         }
                     }
                     break;
-                case STATE_TRANS_OPEN_CARD:
+                case STATE_OPEN_CARD:
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -390,7 +416,9 @@ public class CustomCardStackView extends FrameLayout {
                                 @Override
                                 public void onAnimationStart(Animator animation) {
                                     if (delegate != null) {
-                                        delegate.onBeforeSelectItem(itemIndex % delegate.getTotalRecords(), CustomCardStackView.this);
+                                        int total = delegate.getTotalRecords();
+                                        int index = total==0?-1:(itemIndex%total);
+                                        delegate.onBeforeSelectItem(index, CustomCardStackView.this);
                                     }
                                 }
 
@@ -398,7 +426,9 @@ public class CustomCardStackView extends FrameLayout {
                                 public void onAnimationEnd(Animator animation) {
                                     front.setBackgroundResource(R.drawable.layout_flat_bg);
                                     if (delegate != null) {
-                                        delegate.onSelectItem(itemIndex % delegate.getTotalRecords(), CustomCardStackView.this);
+                                        int total = delegate.getTotalRecords();
+                                        int index = total==0?-1:(itemIndex%total);
+                                        delegate.onSelectItem(index, CustomCardStackView.this);
                                     }
                                 }
 
@@ -412,7 +442,7 @@ public class CustomCardStackView extends FrameLayout {
                         }
                     });
                     break;
-                case STATE_TRANS_CLOSE_CARD:
+                case STATE_CLOSE_CARD:
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -452,6 +482,17 @@ public class CustomCardStackView extends FrameLayout {
                                     back.setVisibility(VISIBLE);
                                     mid.setVisibility(VISIBLE);
                                     switchState(STATE_IDLE);
+                                    refresh();
+                                    if (delegate != null) {
+                                        handler.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                int total = delegate.getTotalRecords();
+                                                int index = total==0?-1:(itemIndex%total);
+                                                delegate.onDeselectItem(index, CustomCardStackView.this);
+                                            }
+                                        });
+                                    }
                                 }
                             }));
                             set.start();
@@ -548,9 +589,6 @@ public class CustomCardStackView extends FrameLayout {
                     });
                     break;
             }
-
-            lastState = state;
-            state = nextState;
         }
 
         boolean requiredUpdateLayout = false;
@@ -585,7 +623,7 @@ public class CustomCardStackView extends FrameLayout {
                     if (delegate != null) {
                         open_card = (delegate.getTotalRecords() > 0);
                     }
-                    switchState(!open_card?STATE_SNOOZE:STATE_TRANS_OPEN_CARD);
+                    switchState(!open_card?STATE_SNOOZE: STATE_OPEN_CARD);
                 }
 
                 if (isFakeDrag && state == STATE_DRAG_OUT) {

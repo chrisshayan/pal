@@ -41,13 +41,14 @@
 
     <!-- main screen -->
     <string name="btn_say_something">Say something</string>
-    <string name="btn_ask_something">Ask something</string>
+    <string name="btn_ask_something">Write something</string>
+    <string name="enter_topic">Enter your topic</string>
 
     <!-- recorder -->
     <string name="message_dash_or">-- or --</string>
     <string name="talk_about">Talk about:</string>
     <string name="say_something">Say something</string>
-    <string name="enter_topic">Enter your topic</string>
+
     <string-array name="recorders_message">
         <item>Touch to begin</item>
         <item>Recording \nTouch to stop</item>

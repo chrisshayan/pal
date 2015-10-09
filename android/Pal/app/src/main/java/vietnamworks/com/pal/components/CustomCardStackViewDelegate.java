@@ -10,4 +10,5 @@ public interface CustomCardStackViewDelegate {
     int getTotalRecords();
     void onBeforeSelectItem(int index,CustomCardStackView ccsv);
     void onSelectItem(int index,CustomCardStackView ccsv);
+    void onDeselectItem(int index, CustomCardStackView ccsv);
 }

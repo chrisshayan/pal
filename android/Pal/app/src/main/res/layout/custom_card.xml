@@ -54,5 +54,16 @@
             android:id="@+id/progressBar"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cc_input"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:inputType="text"
+            android:layout_margin="@dimen/base_padding"
+            android:hint="@string/enter_topic"
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

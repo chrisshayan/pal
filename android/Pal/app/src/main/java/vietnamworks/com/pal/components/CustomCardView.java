@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -27,6 +28,9 @@ public class CustomCardView extends FrameLayout {
     private ImageView icon;
     private TextView body;
     private TextView title;
+    private EditText input;
+
+    private int customType;
 
     public CustomCardView(Context context) {
         super(context);
@@ -58,6 +62,9 @@ public class CustomCardView extends FrameLayout {
         header = (View)this.findViewById(R.id.cc_header);
         hr = (View)this.findViewById(R.id.cc_hr);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        input = (EditText)findViewById(R.id.cc_input);
+
+
         ActivityBase.applyFont(this);
         progressBar.setVisibility(GONE);
     }
@@ -69,22 +76,22 @@ public class CustomCardView extends FrameLayout {
         progressBar.setVisibility(VISIBLE);
     }
 
-    public void setData(int icon, String title, String text) {
+    public void setData(int type, int icon, String title, String text) {
+        this.customType = type;
         this.icon.setImageResource(icon);
         this.title.setText(title);
         this.body.setText(text);
         hr.setVisibility(VISIBLE);
         header.setVisibility(VISIBLE);
-        body.setVisibility(VISIBLE);
         progressBar.setVisibility(GONE);
-    }
 
-    public void setData(String text) {
-        hr.setVisibility(GONE);
-        header.setVisibility(GONE);
-        body.setText(text);
-        body.setVisibility(VISIBLE);
-        progressBar.setVisibility(GONE);
+        if (text == null || text.trim().length() == 0) {
+            body.setVisibility(GONE);
+            input.setVisibility(VISIBLE);
+        } else {
+            input.setVisibility(GONE);
+            body.setVisibility(VISIBLE);
+        }
     }
 
     public void setHolderRef(CustomCardStackView ref) {
@@ -116,5 +123,13 @@ public class CustomCardView extends FrameLayout {
 
     public ViewGroup getCardView() {
         return cardView;
+    }
+
+    public int getCustomType() {
+        return customType;
+    }
+
+    public void setCustomType(int customType) {
+        this.customType = customType;
     }
 }
