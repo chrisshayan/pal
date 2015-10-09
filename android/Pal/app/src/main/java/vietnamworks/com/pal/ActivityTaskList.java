@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +64,11 @@ public class ActivityTaskList extends ActivityBase {
 
     public void onSubmitText(View v) {
         this.hideKeyboard();
+        if (stackView.getFront().getText().length() == 0) {
+            Toast.makeText(this.getBaseContext(), getString(R.string.user_topic_validation_empty_string),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         setTimeout(new Runnable() {
             @Override
             public void run() {
@@ -90,6 +96,11 @@ public class ActivityTaskList extends ActivityBase {
     }
 
     public void onSubmitAudio(View v) {
+        if (stackView.getFront().getText().length() == 0) {
+            Toast.makeText(this.getBaseContext(), getString(R.string.user_topic_validation_empty_string),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         this.fragment_speaking.setVisibility(View.GONE);
         ((FragmentRecording)getSupportFragmentManager().findFragmentById(R.id.fragment_speaking)).reset();
         showSaySomethingGroup();

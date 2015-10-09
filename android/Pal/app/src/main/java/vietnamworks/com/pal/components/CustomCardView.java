@@ -87,6 +87,7 @@ public class CustomCardView extends FrameLayout {
 
         if (text == null || text.trim().length() == 0) {
             body.setVisibility(GONE);
+            body.setText("");
             input.setVisibility(VISIBLE);
         } else {
             input.setVisibility(GONE);
@@ -131,5 +132,13 @@ public class CustomCardView extends FrameLayout {
 
     public void setCustomType(int customType) {
         this.customType = customType;
+    }
+
+    public String getText() {
+        if (body.getText().length() == 0) {
+            return input.getText().toString();
+        } else {
+            return body.getText().toString().trim();
+        }
     }
 }
