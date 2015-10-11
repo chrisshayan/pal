@@ -371,7 +371,7 @@ public class CustomCardStackView extends FrameLayout {
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    delegate.onBeforeChangedActiveItem( (itemIndex + 1) % total, ((itemIndex + 1) + 2) % total, CustomCardStackView.this);
+                                    delegate.onBeforeChangedActiveItem( (itemIndex + 1) % total, ((itemIndex + 1) + 1) % total,((itemIndex + 1) + 2) % total, CustomCardStackView.this);
                                 }
                             });
                         }
@@ -649,7 +649,7 @@ public class CustomCardStackView extends FrameLayout {
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    delegate.onChangedActiveItem(itemIndex % total, (itemIndex + 2) % total, CustomCardStackView.this);
+                                    delegate.onChangedActiveItem(itemIndex % total, (itemIndex + 1) % total, (itemIndex + 2) % total, CustomCardStackView.this);
                                 }
                             });
                         }

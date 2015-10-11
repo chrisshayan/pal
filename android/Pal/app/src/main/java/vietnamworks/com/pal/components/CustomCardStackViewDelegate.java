@@ -5,8 +5,8 @@ package vietnamworks.com.pal.components;
  */
 public interface CustomCardStackViewDelegate {
     void onLaunched(CustomCardStackView obj);
-    void onChangedActiveItem(int front_index, int back_index, CustomCardStackView obj);
-    void onBeforeChangedActiveItem(int front_index, int back_index, CustomCardStackView obj);
+    void onChangedActiveItem(int front_index, int mid_index, int back_index, CustomCardStackView obj);
+    void onBeforeChangedActiveItem(int front_index, int mid_index, int back_index, CustomCardStackView obj);
     int getTotalRecords();
     void onBeforeSelectItem(int index,CustomCardStackView ccsv);
     void onSelectItem(int index,CustomCardStackView ccsv);

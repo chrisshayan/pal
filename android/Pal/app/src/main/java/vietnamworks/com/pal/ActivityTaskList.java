@@ -197,9 +197,9 @@ public class ActivityTaskList extends ActivityBase {
                         stackView.refresh();
                         stackView.unlock();
                     }
-                    Topic p = AppModel.topics.getData().get(count > 1 ? 1 : 0);
+                    Topic p = AppModel.topics.getData().get(1%count);
                     stackView.getMid().showData(p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
-                    p = AppModel.topics.getData().get(count>2?2:0);
+                    p = AppModel.topics.getData().get(2%count);
                     stackView.getBack().showData(p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
                 }
             }, 1000);
@@ -258,11 +258,16 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     }
 
     @Override
-    public void onChangedActiveItem(int front, int back, CustomCardStackView ccsv) {
+    public void onChangedActiveItem(int front, int mid, int back, CustomCardStackView ccsv) {
+        Topic p = AppModel.topics.getData().get(back);
+        ccsv.getBack().showData(p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+
+        p = AppModel.topics.getData().get(mid);
+        ccsv.getMid().showData(p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
     }
 
     @Override
-    public void onBeforeChangedActiveItem(int front, int back, CustomCardStackView ccsv) {
+    public void onBeforeChangedActiveItem(int front, int mid, int back, CustomCardStackView ccsv) {
         Topic p = AppModel.topics.getData().get(back);
         ccsv.getFront().showData(p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
     }
