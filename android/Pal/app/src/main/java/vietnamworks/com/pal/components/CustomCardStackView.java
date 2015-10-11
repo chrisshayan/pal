@@ -9,7 +9,8 @@ import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.BounceInterpolator;
 import android.widget.FrameLayout;
 
 import vietnamworks.com.pal.ActivityBase;
@@ -388,7 +389,7 @@ public class CustomCardStackView extends FrameLayout {
                             AnimatorSet set = new AnimatorSet();
 
                             ValueAnimator a1 = ValueAnimator.ofInt(front.getHeight(), new_height).setDuration(100);
-                            a1.setInterpolator(new AccelerateDecelerateInterpolator());
+                            a1.setInterpolator(new AccelerateInterpolator());
                             a1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                                 public void onAnimationUpdate(ValueAnimator animation) {
                                     frontLayout.height = (int) animation.getAnimatedValue();
@@ -398,7 +399,7 @@ public class CustomCardStackView extends FrameLayout {
 
 
                             ValueAnimator a2 = ValueAnimator.ofInt(front.getWidth(), screen_size[0]).setDuration(100);
-                            a2.setInterpolator(new AccelerateDecelerateInterpolator());
+                            a2.setInterpolator(new BounceInterpolator());
                             a2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                                 public void onAnimationUpdate(ValueAnimator animation) {
                                     frontLayout.width = (int) animation.getAnimatedValue();
@@ -407,7 +408,7 @@ public class CustomCardStackView extends FrameLayout {
                             });
 
                             ObjectAnimator a3 = ObjectAnimator.ofFloat(front, "y", 0);
-                            a3.setInterpolator(new AccelerateDecelerateInterpolator());
+                            a3.setInterpolator(new AccelerateInterpolator());
 
                             set.play(a1).before(a3);
                             set.play(a2).after(a3);
@@ -454,7 +455,7 @@ public class CustomCardStackView extends FrameLayout {
                             AnimatorSet set = new AnimatorSet();
 
                             ValueAnimator a1 = ValueAnimator.ofInt(front.getHeight(), new_height).setDuration(100);
-                            a1.setInterpolator(new AccelerateDecelerateInterpolator());
+                            a1.setInterpolator(new AccelerateInterpolator());
                             a1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                                 public void onAnimationUpdate(ValueAnimator animation) {
                                     frontLayout.height = (int) animation.getAnimatedValue();
@@ -464,7 +465,7 @@ public class CustomCardStackView extends FrameLayout {
 
 
                             ValueAnimator a2 = ValueAnimator.ofInt(front.getWidth(), new_width).setDuration(100);
-                            a2.setInterpolator(new AccelerateDecelerateInterpolator());
+                            a2.setInterpolator(new AccelerateInterpolator());
                             a2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                                 public void onAnimationUpdate(ValueAnimator animation) {
                                     frontLayout.width = (int) animation.getAnimatedValue();
@@ -472,7 +473,7 @@ public class CustomCardStackView extends FrameLayout {
                                 }
                             });
                             ObjectAnimator a3 = ObjectAnimator.ofFloat(front, "translationY", 0);
-                            a3.setInterpolator(new AccelerateDecelerateInterpolator());
+                            a3.setInterpolator(new AccelerateInterpolator());
 
                             set.play(a2).before(a3);
                             set.play(a1).after(a3);
