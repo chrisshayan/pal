@@ -192,7 +192,7 @@ public class ActivityTaskList extends ActivityBase {
                     int count = AppModel.topics.getData().size();
                     if (count > 0) {
                         Topic p = AppModel.topics.getData().get(0);
-                        stackView.getFront().appendData(p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+                        stackView.getFront().showData(p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
                         enableAudioButton(true);
                         stackView.refresh();
                         stackView.unlock();
@@ -264,7 +264,7 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     @Override
     public void onBeforeChangedActiveItem(int front, int back, CustomCardStackView ccsv) {
         Topic p = AppModel.topics.getData().get(back);
-        ccsv.getFront().appendData(p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+        ccsv.getFront().showData(p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
     }
 
     @Override
@@ -288,10 +288,7 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     @Override
     public void onDeselectItem(int index, final CustomCardStackView ccsv) {
         System.out.println("onDeselectItem " + index);
-        if (index >= 0) {
-            Topic p = AppModel.topics.getData().get(index);
-            ccsv.getFront().rollback();
-        }
+        ccsv.getFront().rollback();
     }
 }
 

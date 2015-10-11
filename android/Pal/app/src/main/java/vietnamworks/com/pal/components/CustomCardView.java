@@ -133,6 +133,10 @@ public class CustomCardView extends FrameLayout {
         }
     }
 
+    public int getState() {
+        return stateData.getIntParam("state");
+    }
+
     private void setData(int state, int type, int icon, String title, String text) {
         stateData.setParam("icon", icon);
         stateData.setParam("title", title);
@@ -140,46 +144,52 @@ public class CustomCardView extends FrameLayout {
         stateData.setParam("body", text);
         stateData.setParam("type", type);
     }
+
+    private void setData(HashMap<String, Object> stateData, int state, int type, int icon, String title, String text) {
+        stateData.put("icon", icon);
+        stateData.put("title", title);
+        stateData.put("state", state);
+        stateData.put("body", text);
+        stateData.put("type", type);
+    }
+
     public void startLoading() {
-        stateData.cloneAndPushState();
-        setData(STATE_LOADING, -1, R.drawable.ic_search_grey, "", getResources().getString(R.string.message_loading));
-        setupUI();
+        if (getState() == STATE_INPUT) {
+            HashMap<String, Object> state = stateData.cloneState();
+            setData(state, STATE_LOADING, -1, R.drawable.ic_search_grey, "", getResources().getString(R.string.message_loading));
+            stateData.setState(1, state);
+        } else {
+            setData(STATE_LOADING, -1, R.drawable.ic_search_grey, "", getResources().getString(R.string.message_loading));
+            setupUI();
+        }
     }
 
     public void showData(int type, int icon, String title, String text) {
-        setData(STATE_NORMAL, type, icon, title, text);
-        setupUI();
+        if (getState() == STATE_INPUT) {
+            HashMap<String, Object> state = stateData.cloneState();
+            setData(state, STATE_NORMAL, type, icon, title, text);
+            stateData.setState(1, state);
+        } else {
+            setData(STATE_NORMAL, type, icon, title, text);
+            setupUI();
+        }
     }
 
     public void showMessage(String message) {
-        stateData.cloneAndPushState();
-        setData(STATE_MESSAGE, -1, R.drawable.ic_launcher, "Message", message);
-        setupUI();
+        if (getState() == STATE_INPUT) {
+            HashMap<String, Object> state = stateData.cloneState();
+            setData(state, STATE_MESSAGE, -1, R.drawable.ic_launcher, "Message", message);
+            stateData.setState(1, state);
+        } else {
+            setData(STATE_MESSAGE, -1, R.drawable.ic_launcher, "Message", message);
+            setupUI();
+        }
     }
 
     public void showInput(int type, int icon, String title) {
         stateData.cloneAndPushState();
         setData(STATE_INPUT, type, icon, title, "");
         setupUI();
-    }
-
-    public void appendData(int type, int icon, String title, String text) {
-        boolean isloading = stateData.getIntParam("state") == STATE_LOADING;
-        if (stateData.size() <= 1 || isloading) {
-            if (isloading) {
-                stateData.popState();
-            }
-            showData(type, icon, title, text);
-        } else {
-            //append
-            HashMap<String, Object> obj = (HashMap<String, Object>)stateData.getState().clone();
-            obj.put("icon", icon);
-            obj.put("state", STATE_NORMAL);
-            obj.put("body", text);
-            obj.put("title", title);
-            obj.put("type", type);
-            stateData.setState(1, obj);
-        }
     }
 
     public void rollback() {

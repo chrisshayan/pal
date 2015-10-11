@@ -62,16 +62,38 @@ public class StateObject {
         if (!state_param.containsKey("__extra")) {
             state_param.put("__extra", new HashMap<String, Object>());
         }
-        stateValues.add(state_param);
+        if (!hasSetValue) {
+            setState(0, state_param);
+            hasSetValue = true;
+        } else {
+            stateValues.add(0, state_param);
+        }
     }
 
     public void cloneAndPushState() {
+        HashMap<String, Object> item = (HashMap<String, Object>) stateValues.get(0).clone();
         if (hasSetValue) {
-            HashMap<String, Object> item = (HashMap<String, Object>) stateValues.get(0).clone();
-            stateValues.add(item);
+            stateValues.add(0, item);
         } else {
             hasSetValue = true;
         }
+    }
+
+    public void addState(HashMap<String, Object> state_param) {
+        if (!state_param.containsKey("__extra")) {
+            state_param.put("__extra", new HashMap<String, Object>());
+        }
+        if (!hasSetValue) {
+            stateValues.set(0, state_param);
+            hasSetValue = true;
+        } else {
+            stateValues.add(state_param);
+        }
+    }
+
+    public HashMap<String, Object> cloneState() {
+        HashMap<String, Object> item = (HashMap<String, Object>) stateValues.get(0).clone();
+        return item;
     }
 
     public HashMap<String, Object> popState() {
