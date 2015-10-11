@@ -208,7 +208,7 @@ public class CustomCardView extends FrameLayout {
                     String text = (String) stateData.getStringParam("body");
 
                     icon.setImageResource(iconId);
-                    title.setText(text);
+                    title.setText(titleTxt);
                     body.setText(text);
 
                     if (state == STATE_NORMAL) {
