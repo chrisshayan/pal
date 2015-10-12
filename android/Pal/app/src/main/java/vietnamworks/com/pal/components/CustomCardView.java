@@ -211,6 +211,7 @@ public class CustomCardView extends FrameLayout {
 
     public void showInput(int type, int icon, String title) {
         stateData.cloneAndPushState();
+        this.input.setText("");
         setData("", STATE_INPUT, type, icon, title, "");
         setupUI();
     }
