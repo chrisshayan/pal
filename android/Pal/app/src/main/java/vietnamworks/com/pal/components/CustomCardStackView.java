@@ -301,8 +301,8 @@ public class CustomCardStackView extends FrameLayout {
                 ObjectAnimator scaleYAnimator_1 = ObjectAnimator.ofFloat(front, "scaleY", 0.99f).setDuration(100);
                 ObjectAnimator scaleYAnimator_2 = ObjectAnimator.ofFloat(front, "scaleY", 1.0f).setDuration(100);
 
-                ObjectAnimator rotate1 = ObjectAnimator.ofFloat(mid, "rotation", 0, HIDDEN_CARD_ROTATE_ANGLE).setDuration(100);
-                ObjectAnimator rotate2 = ObjectAnimator.ofFloat(back, "rotation", 0, HIDDEN_CARD_ROTATE_ANGLE * 2).setDuration(200);
+                ObjectAnimator rotate1 = ObjectAnimator.ofFloat(mid, "rotation", mid.getRotation(), HIDDEN_CARD_ROTATE_ANGLE).setDuration(100);
+                ObjectAnimator rotate2 = ObjectAnimator.ofFloat(back, "rotation", back.getRotation(), HIDDEN_CARD_ROTATE_ANGLE * 2).setDuration(200);
 
                 set.play(scaleXAnimator_1).with(scaleYAnimator_1);
                 set.play(scaleXAnimator_2).with(scaleYAnimator_2).after(scaleXAnimator_1);
