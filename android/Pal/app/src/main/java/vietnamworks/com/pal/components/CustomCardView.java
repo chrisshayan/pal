@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -93,6 +94,17 @@ public class CustomCardView extends FrameLayout {
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         input = (EditText)findViewById(R.id.cc_input);
         ActivityBase.applyFont(this);
+
+        input.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    ActivityBase.sInstance.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                } else {
+                    ActivityBase.sInstance.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                }
+            }
+        });
     }
 
     public void setHolderRef(CustomCardStackView ref) {
