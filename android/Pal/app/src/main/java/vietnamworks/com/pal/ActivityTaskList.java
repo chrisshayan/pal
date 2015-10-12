@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.alexbbb.uploadservice.AbstractUploadServiceReceiver;
+
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +25,9 @@ import vietnamworks.com.pal.fragments.FragmentToolbar;
 import vietnamworks.com.pal.fragments.FragmentWriting;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.services.AsyncCallback;
+import vietnamworks.com.pal.services.BaseService;
+import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.utils.Common;
 
 /**
  * Created by duynk on 10/6/15.
@@ -60,6 +67,18 @@ public class ActivityTaskList extends ActivityBase {
                 startLoadingTask();
             }
         }, 500);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uploadReceiver.register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        uploadReceiver.unregister(this);
     }
 
     public void onSubmitText(View v) {
@@ -121,7 +140,15 @@ public class ActivityTaskList extends ActivityBase {
         stackView.closeCard();
         enableAudioButton(true);
 
-        AppModel.posts.addAudioAsync(front.getTopic(), front.getStateStringData("id"));
+        String post_id = AppModel.posts.addAudioAsync(front.getTopic(), front.getStateStringData("id"));
+
+        String server_file_path = Common.getAudioServerFileName(FirebaseService.authData.getUid(), post_id);
+        BaseService.PostFile(
+                this,
+                post_id,
+                Config.AudioUploadURL,
+                Common.getSampleRecordPath(),
+                server_file_path);
     }
 
     public void onCancelSubmitAudio(View v) {
@@ -270,6 +297,40 @@ public class ActivityTaskList extends ActivityBase {
         });
 
     }
+
+
+    //upload file handler
+    private final AbstractUploadServiceReceiver uploadReceiver =
+            new AbstractUploadServiceReceiver() {
+
+                // you can override this progress method if you want to get
+                // the completion progress in percent (0 to 100)
+                // or if you need to know exactly how many bytes have been transferred
+                // override the method below this one
+                @Override
+                public void onProgress(String uploadId, int progress) {
+                    System.out.println("The progress of the upload with ID " + uploadId + " is: " + progress);
+                }
+
+                @Override
+                public void onError(String uploadId, Exception exception) {
+                    System.out.println("Error in upload with ID: " + uploadId + ". " + exception.getLocalizedMessage() + " " + exception);
+                    AppModel.posts.raiseError(uploadId);
+                }
+
+                @Override
+                public void onCompleted(String uploadId,
+                                        int serverResponseCode,
+                                        String serverResponseMessage) {
+                    try {
+                        JSONObject obj = new JSONObject(serverResponseMessage);
+                        AppModel.posts.updateAudioLink(uploadId, obj.getString("url"));
+                    }catch (Exception E) {
+                        AppModel.posts.raiseError(uploadId);
+                        E.printStackTrace();
+                    }
+                }
+            };
 }
 
 class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {

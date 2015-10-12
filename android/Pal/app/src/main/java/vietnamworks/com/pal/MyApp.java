@@ -2,6 +2,7 @@ package vietnamworks.com.pal;
 
 import android.app.Application;
 
+import com.alexbbb.uploadservice.AllCertificatesAndHostsTruster;
 import com.firebase.client.Firebase;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
@@ -21,5 +22,6 @@ public class MyApp extends Application {
         Parse.initialize(this, Config.ParseAppId, Config.ParseAppKey);
         ParseInstallation.getCurrentInstallation().saveInBackground();
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
+        AllCertificatesAndHostsTruster.apply();
     }
 }

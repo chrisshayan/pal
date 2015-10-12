@@ -6,7 +6,7 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by duynk on 10/1/15.
@@ -35,7 +35,7 @@ public class FirebaseService {
         return new Firebase(url);
     }
 
-    public static Firebase newRef(ArrayList<String> path) {
+    public static Firebase newRef(List<String> path) {
         StringBuilder str = new StringBuilder();
         for(int i = 0; i < path.size(); i++) {
             str.append(path.get(i));

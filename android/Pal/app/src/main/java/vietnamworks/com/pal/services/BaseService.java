@@ -1,10 +1,14 @@
 package vietnamworks.com.pal.services;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.alexbbb.uploadservice.UploadRequest;
 import com.alexbbb.uploadservice.UploadService;
+
+import vietnamworks.com.pal.ActivityTaskList;
+import vietnamworks.com.pal.R;
 
 
 /**
@@ -41,9 +45,9 @@ public class BaseService {
     }
     */
 
-    public static void PostFile(final Context context, String server, String filepath, String server_file_name) {
+    public static void PostFile(final Context context, String id, String server, String filepath, String server_file_name) {
         final UploadRequest request = new UploadRequest(context,
-                "custom-upload-id",
+                id,
                 server);
         request.addFileToUpload(filepath,
                 "parameter-name",
@@ -51,6 +55,16 @@ public class BaseService {
                 "content-type");
 
         request.setMaxRetries(2);
+
+        request.setNotificationConfig(R.drawable.ic_launcher,
+                "Upload audio file",
+                "Uploading ...",
+                "Upload successful",
+                "Fail to upload audio",
+                false);
+
+        request.setNotificationClickIntent(new Intent(context, ActivityTaskList.class));
+
         try {
             UploadService.startUpload(request);
 

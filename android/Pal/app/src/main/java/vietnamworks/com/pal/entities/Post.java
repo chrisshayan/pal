@@ -24,6 +24,7 @@ public class Post extends BaseEntity {
     int status = STATUS_USER_PENDING;
     String audio = "";
     String text = "";
+    int type = RecentTopic.TYPE_WRITING;
 
     //evaluate
     int score = 0;
@@ -116,5 +117,13 @@ public class Post extends BaseEntity {
 
     public void setNext(String next) {
         this.next = next;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

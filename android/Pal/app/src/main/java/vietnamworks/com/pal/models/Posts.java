@@ -3,9 +3,11 @@ package vietnamworks.com.pal.models;
 import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.entities.RefUserPosts;
+import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.services.FirebaseService;
 
 /**
@@ -38,6 +40,7 @@ public class Posts extends AbstractContainer<Post> {
         p.setText(text);
         p.setTitle(title);
         p.setStatus(Post.STATUS_READY);
+        p.setType(Topic.TYPE_WRITING);
         return add(p);
     }
 
@@ -46,6 +49,18 @@ public class Posts extends AbstractContainer<Post> {
         p.setRef_topic(ref_topic);
         p.setTitle(title);
         p.setStatus(Post.STATUS_USER_PENDING);
+        p.setType(Topic.TYPE_SPEAKING);
         return add(p);
+    }
+
+    public static void updateAudioLink(String postId, String audioLink) {
+        Firebase ref = FirebaseService.newRef(Arrays.asList("posts", postId));
+        ref.child("audio").setValue(audioLink);
+        ref.child("status").setValue(Post.STATUS_READY);
+        FirebaseService.newRef(Arrays.asList("ref_user_posts", FirebaseService.authData.getUid())).child("status").setValue(Post.STATUS_READY);
+    }
+
+    public static void raiseError(String postId) {
+        FirebaseService.newRef(Arrays.asList("posts", postId)).child("status").setValue(Post.STATUS_USER_ERROR);
     }
 }

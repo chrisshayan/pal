@@ -15,7 +15,6 @@ import vietnamworks.com.pal.ActivityMain;
 import vietnamworks.com.pal.Config;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.entities.Post;
-import vietnamworks.com.pal.services.BaseService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.utils.Common;
 
@@ -144,12 +143,13 @@ public class FragmentSubmitTopic extends FragmentBase {
         p.setStatus(0);
         newPostRef.setValue(p);
 
+        /*
         BaseService.PostFile(
                 this.getActivityRef(ActivityMain.class),
                 Config.AudioUploadURL,
                 Common.getSampleRecordPath(),
                 server_file_path);
-
+*/
         sayThankYou();
 
         //TODO: handle upload audio callback
