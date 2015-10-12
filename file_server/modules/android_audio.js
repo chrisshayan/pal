@@ -29,7 +29,7 @@ module.exports = function (req, res) {
 	req.busboy.on('file', function (fieldname, file, filename) {
         console.log("Receive upload request", filename);
 		var ext = filename.substring(filename.lastIndexOf("."), filename.length);
-		if (ext === ".3gp") {
+		if (ext === ".3gp" || ext === ".mp3" || ext === ".mp4") {
 			console.log("Uploading file ... " + filename);
             var des_path = __dirname + '/../uploads/' + filename;
 			fstream = fs.createWriteStream(des_path);
