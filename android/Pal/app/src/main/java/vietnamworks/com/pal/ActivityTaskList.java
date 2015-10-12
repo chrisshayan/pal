@@ -5,6 +5,8 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -299,8 +301,12 @@ public class ActivityTaskList extends ActivityBase {
 
     }
 
-    public void onOpenDrawer(View v) {
 
+    public void onOpenDrawer(View v) {
+        //drawer
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        drawer.openDrawer(navigationView);
     }
 
     //upload file handler
@@ -335,6 +341,7 @@ public class ActivityTaskList extends ActivityBase {
                     }
                 }
             };
+
 }
 
 class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
