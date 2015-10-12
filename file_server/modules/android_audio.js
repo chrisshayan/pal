@@ -36,7 +36,7 @@ module.exports = function (req, res) {
 			file.pipe(fstream);
 			fstream.on('close', function () {
 				console.log("Done : " + filename);
-				res.json({"url": HOST + filename});
+				res.json({"url": HOST + "/" + filename});
 			});
 		}
 		else {
