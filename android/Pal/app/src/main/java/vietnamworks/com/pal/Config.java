@@ -4,7 +4,7 @@ package vietnamworks.com.pal;
  * Created by duynk on 10/1/15.
  */
 public interface Config {
-    public final static String RecorderFileExt = ".3gp";
+    public final static String RecorderFileExt = ".mp4";
     public final static String SampleRecorderFilename = "recording" + RecorderFileExt;
 
     public final static String AudioServerBaseURL = "http://iamprogrammer.work:4040";
