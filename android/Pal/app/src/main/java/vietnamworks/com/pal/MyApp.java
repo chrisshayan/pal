@@ -2,6 +2,7 @@ package vietnamworks.com.pal;
 
 import android.app.Application;
 
+import com.firebase.client.Firebase;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 
@@ -19,5 +20,6 @@ public class MyApp extends Application {
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, Config.ParseAppId, Config.ParseAppKey);
         ParseInstallation.getCurrentInstallation().saveInBackground();
+        Firebase.getDefaultConfig().setPersistenceEnabled(true);
     }
 }
