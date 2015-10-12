@@ -4,6 +4,7 @@
     <dimen name="activity_vertical_margin">0dp</dimen>
 
     <dimen name="base_padding">16dp</dimen>
+    <dimen name="base_padding_half">8dp</dimen>
 
     <!--common card-->
     <dimen name="card_corner_radius">0dp</dimen>

@@ -299,6 +299,9 @@ public class ActivityTaskList extends ActivityBase {
 
     }
 
+    public void onOpenDrawer(View v) {
+
+    }
 
     //upload file handler
     private final AbstractUploadServiceReceiver uploadReceiver =
