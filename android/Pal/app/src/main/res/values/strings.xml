@@ -44,6 +44,7 @@
     <string name="btn_ask_something">Write something</string>
     <string name="enter_topic">Enter your topic</string>
     <string name="user_topic_validation_empty_string">Topic is required</string>
+    <string name="user_message_validation_empty_string">Content is required</string>
 
     <!-- recorder -->
     <string name="message_dash_or">-- or --</string>

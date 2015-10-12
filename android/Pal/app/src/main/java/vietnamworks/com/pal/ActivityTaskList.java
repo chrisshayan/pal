@@ -63,15 +63,20 @@ public class ActivityTaskList extends ActivityBase {
     }
 
     public void onSubmitText(View v) {
+        CustomCardView front = stackView.getFront();
+        FragmentWriting fragment = (FragmentWriting) getSupportFragmentManager().findFragmentById(R.id.fragment_writing);
+
         this.hideKeyboard();
-        if (stackView.getFront().getTopic().length() == 0) {
+        if (front.getTopic().length() == 0) {
             Toast.makeText(this.getBaseContext(), getString(R.string.user_topic_validation_empty_string),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        } else if (fragment.getText().trim().length() == 0) {
+            Toast.makeText(this.getBaseContext(), getString(R.string.user_message_validation_empty_string),
                     Toast.LENGTH_SHORT).show();
             return;
         }
 
-        CustomCardView front = stackView.getFront();
-        FragmentWriting fragment = (FragmentWriting) getSupportFragmentManager().findFragmentById(R.id.fragment_writing);
         AppModel.posts.addText(front.getTopic(), front.getStateStringData("id"), fragment.getText());
 
         setTimeout(new Runnable() {

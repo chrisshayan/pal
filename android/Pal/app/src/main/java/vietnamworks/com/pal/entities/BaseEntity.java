@@ -1,5 +1,7 @@
 package vietnamworks.com.pal.entities;
 
+import vietnamworks.com.pal.services.FirebaseService;
+
 /**
  * Created by duynk on 10/1/15.
  */
@@ -48,5 +50,25 @@ public class BaseEntity {
 
     public void setLast_modified_date(long last_modified_date) {
         this.last_modified_date = last_modified_date;
+    }
+
+    public void create() {
+        created_by = FirebaseService.authData.getUid();
+        created_date = System.currentTimeMillis();
+    }
+
+    public void modify() {
+        last_modified_by = FirebaseService.authData.getUid();
+        last_modified_date = System.currentTimeMillis();
+    }
+
+    public void modifyOrCreate() {
+        if (created_by == null || created_by.length() == 0) {
+            created_by = FirebaseService.authData.getUid();
+            created_date = System.currentTimeMillis();
+        } else {
+            last_modified_by = FirebaseService.authData.getUid();
+            last_modified_date = System.currentTimeMillis();
+        }
     }
 }

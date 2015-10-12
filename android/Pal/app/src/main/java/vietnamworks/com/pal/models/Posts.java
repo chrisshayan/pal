@@ -5,21 +5,30 @@ import com.firebase.client.Firebase;
 import java.util.ArrayList;
 
 import vietnamworks.com.pal.entities.Post;
+import vietnamworks.com.pal.entities.RefUserPosts;
 import vietnamworks.com.pal.services.FirebaseService;
 
 /**
  * Created by duynk on 10/12/15.
  */
-public class PostData extends AbstractContainer<Post> {
-    protected PostData(){
+public class Posts extends AbstractContainer<Post> {
+    protected Posts(){
         super();
         ArrayList<Post> data = new ArrayList<>();
         this.setData(data);
     }
 
     public static String add(Post p) {
-        Firebase ref = FirebaseService.newRef("posts");
-        ref.push().setValue(p);
+        p.modifyOrCreate();
+        Firebase ref = FirebaseService.newRef("posts").push();
+        ref.setValue(p);
+
+        Firebase user_posts_ref = FirebaseService.newRef("ref_user_posts");
+        RefUserPosts r = new RefUserPosts();
+        r.modify();
+        r.setStatus(p.getStatus());
+        user_posts_ref.setValue(r);
+
         return ref.getKey();
     }
 

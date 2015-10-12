@@ -17,9 +17,9 @@ import vietnamworks.com.pal.services.FirebaseService;
 /**
  * Created by duynk on 9/16/15.
  */
-public class TopicData extends AbstractContainer<Topic> {
+public class Topics extends AbstractContainer<Topic> {
     boolean isLoading = false;
-    protected TopicData(){
+    protected Topics(){
         super();
         ArrayList<Topic> data = new ArrayList<>();
         this.setData(data);
@@ -36,6 +36,7 @@ public class TopicData extends AbstractContainer<Topic> {
                     data.clear();
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         Topic topic = postSnapshot.getValue(Topic.class);
+                        topic.setId(postSnapshot.getKey());
                         data.add(topic);
                     }
                     AppModel.topics.setData(data);

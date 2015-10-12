@@ -71,6 +71,7 @@ public class CustomCardView extends FrameLayout {
         map.put("state", STATE_NORMAL);
         map.put("body", "");
         map.put("title", "");
+        map.put("id", "");
         map.put("type", -1);
         stateData.pushState(map);
     }
@@ -154,7 +155,8 @@ public class CustomCardView extends FrameLayout {
         stateData.setParam("type", type);
     }
 
-    private void setData(HashMap<String, Object> stateData, int state, int type, int icon, String title, String text) {
+    private void setData(HashMap<String, Object> stateData, String id, int state, int type, int icon, String title, String text) {
+        stateData.put("id", id);
         stateData.put("icon", icon);
         stateData.put("title", title);
         stateData.put("state", state);
@@ -165,7 +167,7 @@ public class CustomCardView extends FrameLayout {
     public void startLoading() {
         if (getState() == STATE_INPUT) {
             HashMap<String, Object> state = stateData.cloneState();
-            setData(state, STATE_LOADING, -1, R.drawable.ic_search_grey, "", getResources().getString(R.string.message_loading));
+            setData(state, "", STATE_LOADING, -1, R.drawable.ic_search_grey, "", getResources().getString(R.string.message_loading));
             stateData.setState(1, state);
         } else {
             setData("", STATE_LOADING, -1, R.drawable.ic_search_grey, "", getResources().getString(R.string.message_loading));
@@ -176,7 +178,7 @@ public class CustomCardView extends FrameLayout {
     public void showData(String id, int type, int icon, String title, String text) {
         if (getState() == STATE_INPUT) {
             HashMap<String, Object> state = stateData.cloneState();
-            setData(state, STATE_NORMAL, type, icon, title, text);
+            setData(state, id, STATE_NORMAL, type, icon, title, text);
             stateData.setState(1, state);
         } else {
             setData(id, STATE_NORMAL, type, icon, title, text);
@@ -187,7 +189,7 @@ public class CustomCardView extends FrameLayout {
     public void showMessage(String message) {
         if (getState() == STATE_INPUT) {
             HashMap<String, Object> state = stateData.cloneState();
-            setData(state, STATE_MESSAGE, -1, R.drawable.ic_launcher, "Message", message);
+            setData(state, "", STATE_MESSAGE, -1, R.drawable.ic_launcher, "Message", message);
             stateData.setState(1, state);
         } else {
             setData("", STATE_MESSAGE, -1, R.drawable.ic_launcher, "Message", message);
