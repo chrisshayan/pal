@@ -111,7 +111,9 @@ public class TutorialActivity extends BaseActivity {
     }
 
     public void onLogin(View v) {
-        ((FragmentLogin)mCurrentFragment).onLogin();
+        if (mCurrentFragment instanceof FragmentLogin) {
+            ((FragmentLogin) mCurrentFragment).onLogin();
+        }
     }
 
     public void onSignUp(View v) {
