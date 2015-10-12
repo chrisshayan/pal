@@ -21,7 +21,7 @@ import vietnamworks.com.pal.services.FirebaseService;
  * Created by duynk on 10/1/15.
  */
 
-public class ActivityBase extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
     public static String applicationDataPath = "";
     public static float density;
     private Handler handler = new Handler();
@@ -33,9 +33,9 @@ public class ActivityBase extends AppCompatActivity {
     public static Typeface RobotoI;
     public static Typeface RobotoLI;
 
-    public ActivityBase() {
+    public BaseActivity() {
         super();
-        ActivityBase.sInstance = this;
+        BaseActivity.sInstance = this;
     }
 
     @Override
@@ -58,7 +58,6 @@ public class ActivityBase extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //ActivityBase.sInstance = null;
         FirebaseService.setContext(null);
     }
 
@@ -132,7 +131,7 @@ public class ActivityBase extends AppCompatActivity {
     }
 
     public void openActivity(Class<?> cls) {
-        Intent intent = new Intent(ActivityBase.sInstance, cls);
+        Intent intent = new Intent(BaseActivity.sInstance, cls);
         startActivity(intent);
     }
 
@@ -171,7 +170,7 @@ public class ActivityBase extends AppCompatActivity {
     }
 
     public static int[] getScreenSize() {
-        Display display = ActivityBase.sInstance.getWindowManager().getDefaultDisplay();
+        Display display = BaseActivity.sInstance.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         int s[] = new int[2];
@@ -181,14 +180,14 @@ public class ActivityBase extends AppCompatActivity {
     }
 
     public static int getScreenHeight() {
-        Display display = ActivityBase.sInstance.getWindowManager().getDefaultDisplay();
+        Display display = BaseActivity.sInstance.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         return size.y;
     }
 
     public static int getScreenWidth() {
-        Display display = ActivityBase.sInstance.getWindowManager().getDefaultDisplay();
+        Display display = BaseActivity.sInstance.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         return size.x;
@@ -196,12 +195,12 @@ public class ActivityBase extends AppCompatActivity {
 
     public static int getStatusBarHeight() {
         int result = 0;
-        int resourceId = ActivityBase.sInstance.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = BaseActivity.sInstance.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            result = ActivityBase.sInstance.getResources().getDimensionPixelSize(resourceId);
+            result = BaseActivity.sInstance.getResources().getDimensionPixelSize(resourceId);
         }
         return result;
     }
 
-    public static ActivityBase sInstance;
+    public static BaseActivity sInstance;
 }

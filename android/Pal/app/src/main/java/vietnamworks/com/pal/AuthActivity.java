@@ -12,7 +12,7 @@ import vietnamworks.com.pal.fragments.FragmentSignUp;
 import vietnamworks.com.pal.fragments.FragmentSignUpProcessing;
 import vietnamworks.com.pal.utils.Common;
 
-public class ActivityAuth extends ActivityBase {
+public class AuthActivity extends BaseActivity {
     FragmentSignUp mFragmentSignUp;
     FragmentLogin mFragmentLogin;
     @Override

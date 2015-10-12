@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-import vietnamworks.com.pal.ActivityBase;
+import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.Config;
 
 /**
@@ -52,7 +52,7 @@ public class Common {
     }
 
     public static String getHomeDir() {
-        return ActivityBase.applicationDataPath;
+        return BaseActivity.applicationDataPath;
     }
 
     public static String currentSampleRecordSeed = System.currentTimeMillis() + "";

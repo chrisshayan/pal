@@ -13,7 +13,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.FrameLayout;
 
-import vietnamworks.com.pal.ActivityBase;
+import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.utils.Callback;
 import vietnamworks.com.pal.utils.Common;
@@ -94,7 +94,8 @@ public class CustomCardStackView extends FrameLayout {
                 try {
                     while(isAlive) {
                         update();
-                        sleep(40);
+                        long dt = Math.min(Math.max((long) (1000.0f / 60.0f) - frameDt, 10), 100);
+                        sleep(dt);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -136,15 +137,13 @@ public class CustomCardStackView extends FrameLayout {
     public final static float CARD_TRIGGER_PERCENT = 0.25f;
     public final static float FIRST_CARD_MAX_ROTATE_ANGLE = 5.0f;
     public final static float HIDDEN_CARD_ROTATE_ANGLE = 1.0f;
-    public final static float CARD_WIDTH = 0.9f;
+    public final static float CARD_WIDTH = 0.75f;
     public final static float CARD_HEIGHT = 0.65f;
-
-
-
 
     private float mDownX;
     private int originLayoutMargin;
     private int state = STATE_NONE;
+    private boolean lockState = false;
     private int nextState = STATE_NONE;
     private int lastState = STATE_NONE;
     private int targetScrollX;
@@ -209,7 +208,7 @@ public class CustomCardStackView extends FrameLayout {
     }
 
     private void initLayout() {
-        int[] screen_size = ActivityBase.getScreenSize();
+        int[] screen_size = BaseActivity.getScreenSize();
 
         density = this.getResources().getDisplayMetrics().density;
         int card_width = (int)(screen_size[0]*CARD_WIDTH);
@@ -334,12 +333,15 @@ public class CustomCardStackView extends FrameLayout {
     }
 
     private void update() {
-        frameDt = Math.min(System.currentTimeMillis() - lastUpdate, 100);
+        if (lockState) {
+            return;
+        }
+        frameDt = Math.min(System.currentTimeMillis() - lastUpdate, 500);
         lastUpdate = System.currentTimeMillis();
         if (state != nextState) {
             lastState = state;
             state = nextState;
-            System.out.println("CHANGE TO STATE ... " + STATE_NAME[state]);
+            System.out.println("CHANGE STATE: " + STATE_NAME[lastState] + " -> " + STATE_NAME[state]);
             switch (state) {
                 case STATE_PRE_INIT:
                     handler.post(new Runnable() {
@@ -383,7 +385,7 @@ public class CustomCardStackView extends FrameLayout {
                         public void run() {
                             back.setVisibility(GONE);
                             mid.setVisibility(GONE);
-                            int[] screen_size = ActivityBase.getScreenSize();
+                            int[] screen_size = BaseActivity.getScreenSize();
                             int new_height = (int)(screen_size[0]*9.0f/16.0f);
 
                             AnimatorSet set = new AnimatorSet();
@@ -448,7 +450,7 @@ public class CustomCardStackView extends FrameLayout {
                         @Override
                         public void run() {
                             front.setBackgroundResource(R.drawable.layout_corner_bg);
-                            int[] screen_size = ActivityBase.getScreenSize();
+                            int[] screen_size = BaseActivity.getScreenSize();
                             int new_width = (int)(screen_size[0]*CARD_WIDTH);
                             int new_height = (int)(screen_size[1]*CARD_HEIGHT);
 
@@ -626,10 +628,11 @@ public class CustomCardStackView extends FrameLayout {
                     }
                     switchState(!open_card?STATE_SNOOZE: STATE_OPEN_CARD);
                 }
-
+                /*
                 if (isFakeDrag && state == STATE_DRAG_OUT) {
                     System.out.println(Math.abs(frontLayout.leftMargin) + " " + front.getWidth()*CARD_TRIGGER_PERCENT*2);
                 }
+                */
                 if ( isFakeDrag && state == STATE_DRAG_OUT && Math.abs(frontLayout.leftMargin) >= (int)(front.getWidth()*CARD_TRIGGER_PERCENT*2)) {
                     switchState(STATE_REORDER);
                 }
@@ -669,11 +672,11 @@ public class CustomCardStackView extends FrameLayout {
         final int _state = this.state;
 
         if (requiredUpdateLayout) {
+            lockState = true;
             handler.post(new Runnable() {
                 @Override
                 public void run() {
                     if (_state != STATE_REORDER) {
-                        final float density = getResources().getDisplayMetrics().density;
                         front.setLayoutParams(frontLayout);
                         front.setRotation(_overMovingPercent * FIRST_CARD_MAX_ROTATE_ANGLE * Common.sign(frontLayout.leftMargin));
 
@@ -704,6 +707,7 @@ public class CustomCardStackView extends FrameLayout {
                         initLayout();
                         switchState(STATE_FLY_IN);
                     }
+                    lockState = false;
                 }
             });
         }

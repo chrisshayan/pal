@@ -34,7 +34,7 @@ import vietnamworks.com.pal.utils.Common;
 /**
  * Created by duynk on 10/6/15.
  */
-public class ActivityTaskList extends ActivityBase {
+public class TaskListActivity extends BaseActivity {
 
     public CustomCardStackView stackView;
     public View fragment_writing;
@@ -43,7 +43,7 @@ public class ActivityTaskList extends ActivityBase {
 
     private boolean isUseAudioTask = true;
 
-    public ActivityTaskList() {}
+    public TaskListActivity() {}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class ActivityTaskList extends ActivityBase {
         this.setTimeout(new Runnable() {
             @Override
             public void run() {
-                ((ActivityTaskList) (ActivityTaskList.sInstance)).showSaySomethingGroup();
+                ((TaskListActivity) (TaskListActivity.sInstance)).showSaySomethingGroup();
                 startLoadingTask();
             }
         }, 500);
@@ -271,7 +271,7 @@ public class ActivityTaskList extends ActivityBase {
                 stackView.lock();
                 Map<String, Object> cnd = new HashMap<>();
                 cnd.put("audio", isUseAudioTask);
-                AppModel.topics.loadAsync(ActivityBase.sInstance, cnd, loadDataCallback);
+                AppModel.topics.loadAsync(BaseActivity.sInstance, cnd, loadDataCallback);
                 enableAudioButton(false);
             }
         });
@@ -288,12 +288,12 @@ public class ActivityTaskList extends ActivityBase {
                 if (type == Topic.TYPE_SPEAKING) {
                     fragment_speaking.setVisibility(View.VISIBLE);
                     ViewGroup.LayoutParams layout = fragment_speaking.getLayoutParams();
-                    layout.height = (int) (ActivityBase.getScreenHeight() - ActivityBase.getStatusBarHeight() - stackView.getFront().getHeight() * stackView.getFront().getScaleX());
+                    layout.height = (int) (BaseActivity.getScreenHeight() - BaseActivity.getStatusBarHeight() - stackView.getFront().getHeight() * stackView.getFront().getScaleX());
                     fragment_speaking.setLayoutParams(layout);
                 } else {
                     fragment_writing.setVisibility(View.VISIBLE);
                     ViewGroup.LayoutParams layout = fragment_writing.getLayoutParams();
-                    layout.height = (int) (ActivityBase.getScreenHeight() - ActivityBase.getStatusBarHeight() - stackView.getFront().getHeight() * stackView.getFront().getScaleX());
+                    layout.height = (int) (BaseActivity.getScreenHeight() - BaseActivity.getStatusBarHeight() - stackView.getFront().getHeight() * stackView.getFront().getScaleX());
                     fragment_writing.setLayoutParams(layout);
                 }
             }
@@ -352,16 +352,16 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     @Override
     public void onChangedActiveItem(int front, int mid, int back, CustomCardStackView ccsv) {
         Topic p = AppModel.topics.getData().get(back);
-        ccsv.getBack().showData(p.getId(), p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+        ccsv.getBack().showData(p.getId(), p.getType(), TaskListActivity.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
 
         p = AppModel.topics.getData().get(mid);
-        ccsv.getMid().showData(p.getId(), p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+        ccsv.getMid().showData(p.getId(), p.getType(), TaskListActivity.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
     }
 
     @Override
     public void onBeforeChangedActiveItem(int front, int mid, int back, CustomCardStackView ccsv) {
         Topic p = AppModel.topics.getData().get(back);
-        ccsv.getFront().showData(p.getId(), p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+        ccsv.getFront().showData(p.getId(), p.getType(), TaskListActivity.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
     }
 
     @Override
@@ -372,13 +372,13 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
 
     @Override
     public void onBeforeSelectItem(int index, final CustomCardStackView ccsv) {
-        ((ActivityTaskList)(ActivityTaskList.sInstance)).hideSaySomethingGroup();
+        ((TaskListActivity)(TaskListActivity.sInstance)).hideSaySomethingGroup();
     }
 
     @Override
     public void onSelectItem(int index, final CustomCardStackView ccsv) {
         System.out.println("onSelectItem " + index);
-        ActivityTaskList act = (ActivityTaskList) ActivityTaskList.sInstance;
+        TaskListActivity act = (TaskListActivity) TaskListActivity.sInstance;
         act.showTopicDetail(ccsv.getFront().getStateIntData("type"));
     }
 

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import it.sephiroth.android.library.tooltip.TooltipManager;
-import vietnamworks.com.pal.ActivityBase;
+import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
 
 /**
@@ -44,14 +44,14 @@ public class FragmentToolbar extends FragmentBase {
 
         if (!hasDisable) {
             if (useAudio) {
-                ActivityBase.sInstance.setTimeout(
+                BaseActivity.sInstance.setTimeout(
                         new Runnable() {
                             @Override
                             public void run() {
                                 if (!hasDisable && !hasShowDisableAudioTooltip && btnAudioMode.getVisibility() == View.VISIBLE) {
                                     hasShowDisableAudioTooltip = true;
                                     TooltipManager.getInstance()
-                                            .create(ActivityBase.sInstance, R.id.btn_audio_mode)
+                                            .create(BaseActivity.sInstance, R.id.btn_audio_mode)
                                             .anchor(btnAudioMode, TooltipManager.Gravity.TOP)
                                             .closePolicy(TooltipManager.ClosePolicy.TouchOutside, 3000)
                                             .activateDelay(800)
@@ -61,14 +61,14 @@ public class FragmentToolbar extends FragmentBase {
                             }
                         }, 3000);
             } else {
-                ActivityBase.sInstance.setTimeout(
+                BaseActivity.sInstance.setTimeout(
                         new Runnable() {
                             @Override
                             public void run() {
                                 if (!hasDisable && !hasShowEnableAudioTooltip && btnAudioMode.getVisibility() == View.VISIBLE) {
                                     hasShowEnableAudioTooltip = true;
                                     TooltipManager.getInstance()
-                                            .create(ActivityBase.sInstance, R.id.btn_audio_mode)
+                                            .create(BaseActivity.sInstance, R.id.btn_audio_mode)
                                             .anchor(btnAudioMode, TooltipManager.Gravity.TOP)
                                             .closePolicy(TooltipManager.ClosePolicy.TouchOutside, 3000)
                                             .activateDelay(800)

@@ -17,7 +17,7 @@ import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.fragments.FragmentLogin;
 import vietnamworks.com.pal.fragments.FragmentTutorial;
 
-public class ActivityTutorial extends ActivityBase {
+public class TutorialActivity extends BaseActivity {
     private static int sNumPages;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -35,7 +35,7 @@ public class ActivityTutorial extends ActivityBase {
         mPagerAdapter = new TutorScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
-        ((ActivityTutorial)sInstance).SetPageIndex(0);
+        ((TutorialActivity)sInstance).SetPageIndex(0);
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -43,7 +43,7 @@ public class ActivityTutorial extends ActivityBase {
 
             @Override
             public void onPageSelected(int position) {
-                ((ActivityTutorial)sInstance).SetPageIndex(position);
+                ((TutorialActivity)sInstance).SetPageIndex(position);
             }
 
             @Override

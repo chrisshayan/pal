@@ -4,10 +4,10 @@ import android.os.Bundle;
 
 import com.alexbbb.uploadservice.UploadService;
 
-public class ActivityLauncher extends ActivityBase {
+public class LauncherActivity extends BaseActivity {
     public final static long DELAY_TIME = 3000L;
 
-    public static ActivityLauncher instance = null;
+    public static LauncherActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,7 @@ public class ActivityLauncher extends ActivityBase {
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                openActivity(ActivityTutorial.class);
+                openActivity(TutorialActivity.class);
             }
         }, DELAY_TIME);
         UploadService.NAMESPACE = "vietnamworks.com.pal";

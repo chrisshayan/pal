@@ -7,7 +7,7 @@ import android.util.Log;
 import com.alexbbb.uploadservice.UploadRequest;
 import com.alexbbb.uploadservice.UploadService;
 
-import vietnamworks.com.pal.ActivityTaskList;
+import vietnamworks.com.pal.TaskListActivity;
 import vietnamworks.com.pal.R;
 
 
@@ -63,7 +63,7 @@ public class BaseService {
                 "Fail to upload audio",
                 false);
 
-        request.setNotificationClickIntent(new Intent(context, ActivityTaskList.class));
+        request.setNotificationClickIntent(new Intent(context, TaskListActivity.class));
 
         try {
             UploadService.startUpload(request);

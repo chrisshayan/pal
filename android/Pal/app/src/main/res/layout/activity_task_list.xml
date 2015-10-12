@@ -9,7 +9,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/accent"
+        android:background="@drawable/background_pattern"
         android:weightSum="1">
         <fragment
             android:id="@+id/fragment_toolbar"

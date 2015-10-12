@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
-import vietnamworks.com.pal.ActivityBase;
+import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.utils.StateObject;
 
@@ -93,15 +93,15 @@ public class CustomCardView extends FrameLayout {
         hr = (View)this.findViewById(R.id.cc_hr);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         input = (EditText)findViewById(R.id.cc_input);
-        ActivityBase.applyFont(this);
+        BaseActivity.applyFont(this);
 
         input.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    ActivityBase.sInstance.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                    BaseActivity.sInstance.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
                 } else {
-                    ActivityBase.sInstance.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                    BaseActivity.sInstance.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 }
             }
         });
