@@ -16,8 +16,7 @@ public class ActivityLauncher extends ActivityBase {
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //openActivity(ActivityTutorial.class);
-                openActivity(ActivityTaskList.class);
+                openActivity(ActivityTutorial.class);
             }
         }, DELAY_TIME);
         UploadService.NAMESPACE = "vietnamworks.com.pal";

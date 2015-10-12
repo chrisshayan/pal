@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.parse.ParseInstallation;
 
 import vietnamworks.com.pal.ActivityAuth;
-import vietnamworks.com.pal.ActivityMain;
+import vietnamworks.com.pal.ActivityTaskList;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.FirebaseService;
@@ -183,7 +183,7 @@ public class FragmentLogin extends Fragment {
     }
 
     public void onLoginSuccess() {
-        Intent intent = new Intent(mRefActivity, ActivityMain.class);
+        Intent intent = new Intent(mRefActivity, ActivityTaskList.class);
         startActivity(intent);
     }
 

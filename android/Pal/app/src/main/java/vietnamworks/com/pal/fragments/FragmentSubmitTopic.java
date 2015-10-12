@@ -12,13 +12,12 @@ import android.widget.Toast;
 import com.firebase.client.Firebase;
 
 import vietnamworks.com.pal.ActivityMain;
+import vietnamworks.com.pal.Config;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.entities.Post;
-import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.services.BaseService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.utils.Common;
-import vietnamworks.com.pal.Config;
 
 /**
  * Created by duynk on 9/17/15.
@@ -134,7 +133,7 @@ public class FragmentSubmitTopic extends FragmentBase {
         Post p = null;
         int current_topic = ((ActivityMain)this.getActivity()).mCurrentTopicIndex;
         if (current_topic >= 0) {
-            p = new Post(AppModel.topics.getData().get(current_topic));
+            //p = new Post(AppModel.topics.getData().get(current_topic));
         } else {
             p = new Post();
             p.setTitle(mTxtUserTopic.getText().toString());

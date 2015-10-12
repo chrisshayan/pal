@@ -29,4 +29,7 @@ public class FragmentWriting extends FragmentBase {
     public void reset() {
         text.setText("");
     }
+    public String getText() {
+        return this.text.getText().toString();
+    }
 }

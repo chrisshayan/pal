@@ -125,7 +125,15 @@ public class CustomCardView extends FrameLayout {
         return cardView;
     }
 
-    public String getText() {
+    public String getTopic() {
+        if (body.getText().length() == 0) {
+            return input.getText().toString();
+        } else {
+            return body.getText().toString().trim();
+        }
+    }
+
+    public String getAnswer() {
         if (body.getText().length() == 0) {
             return input.getText().toString();
         } else {
@@ -137,7 +145,8 @@ public class CustomCardView extends FrameLayout {
         return stateData.getIntParam("state");
     }
 
-    private void setData(int state, int type, int icon, String title, String text) {
+    private void setData(String id, int state, int type, int icon, String title, String text) {
+        stateData.setParam("id", id);
         stateData.setParam("icon", icon);
         stateData.setParam("title", title);
         stateData.setParam("state", state);
@@ -159,18 +168,18 @@ public class CustomCardView extends FrameLayout {
             setData(state, STATE_LOADING, -1, R.drawable.ic_search_grey, "", getResources().getString(R.string.message_loading));
             stateData.setState(1, state);
         } else {
-            setData(STATE_LOADING, -1, R.drawable.ic_search_grey, "", getResources().getString(R.string.message_loading));
+            setData("", STATE_LOADING, -1, R.drawable.ic_search_grey, "", getResources().getString(R.string.message_loading));
             setupUI();
         }
     }
 
-    public void showData(int type, int icon, String title, String text) {
+    public void showData(String id, int type, int icon, String title, String text) {
         if (getState() == STATE_INPUT) {
             HashMap<String, Object> state = stateData.cloneState();
             setData(state, STATE_NORMAL, type, icon, title, text);
             stateData.setState(1, state);
         } else {
-            setData(STATE_NORMAL, type, icon, title, text);
+            setData(id, STATE_NORMAL, type, icon, title, text);
             setupUI();
         }
     }
@@ -181,14 +190,14 @@ public class CustomCardView extends FrameLayout {
             setData(state, STATE_MESSAGE, -1, R.drawable.ic_launcher, "Message", message);
             stateData.setState(1, state);
         } else {
-            setData(STATE_MESSAGE, -1, R.drawable.ic_launcher, "Message", message);
+            setData("", STATE_MESSAGE, -1, R.drawable.ic_launcher, "Message", message);
             setupUI();
         }
     }
 
     public void showInput(int type, int icon, String title) {
         stateData.cloneAndPushState();
-        setData(STATE_INPUT, type, icon, title, "");
+        setData("", STATE_INPUT, type, icon, title, "");
         setupUI();
     }
 

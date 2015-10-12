@@ -73,6 +73,7 @@ public class TopicData extends AbstractContainer<Topic> {
                         for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                             Topic topic = postSnapshot.getValue(Topic.class);
                             data.add(topic);
+                            topic.setId(postSnapshot.getKey());
                         }
                         AppModel.topics.setData(data);
                         if (callback != null) {

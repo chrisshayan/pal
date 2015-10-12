@@ -14,6 +14,7 @@ import java.util.Map;
 
 import vietnamworks.com.pal.components.CustomCardStackView;
 import vietnamworks.com.pal.components.CustomCardStackViewDelegate;
+import vietnamworks.com.pal.components.CustomCardView;
 import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.fragments.FragmentRecording;
 import vietnamworks.com.pal.fragments.FragmentToolbar;
@@ -63,11 +64,16 @@ public class ActivityTaskList extends ActivityBase {
 
     public void onSubmitText(View v) {
         this.hideKeyboard();
-        if (stackView.getFront().getText().length() == 0) {
+        if (stackView.getFront().getTopic().length() == 0) {
             Toast.makeText(this.getBaseContext(), getString(R.string.user_topic_validation_empty_string),
                     Toast.LENGTH_SHORT).show();
             return;
         }
+
+        CustomCardView front = stackView.getFront();
+        FragmentWriting fragment = (FragmentWriting) getSupportFragmentManager().findFragmentById(R.id.fragment_writing);
+        AppModel.posts.addText(front.getTopic(), front.getStateStringData("id"), fragment.getText());
+
         setTimeout(new Runnable() {
             @Override
             public void run() {
@@ -91,20 +97,26 @@ public class ActivityTaskList extends ActivityBase {
                 showSaySomethingGroup();
                 enableAudioButton(true);
             }
-        }, 10);
+        }, 100);
     }
 
     public void onSubmitAudio(View v) {
-        if (stackView.getFront().getText().length() == 0) {
+        CustomCardView front = stackView.getFront();
+        FragmentRecording fragment = (FragmentRecording) getSupportFragmentManager().findFragmentById(R.id.fragment_speaking);
+
+        if (front.getTopic().length() == 0) {
             Toast.makeText(this.getBaseContext(), getString(R.string.user_topic_validation_empty_string),
                     Toast.LENGTH_SHORT).show();
             return;
         }
+
         this.fragment_speaking.setVisibility(View.GONE);
-        ((FragmentRecording)getSupportFragmentManager().findFragmentById(R.id.fragment_speaking)).reset();
+        fragment.reset();
         showSaySomethingGroup();
         stackView.closeCard();
         enableAudioButton(true);
+
+        AppModel.posts.addAudioAsync(front.getTopic(), front.getStateStringData("id"));
     }
 
     public void onCancelSubmitAudio(View v) {
@@ -192,15 +204,18 @@ public class ActivityTaskList extends ActivityBase {
                     int count = AppModel.topics.getData().size();
                     if (count > 0) {
                         Topic p = AppModel.topics.getData().get(0);
-                        stackView.getFront().showData(p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+                        stackView.getFront().showData(p.getId(), p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+
+                        p = AppModel.topics.getData().get(1%count);
+                        stackView.getMid().showData(p.getId(), p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+                        p = AppModel.topics.getData().get(2%count);
+                        stackView.getBack().showData(p.getId(), p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+
                         enableAudioButton(true);
                         stackView.refresh();
                         stackView.unlock();
                     }
-                    Topic p = AppModel.topics.getData().get(1%count);
-                    stackView.getMid().showData(p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
-                    p = AppModel.topics.getData().get(2%count);
-                    stackView.getBack().showData(p.getType(), getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+
                 }
             }, 1000);
         }
@@ -231,7 +246,7 @@ public class ActivityTaskList extends ActivityBase {
         ((FragmentToolbar) getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar)).enableAudioButton(val);
     }
 
-    public void showTaskDetail(final int type) {
+    public void showTopicDetail(final int type) {
         setTimeout(new Runnable() {
             @Override
             public void run() {
@@ -260,16 +275,16 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     @Override
     public void onChangedActiveItem(int front, int mid, int back, CustomCardStackView ccsv) {
         Topic p = AppModel.topics.getData().get(back);
-        ccsv.getBack().showData(p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+        ccsv.getBack().showData(p.getId(), p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
 
         p = AppModel.topics.getData().get(mid);
-        ccsv.getMid().showData(p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+        ccsv.getMid().showData(p.getId(), p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
     }
 
     @Override
     public void onBeforeChangedActiveItem(int front, int mid, int back, CustomCardStackView ccsv) {
         Topic p = AppModel.topics.getData().get(back);
-        ccsv.getFront().showData(p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+        ccsv.getFront().showData(p.getId(), p.getType(), ActivityTaskList.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
     }
 
     @Override
@@ -287,7 +302,7 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
     public void onSelectItem(int index, final CustomCardStackView ccsv) {
         System.out.println("onSelectItem " + index);
         ActivityTaskList act = (ActivityTaskList) ActivityTaskList.sInstance;
-        act.showTaskDetail(ccsv.getFront().getStateIntData("type"));
+        act.showTopicDetail(ccsv.getFront().getStateIntData("type"));
     }
 
     @Override
