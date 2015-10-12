@@ -68,7 +68,7 @@ public class CustomCardView extends FrameLayout {
 
     private void setupDefaultData() {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("icon", R.drawable.ic_launcher);
+        map.put("icon", R.mipmap.ic_launcher);
         map.put("state", STATE_NORMAL);
         map.put("body", "");
         map.put("title", "");
@@ -181,7 +181,7 @@ public class CustomCardView extends FrameLayout {
             HashMap<String, Object> state = stateData.cloneState();
             setData(state, "", STATE_LOADING, -1, R.drawable.ic_search_grey, "", getResources().getString(R.string.message_loading));
             stateData.setState(1, state);
-        } else {
+        } if (getState() != STATE_LOADING) {
             setData("", STATE_LOADING, -1, R.drawable.ic_search_grey, "", getResources().getString(R.string.message_loading));
             setupUI();
         }

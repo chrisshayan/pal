@@ -60,6 +60,7 @@ public class ActivityTaskList extends ActivityBase {
         fragment_speaking = (View)this.findViewById(R.id.fragment_speaking);
         fragment_speaking.setVisibility(View.GONE);
 
+        stackView.getFront().startLoading();
         this.setTimeout(new Runnable() {
             @Override
             public void run() {
