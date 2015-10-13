@@ -6,16 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-
-import java.util.Arrays;
-
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.models.AppModel;
-import vietnamworks.com.pal.services.FirebaseService;
 
 /**
  * Created by duynk on 10/13/15.
@@ -47,20 +40,6 @@ public class PostCardAdapter extends RecyclerView.Adapter<PostCardAdapter.CardVi
     public void onBindViewHolder(final CardViewHolder view, final int i) {
         Post p = AppModel.posts.getData().get(i);
         if (p != null) {
-            if (p.getStatus() == Post.STATUS_NONE) { //not sync yet
-                FirebaseService.newRef(Arrays.asList("posts", p.getId())).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        AppModel.posts.getData().set(i, dataSnapshot.getValue(Post.class));
-                        notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
-            }
             view.title.setText(AppModel.posts.getData().get(i).getTitle());
             view.createdDate.setText(AppModel.posts.getData().get(i).getCreated_date() + "");
         }

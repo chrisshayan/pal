@@ -13,11 +13,10 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.util.Arrays;
-
 import vietnamworks.com.pal.components.DrawerEventListener;
 import vietnamworks.com.pal.components.PostCardAdapter;
 import vietnamworks.com.pal.entities.Post;
+import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.fragments.FragmentHeader;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.services.FirebaseService;
@@ -54,18 +53,26 @@ public class PostsActivity extends BaseActivity {
         Firebase.setAndroidContext(this);
 
         Bundle b = getIntent().getExtras();
+        dataRef = FirebaseService.newRef("posts");
+
         if (b != null) {
-            String mode = b.getString("mode");
-            if (mode != null) {
-                if (mode.equalsIgnoreCase("recent")) {
-                    fragment_header.setTitle("Recent posts");
-                    dataRef = FirebaseService.newRef(Arrays.asList("ref_user_posts", FirebaseService.authData.getUid()));
-                    dataRef.addValueEventListener(dataValueEventListener);
-                } else if (mode.equalsIgnoreCase("evaluated")) {
-                    fragment_header.setTitle("Evaluated posts");
-                    dataRef = FirebaseService.newRef(Arrays.asList("ref_user_posts", FirebaseService.authData.getUid()));
-                    dataRef.orderByChild("status").startAt(Post.STATUS_ADVISOR_EVALUATED).addValueEventListener(dataValueEventListener);
-                }
+            int mode = b.getInt("mode", -1);
+            String uid = FirebaseService.authData.getUid();
+            if (mode == DrawerEventListener.POST_FILTER_ALL) {
+                fragment_header.setTitle("All posts");
+                dataRef.orderByChild("created_by").equalTo(uid).addValueEventListener(dataValueEventListener);
+            } else if (mode == DrawerEventListener.POST_FILTER_RECENT_EVALUATED) {
+                fragment_header.setTitle("Recent evaluated posts");
+                String index = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED);
+                dataRef.orderByChild("index_user_status").equalTo(index).addValueEventListener(dataValueEventListener);
+            } else if (mode == DrawerEventListener.POST_FILTER_SPEAKING) {
+                fragment_header.setTitle("Speaking posts");
+                String index = Post.buildUserTypeIndex(uid, Topic.TYPE_SPEAKING);
+                dataRef.orderByChild("index_user_type").equalTo(index).addValueEventListener(dataValueEventListener);
+            } else if (mode == DrawerEventListener.POST_FILTER_WRITING) {
+                fragment_header.setTitle("Writing posts");
+                String index = Post.buildUserTypeIndex(uid, Topic.TYPE_WRITING);
+                dataRef.orderByChild("index_user_type").equalTo(index).addValueEventListener(dataValueEventListener);
             }
         }
 
@@ -79,7 +86,7 @@ public class PostsActivity extends BaseActivity {
             AppModel.posts.getData().clear();
             for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                 String key = postSnapshot.getKey();
-                Post p = new Post();
+                Post p = postSnapshot.getValue(Post.class);
                 p.setId(key);
                 AppModel.posts.getData().add(p);
                 //TODO: no need to reload all list like this. Just reload changed item only
@@ -89,7 +96,6 @@ public class PostsActivity extends BaseActivity {
 
         @Override
         public void onCancelled(FirebaseError firebaseError) {
-
         }
     };
 

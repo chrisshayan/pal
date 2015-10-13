@@ -1,30 +1,31 @@
 package vietnamworks.com.pal.entities;
 
-import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.utils.Common;
 
 /**
  * Created by duynk on 10/1/15.
  */
 public class Post extends BaseEntity {
 
-    public final static int STATUS_NONE                     = -1;                               //-1
-    public final static int STATUS_USER_PENDING             = STATUS_NONE + 1;                  //0
-    public final static int STATUS_USER_ERROR               = STATUS_USER_PENDING + 1;          //1
-    public final static int STATUS_READY                    = STATUS_USER_ERROR + 1;            //2
-    public final static int STATUS_ADVISOR_PROCESSING       = STATUS_READY + 1;                 //3
-    public final static int STATUS_ADVISOR_EVALUATED        = STATUS_ADVISOR_PROCESSING + 1;    //4
-    public final static int STATUS_USER_CONVERSATION        = STATUS_ADVISOR_EVALUATED + 1;     //5
-    public final static int STATUS_ADVISOR_CONVERSATION     = STATUS_USER_CONVERSATION + 1;     //6
-    public final static int STATUS_CLOSED_BY_USER           = STATUS_ADVISOR_CONVERSATION + 1;  //7
-    public final static int STATUS_CLOSED_AND_REDO          = STATUS_CLOSED_BY_USER + 1;        //8
+    public final static int STATUS_NONE                     = 0;                                //0
+    public final static int STATUS_USER_PENDING             = STATUS_NONE + 1;                  //1
+    public final static int STATUS_USER_ERROR               = STATUS_USER_PENDING + 1;          //2
+    public final static int STATUS_READY                    = STATUS_USER_ERROR + 1;            //3
+    public final static int STATUS_ADVISOR_PROCESSING       = STATUS_READY + 1;                 //4
+    public final static int STATUS_ADVISOR_EVALUATED        = STATUS_ADVISOR_PROCESSING + 1;    //5
+    public final static int STATUS_USER_CONVERSATION        = STATUS_ADVISOR_EVALUATED + 1;     //6
+    public final static int STATUS_ADVISOR_CONVERSATION     = STATUS_USER_CONVERSATION + 1;     //7
+    public final static int STATUS_CLOSED_BY_USER           = STATUS_ADVISOR_CONVERSATION + 1;  //8
+    public final static int STATUS_CLOSED_AND_REDO          = STATUS_CLOSED_BY_USER + 1;        //9
 
     //core
-    String uid = "";
     String title = "";
     String ref_topic = "";
     int status = STATUS_NONE;
     String audio = "";
     String text = "";
+    String index_user_status = "";
+    String index_user_type = "";
     int type = RecentTopic.TYPE_WRITING;
 
     //evaluate
@@ -36,9 +37,7 @@ public class Post extends BaseEntity {
     String prev = "";
     String next = "";
 
-    public Post() {
-        this.uid = FirebaseService.authData.getUid();
-    }
+    public Post() {}
 
     public String getTitle() {
         return title;
@@ -61,6 +60,7 @@ public class Post extends BaseEntity {
     }
 
     public void setStatus(int status) {
+        this.index_user_status = buildUserStatusIndex(this.getCreated_by(), status);
         this.status = status;
     }
 
@@ -125,6 +125,31 @@ public class Post extends BaseEntity {
     }
 
     public void setType(int type) {
+        this.index_user_type = buildUserTypeIndex(this.getCreated_by(), type);
         this.type = type;
     }
+
+    public String getIndex_user_status() {
+        return index_user_status;
+    }
+
+    public void setIndex_user_status(String channel_status) {
+        this.index_user_status = index_user_status;
+    }
+
+    public String getIndex_user_type() {
+        return index_user_type;
+    }
+
+    public void setIndex_user_type(String index_user_type) {
+        this.index_user_type = index_user_type;
+    }
+
+    public static String buildUserTypeIndex(String userid, int type) {
+        return Common.padRight(userid, 48) + Common.padRight(type + "", 4) ;
+    }
+    public static String buildUserStatusIndex(String userid, int status) {
+        return Common.padRight(userid, 48) + Common.padRight(status + "", 4) ;
+    }
+
 }

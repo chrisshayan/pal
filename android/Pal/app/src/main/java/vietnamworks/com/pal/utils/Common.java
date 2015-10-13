@@ -94,4 +94,12 @@ public class Common {
     public static int sign(float a) {
         return a > 0?1:(a<0?-1:0);
     }
+
+    public static String padRight(String s, int n) {
+        return String.format("%1$-" + n + "s", s);
+    }
+
+    public static String padLeft(String s, int n) {
+        return String.format("%1$" + n + "s", s);
+    }
 }

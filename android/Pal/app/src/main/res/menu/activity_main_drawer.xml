@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Posts">
-        <menu>
-            <item android:id="@+id/nav_waiting" android:icon="@android:drawable/ic_input_get"
-                android:title="Recent posts" />
-            <item android:id="@+id/nav_evaluated" android:icon="@android:drawable/btn_star_big_on"
-                android:title="Evaluated posts" />
-        </menu>
-    </item>
+    <group android:checkableBehavior="single" android:id="@+id/group1">
+        <item android:id="@+id/all_posts" android:icon="@android:drawable/ic_input_get"
+            android:title="All posts" />
+        <item android:id="@+id/recent_evaluated_posts" android:icon="@android:drawable/ic_input_get"
+            android:title="Recent evaluated posts" />
+    </group>
+
+    <group android:checkableBehavior="single" android:id="@+id/post_type">
+        <item android:id="@+id/writing_posts" android:icon="@android:drawable/ic_input_get"
+            android:title="Writing" />
+        <item android:id="@+id/speaking_posts" android:icon="@android:drawable/ic_input_get"
+            android:title="Speaking" />
+    </group>
 
     <item android:title="Account">
         <menu>

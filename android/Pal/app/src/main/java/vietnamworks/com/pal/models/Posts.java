@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import vietnamworks.com.pal.entities.Post;
-import vietnamworks.com.pal.entities.RefUserPosts;
 import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.services.FirebaseService;
 
@@ -23,14 +22,9 @@ public class Posts extends AbstractContainer<Post> {
     public static String add(Post p) {
         p.modifyOrCreate();
         Firebase ref = FirebaseService.newRef("posts").push();
+        p.setStatus(p.getStatus()); //update status index
+        p.setType(p.getType()); //update type index
         ref.setValue(p);
-
-        RefUserPosts r = new RefUserPosts();
-        r.modifyOrCreate();
-        r.setStatus(p.getStatus());
-
-        Firebase user_posts_ref = FirebaseService.newRef(Arrays.asList("ref_user_posts", FirebaseService.authData.getUid(), ref.getKey()));
-        user_posts_ref.setValue(r);
 
         return ref.getKey();
     }
@@ -58,7 +52,6 @@ public class Posts extends AbstractContainer<Post> {
         Firebase ref = FirebaseService.newRef(Arrays.asList("posts", postId));
         ref.child("audio").setValue(audioLink);
         ref.child("status").setValue(Post.STATUS_READY);
-        FirebaseService.newRef(Arrays.asList("ref_user_posts", FirebaseService.authData.getUid())).child(postId).child("status").setValue(Post.STATUS_READY);
     }
 
     public static void raiseError(String postId) {
