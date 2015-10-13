@@ -22,6 +22,7 @@
         android:textColor="@color/primary_text"
         android:textColorHint="@color/secondary_text"
         android:layout_weight="1"
+        android:elevation="5dp"
         android:background="@color/primary_light" />
 
     <LinearLayout
