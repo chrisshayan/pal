@@ -5,6 +5,7 @@
 
     <dimen name="base_padding">16dp</dimen>
     <dimen name="base_padding_half">8dp</dimen>
+    <dimen name="base_padding_quarter">8dp</dimen>
 
     <!--common card-->
     <dimen name="card_corner_radius">0dp</dimen>
@@ -24,4 +25,5 @@
     <dimen name="button_press_elevation">18dp</dimen>
 
     <dimen name="floating_button_size">60dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

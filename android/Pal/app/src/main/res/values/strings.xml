@@ -58,5 +58,6 @@
     </string-array>
 
     <string name="btn_fail_to_load_topic">Retry</string>
+    <string name="title_activity_posts">PostsActivity</string>
 
 </resources>

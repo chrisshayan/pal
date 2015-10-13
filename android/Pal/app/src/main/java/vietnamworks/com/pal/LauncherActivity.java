@@ -16,7 +16,8 @@ public class LauncherActivity extends BaseActivity {
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                openActivity(TutorialActivity.class);
+                //openActivity(TutorialActivity.class);
+                openActivity(PostsActivity.class);
             }
         }, DELAY_TIME);
         UploadService.NAMESPACE = "vietnamworks.com.pal";
