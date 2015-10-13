@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import it.sephiroth.android.library.tooltip.TooltipManager;
 import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
 
@@ -44,6 +43,7 @@ public class FragmentToolbar extends FragmentBase {
             btnAudioMode.setImageResource(val ? R.drawable.ic_microphone_borderless_lightblue : R.drawable.ic_microphone_disable_borderless_lightblue);
         }
 
+        /*
         if (!hasDisable) {
             if (useAudio) {
                 BaseActivity.sInstance.setTimeout(
@@ -81,6 +81,7 @@ public class FragmentToolbar extends FragmentBase {
                         }, 3000);
             }
         }
+        */
     }
 
     public void enableAudioButton(boolean val) {
