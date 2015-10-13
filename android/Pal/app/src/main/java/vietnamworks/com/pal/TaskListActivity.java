@@ -71,6 +71,10 @@ public class TaskListActivity extends BaseActivity {
                 startLoadingTask();
             }
         }, 500);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new DrawerEventListener(drawer));
     }
 
     @Override

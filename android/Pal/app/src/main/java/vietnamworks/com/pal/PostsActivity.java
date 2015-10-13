@@ -50,12 +50,13 @@ public class PostsActivity extends BaseActivity {
 
         fragment_header = ((FragmentHeader)getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar));
 
-        Firebase.setAndroidContext(this);
-
         Bundle b = getIntent().getExtras();
+        mRecyclerView.setAdapter(null);
+
         dataRef = FirebaseService.newRef("posts");
 
         if (b != null) {
+            mAdapter = new PostCardAdapter();
             int mode = b.getInt("mode", -1);
             String uid = FirebaseService.authData.getUid();
             if (mode == DrawerEventListener.POST_FILTER_ALL) {
@@ -76,8 +77,16 @@ public class PostsActivity extends BaseActivity {
             }
         }
 
-        mAdapter = new PostCardAdapter();
-        mRecyclerView.setAdapter(mAdapter);
+        setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        }, 1000);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new DrawerEventListener(drawer));
     }
 
     private ValueEventListener dataValueEventListener = new ValueEventListener() {
@@ -109,7 +118,6 @@ public class PostsActivity extends BaseActivity {
         //drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new DrawerEventListener(drawer));
         drawer.openDrawer(navigationView);
     }
 }
