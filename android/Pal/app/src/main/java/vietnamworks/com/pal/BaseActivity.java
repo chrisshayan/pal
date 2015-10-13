@@ -62,7 +62,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public static void applyFont(final View v) {
-        applyFont(v,RobotoL);
+        applyFont(v, RobotoL);
     }
 
     public static void applyFont(final View v, String font_des) {
@@ -132,6 +132,12 @@ public class BaseActivity extends AppCompatActivity {
 
     public void openActivity(Class<?> cls) {
         Intent intent = new Intent(BaseActivity.sInstance, cls);
+        startActivity(intent);
+    }
+
+    public void openActivity(Class<?> cls, Bundle b) {
+        Intent intent = new Intent(BaseActivity.sInstance, cls);
+        intent.putExtras(b);
         startActivity(intent);
     }
 

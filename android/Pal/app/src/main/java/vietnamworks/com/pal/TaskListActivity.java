@@ -21,6 +21,7 @@ import java.util.Map;
 import vietnamworks.com.pal.components.CustomCardStackView;
 import vietnamworks.com.pal.components.CustomCardStackViewDelegate;
 import vietnamworks.com.pal.components.CustomCardView;
+import vietnamworks.com.pal.components.DrawerEventListener;
 import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.fragments.FragmentRecording;
 import vietnamworks.com.pal.fragments.FragmentToolbar;
@@ -306,6 +307,7 @@ public class TaskListActivity extends BaseActivity {
         //drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new DrawerEventListener(drawer));
         drawer.openDrawer(navigationView);
     }
 
