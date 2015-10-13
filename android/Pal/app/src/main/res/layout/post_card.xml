@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/cv"
-    android:layout_marginBottom="1dp"
-    card_view:cardCornerRadius="0dp"
-    android:elevation="1dp"
-    card_view:elevation="1dp"
-    >
+    android:orientation="vertical"
+    android:background="?attr/selectableItemBackgroundBorderless">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -50,11 +46,6 @@
                 android:textColor="@color/primary_text"
                 android:paddingBottom="@dimen/base_padding_quarter" />
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@color/divider" />
-
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
@@ -83,4 +74,9 @@
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
-</android.support.v7.widget.CardView>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/divider"
+        />
+</LinearLayout>
