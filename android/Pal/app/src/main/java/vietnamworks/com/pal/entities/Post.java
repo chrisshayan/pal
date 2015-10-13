@@ -27,6 +27,7 @@ public class Post extends BaseEntity {
     String index_user_status = "";
     String index_user_type = "";
     int type = RecentTopic.TYPE_WRITING;
+    boolean hasRead = false;
 
     //evaluate
     int score = 0;
@@ -143,6 +144,14 @@ public class Post extends BaseEntity {
 
     public void setIndex_user_type(String index_user_type) {
         this.index_user_type = index_user_type;
+    }
+
+    public boolean isHasRead() {
+        return hasRead;
+    }
+
+    public void setHasRead(boolean hasRead) {
+        this.hasRead = hasRead;
     }
 
     public static String buildUserTypeIndex(String userid, int type) {
