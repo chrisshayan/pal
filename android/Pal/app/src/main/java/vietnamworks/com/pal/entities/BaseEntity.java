@@ -55,6 +55,7 @@ public class BaseEntity {
     public void create() {
         created_by = FirebaseService.authData.getUid();
         created_date = System.currentTimeMillis();
+        modify();
     }
 
     public void modify() {
@@ -64,11 +65,9 @@ public class BaseEntity {
 
     public void modifyOrCreate() {
         if (created_by == null || created_by.length() == 0) {
-            created_by = FirebaseService.authData.getUid();
-            created_date = System.currentTimeMillis();
+            create();
         } else {
-            last_modified_by = FirebaseService.authData.getUid();
-            last_modified_date = System.currentTimeMillis();
+            modify();
         }
     }
 }

@@ -17,7 +17,7 @@ public class LauncherActivity extends BaseActivity {
             @Override
             public void run() {
                 //openActivity(TutorialActivity.class);
-                openActivity(PostsActivity.class);
+                openActivity(AuthActivity.class);
             }
         }, DELAY_TIME);
         UploadService.NAMESPACE = "vietnamworks.com.pal";

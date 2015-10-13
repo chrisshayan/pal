@@ -7,7 +7,8 @@ import vietnamworks.com.pal.services.FirebaseService;
  */
 public class Post extends BaseEntity {
 
-    public final static int STATUS_USER_PENDING             = 0;                                //0
+    public final static int STATUS_NONE                     = -1;                               //-1
+    public final static int STATUS_USER_PENDING             = STATUS_NONE + 1;                  //0
     public final static int STATUS_USER_ERROR               = STATUS_USER_PENDING + 1;          //1
     public final static int STATUS_READY                    = STATUS_USER_ERROR + 1;            //2
     public final static int STATUS_ADVISOR_PROCESSING       = STATUS_READY + 1;                 //3
@@ -21,7 +22,7 @@ public class Post extends BaseEntity {
     String uid = "";
     String title = "";
     String ref_topic = "";
-    int status = STATUS_USER_PENDING;
+    int status = STATUS_NONE;
     String audio = "";
     String text = "";
     int type = RecentTopic.TYPE_WRITING;
