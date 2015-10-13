@@ -18,17 +18,24 @@ import vietnamworks.com.pal.utils.Common;
  * Created by duynk on 10/13/15.
  */
 public class PostCardAdapter extends RecyclerView.Adapter<PostCardAdapter.CardViewHolder> {
-    public static class CardViewHolder extends RecyclerView.ViewHolder {
+    public static class CardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView title;
         TextView lastModifiedDate;
         TextView status;
         TextView score;
+        View holder;
         CardViewHolder(View itemView) {
             super(itemView);
             title = (TextView)itemView.findViewById(R.id.title);
             lastModifiedDate = (TextView)itemView.findViewById(R.id.last_modified_date);
             status = (TextView)itemView.findViewById(R.id.status);
             score = (TextView)itemView.findViewById(R.id.score);
+            holder = (View)itemView.findViewById(R.id.holder);
+            holder.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View v) {
+            
         }
     }
 
