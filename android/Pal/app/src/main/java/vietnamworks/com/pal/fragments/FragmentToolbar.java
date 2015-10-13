@@ -31,6 +31,8 @@ public class FragmentToolbar extends FragmentBase {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_header, container, false);
         btnAudioMode = (ImageButton)rootView.findViewById(R.id.btn_audio_mode);
+
+        BaseActivity.applyFont(rootView);
         return rootView;
     }
 

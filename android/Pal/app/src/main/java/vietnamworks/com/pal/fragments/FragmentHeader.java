@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
 
 /**
@@ -22,6 +23,7 @@ public class FragmentHeader extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_header_posts, container, false);
         title = (TextView)rootView.findViewById(R.id.lb_title);
+        BaseActivity.applyFont(rootView);
         return rootView;
     }
 

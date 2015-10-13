@@ -47,7 +47,8 @@
         </activity>
         <activity
             android:name=".AuthActivity"
-            android:label="@string/title_activity_auth" >
+            android:label="@string/title_activity_auth"
+            android:noHistory="true">
         </activity>
 
         <service android:name="com.parse.PushService" />

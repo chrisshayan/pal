@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.utils.Common;
 
@@ -47,9 +48,9 @@ public class FragmentRecording extends FragmentBase {
         btnRecord = (ImageButton)rootView.findViewById(R.id.btn_record);
         btnPlay = (ImageButton)rootView.findViewById(R.id.btn_play);
         recordingStatus = (TextView)rootView.findViewById(R.id.recording_status);
-
-
         setState(STATE_EMPTY);
+
+        BaseActivity.applyFont(rootView);
         return rootView;
     }
 

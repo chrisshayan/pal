@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
 
 /**
@@ -53,6 +54,7 @@ public class FragmentTutorial extends Fragment {
         int []res = new int[] {R.drawable.ic_tutor_1, R.drawable.ic_tutor_2, R.drawable.ic_tutor_3};
         img.setImageResource(res[mPageNumber % res.length]);
 
+        BaseActivity.applyFont(rootView);
         return rootView;
     }
 

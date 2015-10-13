@@ -81,6 +81,7 @@ public class CustomCardView extends FrameLayout {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.custom_card, this);
+        BaseActivity.applyFont(this);
     }
 
     protected void onFinishInflate() {

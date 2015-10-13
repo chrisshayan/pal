@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.parse.ParseInstallation;
 
 import vietnamworks.com.pal.AuthActivity;
+import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.TaskListActivity;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.services.AsyncCallback;
@@ -64,6 +65,8 @@ public class FragmentLogin extends Fragment {
         loginButtonObjectAnimator = ObjectAnimator.ofFloat(mBtnLogin , "rotation", 0f, 360f);
         loginButtonObjectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
         loginButtonObjectAnimator.setRepeatMode(ObjectAnimator.RESTART);
+
+        BaseActivity.applyFont(rootView);
         return rootView;
     }
 

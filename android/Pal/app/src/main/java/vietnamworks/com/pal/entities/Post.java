@@ -18,6 +18,19 @@ public class Post extends BaseEntity {
     public final static int STATUS_CLOSED_BY_USER           = STATUS_ADVISOR_CONVERSATION + 1;  //8
     public final static int STATUS_CLOSED_AND_REDO          = STATUS_CLOSED_BY_USER + 1;        //9
 
+    public static String[] STATUS_TEXT = {
+            "None",
+            "Pending",
+            "Error",
+            "Ready",
+            "Processing",
+            "Evaluated",
+            "In conversation",
+            "Waiting",
+            "Closed",
+            "Closed"
+    };
+
     //core
     String title = "";
     String ref_topic = "";

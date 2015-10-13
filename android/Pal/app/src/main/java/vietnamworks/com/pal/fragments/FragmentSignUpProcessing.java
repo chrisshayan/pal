@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.utils.Common;
 
@@ -44,6 +45,8 @@ public class FragmentSignUpProcessing extends Fragment {
         mTryAgain.setVisibility(View.INVISIBLE);
 
         onSignUp();
+
+        BaseActivity.applyFont(rootView);
         return rootView;
     }
 

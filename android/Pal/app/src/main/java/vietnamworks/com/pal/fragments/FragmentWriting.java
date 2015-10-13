@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
 
 /**
@@ -23,6 +24,8 @@ public class FragmentWriting extends FragmentBase {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_writing, container, false);
         text = (EditText)rootView.findViewById(R.id.textAnswer);
+
+        BaseActivity.applyFont(rootView);
         return rootView;
     }
 
