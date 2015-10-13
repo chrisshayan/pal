@@ -1,6 +1,7 @@
 package vietnamworks.com.pal.components;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,31 +24,45 @@ public class DrawerEventListener implements NavigationView.OnNavigationItemSelec
     public DrawerEventListener(DrawerLayout drawer) {
         this.drawer = drawer;
     }
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(final MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        if (id == R.id.all_posts) {
-            Bundle b = new Bundle();
-            b.putInt("mode", POST_FILTER_ALL);
-            BaseActivity.sInstance.openActivity(PostsActivity.class, b);
-        } else if (id == R.id.recent_evaluated_posts) {
-            Bundle b = new Bundle();
-            b.putInt("mode", POST_FILTER_RECENT_EVALUATED);
-            BaseActivity.sInstance.openActivity(PostsActivity.class, b);
-        } else if (id == R.id.writing_posts) {
-            Bundle b = new Bundle();
-            b.putInt("mode", POST_FILTER_WRITING);
-            BaseActivity.sInstance.openActivity(PostsActivity.class, b);
-        } else if (id == R.id.speaking_posts) {
-                Bundle b = new Bundle();
-                b.putInt("mode", POST_FILTER_SPEAKING);
-                BaseActivity.sInstance.openActivity(PostsActivity.class, b);
-        } else if (id == R.id.nav_change_password) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int id = item.getItemId();
+                if (id == R.id.all_posts) {
+                    Bundle b = new Bundle();
+                    b.putInt("mode", POST_FILTER_ALL);
+                    BaseActivity.sInstance.openActivity(PostsActivity.class, b);
+                } else if (id == R.id.recent_evaluated_posts)
 
-        } else if (id == R.id.nav_logout) {
+                {
+                    Bundle b = new Bundle();
+                    b.putInt("mode", POST_FILTER_RECENT_EVALUATED);
+                    BaseActivity.sInstance.openActivity(PostsActivity.class, b);
+                } else if (id == R.id.writing_posts)
 
-        }
+                {
+                    Bundle b = new Bundle();
+                    b.putInt("mode", POST_FILTER_WRITING);
+                    BaseActivity.sInstance.openActivity(PostsActivity.class, b);
+                } else if (id == R.id.speaking_posts)
 
+                {
+                    Bundle b = new Bundle();
+                    b.putInt("mode", POST_FILTER_SPEAKING);
+                    BaseActivity.sInstance.openActivity(PostsActivity.class, b);
+                } else if (id == R.id.nav_change_password)
+
+                {
+
+                } else if (id == R.id.nav_logout)
+
+                {
+
+                }
+            }
+        }, 500);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

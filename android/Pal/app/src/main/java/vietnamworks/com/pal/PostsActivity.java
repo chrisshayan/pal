@@ -77,12 +77,7 @@ public class PostsActivity extends BaseActivity {
             }
         }
 
-        setTimeout(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.setAdapter(mAdapter);
-            }
-        }, 1000);
+        mRecyclerView.setAdapter(mAdapter);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
