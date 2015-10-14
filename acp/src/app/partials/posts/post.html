@@ -3,32 +3,23 @@
         {{data.title}}<br/>
         <small><i class="fa fa-fw fa-user"></i>{{user_display_name}}</small><br/>
         <small><i class="fa fa-fw fa-clock-o"></i>{{formatDateTime(data.last_modified_date)}}</small>
-        <i class="fa fa-fw pull-right" ng-class="{'fa-microphone':isSpeakingTask(), 'fa-paragraph':!isSpeakingTask()}"></i>
+        <span ng-if="!data.audio" class="badge badge-info pull-right"><i class="fa fa-fw fa-paragraph"></i></span>
+        <div ng-if="data.audio" class="pull-right">
+            <audio-player audio="https://api.cloudconvert.com/convert?apikey=3suj4KZn3UoTKbksedeKLiDLIBQ9JBl0CBzVQ6FV_IKknHzkcHTEUT_DP6O2DopvIWSM4-nL1w0xIZCd1INaJQ&input=download&download=inline&inputformat=3gp&outputformat=mp3&file={{data.audio}}"></audio-player>
+        </div>
     </h4>
     <div ng-show="isShowDetail">
-        <hr/>
-        <div ng-if="numOfWaitingPost == null" class="spiner-example" ng-show="isSubmitting">
-            <div class="sk-spinner sk-spinner-wave">
-                <div class="sk-rect1"></div>
-                <div class="sk-rect2"></div>
-                <div class="sk-rect3"></div>
-                <div class="sk-rect4"></div>
-                <div class="sk-rect5"></div>
-            </div>
-        </div>
+        <hr ng-if="!isSubmitting && data.text"/>
         <div class="row" ng-show="!isSubmitting">
-            <div class="col-md-12 col-xs-12" style="text-align:center" ng-show="isSpeakingTask()">
-                <h4>User's voice</h4>
-                <button ng-show="!audio.playing" class="btn btn-success dim" type="button" ng-click="playPause()"><i class="fa fa-play"></i></button>
-                <button ng-show="audio.playing" class="btn btn-warning dim" type="button" ng-click="playPause()"><i class="fa fa-pause"></i></button>
-            </div>
             <div class="col-md-12 col-xs-12" style="text-align:left" ng-show="!isSpeakingTask()">
                 <h4>User says:</h4>
                 <blockquote style="font-size:10pt">{{data.text}}</blockquote>
             </div>
         </div>
+
+        <hr ng-if="!isSubmitting"/>
+
         <div class="row" ng-show="!isSubmitting">
-            <hr ng-if="isSpeakingTask()"/>
             <div class="col-md-10 col-xs-10 form-group" style="text-align:center">
                 <textarea ng-model="comment" rows="10" class="form-control" style="resize:vertical" placeholder="Your comment"></textarea>
             </div>
@@ -38,11 +29,8 @@
                 <button ng-show="teacher_audio && !teacher_audio.playing && !isRecording" class="btn btn-success dim" type="button" ng-click="playStopRecord()"><i class="fa fa-play"></i></button>
                 <button ng-show="teacher_audio && teacher_audio.playing && !isRecording" class="btn btn-warning dim" type="button" ng-click="playStopRecord()"><i class="fa fa-pause"></i></button>
             </div>
-        </div>
-        <div class="row" ng-show="!isSubmitting">
-            <hr/>
+
             <div class="col-md-12" style="text-align:center; margin: 10px 0 10px 0" ng-mouseleave="pre_vote=vote">
-                <h4>Score</h4>
                 <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote == 0 || pre_vote == 0, 'fa-star': vote >= 1 && pre_vote >= 1, 'text-warning': vote >= 1 || pre_vote >= 1}" ng-mouseover="pre_vote=1" ng-click="vote=1"></span>
                 <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 2  || pre_vote < 2 , 'fa-star': vote >= 2 && pre_vote >= 2, 'text-warning': vote >= 2 || pre_vote >= 2}" ng-mouseover="pre_vote=2" ng-click="vote=2"></span>
                 <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 3  || pre_vote < 3 , 'fa-star': vote >= 3 && pre_vote >= 3, 'text-warning': vote >= 3 || pre_vote >= 3}" ng-mouseover="pre_vote=3" ng-click="vote=3"></span>
@@ -50,8 +38,9 @@
                 <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 5  || pre_vote < 5 , 'fa-star': vote >= 5 && pre_vote >= 5, 'text-warning': vote >= 5 || pre_vote >= 5}" ng-mouseover="pre_vote=5" ng-click="vote=5"></span>
             </div>
         </div>
+        <hr ng-if="!isSubmitting"/>
+
         <div class="agile-detail" ng-show="!isSubmitting">
-            <hr/>
             <div class="pull-right">
                 <button tooltip="Return this task to queue" href="" ng-click="onPutBack()" class="btn btn-xs btn-danger"><i class="fa fa-fw fa-undo"></i> Put back</button>
                 <button href="" ng-disabled="!vote || vote == 0 || (!teacher_audio && !comment)" ng-click="onSubmit()" class="btn btn-xs btn-primary"><i class="fa fa-fw fa-paper-plane"></i> Submit</button>

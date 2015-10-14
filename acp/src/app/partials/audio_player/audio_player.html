@@ -1,0 +1,2 @@
+<button ng-if="!audioPlayer.playing" class="btn btn-success btn-xs" type="button" ng-click="toggleAudio();$event.stopPropagation();"><i class="fa fa-play"></i></button>
+<button ng-if="audioPlayer.playing" class="btn btn-warning btn-xs" type="button" ng-click="toggleAudio();$event.stopPropagation();"><i class="fa fa-pause"></i></button>

@@ -1,5 +1,6 @@
 angular.module('cs', []).service('cs', function () {
     this.formatDateTime = function(input) {
+        if (!input) return "";
         var date = new Date(input)
         var year = date.getFullYear();
         var month = date.getMonth() + 1;

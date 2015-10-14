@@ -12,44 +12,20 @@ angular.module('inspinia')
             $scope.formatTime = cs.formatTime;
             $scope.formatDate = cs.formatDate;
             $scope.formatDateTime = cs.formatDateTime;
-            $scope.audio = null;
             $scope.teacher_audio = null;
-            $scope.audio_percent = 0;
             $scope.audioRecorder = null;
             $scope.vote = 0;
             $scope.pre_vote = 0;
             $scope.comment = "";
             $scope.isSubmitting = false;
-
-            $scope.data = firebaseHelper.syncObject(["posts", $scope.ref.$id]);
+            $scope.data = $scope.ref;
 
             $scope.user = firebaseHelper.getFireBaseInstance(["profiles_pub", $scope.data.created_by, "display_name"]).once('value', function(snapshot) {
-                $scope.user_display_name = snapshot.val() || "unknowned";
+                $scope.user_display_name = snapshot.val() || "Unknowned";
                 setTimeout(function(){
                     $scope.$digest();
                 }, 100);
             }, function() {});
-
-            $scope.playPause = function(){
-                if (!$scope.audio) {
-                    $scope.audio = new Audio();
-                    $scope.audio.src = "https://api.cloudconvert.com/convert?apikey=3suj4KZn3UoTKbksedeKLiDLIBQ9JBl0CBzVQ6FV_IKknHzkcHTEUT_DP6O2DopvIWSM4-nL1w0xIZCd1INaJQ&input=download&download=inline&inputformat=3gp&outputformat=mp3&file=" + $scope.data.audio;
-                    console.log($scope.audio.src);
-
-                    $scope.audio.addEventListener('timeupdate', function(event){
-                    });
-                    $scope.audio.addEventListener('ended', function(){
-                        $scope.audio.playing = false;
-                        $scope.$digest();
-                    });
-                }
-                if ($scope.audio.playing) {
-                    $scope.audio.pause()
-                } else {
-                    $scope.audio.play()
-                }
-                $scope.audio.playing = !$scope.audio.playing;
-            };
 
             $scope.isRecording = false;
             $scope.startRecord = function() {
@@ -110,6 +86,7 @@ angular.module('inspinia')
                                 .set("score", $scope.vote)
                                 .set("hasRead", false)
                                 .push("conversation", {
+                                    created_date: Date.now(),
                                     uid: uid,
                                     audio: audio || "",
                                     text: $scope.comment

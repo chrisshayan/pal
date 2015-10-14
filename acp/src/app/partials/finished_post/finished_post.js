@@ -8,55 +8,36 @@ angular.module('inspinia')
             group: '@'
         },
         controller: function($scope, firebaseHelper, $sce, $rootScope, cs) {
+            $scope.isShowDetail = false;
             $scope.formatTime = cs.formatTime;
             $scope.formatDate = cs.formatDate;
             $scope.formatDateTime = cs.formatDateTime;
 
-            $scope.audio = null;
-            $scope.advisorAudio = null;
+            $scope.data = $scope.ref;
+            $scope.uid = firebaseHelper.getUID();
 
-            $scope.data = firebaseHelper.syncObject(["posts", $scope.ref.$id]);
-
-            $scope.user = firebaseHelper.getFireBaseInstance(["profiles_pub", $scope.data.created_by, "display_name"]).on('value', function(snapshot) {
-                $scope.user_display_name = snapshot.val();
-                setTimeout(function() {
+            $scope.user = firebaseHelper.getFireBaseInstance(["profiles_pub", $scope.data.created_by, "display_name"]).once('value', function(snapshot) {
+                $scope.user_display_name = snapshot.val() || "Unknowned";
+                setTimeout(function(){
                     $scope.$digest();
                 }, 100);
             }, function() {});
 
-            $scope.toggleUserVoice = function(){
-                if (!$scope.audio) {
-                    $scope.audio = new Audio();
-                    $scope.audio.src = $scope.data.audio;
-                    $scope.audio.addEventListener('ended', function(){
-                        $scope.audio.playing = false;
-                        $scope.$digest();
-                    });
-                }
-                if ($scope.audio.playing) {
-                    $scope.audio.pause()
-                } else {
-                    $scope.audio.play()
-                }
-                $scope.audio.playing = !$scope.audio.playing;
-            };
+            $scope.isSpeakingTask = function() {
+                return $scope.data.type == PostType.Speaking;
+            }
 
-            $scope.toggleAdvisorVoice = function(){
-                if (!$scope.advisorAudio) {
-                    $scope.advisorAudio = new Audio();
-                    $scope.advisorAudio.src = $scope.data.answer_audio;
-                    $scope.advisorAudio.addEventListener('ended', function(){
-                        $scope.advisorAudio.playing = false;
-                        $scope.$digest();
-                    });
+            $scope.onOpenTask = function(id) {
+                $scope.isShowDetail = !$scope.isShowDetail;
+                if ($scope.isShowDetail) {
+                    $rootScope.$broadcast('done_task:open', {id: $scope.ref.$id});
                 }
-                if ($scope.advisorAudio.playing) {
-                    $scope.advisorAudio.pause()
-                } else {
-                    $scope.advisorAudio.play()
+            }
+            $scope.$on("done_task:open", function(sender, data) {
+                if (data.id != $scope.ref.$id) {
+                    $scope.isShowDetail = false;
                 }
-                $scope.advisorAudio.playing = !$scope.advisorAudio.playing;
-            };
+            })
         },
         templateUrl: "app/partials/finished_post/finished_post.html"
     }

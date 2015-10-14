@@ -1,32 +1,33 @@
 <li class="">
-    <h4>{{data.title}}<br/>
-        <small>{{user_display_name}}</small>
+    <h4 style="display:block" ng-click="onOpenTask()">
+        {{data.title}}<br/>
+        <small><i class="fa fa-fw fa-user"></i>{{user_display_name}}</small><br/>
+        <small><i class="fa fa-fw fa-clock-o"></i>{{formatDateTime(data.last_modified_date)}}</small>
+        <span class="badge badge-info pull-right"><i class="fa fa-fw" ng-class="{'fa-microphone':isSpeakingTask(), 'fa-paragraph':!isSpeakingTask()}"></i></span>
+        <span class="badge badge-success pull-right" style="margin-right:5px">{{data.score}} <i class="fa fa-star"></i></span>
     </h4>
-    <hr/>
-    <div class="row">
-        <div class="col-md-6 col-xs-6 b-r" style="text-align:center">
-            <h4>User's voice</h4>
-            <button ng-show="!audio.playing" class="btn btn-success dim" type="button" ng-click="toggleUserVoice()"><i class="fa fa-play"></i></button>
-            <button ng-show="audio.playing" class="btn btn-warning dim" type="button" ng-click="toggleUserVoice()"><i class="fa fa-pause"></i></button>
+    <div ng-show="isShowDetail">
+        <hr/>
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <span><b>User said: ({{formatDateTime(data.created_date)}})</b></span><br/>
+                <blockquote style="font-size:10pt">
+                    <audio-player ng-if="data.audio" audio="{{data.audio}}"></audio-player>
+                    {{data.text}}
+                </blockquote>
+            </div>
         </div>
-        <div class="col-md-6 col-xs-6" style="text-align:center">
-            <h4>Your voice</h4>
-            <button ng-show="!advisorAudio.playing" class="btn btn-success dim" type="button" ng-click="toggleAdvisorVoice()"><i class="fa fa-play"></i></button>
-            <button ng-show="advisorAudio.playing" class="btn btn-warning dim" type="button" ng-click="toggleAdvisorVoice()"><i class="fa fa-pause"></i></button>
+
+        <div class="row" ng-repeat="c in data.conversation">
+            <div class="col-md-12 col-xs-12">
+                <span ng-if="c.uid != uid"><b>User said: ({{formatDateTime(c.created_date)}})</b></span>
+                <span ng-if="c.uid == uid"><b>You said: ({{formatDateTime(c.created_date)}})</b></span>
+                <br/>
+                <blockquote style="font-size:10pt">
+                    <audio-player ng-if="c.audio" audio="{{c.audio}}"></audio-player>
+                    {{c.text}}
+                </blockquote>
+            </div>
         </div>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="col-md-12" style="text-align:center; margin: 10px 0 10px 0">
-            <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': data.score <= 0, 'fa-star': data.score >= 1, 'text-warning': data.score >= 1}"></span>
-            <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': data.score <= 1, 'fa-star': data.score >= 2, 'text-warning': data.score >= 2}"></span>
-            <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': data.score <= 2, 'fa-star': data.score >= 3, 'text-warning': data.score >= 3}"></span>
-            <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': data.score <= 3, 'fa-star': data.score >= 4, 'text-warning': data.score >= 4}"></span>
-            <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': data.score <= 4, 'fa-star': data.score >= 5, 'text-warning': data.score >= 5}"></span>
-        </div>
-    </div>
-    <hr/>
-    <div class="agile-detail">
-        <i class="fa fa-clock-o"></i> {{formatDateTime(data.created_date)}}
     </div>
 </li>
