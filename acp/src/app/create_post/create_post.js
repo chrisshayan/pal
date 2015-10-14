@@ -2,29 +2,19 @@
 
 angular.module('inspinia').controller('CreatePostCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval) {
 
-
+    var post = new Post();
     var init = function() {
-        $scope.post = {
-            title: "",
-            audio: "",
-            text: "",
-            type: 0, //audio
-            prev: 0,
-            status: 0 //pending
-        }
+        $scope.post = post.data;
     }
     init();
 
     $scope.onPost = function() {
         if (firebaseHelper.getUID()) {
-            $scope.post.created_date = Date.now();
-            $scope.post.created_by = firebaseHelper.getUID();
             if ($scope.post.title) {
-                firebaseHelper.pushItemOne("posts", "users", firebaseHelper.getUID(), cs.purify($scope.post), {
-                    success: function() {
+                post.set("status", PostStatus.Ready).doCreate(firebaseHelper.getUID());
+                firebaseHelper.getFireBaseInstance("posts").push().set(cs.purify($scope.post), function(error) {
+                    if (!error) {
                         $rootScope.notifySuccess();
-                        init();
-                        $scope.$apply();
                     }
                 });
             } else {
