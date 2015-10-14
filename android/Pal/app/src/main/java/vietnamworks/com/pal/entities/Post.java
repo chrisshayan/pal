@@ -24,11 +24,11 @@ public class Post extends BaseEntity {
             "None",
             "Pending",
             "Error",
-            "Ready",
+            "Wait for advisor", //ready
             "Processing",
             "Evaluated",
             "In conversation",
-            "Waiting",
+            "Waiting", //wait for response from advisor
             "Closed",
             "Closed"
     };
