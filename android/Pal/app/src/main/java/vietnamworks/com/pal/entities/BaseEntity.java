@@ -1,5 +1,7 @@
 package vietnamworks.com.pal.entities;
 
+import java.util.HashMap;
+
 import vietnamworks.com.pal.services.FirebaseService;
 
 /**
@@ -69,5 +71,37 @@ public class BaseEntity {
         } else {
             modify();
         }
+    }
+
+    public static int safeGetInt(HashMap<String, Object> obj, String key) {
+        if (obj.containsKey(key)) {
+            try {
+                int v = (int)obj.get(key);
+                return v;
+            } catch (Exception E) {
+            }
+        }
+        return -9999;
+    }
+
+    public static long safeGetLong(HashMap<String, Object> obj, String key) {
+        if (obj.containsKey(key)) {
+            try {
+                long v = (long)obj.get(key);
+                return v;
+            } catch (Exception E) {
+            }
+        }
+        return -9999;
+    }
+
+    public static String safeGetString(HashMap<String, Object> obj, String key) {
+        if (obj.containsKey(key)) {
+            try {
+                return obj.get(key).toString();
+            } catch (Exception E) {
+            }
+        }
+        return null;
     }
 }

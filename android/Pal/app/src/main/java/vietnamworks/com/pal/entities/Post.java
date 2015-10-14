@@ -1,5 +1,7 @@
 package vietnamworks.com.pal.entities;
 
+import java.util.HashMap;
+
 import vietnamworks.com.pal.utils.Common;
 
 /**
@@ -53,6 +55,34 @@ public class Post extends BaseEntity {
     String next = "";
 
     public Post() {}
+
+    public Post(HashMap<String, Object> obj) {
+        this.setCreated_date((long) obj.get("created_date"));
+        this.setCreated_by(obj.get("created_by").toString());
+        this.setLast_modified_date((long) obj.get("last_modified_date"));
+        this.setLast_modified_by(obj.get("last_modified_by").toString());
+
+        //core
+        title = obj.get("title").toString();
+        ref_topic = obj.get("ref_topic").toString();
+        status = (int)obj.get("status");
+        audio = obj.get("audio").toString();
+        text = obj.get("text").toString();
+        index_user_status = obj.get("index_user_status").toString();
+        index_user_type = obj.get("index_user_type").toString();
+        type = (int)obj.get("type");
+        hasRead = (boolean)obj.get("hasRead");
+        user_last_requested = BaseEntity.safeGetLong(obj, "user_last_requested");
+
+        //evaluate
+        score = (int)obj.get("score");
+        satisfy_score = (int)obj.get("satisfy_score");
+        advisor_id = obj.get("advisor_id").toString();
+
+        //for re-post
+        prev = obj.get("prev").toString();
+        next = obj.get("next").toString();
+    }
 
     public String getTitle() {
         return title;

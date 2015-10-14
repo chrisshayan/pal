@@ -13,6 +13,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.HashMap;
+
 import vietnamworks.com.pal.components.DrawerEventListener;
 import vietnamworks.com.pal.components.PostCardAdapter;
 import vietnamworks.com.pal.entities.Post;
@@ -90,7 +92,8 @@ public class PostsActivity extends BaseActivity {
             AppModel.posts.getData().clear();
             for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                 String key = postSnapshot.getKey();
-                Post p = postSnapshot.getValue(Post.class);
+                HashMap<String, Object> obj = postSnapshot.getValue(HashMap.class);
+                Post p = new Post(obj);
                 p.setId(key);
                 AppModel.posts.getData().add(p);
                 //TODO: no need to reload all list like this. Just reload changed item only
