@@ -1,3 +1,5 @@
+String.prototype.padRight = String.prototype.padRight || function(l,c) {return this+Array(l-this.length+1).join(c||" ")}
+
 var PostStatus = {
     None: 0,
     UserPending: 1,
@@ -16,7 +18,13 @@ var PostType = {
     Writing: 1
 }
 
-function Post () {
+PostHelper = {
+    buildIndex: function(uid, val) {
+        return uid.padRight(48) + (val + "").padRight(4);
+    }
+}
+
+function Post (obj) {
     this.property = {
         created_date: 0,
         created_by: "",
@@ -41,12 +49,26 @@ function Post () {
         index_user_status: "",
         index_user_type: ""
     }
-
-    this.data = JSON.parse(JSON.stringify(this.property));
+    if (obj) {
+        this.data = JSON.parse(JSON.stringify(this.property));
+        for (k in obj) {
+            this.data[k] = obj[k];
+        }
+    } else {
+        this.data = JSON.parse(JSON.stringify(this.property));
+    }
 }
 Post.prototype.set = function(k, v) {
     this.data[k] = v;
     return this;
+}
+
+Post.prototype.get = function(k) {
+    if (k) {
+        return this.data[k];
+    } else {
+        return this.data;
+    }
 }
 
 Post.prototype.doCreate = function(by) {
@@ -65,10 +87,9 @@ Post.prototype.doModify = function(by) {
     return this;
 }
 
-String.prototype.padRight = String.prototype.padRight || function(l,c) {return this+Array(l-this.length+1).join(c||" ")}
-
 Post.prototype.computeIndex = function() {
-    this.data.index_user_status = this.data.created_by.padRight(48) + (this.data.status + "").padRight(4);
-    this.data.index_user_type = this.data.created_by.padRight(48) + (this.data.type + "").padRight(4);
+    this.data.index_user_status = PostHelper.buildIndex(this.data.created_by, this.data.status);
+    this.data.index_user_type = PostHelper.buildIndex(this.data.created_by, this.data.type);
+    this.data.index_advisior_status = PostHelper.buildIndex(this.data.advisor_id, this.data.status);
     return this;
 }

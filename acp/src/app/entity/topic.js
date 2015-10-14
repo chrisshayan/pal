@@ -14,11 +14,26 @@ function Topic () {
         status: TopicStatus.Enable,
         type: TopicType.Speaking
     };
-    this.data = JSON.parse(JSON.stringify(this.property));
+    if (obj) {
+        this.data = JSON.parse(JSON.stringify(this.property));
+        for (k in obj) {
+            this.data[k] = obj[k];
+        }
+    } else {
+        this.data = JSON.parse(JSON.stringify(this.property));
+    }
 }
 
 Topic.prototype.set = function(k, v) {
     this.data[k] = v;
+}
+
+Topic.prototype.get = function(k) {
+    if (k) {
+        return this.data[k];
+    } else {
+        return this.data;
+    }
 }
 
 Topic.prototype.doCreate = function(by) {

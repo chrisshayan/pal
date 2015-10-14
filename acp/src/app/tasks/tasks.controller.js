@@ -15,13 +15,24 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
         }, 100);
     });
 
+    var init = function() {
+        $scope.newPosts = firebaseHelper.syncArray(
+            firebaseHelper
+                .getFireBaseInstance("posts")
+                .orderByChild("index_advisior_status")
+                .equalTo(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing)));
+
+        $scope.completedPosts = firebaseHelper.syncArray(
+            firebaseHelper
+                .getFireBaseInstance("posts")
+                .orderByChild("index_advisior_status")
+                .startAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1)));
+    }
     if (firebaseHelper.getRole()) {
-        $scope.newPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID()]).orderByValue().equalTo(1));
-        $scope.completedPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID()]).orderByValue().equalTo(2));
+        init();
     } else {
         $scope.$on("user:login", function() {
-            $scope.newPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID()]).orderByValue().equalTo(1));
-            $scope.completedPosts = firebaseHelper.syncArray(firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID()]).orderByValue().equalTo(2));
+            init();
         })
     }
 
@@ -51,7 +62,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
             return;
         }
 
-        firebaseHelper.getFireBaseInstance(["posts"]).orderByChild("status").equalTo(0).limitToLast(1).once('value', function(snapshot) {
+        firebaseHelper.getFireBaseInstance(["posts"]).orderByChild("status").equalTo(PostStatus.Ready).limitToLast(1).once('value', function(snapshot) {
             var numChildren = snapshot.numChildren();
             if (numChildren === 0) {
                 $rootScope.notifyError("No more task available. Please try again later");
@@ -61,17 +72,19 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
             snapshot.forEach(function(childSnapshot) {
                 var key = childSnapshot.key();
                 var childData = childSnapshot.val();
-                if (childData.status === 0) {
+                if (childData.status === PostStatus.Ready) {
                     firebaseHelper.getFireBaseInstance(["posts", key]).transaction(function(current) {
                         if (!current) {
                             $rootScope.notifyError("Something wrong. Please try again");
                             $scope.startCountDown(5);
                             return;
                         } else {
-                            if (current.status === 0) {
-                                current.status = 1;
-                                current.picked_date = Date.now();
-                                current.picked_by = uid;
+                            if (current.status === PostStatus.Ready) {
+                                current = new Post(current)
+                                    .set("status", PostStatus.AdvisorProcessing)
+                                    .set("advisor_id", uid)
+                                    .doModify(uid)
+                                    .get();
                             }
                         }
                         return current;
@@ -85,7 +98,6 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                         } else {
                             $rootScope.notifySuccess("You have got a task");
                             $scope.startCountDown(15);
-                            firebaseHelper.getFireBaseInstance(["ref_advisor_posts", uid, key]).set(snapshot.val().status);
                         }
                     });
                 }
