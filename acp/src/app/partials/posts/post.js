@@ -8,6 +8,7 @@ angular.module('inspinia')
             group: '@'
         },
         controller: function($scope, firebaseHelper, $sce, $rootScope, cs, $http, parseHelper) {
+            $scope.isShowDetail = false;
             $scope.formatTime = cs.formatTime;
             $scope.formatDate = cs.formatDate;
             $scope.formatDateTime = cs.formatDateTime;
@@ -22,7 +23,7 @@ angular.module('inspinia')
             $scope.data = firebaseHelper.syncObject(["posts", $scope.ref.$id]);
 
             $scope.user = firebaseHelper.getFireBaseInstance(["profiles_pub", $scope.data.created_by, "display_name"]).once('value', function(snapshot) {
-                $scope.user_display_name = snapshot.val();
+                $scope.user_display_name = snapshot.val() || "unknowned";
                 setTimeout(function(){
                     $scope.$digest();
                 }, 100);
@@ -169,6 +170,22 @@ angular.module('inspinia')
                 } else {
                     $rootScope.notifyError("Something wrong");
                 }
+            }
+
+            $scope.onOpenTask = function(id) {
+                $scope.isShowDetail = !$scope.isShowDetail;
+                if ($scope.isShowDetail) {
+                    $rootScope.$broadcast('todo_task:open', {id: $scope.ref.$id});
+                }
+            }
+            $scope.$on("todo_task:open", function(sender, data) {
+                if (data.id != $scope.ref.$id) {
+                    $scope.isShowDetail = false;
+                }
+            })
+
+            $scope.isSpeakingTask = function() {
+                return $scope.data.type == PostType.Speaking;
             }
         },
         templateUrl: "app/partials/posts/post.html"

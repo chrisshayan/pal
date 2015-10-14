@@ -1,48 +1,62 @@
 <li class="">
-    <h4>{{data.title}}<br/>
-        <small>{{user_display_name}}</small>
+    <h4 style="display:block" ng-click="onOpenTask()">
+        {{data.title}}<br/>
+        <small><i class="fa fa-fw fa-user"></i>{{user_display_name}}</small><br/>
+        <small><i class="fa fa-fw fa-clock-o"></i>{{formatDateTime(data.last_modified_date)}}</small>
+        <i class="fa fa-fw pull-right" ng-class="{'fa-microphone':isSpeakingTask(), 'fa-paragraph':!isSpeakingTask()}"></i> 
     </h4>
-    <hr/>
-    <div ng-if="numOfWaitingPost == null" class="spiner-example" ng-show="isSubmitting">
-        <div class="sk-spinner sk-spinner-wave">
-            <div class="sk-rect1"></div>
-            <div class="sk-rect2"></div>
-            <div class="sk-rect3"></div>
-            <div class="sk-rect4"></div>
-            <div class="sk-rect5"></div>
+    <div ng-show="isShowDetail">
+        <hr/>
+        <div ng-if="numOfWaitingPost == null" class="spiner-example" ng-show="isSubmitting">
+            <div class="sk-spinner sk-spinner-wave">
+                <div class="sk-rect1"></div>
+                <div class="sk-rect2"></div>
+                <div class="sk-rect3"></div>
+                <div class="sk-rect4"></div>
+                <div class="sk-rect5"></div>
+            </div>
         </div>
-    </div>
-    <div class="row" ng-show="!isSubmitting">
-        <div class="col-md-6 col-xs-6 b-r" style="text-align:center">
-            <h4>User's voice</h4>
-            <button ng-show="!audio.playing" class="btn btn-success dim" type="button" ng-click="playPause()"><i class="fa fa-play"></i></button>
-            <button ng-show="audio.playing" class="btn btn-warning dim" type="button" ng-click="playPause()"><i class="fa fa-pause"></i></button>
+        <div class="row" ng-show="!isSubmitting">
+            <div class="col-md-12 col-xs-12" style="text-align:center" ng-show="isSpeakingTask()">
+                <h4>User's voice</h4>
+                <button ng-show="!audio.playing" class="btn btn-success dim" type="button" ng-click="playPause()"><i class="fa fa-play"></i></button>
+                <button ng-show="audio.playing" class="btn btn-warning dim" type="button" ng-click="playPause()"><i class="fa fa-pause"></i></button>
+            </div>
+            <div class="col-md-12 col-xs-12" style="text-align:left" ng-show="!isSpeakingTask()">
+                <h4>User says:</h4>
+                <blockquote style="font-size:10pt">{{data.text}}</blockquote>
+            </div>
         </div>
-        <div class="col-md-6 col-xs-6" style="text-align:center">
-            <h4>Your voice</h4>
-            <button ng-show="isRecording" class="btn btn-warning dim" type="button" ng-click="stopRecord()"><i class="fa fa-stop"></i></button>
-            <button ng-hide="isRecording" class="btn btn-success dim" type="button" ng-click="startRecord()"><i class="fa fa-microphone"></i></button>
-            <button ng-show="teacher_audio && !teacher_audio.playing && !isRecording" class="btn btn-success dim" type="button" ng-click="playStopRecord()"><i class="fa fa-play"></i></button>
-            <button ng-show="teacher_audio && teacher_audio.playing && !isRecording" class="btn btn-warning dim" type="button" ng-click="playStopRecord()"><i class="fa fa-pause"></i></button>
+        <hr ng-if="isSpeakingTask()"/>
+        <div class="row" ng-show="!isSubmitting">
+            <div class="col-md-10 col-xs-10 form-group" style="text-align:center">
+                <textarea rows="10" class="form-control" style="resize:vertical" placeholder="Your comment"></textarea>
+            </div>
+            <div class="col-md-2 col-xs-2" style="text-align:center">
+                <button ng-show="isRecording" class="btn btn-warning dim" type="button" ng-click="stopRecord()"><i class="fa fa-stop"></i></button>
+                <button ng-hide="isRecording" class="btn btn-success dim" type="button" ng-click="startRecord()"><i class="fa fa-microphone"></i></button>
+                <button ng-show="teacher_audio && !teacher_audio.playing && !isRecording" class="btn btn-success dim" type="button" ng-click="playStopRecord()"><i class="fa fa-play"></i></button>
+                <button ng-show="teacher_audio && teacher_audio.playing && !isRecording" class="btn btn-warning dim" type="button" ng-click="playStopRecord()"><i class="fa fa-pause"></i></button>
+            </div>
         </div>
-    </div>
-    <hr/>
-    <div class="row" ng-show="!isSubmitting">
-        <div class="col-md-12" style="text-align:center; margin: 10px 0 10px 0" ng-mouseleave="pre_vote=vote">
-            <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote == 0 || pre_vote == 0, 'fa-star': vote >= 1 && pre_vote >= 1, 'text-warning': vote >= 1 || pre_vote >= 1}" ng-mouseover="pre_vote=1" ng-click="vote=1"></span>
-            <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 2  || pre_vote < 2 , 'fa-star': vote >= 2 && pre_vote >= 2, 'text-warning': vote >= 2 || pre_vote >= 2}" ng-mouseover="pre_vote=2" ng-click="vote=2"></span>
-            <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 3  || pre_vote < 3 , 'fa-star': vote >= 3 && pre_vote >= 3, 'text-warning': vote >= 3 || pre_vote >= 3}" ng-mouseover="pre_vote=3" ng-click="vote=3"></span>
-            <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 4  || pre_vote < 4 , 'fa-star': vote >= 4 && pre_vote >= 4, 'text-warning': vote >= 4 || pre_vote >= 4}" ng-mouseover="pre_vote=4" ng-click="vote=4"></span>
-            <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 5  || pre_vote < 5 , 'fa-star': vote >= 5 && pre_vote >= 5, 'text-warning': vote >= 5 || pre_vote >= 5}" ng-mouseover="pre_vote=5" ng-click="vote=5"></span>
+        <hr/>
+        <div class="row" ng-show="!isSubmitting">
+            <div class="col-md-12" style="text-align:center; margin: 10px 0 10px 0" ng-mouseleave="pre_vote=vote">
+                <h4>Score</h4>
+                <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote == 0 || pre_vote == 0, 'fa-star': vote >= 1 && pre_vote >= 1, 'text-warning': vote >= 1 || pre_vote >= 1}" ng-mouseover="pre_vote=1" ng-click="vote=1"></span>
+                <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 2  || pre_vote < 2 , 'fa-star': vote >= 2 && pre_vote >= 2, 'text-warning': vote >= 2 || pre_vote >= 2}" ng-mouseover="pre_vote=2" ng-click="vote=2"></span>
+                <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 3  || pre_vote < 3 , 'fa-star': vote >= 3 && pre_vote >= 3, 'text-warning': vote >= 3 || pre_vote >= 3}" ng-mouseover="pre_vote=3" ng-click="vote=3"></span>
+                <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 4  || pre_vote < 4 , 'fa-star': vote >= 4 && pre_vote >= 4, 'text-warning': vote >= 4 || pre_vote >= 4}" ng-mouseover="pre_vote=4" ng-click="vote=4"></span>
+                <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 5  || pre_vote < 5 , 'fa-star': vote >= 5 && pre_vote >= 5, 'text-warning': vote >= 5 || pre_vote >= 5}" ng-mouseover="pre_vote=5" ng-click="vote=5"></span>
+            </div>
         </div>
-    </div>
-
-    <hr/>
-    <div class="agile-detail" ng-show="!isSubmitting">
-        <div class="pull-right">
-            <button tooltip="Return this task to queue" href="" ng-click="onPutBack()" class="btn btn-xs btn-danger"><i class="fa fa-fw fa-undo"></i> Put back</button>
-            <button href="" ng-disabled="!vote || vote == 0 || !teacher_audio" ng-click="onSubmit()" class="btn btn-xs btn-primary"><i class="fa fa-fw fa-paper-plane"></i> Submit</button>
+        <hr/>
+        <div class="agile-detail" ng-show="!isSubmitting">
+            <div class="pull-right">
+                <button tooltip="Return this task to queue" href="" ng-click="onPutBack()" class="btn btn-xs btn-danger"><i class="fa fa-fw fa-undo"></i> Put back</button>
+                <button href="" ng-disabled="!vote || vote == 0 || !teacher_audio" ng-click="onSubmit()" class="btn btn-xs btn-primary"><i class="fa fa-fw fa-paper-plane"></i> Submit</button>
+            </div>
+            <i class="fa fa-clock-o"></i> {{formatDateTime(data.created_date)}}
         </div>
-        <i class="fa fa-clock-o"></i> {{formatDateTime(data.created_date)}}
     </div>
 </li>
