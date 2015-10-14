@@ -38,7 +38,7 @@ function Post (obj) {
         text: "",
         ref_topic: "",
         advisor_id: "",
-        hasRead: false,
+        hasRead: true,
         next: "",
         prev: "",
         satisfy_score: 0,
@@ -60,6 +60,12 @@ function Post (obj) {
 }
 Post.prototype.set = function(k, v) {
     this.data[k] = v;
+    return this;
+}
+
+Post.prototype.push = function(k, v) {
+    this.data[k] = this.data[k] || [];
+    this.data[k].push(v)
     return this;
 }
 

@@ -40,7 +40,7 @@ public class Post extends BaseEntity {
     String index_user_status = "";
     String index_user_type = "";
     int type = RecentTopic.TYPE_WRITING;
-    boolean hasRead = false;
+    boolean hasRead = true;
 
     //evaluate
     int score = 0;

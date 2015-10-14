@@ -18,6 +18,7 @@ angular.module('inspinia')
             $scope.audioRecorder = null;
             $scope.vote = 0;
             $scope.pre_vote = 0;
+            $scope.comment = "";
             $scope.isSubmitting = false;
 
             $scope.data = firebaseHelper.syncObject(["posts", $scope.ref.$id]);
@@ -95,61 +96,76 @@ angular.module('inspinia')
                 $scope.teacher_audio.playing = !$scope.teacher_audio.playing;
             }
 
+            var submit = function(audio) {
+                //posted audio, now save question content
+                firebaseHelper.getFireBaseInstance(["posts", $scope.data.$id]).transaction(function(recent){
+                    if (!recent) {
+                        $rootScope.notifyError("Something wrong. Please try again");
+                        return;
+                    } else {
+                        var uid = firebaseHelper.getUID();
+                        if (recent.status == PostStatus.AdvisorProcessing && recent.advisor_id == uid) {
+                            recent = new Post(recent)
+                                .set("status", PostStatus.AdvisorEvaluated)
+                                .set("score", $scope.vote)
+                                .set("hasRead", false)
+                                .push("conversation", {
+                                    uid: uid,
+                                    audio: audio || "",
+                                    text: $scope.comment
+                                })
+                                .doModify(uid)
+                                .get();
+                            return recent;
+                        } else {
+                            $rootScope.notifyError("This task was tranferred to another advisor before");
+                            return;
+                        }
+                    }
+
+                }, function(error, committed, snapshot){
+                    if (error) {
+                        $rootScope.notifyError("Something wrong. Please try again");
+                    } else if (!committed) {
+                        $rootScope.notifyError("Fail to save data");
+                    } else {
+                        $rootScope.notifySuccess("You have solved a task");
+                        parseHelper.push($scope.data.created_by, "You've got new feedback from advisor");
+                    }
+                    $scope.isSubmitting = false;
+                    $scope.$apply();
+                });
+            }
+
             $scope.onSubmit = function() {
                 if (firebaseHelper.getUID()) {
                     $scope.isSubmitting = true;
                     //post audio file to server
-                    $scope.audioRecorder.getDataURL(function(dataURL) {
-                        var fileName = "advisors_" + firebaseHelper.getUID() + "_" + $scope.data.$id + "_" + Date.now();
-                        var audioType = $scope.audioRecorder.getBlob().type;
-                        var audio = {
-                            name: fileName + '.' + audioType.split('/')[1],
-                            type: audioType,
-                            contents: dataURL
-                        }
-                        $http.post(window.RTC_SERVER, audio).then(function(data) {
-                            console.log(data.data.url);
-                            if (!data.data.url) {
-                                $rootScope.notifyError("Fail to upload audio. Invalid response");
-                                $scope.isSubmitting = false;
-                                return;
+                    if ($scope.audioRecorder) {
+                        $scope.audioRecorder.getDataURL(function(dataURL) {
+                            var fileName = "advisors_" + firebaseHelper.getUID() + "_" + $scope.data.$id + "_" + Date.now();
+                            var audioType = $scope.audioRecorder.getBlob().type;
+                            var audio = {
+                                name: fileName + '.' + audioType.split('/')[1],
+                                type: audioType,
+                                contents: dataURL
                             }
-                            //posted audio, now save question content
-                            firebaseHelper.getFireBaseInstance(["posts", $scope.data.$id]).transaction(function(recent){
-                                if (!recent) {
-                                    $rootScope.notifyError("Something wrong. Please try again");
+                            $http.post(window.RTC_SERVER, audio).then(function(data) {
+                                console.log(data.data.url);
+                                if (!data.data.url) {
+                                    $rootScope.notifyError("Fail to upload audio. Invalid response");
+                                    $scope.isSubmitting = false;
                                     return;
-                                } else {
-                                    if (recent.status == 1 && recent.picked_by == firebaseHelper.getUID()) {
-                                        recent.status = 2;
-                                        recent.answer_date = Date.now();
-                                        recent.score = $scope.vote;
-                                        recent.answer_audio = data.data.url;
-                                        return recent;
-                                    } else {
-                                        $rootScope.notifyError("This task was tranferred to another advisor before");
-                                        return;
-                                    }
                                 }
-
-                            }, function(error, committed, snapshot){
-                                if (error) {
-                                    $rootScope.notifyError("Something wrong. Please try again");
-                                } else if (!committed) {
-                                    $rootScope.notifyError("Fail to save data");
-                                } else {
-                                    firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID(), $scope.ref.$id]).set(snapshot.val().status);
-                                    $rootScope.notifySuccess("You have solved a task");
-                                    parseHelper.push($scope.data.created_by, "You've got new feedback from advisor");
-                                }
+                                submit(data.data.url);
+                            }, function() {
+                                $rootScope.notifyError("Fail to upload audio");
                                 $scope.isSubmitting = false;
-                                $scope.$apply();
                             });
-                        }, function() {
-                            $rootScope.notifyError("Fail to upload audio");
-                            $scope.isSubmitting = false;
                         });
-                    });
+                    } else {
+                        submit();
+                    }
                 } else {
                     $rootScope.notifyError("Something wrong");
                 }
@@ -158,12 +174,13 @@ angular.module('inspinia')
             $scope.onPutBack = function() {
                 if (firebaseHelper.getUID()) {
                     firebaseHelper.getFireBaseInstance(["posts", $scope.data.$id]).update({
-                        status:0
+                        status: PostStatus.Ready,
+                        index_user_status: PostHelper.buildIndex($scope.data.created_by, PostStatus.Ready),
+                        index_advisior_status: PostHelper.buildIndex($scope.data.advisor_id, PostStatus.Ready)
                     }, function(error) {
                         if (error) {
                             $rootScope.notifyError(error);
                         } else {
-                            firebaseHelper.getFireBaseInstance(["ref_advisor_posts", firebaseHelper.getUID(), $scope.ref.$id]).set(0);
                             $rootScope.notifySuccess("You have rejected a task");
                         }
                     });
