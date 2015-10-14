@@ -41,6 +41,7 @@ public class Post extends BaseEntity {
     String index_user_type = "";
     int type = RecentTopic.TYPE_WRITING;
     boolean hasRead = true;
+    long user_last_requested = 0;
 
     //evaluate
     int score = 0;
@@ -174,4 +175,11 @@ public class Post extends BaseEntity {
         return Common.padRight(userid, 48) + Common.padRight(status + "", 4) ;
     }
 
+    public long getUser_last_request() {
+        return user_last_requested;
+    }
+
+    public void setUser_last_request(long user_last_request) {
+        this.user_last_requested = user_last_request;
+    }
 }
