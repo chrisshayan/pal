@@ -8,7 +8,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
 
     $scope.pickTaskCountDown = 0;
 
-    $scope.stat = firebaseHelper.getFireBaseInstance(["posts"]).orderByChild("status").equalTo(0).on('value', function(snapshot) {
+    $scope.stat = firebaseHelper.getFireBaseInstance(["posts"]).orderByChild("status").equalTo(PostStatus.Ready).on('value', function(snapshot) {
         $scope.numOfWaitingPost = snapshot.numChildren();
         setTimeout(function() {
             $scope.$digest();
