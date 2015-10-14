@@ -95,7 +95,7 @@ public class PostsActivity extends BaseActivity {
                 HashMap<String, Object> obj = postSnapshot.getValue(HashMap.class);
                 Post p = new Post(obj);
                 p.setId(key);
-                AppModel.posts.getData().add(p);
+                AppModel.posts.getData().add(0, p);
                 //TODO: no need to reload all list like this. Just reload changed item only
             }
             mAdapter.notifyDataSetChanged();

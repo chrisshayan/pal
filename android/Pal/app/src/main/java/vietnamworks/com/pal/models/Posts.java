@@ -26,6 +26,7 @@ public class Posts extends AbstractContainer<Post> {
         p.setStatus(p.getStatus()); //update status index
         p.setType(p.getType()); //update type index
         ref.setValue(p);
+        ref.setPriority(-System.currentTimeMillis());
 
         return ref.getKey();
     }
