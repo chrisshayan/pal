@@ -56,12 +56,12 @@ public class BaseService {
 
         request.setMaxRetries(2);
 
-        request.setNotificationConfig(R.drawable.ic_launcher,
+        request.setNotificationConfig(R.mipmap.ic_launcher,
                 "Upload audio file",
                 "Uploading ...",
                 "Upload successful",
                 "Fail to upload audio",
-                false);
+                true);
 
         request.setNotificationClickIntent(new Intent(context, TaskListActivity.class));
 
