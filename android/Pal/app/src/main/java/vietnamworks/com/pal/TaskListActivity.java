@@ -9,7 +9,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.alexbbb.uploadservice.AbstractUploadServiceReceiver;
 
@@ -95,12 +94,10 @@ public class TaskListActivity extends BaseActivity {
 
         this.hideKeyboard();
         if (front.getTopic().length() == 0) {
-            Toast.makeText(this.getBaseContext(), getString(R.string.user_topic_validation_empty_string),
-                    Toast.LENGTH_SHORT).show();
+            toast(R.string.user_topic_validation_empty_string);
             return;
         } else if (fragment.getText().trim().length() == 0) {
-            Toast.makeText(this.getBaseContext(), getString(R.string.user_message_validation_empty_string),
-                    Toast.LENGTH_SHORT).show();
+            toast(R.string.user_message_validation_empty_string);
             return;
         }
 
@@ -114,6 +111,7 @@ public class TaskListActivity extends BaseActivity {
                 stackView.closeCard();
                 showSaySomethingGroup();
                 enableAudioButton(true);
+                toast(R.string.create_post_successful);
             }
         }, 100);
     }
@@ -137,8 +135,7 @@ public class TaskListActivity extends BaseActivity {
         FragmentRecording fragment = (FragmentRecording) getSupportFragmentManager().findFragmentById(R.id.fragment_speaking);
 
         if (front.getTopic().length() == 0) {
-            Toast.makeText(this.getBaseContext(), getString(R.string.user_topic_validation_empty_string),
-                    Toast.LENGTH_SHORT).show();
+            toast(R.string.user_topic_validation_empty_string);
             return;
         }
 
@@ -157,6 +154,7 @@ public class TaskListActivity extends BaseActivity {
                 Config.AudioUploadURL,
                 Common.getSampleRecordPath(),
                 server_file_path);
+        toast(R.string.create_post_successful);
     }
 
     public void onCancelSubmitAudio(View v) {

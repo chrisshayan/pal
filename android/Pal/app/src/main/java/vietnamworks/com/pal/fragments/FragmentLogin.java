@@ -13,14 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.parse.ParseInstallation;
 
 import vietnamworks.com.pal.AuthActivity;
 import vietnamworks.com.pal.BaseActivity;
-import vietnamworks.com.pal.TaskListActivity;
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.TaskListActivity;
 import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.utils.Common;
@@ -35,7 +34,6 @@ public class FragmentLogin extends Fragment {
     FloatingActionButton mBtnLogin;
     Button mBtnSignup;
     ProgressBar mProgressbar;
-    Toast mToast;
     Activity mRefActivity;
 
     ObjectAnimator loginButtonObjectAnimator;
@@ -74,7 +72,6 @@ public class FragmentLogin extends Fragment {
     public static FragmentLogin create(Activity act) {
         FragmentLogin fragment = new FragmentLogin();
         fragment.mRefActivity = act;
-        fragment.mToast = Toast.makeText(act, "", Toast.LENGTH_SHORT);
         return fragment;
     }
 
@@ -116,22 +113,6 @@ public class FragmentLogin extends Fragment {
         //loginButtonObjectAnimator.cancel();
     }
 
-    private void showToastMessage(CharSequence message, int time) {
-        mToast.cancel();
-        mToast = Toast.makeText(this.mRefActivity, message, time);
-        mToast.show();
-    }
-
-    private void showToastMessage(int id) {
-        String str = getString(id);
-        showToastMessage(str, Toast.LENGTH_SHORT);
-    }
-
-    private void showToastMessage(int id, int time) {
-        String str = getString(id);
-        showToastMessage(str, time);
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -143,19 +124,19 @@ public class FragmentLogin extends Fragment {
         final String password = this.getPassword();
 
         if (email.length() == 0) {
-            showToastMessage(R.string.login_validation_empty_email);
+            BaseActivity.toast(R.string.login_validation_empty_email);
             this.focusEmail();
             return;
         }
 
         if (!Common.isValidEmail(email)) {
-            showToastMessage(R.string.login_validation_invalid_email_format);
+            BaseActivity.toast(R.string.login_validation_invalid_email_format);
             this.focusEmail();
             return;
         }
 
         if (password.length() == 0) {
-            showToastMessage(R.string.login_validation_empty_password);
+            BaseActivity.toast(R.string.login_validation_empty_password);
             this.focusPassword();
             return;
         }
@@ -182,7 +163,7 @@ public class FragmentLogin extends Fragment {
     }
 
     public void onLoginFail(int error, String  message) {
-        showToastMessage(message, Toast.LENGTH_LONG);
+        BaseActivity.toast(message);
     }
 
     public void onLoginSuccess() {

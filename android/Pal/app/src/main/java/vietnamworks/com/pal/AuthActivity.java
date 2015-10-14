@@ -4,12 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.Toast;
 
-import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.fragments.FragmentLogin;
 import vietnamworks.com.pal.fragments.FragmentSignUp;
 import vietnamworks.com.pal.fragments.FragmentSignUpProcessing;
+import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.utils.Common;
 
 public class AuthActivity extends BaseActivity {
@@ -57,14 +56,12 @@ public class AuthActivity extends BaseActivity {
         } else if (f instanceof FragmentSignUp) {
             final String email = ((FragmentSignUp)f).getEmail();
             if (email.length() == 0) {
-                Toast.makeText(this.getBaseContext(),getString(R.string.login_validation_empty_email),
-                        Toast.LENGTH_SHORT).show();
+                toast(R.string.login_validation_empty_email);
                 return;
             }
 
             if (!Common.isValidEmail(email)) {
-                Toast.makeText(this.getBaseContext(), getString(R.string.login_validation_invalid_email_format),
-                        Toast.LENGTH_SHORT).show();
+                toast(R.string.login_validation_invalid_email_format);
                 return;
             }
 

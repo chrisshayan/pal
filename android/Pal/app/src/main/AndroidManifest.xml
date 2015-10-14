@@ -75,7 +75,6 @@
 
         <activity
             android:name=".PostsActivity"
-            android:label="@string/title_activity_posts"
             android:noHistory="true"
             android:theme="@style/AppTheme" >
         </activity>

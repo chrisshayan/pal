@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import vietnamworks.com.pal.services.FirebaseService;
 
@@ -32,6 +33,8 @@ public class BaseActivity extends AppCompatActivity {
     public static Typeface RobotoBI;
     public static Typeface RobotoI;
     public static Typeface RobotoLI;
+
+    static Toast toast;
 
     public BaseActivity() {
         super();
@@ -53,12 +56,27 @@ public class BaseActivity extends AppCompatActivity {
         RobotoB = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
         RobotoBI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-BoldItalic.ttf");
         RobotoI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Italic.ttf");
+
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         FirebaseService.setContext(null);
+    }
+
+    public static void toast(int messageId) {
+        toast(sInstance.getString(messageId));
+    }
+
+    public static void toast(String message) {
+        if (toast != null) {
+            toast.cancel();
+            toast = null;
+        }
+        toast = Toast.makeText(sInstance.getBaseContext(),message, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     public static void applyFont(final View v) {

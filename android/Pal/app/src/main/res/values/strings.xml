@@ -46,18 +46,6 @@
     <string name="user_topic_validation_empty_string">Topic is required</string>
     <string name="user_message_validation_empty_string">Content is required</string>
 
-    <!-- recorder -->
-    <string name="message_dash_or">-- or --</string>
-    <string name="talk_about">Talk about:</string>
-    <string name="say_something">Say something</string>
-
-    <string-array name="recorders_message">
-        <item>Touch to begin</item>
-        <item>Recording \nTouch to stop</item>
-        <item>Touch to retry</item>
-    </string-array>
-
-    <string name="btn_fail_to_load_topic">Retry</string>
-    <string name="title_activity_posts">PostsActivity</string>
+    <string name="create_post_successful">Your post has been saved</string>
 
 </resources>
