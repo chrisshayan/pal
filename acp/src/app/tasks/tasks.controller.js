@@ -62,7 +62,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
             return;
         }
 
-        firebaseHelper.getFireBaseInstance(["posts"]).orderByChild("status").equalTo(PostStatus.Ready).limitToLast(1).once('value', function(snapshot) {
+        firebaseHelper.getFireBaseInstance(["posts"]).orderByChild("status").equalTo(PostStatus.Ready).limitToFirst(1).once('value', function(snapshot) {
             var numChildren = snapshot.numChildren();
             if (numChildren === 0) {
                 $rootScope.notifyError("No more task available. Please try again later");
@@ -82,6 +82,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                             if (current.status === PostStatus.Ready) {
                                 current = new Post(current)
                                     .set("status", PostStatus.AdvisorProcessing)
+                                    .set("hasRead", false)
                                     .set("advisor_id", uid)
                                     .doModify(uid)
                                     .get();

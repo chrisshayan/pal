@@ -5,7 +5,7 @@
         <small><i class="fa fa-fw fa-clock-o"></i>{{formatDateTime(data.last_modified_date)}}</small>
         <span ng-if="!data.audio" class="badge badge-info pull-right"><i class="fa fa-fw fa-paragraph"></i></span>
         <div ng-if="data.audio" class="pull-right">
-            <audio-player audio="https://api.cloudconvert.com/convert?apikey=3suj4KZn3UoTKbksedeKLiDLIBQ9JBl0CBzVQ6FV_IKknHzkcHTEUT_DP6O2DopvIWSM4-nL1w0xIZCd1INaJQ&input=download&download=inline&inputformat=3gp&outputformat=mp3&file={{data.audio}}"></audio-player>
+            <audio-player convert-to="mp3" audio="{{data.audio}}"></audio-player>
         </div>
     </h4>
     <div ng-show="isShowDetail">
