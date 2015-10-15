@@ -18,22 +18,21 @@ import com.firebase.client.ValueEventListener;
 import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.TaskListActivity;
-import vietnamworks.com.pal.components.PostCardAdapter;
+import vietnamworks.com.pal.components.ConversationAdapter;
+import vietnamworks.com.pal.components.ConversationView;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.services.FirebaseService;
-import vietnamworks.com.pal.utils.Common;
 
 /**
  * Created by duynk on 10/15/15.
  */
 public class FragmentPostDetail extends FragmentBase {
-    private PostCardAdapter mAdapter;
+    private ConversationAdapter mAdapter;
     Firebase dataRef;
 
     TextView title;
     TextView score;
     TextView status;
-    TextView lastModifiedDate;
     ViewGroup userAnswerHolder;
 
     public static FragmentPostDetail create(Bundle args) {
@@ -52,7 +51,6 @@ public class FragmentPostDetail extends FragmentBase {
         title = (TextView) rootView.findViewById(R.id.title);
         score = (TextView) rootView.findViewById(R.id.score);
         status = (TextView) rootView.findViewById(R.id.status);
-        lastModifiedDate = (TextView) rootView.findViewById(R.id.last_modified_date);
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +63,8 @@ public class FragmentPostDetail extends FragmentBase {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.conversation);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        //mAdapter = new PostCardAdapter();
-        //recyclerView.setAdapter(mAdapter);
+        mAdapter = new ConversationAdapter();
+        recyclerView.setAdapter(mAdapter);
 
         userAnswerHolder = (ViewGroup)rootView.findViewById(R.id.user_answer_holder);
 
@@ -77,23 +75,23 @@ public class FragmentPostDetail extends FragmentBase {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             final Post p = new Post(dataSnapshot);
+            mAdapter.setPost(p);
             ((BaseActivity)getActivity()).setTimeout(new Runnable() {
                 @Override
                 public void run() {
-                    userAnswerHolder.addView(FragmentConversation.create(
+                    userAnswerHolder.addView(ConversationView.create(
                             FragmentPostDetail.this.getActivity(),
                             "You said:", //TODO: remove hard code text
                             p.getText(),
-                            p.getAudio()));
+                            p.getAudio(),
+                            p.getCreated_date()));
 
 
                     title.setText(p.getTitle());
                     score.setText(p.getScore() == 0?"?":p.getScore() + "");
                     status.setText(p.getStatusString());
-                    lastModifiedDate.setText(Common.getDateString(p.getLast_modified_date()));
                 }
             });
-            //mAdapter.notifyDataSetChanged();
         }
 
         @Override

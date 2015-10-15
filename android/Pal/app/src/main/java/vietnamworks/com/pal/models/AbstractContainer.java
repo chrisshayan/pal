@@ -15,7 +15,7 @@ public abstract class AbstractContainer<T> {
 
     protected AsyncCallback onLoadAsyncCallback;
     protected ArrayList<T> data = new ArrayList<>();
-    protected int mActiveIndex = -1;
+    //protected int mActiveIndex = -1;
 
 
     public ArrayList<T> getData() {
@@ -25,17 +25,18 @@ public abstract class AbstractContainer<T> {
         this.data = data;
     }
     public void loadAsync(Context context, AsyncCallback callback) {
-        mActiveIndex = SELECTED_ITEM_NONE;
+        //mActiveIndex = SELECTED_ITEM_NONE;
     }
 
     public void loadAsync(Context context, Map<String, Object>params, AsyncCallback callback) {
-        mActiveIndex = SELECTED_ITEM_NONE;
+        //mActiveIndex = SELECTED_ITEM_NONE;
     }
 
     public void setActiveItemIndex(int index) {
-        mActiveIndex = index;
+        //mActiveIndex = index;
     }
 
+    /*
     public int getActiveItemIndex() {
         return mActiveIndex;
     }
@@ -46,4 +47,5 @@ public abstract class AbstractContainer<T> {
         }
         return null;
     }
+    */
 }

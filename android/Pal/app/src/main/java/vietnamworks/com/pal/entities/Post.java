@@ -2,6 +2,7 @@ package vietnamworks.com.pal.entities;
 
 import com.firebase.client.DataSnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import vietnamworks.com.pal.utils.Common;
@@ -46,6 +47,7 @@ public class Post extends BaseEntity {
     int type = RecentTopic.TYPE_WRITING;
     boolean hasRead = true;
     long user_last_requested = 0;
+    Object conversation;
 
     //evaluate
     int score = 0;
@@ -85,6 +87,7 @@ public class Post extends BaseEntity {
         type = (int)obj.get("type");
         hasRead = (boolean)obj.get("hasRead");
         user_last_requested = BaseEntity.safeGetLong(obj, "user_last_requested");
+        conversation = obj.get("conversation");
 
         //evaluate
         score = (int)obj.get("score");
@@ -229,5 +232,21 @@ public class Post extends BaseEntity {
 
     public void setUser_last_request(long user_last_request) {
         this.user_last_requested = user_last_request;
+    }
+
+    public Object getConversation() {
+        return conversation;
+    }
+
+    public ArrayList<HashMap<String, Object>> getConversationList() {
+        if (conversation == null) {
+            return new ArrayList<>();
+        } else {
+            return (ArrayList<HashMap<String, Object>>)conversation;
+        }
+    }
+
+    public void setConversation(Object conversation) {
+        this.conversation = conversation;
     }
 }

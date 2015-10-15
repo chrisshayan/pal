@@ -15,8 +15,8 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/base_padding"
-            android:layout_marginLeft="@dimen/base_padding" >
+            android:layout_marginTop="@dimen/base_padding_half"
+            android:layout_marginLeft="@dimen/base_padding_half" >
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -38,14 +38,14 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/base_padding">
+            android:padding="@dimen/base_padding_half">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/title"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/primary_text"
-                android:paddingBottom="@dimen/base_padding_quarter" />
+                android:paddingBottom="@dimen/base_padding_half" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
