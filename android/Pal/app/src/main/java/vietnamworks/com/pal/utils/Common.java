@@ -37,6 +37,11 @@ public class Common {
         return getDateString(date, DEFAULT_DATETIME_FORMAT);
     }
 
+    public static String getDateString(long timestamp) {
+        Date date = new Date(timestamp);
+        return getDateString(date, DEFAULT_DATETIME_FORMAT);
+    }
+
     public static String getDateString(Date date, String format) {
         java.text.DateFormat df = new SimpleDateFormat(format);
         return df.format(date);

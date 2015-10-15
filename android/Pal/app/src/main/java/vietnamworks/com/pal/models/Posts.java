@@ -59,4 +59,8 @@ public class Posts extends AbstractContainer<Post> {
     public static void raiseError(String postId) {
         FirebaseService.newRef(Arrays.asList("posts", postId)).child("status").setValue(Post.STATUS_USER_ERROR);
     }
+
+    public static void markAsRead(String postId) {
+        FirebaseService.newRef(Arrays.asList("posts", postId, "hasRead")).setValue(true);
+    }
 }

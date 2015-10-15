@@ -1,5 +1,7 @@
 package vietnamworks.com.pal.entities;
 
+import com.firebase.client.DataSnapshot;
+
 import java.util.HashMap;
 
 import vietnamworks.com.pal.utils.Common;
@@ -56,7 +58,17 @@ public class Post extends BaseEntity {
 
     public Post() {}
 
+    public Post(DataSnapshot dataSnapshot) {
+        HashMap<String, Object> obj = dataSnapshot.getValue(HashMap.class);
+        importFromHashMap(obj);
+        this.setId(dataSnapshot.getKey());
+    }
+
     public Post(HashMap<String, Object> obj) {
+        importFromHashMap(obj);
+    }
+
+    private void importFromHashMap(HashMap<String, Object> obj) {
         this.setCreated_date((long) obj.get("created_date"));
         this.setCreated_by(obj.get("created_by").toString());
         this.setLast_modified_date((long) obj.get("last_modified_date"));
@@ -84,6 +96,7 @@ public class Post extends BaseEntity {
         next = obj.get("next").toString();
     }
 
+
     public String getTitle() {
         return title;
     }
@@ -103,6 +116,11 @@ public class Post extends BaseEntity {
     public int getStatus() {
         return status;
     }
+
+    public String getStatusString() {
+        return STATUS_TEXT[status];
+    }
+
 
     public void setStatus(int status) {
         this.index_user_status = buildUserStatusIndex(this.getCreated_by(), status);

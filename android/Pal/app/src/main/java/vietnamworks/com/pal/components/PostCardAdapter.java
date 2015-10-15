@@ -1,5 +1,6 @@
 package vietnamworks.com.pal.components;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,9 @@ import java.util.Date;
 import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.entities.Post;
+import vietnamworks.com.pal.fragments.FragmentPostDetail;
 import vietnamworks.com.pal.models.AppModel;
+import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.utils.Common;
 
 /**
@@ -24,6 +27,8 @@ public class PostCardAdapter extends RecyclerView.Adapter<PostCardAdapter.CardVi
         TextView status;
         TextView score;
         View holder;
+        String itemId;
+
         CardViewHolder(View itemView) {
             super(itemView);
             title = (TextView)itemView.findViewById(R.id.title);
@@ -33,9 +38,17 @@ public class PostCardAdapter extends RecyclerView.Adapter<PostCardAdapter.CardVi
             holder = (View)itemView.findViewById(R.id.holder);
             holder.setOnClickListener(this);
         }
+
+        public void setItemId(String id) {
+            this.itemId = id;
+        }
+
         @Override
         public void onClick(View v) {
-            
+            Bundle b = new Bundle();
+            b.putString("id", itemId);
+            Posts.markAsRead(itemId);
+            BaseActivity.sInstance.openFragment(FragmentPostDetail.create(b), R.id.fragment_container, true);
         }
     }
 
@@ -59,8 +72,9 @@ public class PostCardAdapter extends RecyclerView.Adapter<PostCardAdapter.CardVi
             view.title.setText(p.getTitle());
             Date last_modified = new Date(p.getLast_modified_date());
             view.lastModifiedDate.setText(Common.getDateString(last_modified));
-            view.status.setText(Post.STATUS_TEXT[p.getStatus()]);
+            view.status.setText(p.getStatusString());
             view.score.setText(p.getScore() > 0?p.getScore() + "":"?");
+            view.setItemId(p.getId());
 
             if (!p.isHasRead()) {
                 view.title.setTypeface(BaseActivity.RobotoB);

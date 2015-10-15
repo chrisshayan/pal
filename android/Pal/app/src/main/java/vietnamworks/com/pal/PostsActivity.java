@@ -24,13 +24,13 @@ public class PostsActivity extends BaseActivity {
         fragment_header = ((FragmentHeader)getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar));
         Bundle b = getIntent().getExtras();
 
-        if (findViewById(R.id.holder) != null) {
+        if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) {
                 return;
             }
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.holder, FragmentPostList.create(b)).commit();
+                    .add(R.id.fragment_container, FragmentPostList.create(b)).commit();
         }
 
         if (b != null) {
