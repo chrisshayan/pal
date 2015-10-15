@@ -34,6 +34,7 @@ public class FragmentPostDetail extends FragmentBase {
     TextView score;
     TextView status;
     TextView lastModifiedDate;
+    ViewGroup userAnswerHolder;
 
     public static FragmentPostDetail create(Bundle args) {
         FragmentPostDetail fragment = new FragmentPostDetail();
@@ -53,7 +54,6 @@ public class FragmentPostDetail extends FragmentBase {
         status = (TextView) rootView.findViewById(R.id.status);
         lastModifiedDate = (TextView) rootView.findViewById(R.id.last_modified_date);
 
-
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +68,8 @@ public class FragmentPostDetail extends FragmentBase {
         //mAdapter = new PostCardAdapter();
         //recyclerView.setAdapter(mAdapter);
 
+        userAnswerHolder = (ViewGroup)rootView.findViewById(R.id.user_answer_holder);
+
         return rootView;
     }
 
@@ -78,6 +80,13 @@ public class FragmentPostDetail extends FragmentBase {
             ((BaseActivity)getActivity()).setTimeout(new Runnable() {
                 @Override
                 public void run() {
+                    userAnswerHolder.addView(FragmentConversation.create(
+                            FragmentPostDetail.this.getActivity(),
+                            "You said:", //TODO: remove hard code text
+                            p.getText(),
+                            p.getAudio()));
+
+
                     title.setText(p.getTitle());
                     score.setText(p.getScore() == 0?"?":p.getScore() + "");
                     status.setText(p.getStatusString());

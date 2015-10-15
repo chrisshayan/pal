@@ -84,6 +84,7 @@ public class CustomCardView extends FrameLayout {
         BaseActivity.applyFont(this);
     }
 
+    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         cardView = (ViewGroup) this.findViewById(R.id.card_view);

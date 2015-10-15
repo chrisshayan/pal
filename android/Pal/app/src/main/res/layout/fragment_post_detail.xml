@@ -26,8 +26,8 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/base_padding"
-                    android:layout_marginLeft="@dimen/base_padding" >
+                    android:layout_marginTop="@dimen/base_padding_quarter"
+                    android:layout_marginLeft="@dimen/base_padding_quarter" >
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -92,6 +92,12 @@
                 android:background="@color/divider"
                 />
         </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/user_answer_holder"
+            />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/conversation"
