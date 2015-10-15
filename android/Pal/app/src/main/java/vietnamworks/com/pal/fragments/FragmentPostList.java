@@ -1,5 +1,6 @@
 package vietnamworks.com.pal.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import com.firebase.client.ValueEventListener;
 import java.util.HashMap;
 
 import vietnamworks.com.pal.BaseActivity;
+import vietnamworks.com.pal.PostsActivity;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.TaskListActivity;
 import vietnamworks.com.pal.components.DrawerEventListener;
@@ -101,6 +103,18 @@ public class FragmentPostList extends FragmentBase {
             String index = Post.buildUserTypeIndex(uid, Topic.TYPE_WRITING);
             dataRef.orderByChild("index_user_type").equalTo(index).addValueEventListener(dataValueEventListener);
         }
+
+        ((PostsActivity)this.getActivity()).updateHomeButton();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Activity act = this.getActivity();
+        if (act != null) {
+            ((PostsActivity) this.getActivity()).updateHomeButton();
+        }
+
     }
 
     @Override

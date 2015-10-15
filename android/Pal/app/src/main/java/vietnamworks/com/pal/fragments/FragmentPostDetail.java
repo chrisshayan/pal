@@ -17,6 +17,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import vietnamworks.com.pal.BaseActivity;
+import vietnamworks.com.pal.PostsActivity;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.TaskListActivity;
 import vietnamworks.com.pal.components.AudioMixerController;
@@ -115,6 +116,8 @@ public class FragmentPostDetail extends FragmentBase implements AudioMixerContro
             dataRef = FirebaseService.newRef("posts").child(postId);
             dataRef.addValueEventListener(dataValueEventListener);
         }
+
+        ((PostsActivity)this.getActivity()).updateHomeButton();
     }
 
     @Override

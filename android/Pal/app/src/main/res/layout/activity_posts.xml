@@ -15,7 +15,7 @@
             android:id="@+id/fragment_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            class="vietnamworks.com.pal.fragments.FragmentHeader"
+            class="vietnamworks.com.pal.fragments.FragmentPostHeader"
             tools:layout="@layout/fragment_header" />
 
         <FrameLayout

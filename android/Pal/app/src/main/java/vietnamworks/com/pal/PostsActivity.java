@@ -2,6 +2,7 @@ package vietnamworks.com.pal;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 
@@ -10,19 +11,20 @@ import vietnamworks.com.pal.components.DrawerEventListener;
 import vietnamworks.com.pal.components.PostListDrawerEventListener;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.entities.Topic;
+import vietnamworks.com.pal.fragments.FragmentPostDetail;
 import vietnamworks.com.pal.fragments.FragmentPostList;
-import vietnamworks.com.pal.fragments.FragmentHeader;
+import vietnamworks.com.pal.fragments.FragmentPostHeader;
 import vietnamworks.com.pal.services.FirebaseService;
 
 public class PostsActivity extends BaseActivity {
-    public FragmentHeader fragment_header;
+    public FragmentPostHeader fragment_header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posts);
 
-        fragment_header = ((FragmentHeader)getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar));
+        fragment_header = ((FragmentPostHeader)getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar));
         Bundle b = getIntent().getExtras();
 
         if (findViewById(R.id.fragment_container) != null) {
@@ -61,11 +63,20 @@ public class PostsActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    public void onOpenDrawer(View v) {
-        //drawer
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        drawer.openDrawer(navigationView);
+    public void onClickHomeButton(View v) {
+        Fragment f = this.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (f instanceof FragmentPostDetail) {
+            this.getSupportFragmentManager().popBackStackImmediate();
+        } else if (f instanceof  FragmentPostList) {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            drawer.openDrawer(navigationView);
+        }
+
+    }
+
+    public void updateHomeButton() {
+        fragment_header.updateHomeButton();
     }
 
     public void onToggleAudio(View v) {
