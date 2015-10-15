@@ -1,5 +1,6 @@
 package vietnamworks.com.pal.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -134,6 +135,16 @@ public class FragmentPostDetail extends FragmentBase implements AudioMixerContro
             } catch (Exception e) {
 
             }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Activity _act = this.getActivity();
+        if (_act != null) {
+            PostsActivity act = (PostsActivity) _act;
+            act.fragment_header.setTitle(getResources().getString(R.string.post_page_detail));
         }
     }
 

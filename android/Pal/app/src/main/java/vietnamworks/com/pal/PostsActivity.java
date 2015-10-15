@@ -7,14 +7,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 
 import vietnamworks.com.pal.components.ConversationView;
-import vietnamworks.com.pal.components.DrawerEventListener;
 import vietnamworks.com.pal.components.PostListDrawerEventListener;
-import vietnamworks.com.pal.entities.Post;
-import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.fragments.FragmentPostDetail;
-import vietnamworks.com.pal.fragments.FragmentPostList;
 import vietnamworks.com.pal.fragments.FragmentPostHeader;
-import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.fragments.FragmentPostList;
 
 public class PostsActivity extends BaseActivity {
     public FragmentPostHeader fragment_header;
@@ -34,23 +30,6 @@ public class PostsActivity extends BaseActivity {
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, FragmentPostList.create(b)).commit();
-        }
-
-        if (b != null) {
-            int mode = b.getInt("mode", -1);
-            String uid = FirebaseService.authData.getUid();
-            if (mode == DrawerEventListener.POST_FILTER_ALL) {
-                fragment_header.setTitle("All posts");
-            } else if (mode == DrawerEventListener.POST_FILTER_RECENT_EVALUATED) {
-                fragment_header.setTitle("Recent evaluated posts");
-                String index = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED);
-            } else if (mode == DrawerEventListener.POST_FILTER_SPEAKING) {
-                fragment_header.setTitle("Speaking posts");
-                String index = Post.buildUserTypeIndex(uid, Topic.TYPE_SPEAKING);
-            } else if (mode == DrawerEventListener.POST_FILTER_WRITING) {
-                fragment_header.setTitle("Writing posts");
-                String index = Post.buildUserTypeIndex(uid, Topic.TYPE_WRITING);
-            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

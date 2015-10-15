@@ -88,33 +88,35 @@ public class FragmentPostList extends FragmentBase {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        dataRef = FirebaseService.newRef("posts");
-        int mode = getArguments().getInt("mode", -1);
-        String uid = FirebaseService.authData.getUid();
-        if (mode == DrawerEventListener.POST_FILTER_ALL) {
-            dataRef.orderByChild("created_by").equalTo(uid).addValueEventListener(dataValueEventListener);
-        } else if (mode == DrawerEventListener.POST_FILTER_RECENT_EVALUATED) {
-            String index = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED);
-            dataRef.orderByChild("index_user_status").equalTo(index).addValueEventListener(dataValueEventListener);
-        } else if (mode == DrawerEventListener.POST_FILTER_SPEAKING) {
-            String index = Post.buildUserTypeIndex(uid, Topic.TYPE_SPEAKING);
-            dataRef.orderByChild("index_user_type").equalTo(index).addValueEventListener(dataValueEventListener);
-        } else if (mode == DrawerEventListener.POST_FILTER_WRITING) {
-            String index = Post.buildUserTypeIndex(uid, Topic.TYPE_WRITING);
-            dataRef.orderByChild("index_user_type").equalTo(index).addValueEventListener(dataValueEventListener);
-        }
-
-        ((PostsActivity)this.getActivity()).updateHomeButton();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Activity act = this.getActivity();
-        if (act != null) {
-            ((PostsActivity) this.getActivity()).updateHomeButton();
+        Activity _act = this.getActivity();
+        if (_act != null) {
+            PostsActivity act = (PostsActivity) _act;
+            dataRef = FirebaseService.newRef("posts");
+            int mode = getArguments().getInt("mode", -1);
+            String uid = FirebaseService.authData.getUid();
+            if (mode == DrawerEventListener.POST_FILTER_ALL) {
+                act.fragment_header.setTitle(getResources().getString(R.string.post_page_all_posts));
+                dataRef.orderByChild("created_by").equalTo(uid).addValueEventListener(dataValueEventListener);
+            } else if (mode == DrawerEventListener.POST_FILTER_RECENT_EVALUATED) {
+                act.fragment_header.setTitle(getResources().getString(R.string.post_page_evaluated_posts));
+                String index = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED);
+                dataRef.orderByChild("index_user_status").equalTo(index).addValueEventListener(dataValueEventListener);
+            } else if (mode == DrawerEventListener.POST_FILTER_SPEAKING) {
+                act.fragment_header.setTitle(getResources().getString(R.string.post_page_speaking_posts));
+                String index = Post.buildUserTypeIndex(uid, Topic.TYPE_SPEAKING);
+                dataRef.orderByChild("index_user_type").equalTo(index).addValueEventListener(dataValueEventListener);
+            } else if (mode == DrawerEventListener.POST_FILTER_WRITING) {
+                act.fragment_header.setTitle(getResources().getString(R.string.post_page_writing_posts));
+                String index = Post.buildUserTypeIndex(uid, Topic.TYPE_WRITING);
+                dataRef.orderByChild("index_user_type").equalTo(index).addValueEventListener(dataValueEventListener);
+            }
+            act.fragment_header.updateHomeButton();
         }
-
     }
 
     @Override

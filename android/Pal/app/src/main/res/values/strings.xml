@@ -48,4 +48,10 @@
 
     <string name="create_post_successful">Your post has been saved</string>
 
+
+    <string name="post_page_all_posts">All posts</string>
+    <string name="post_page_evaluated_posts">Evaluated posts</string>
+    <string name="post_page_writing_posts">Writing posts</string>
+    <string name="post_page_speaking_posts">Speaking posts</string>
+    <string name="post_page_detail"> </string>
 </resources>
