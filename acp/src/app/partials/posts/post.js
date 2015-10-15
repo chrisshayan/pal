@@ -46,21 +46,25 @@ angular.module('inspinia')
                 });
             }
 
-            $scope.stopRecord = function() {
-                $scope.audioRecorder.stopRecording(function (audioVideoWebMURL) {
-                    $scope.isRecording = false;
-                    $scope.teacher_audio = new Audio();
-                    $scope.teacher_audio.src = audioVideoWebMURL;
-                    $scope.teacher_audio.playing = false;
-                    $scope.teacher_audio.addEventListener('ended', function(){
+            $scope.stopRecord = function(callback) {
+                if ($scope.isRecording) {
+                    $scope.audioRecorder.stopRecording(function (audioVideoWebMURL) {
+                        $scope.isRecording = false;
+                        $scope.teacher_audio = new Audio();
+                        $scope.teacher_audio.src = audioVideoWebMURL;
                         $scope.teacher_audio.playing = false;
-                        $scope.$digest();
+                        $scope.teacher_audio.addEventListener('ended', function(){
+                            $scope.teacher_audio.playing = false;
+                            $scope.$digest();
+                        });
+                        if (callback)  {callback();}
+                        // var recordedBlob = $scope.audioRecorder.getBlob();
+                        // $scope.audioRecorder.getDataURL(function(dataURL) { });
+                        $scope.$apply();
                     });
-
-                    // var recordedBlob = $scope.audioRecorder.getBlob();
-                    // $scope.audioRecorder.getDataURL(function(dataURL) { });
-                    $scope.$apply();
-                });
+                } else {
+                    if (callback)  {callback();}
+                }
             }
 
             $scope.playStopRecord = function() {
@@ -117,32 +121,39 @@ angular.module('inspinia')
             $scope.onSubmit = function() {
                 if (firebaseHelper.getUID()) {
                     $scope.isSubmitting = true;
-                    //post audio file to server
-                    if ($scope.audioRecorder) {
-                        $scope.audioRecorder.getDataURL(function(dataURL) {
-                            var fileName = "advisors_" + firebaseHelper.getUID() + "_" + $scope.data.$id + "_" + Date.now();
-                            var audioType = $scope.audioRecorder.getBlob().type;
-                            var audio = {
-                                name: fileName + '.' + audioType.split('/')[1],
-                                type: audioType,
-                                contents: dataURL
-                            }
-                            $http.post(window.RTC_SERVER, audio).then(function(data) {
-                                console.log(data.data.url);
-                                if (!data.data.url) {
-                                    $rootScope.notifyError("Fail to upload audio. Invalid response");
-                                    $scope.isSubmitting = false;
-                                    return;
-                                }
-                                submit(data.data.url);
-                            }, function() {
-                                $rootScope.notifyError("Fail to upload audio");
-                                $scope.isSubmitting = false;
-                            });
-                        });
-                    } else {
-                        submit();
+                    if ($scope.teacher_audio && $scope.teacher_audio.playing) {
+                        $scope.teacher_audio.pause()
+                        $scope.teacher_audio.playing = false;
                     }
+
+                    $scope.stopRecord(function() {
+                        //post audio file to server
+                        if ($scope.audioRecorder) {
+                            $scope.audioRecorder.getDataURL(function(dataURL) {
+                                var fileName = "advisors_" + firebaseHelper.getUID() + "_" + $scope.data.$id + "_" + Date.now();
+                                var audioType = $scope.audioRecorder.getBlob().type;
+                                var audio = {
+                                    name: fileName + '.' + audioType.split('/')[1],
+                                    type: audioType,
+                                    contents: dataURL
+                                }
+                                $http.post(window.RTC_SERVER, audio).then(function(data) {
+                                    console.log(data.data.url);
+                                    if (!data.data.url) {
+                                        $rootScope.notifyError("Fail to upload audio. Invalid response");
+                                        $scope.isSubmitting = false;
+                                        return;
+                                    }
+                                    submit(data.data.url);
+                                }, function() {
+                                    $rootScope.notifyError("Fail to upload audio");
+                                    $scope.isSubmitting = false;
+                                });
+                            });
+                        } else {
+                            submit();
+                        }
+                    });
                 } else {
                     $rootScope.notifyError("Something wrong");
                 }
