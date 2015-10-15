@@ -44,9 +44,9 @@ public class FragmentPostHeader extends Fragment {
         PostsActivity act = (PostsActivity) this.getActivity();
         Fragment f = act.getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (f instanceof FragmentPostDetail) {
-            btnHome.setImageResource(R.drawable.ic_stop_blue);
-        } else if (f instanceof  FragmentPostList) {
             btnHome.setImageResource(R.drawable.ic_hardware_keyboard_backspace);
+        } else if (f instanceof  FragmentPostList) {
+            btnHome.setImageResource(R.drawable.ic_menu_borderless_white);
         }
     }
 }
