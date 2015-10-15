@@ -1,9 +1,9 @@
-var TopicType = {
+window.TopicType = {
     Speaking: 0,
     Writing: 1
 }
 
-var TopicStatus = {
+window.TopicStatus = {
     Disable: 0,
     Enable: 1
 }
@@ -16,7 +16,7 @@ function Topic () {
     };
     if (obj) {
         this.data = JSON.parse(JSON.stringify(this.property));
-        for (k in obj) {
+        for (var k in obj) {
             this.data[k] = obj[k];
         }
     } else {

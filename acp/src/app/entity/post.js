@@ -1,6 +1,6 @@
 String.prototype.padRight = String.prototype.padRight || function(l,c) {return this+Array(l-this.length+1).join(c||" ")}
 
-var PostStatus = {
+window.PostStatus = {
     None: 0,
     UserPending: 1,
     UserError: 2,
@@ -13,12 +13,12 @@ var PostStatus = {
     ClosedByRedo: 9
 }
 
-var PostType = {
+window.PostType = {
     Speaking: 0,
     Writing: 1
 }
 
-PostHelper = {
+window.PostHelper = {
     buildIndex: function(uid, val) {
         return uid.padRight(48) + (val + "").padRight(4);
     }
@@ -51,7 +51,7 @@ function Post (obj) {
     }
     if (obj) {
         this.data = JSON.parse(JSON.stringify(this.property));
-        for (k in obj) {
+        for (var k in obj) {
             this.data[k] = obj[k];
         }
     } else {
