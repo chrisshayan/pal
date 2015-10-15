@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
-import vietnamworks.com.pal.fragments.FragmentContentPosts;
+import vietnamworks.com.pal.fragments.FragmentPostList;
 
 /**
  * Created by duynk on 10/15/15.
@@ -31,25 +31,25 @@ public class PostListDrawerEventListener extends DrawerEventListener {
                 if (id == R.id.all_posts) {
                     Bundle b = new Bundle();
                     b.putInt("mode", POST_FILTER_ALL);
-                    BaseActivity.sInstance.openFragment(FragmentContentPosts.create(b), R.id.holder);
+                    BaseActivity.sInstance.openFragment(FragmentPostList.create(b), R.id.holder);
                 } else if (id == R.id.recent_evaluated_posts)
 
                 {
                     Bundle b = new Bundle();
                     b.putInt("mode", POST_FILTER_RECENT_EVALUATED);
-                    BaseActivity.sInstance.openFragment(FragmentContentPosts.create(b), R.id.holder);
+                    BaseActivity.sInstance.openFragment(FragmentPostList.create(b), R.id.holder);
                 } else if (id == R.id.writing_posts)
 
                 {
                     Bundle b = new Bundle();
                     b.putInt("mode", POST_FILTER_WRITING);
-                    BaseActivity.sInstance.openFragment(FragmentContentPosts.create(b), R.id.holder);
+                    BaseActivity.sInstance.openFragment(FragmentPostList.create(b), R.id.holder);
                 } else if (id == R.id.speaking_posts)
 
                 {
                     Bundle b = new Bundle();
                     b.putInt("mode", POST_FILTER_SPEAKING);
-                    BaseActivity.sInstance.openFragment(FragmentContentPosts.create(b), R.id.holder);
+                    BaseActivity.sInstance.openFragment(FragmentPostList.create(b), R.id.holder);
                 } else if (id == R.id.nav_change_password)
 
                 {

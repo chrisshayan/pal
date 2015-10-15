@@ -9,7 +9,7 @@ import vietnamworks.com.pal.components.DrawerEventListener;
 import vietnamworks.com.pal.components.PostListDrawerEventListener;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.entities.Topic;
-import vietnamworks.com.pal.fragments.FragmentContentPosts;
+import vietnamworks.com.pal.fragments.FragmentPostList;
 import vietnamworks.com.pal.fragments.FragmentHeader;
 import vietnamworks.com.pal.services.FirebaseService;
 
@@ -30,7 +30,7 @@ public class PostsActivity extends BaseActivity {
             }
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.holder, FragmentContentPosts.create(b)).commit();
+                    .add(R.id.holder, FragmentPostList.create(b)).commit();
         }
 
         if (b != null) {

@@ -29,12 +29,12 @@ import vietnamworks.com.pal.services.FirebaseService;
 /**
  * Created by duynk on 10/15/15.
  */
-public class FragmentContentPosts extends FragmentBase {
+public class FragmentPostList extends FragmentBase {
     private PostCardAdapter mAdapter;
     Firebase dataRef;
 
-    public static FragmentContentPosts create(Bundle args) {
-        FragmentContentPosts fragment = new FragmentContentPosts();
+    public static FragmentPostList create(Bundle args) {
+        FragmentPostList fragment = new FragmentPostList();
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,14 +43,14 @@ public class FragmentContentPosts extends FragmentBase {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater
-                .inflate(R.layout.content_posts, container, false);
+                .inflate(R.layout.fragment_post_list, container, false);
         BaseActivity.applyFont(rootView);
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((BaseActivity) FragmentContentPosts.this.getActivity()).openActivity(TaskListActivity.class);
+                ((BaseActivity) FragmentPostList.this.getActivity()).openActivity(TaskListActivity.class);
             }
         });
 
