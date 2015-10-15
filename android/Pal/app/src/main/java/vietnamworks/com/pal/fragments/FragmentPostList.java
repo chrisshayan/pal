@@ -34,6 +34,7 @@ import vietnamworks.com.pal.services.FirebaseService;
 public class FragmentPostList extends FragmentBase {
     private PostCardAdapter mAdapter;
     Firebase dataRef;
+    RecyclerView recyclerView;
 
     public static FragmentPostList create(Bundle args) {
         FragmentPostList fragment = new FragmentPostList();
@@ -56,11 +57,10 @@ public class FragmentPostList extends FragmentBase {
             }
         });
 
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.post_list);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.post_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mAdapter = new PostCardAdapter();
-        recyclerView.setAdapter(mAdapter);
 
         return rootView;
     }
@@ -93,6 +93,7 @@ public class FragmentPostList extends FragmentBase {
     @Override
     public void onResume() {
         super.onResume();
+        recyclerView.setAdapter(null);
         Activity _act = this.getActivity();
         if (_act != null) {
             PostsActivity act = (PostsActivity) _act;
@@ -117,6 +118,7 @@ public class FragmentPostList extends FragmentBase {
             }
             act.fragment_header.updateHomeButton();
         }
+        recyclerView.setAdapter(mAdapter);
     }
 
     @Override
