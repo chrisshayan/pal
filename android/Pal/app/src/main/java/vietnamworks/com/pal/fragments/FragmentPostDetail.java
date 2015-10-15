@@ -1,6 +1,7 @@
 package vietnamworks.com.pal.fragments;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,8 @@ import com.firebase.client.ValueEventListener;
 import vietnamworks.com.pal.BaseActivity;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.TaskListActivity;
+import vietnamworks.com.pal.components.AudioMixerController;
+import vietnamworks.com.pal.components.AudioMixerSubscriber;
 import vietnamworks.com.pal.components.ConversationAdapter;
 import vietnamworks.com.pal.components.ConversationView;
 import vietnamworks.com.pal.entities.Post;
@@ -26,7 +29,7 @@ import vietnamworks.com.pal.services.FirebaseService;
 /**
  * Created by duynk on 10/15/15.
  */
-public class FragmentPostDetail extends FragmentBase {
+public class FragmentPostDetail extends FragmentBase implements AudioMixerController {
     private ConversationAdapter mAdapter;
     Firebase dataRef;
 
@@ -34,6 +37,9 @@ public class FragmentPostDetail extends FragmentBase {
     TextView score;
     TextView status;
     ViewGroup userAnswerHolder;
+
+    private MediaPlayer mPlayer = null;
+    private AudioMixerSubscriber currentAudioSubscriber;
 
     public static FragmentPostDetail create(Bundle args) {
         FragmentPostDetail fragment = new FragmentPostDetail();
@@ -63,7 +69,7 @@ public class FragmentPostDetail extends FragmentBase {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.conversation);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        mAdapter = new ConversationAdapter();
+        mAdapter = new ConversationAdapter(this);
         recyclerView.setAdapter(mAdapter);
 
         userAnswerHolder = (ViewGroup)rootView.findViewById(R.id.user_answer_holder);
@@ -81,6 +87,7 @@ public class FragmentPostDetail extends FragmentBase {
                 public void run() {
                     userAnswerHolder.addView(ConversationView.create(
                             FragmentPostDetail.this.getActivity(),
+                            FragmentPostDetail.this,
                             "You said:", //TODO: remove hard code text
                             p.getText(),
                             p.getAudio(),
@@ -116,5 +123,74 @@ public class FragmentPostDetail extends FragmentBase {
         if (dataRef != null) {
             dataRef.removeEventListener(dataValueEventListener);
         }
+        if (currentAudioSubscriber != null && mPlayer != null) {
+            try {
+                mPlayer.stop();
+                mPlayer.release();
+                mPlayer = null;
+            } catch (Exception e) {
+
+            }
+        }
     }
+
+    public void playAudio(String url, final AudioMixerSubscriber sender) {
+        if (mPlayer == null) { //not playing
+            mPlayer = new MediaPlayer();
+            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mPlayer.stop();
+                    mPlayer.reset();
+                    mPlayer.release();
+                    mPlayer = null;
+                    sender.onStopAudio();
+                }
+            });
+            try {
+                mPlayer.setDataSource(url);
+                mPlayer.prepare();
+                mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        if (mp == mPlayer) {
+                            mp.start();
+                            currentAudioSubscriber = sender;
+                            sender.onPlayAudio();
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                mPlayer = null;
+                sender.onStopAudio();
+            }
+        } else {
+            if (currentAudioSubscriber != null) {
+                currentAudioSubscriber.onStopAudio();
+                currentAudioSubscriber = null;
+            }
+            mPlayer.stop();
+            mPlayer.release();
+            mPlayer = null;
+            playAudio(url, sender);
+        }
+    }
+
+    public void stopAudio(final AudioMixerSubscriber sender) {
+        if (mPlayer == null) {
+            sender.onStopAudio();
+        } else {
+            try {
+                mPlayer.stop();
+                mPlayer.release();
+                mPlayer = null;
+            } catch (Exception e) {
+
+            }
+            sender.onStopAudio();
+            currentAudioSubscriber = null;
+        }
+    }
+
 }

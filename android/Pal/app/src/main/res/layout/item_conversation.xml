@@ -16,7 +16,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="You said:"
             android:id="@+id/title"
-            android:layout_margin="@dimen/base_padding_quarter" />
+            android:layout_margin="@dimen/base_padding_half" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
             android:id="@+id/created_date"
-            android:layout_margin="@dimen/base_padding_quarter"
+            android:layout_margin="@dimen/base_padding_half"
             android:layout_alignParentRight="true"
             android:textSize="10dp" />
     </RelativeLayout>
@@ -32,7 +32,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/base_padding_quarter">
+        android:layout_margin="@dimen/base_padding_half">
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -42,7 +42,9 @@
             android:src="@drawable/ic_play_blue"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:background="?attr/selectableItemBackgroundBorderless" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="onToggleAudio"
+            android:nestedScrollingEnabled="false" />
     </RelativeLayout>
 
     <TextView
@@ -51,7 +53,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/body"
-        android:layout_margin="@dimen/base_padding_quarter" />
+        android:layout_margin="@dimen/base_padding_half" />
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"

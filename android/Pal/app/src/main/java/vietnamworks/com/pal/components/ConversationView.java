@@ -16,7 +16,7 @@ import vietnamworks.com.pal.utils.Common;
 /**
  * Created by duynk on 10/15/15.
  */
-public class ConversationView extends LinearLayout {
+public class ConversationView extends LinearLayout implements AudioMixerSubscriber {
     TextView titleView;
     ImageButton btnAudio;
     TextView bodyView;
@@ -26,6 +26,7 @@ public class ConversationView extends LinearLayout {
     String title = "";
     String body = "";
     long timeStamp = 0;
+    AudioMixerController mixer;
 
     public ConversationView(Context context) {
         super(context);
@@ -65,21 +66,23 @@ public class ConversationView extends LinearLayout {
         titleView.setTypeface(BaseActivity.RobotoB);
     }
 
-    public static ConversationView create(Context ctx, String title, String body, String audio, long timeStamp) {
+    public static ConversationView create(Context ctx, AudioMixerController audioCtrl, String title, String body, String audio, long timeStamp) {
         ConversationView view = new ConversationView(ctx);
         view.audioURL = audio;
         view.title = title;
         view.body = body;
         view.timeStamp = timeStamp;
+        view.mixer = audioCtrl;
         view.updateUI();
         return view;
     }
 
-    public void setData(String title, String body, String audio, long timeStamp) {
+    public void setData(AudioMixerController audioCtrl, String title, String body, String audio, long timeStamp) {
         this.audioURL = audio;
         this.title = title;
         this.body = body;
         this.timeStamp = timeStamp;
+        this.mixer = audioCtrl;
         this.updateUI();
     }
 
@@ -98,6 +101,29 @@ public class ConversationView extends LinearLayout {
         } else {
             ((ViewGroup)btnAudio.getParent()).setVisibility(View.VISIBLE);
         }
+    }
+
+
+    private boolean audioPlaying = false;
+    public void onToggleAudio(View v) {
+        audioPlaying = !audioPlaying;
+        if (audioPlaying) {
+            getContext();
+            mixer.playAudio(this.audioURL, this);
+        } else {
+            onStopAudio();
+            mixer.stopAudio(this);
+        }
+    }
+
+    public void onPlayAudio() {
+        audioPlaying = true;
+        btnAudio.setImageResource(R.drawable.ic_stop_blue);
+    }
+
+    public void onStopAudio() {
+        audioPlaying = false;
+        btnAudio.setImageResource(R.drawable.ic_play_blue);
     }
 
 }

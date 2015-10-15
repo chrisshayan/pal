@@ -16,6 +16,12 @@ import vietnamworks.com.pal.services.FirebaseService;
  */
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.ConversationViewHolder> {
     Post post;
+    AudioMixerController mixer;
+
+    public ConversationAdapter(AudioMixerController mixer) {
+        super();
+        this.mixer = mixer;
+    }
 
 
     public void setPost(Post p) {
@@ -59,7 +65,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             }
             String message = BaseEntity.safeGetString(conversation, "text");
             String audio = BaseEntity.safeGetString(conversation, "audio");
-            holder.view.setData(title, message, audio, BaseEntity.safeGetLong(conversation, "created_date"));
+            holder.view.setData(mixer, title, message, audio, BaseEntity.safeGetLong(conversation, "created_date"));
         }
     }
 }

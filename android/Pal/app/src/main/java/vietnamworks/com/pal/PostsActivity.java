@@ -5,6 +5,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 
+import vietnamworks.com.pal.components.ConversationView;
 import vietnamworks.com.pal.components.DrawerEventListener;
 import vietnamworks.com.pal.components.PostListDrawerEventListener;
 import vietnamworks.com.pal.entities.Post;
@@ -65,5 +66,16 @@ public class PostsActivity extends BaseActivity {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         drawer.openDrawer(navigationView);
+    }
+
+    public void onToggleAudio(View v) {
+        View p = (View) v.getParent();
+        while (p != null) {
+            if (p instanceof  ConversationView) {
+                ((ConversationView)p).onToggleAudio(p);
+                return;
+            }
+            p = (View) p.getParent();
+        }
     }
 }
