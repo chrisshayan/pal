@@ -18,7 +18,11 @@
             class="vietnamworks.com.pal.fragments.FragmentHeader"
             tools:layout="@layout/fragment_header" />
 
-        <include layout="@layout/content_posts" />
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/holder"
+            ></FrameLayout>
     </LinearLayout>
 
     <android.support.design.widget.NavigationView android:id="@+id/nav_view"
