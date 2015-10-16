@@ -1,5 +1,52 @@
 angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval,$state ) {
 
+    $scope.checked = {};
+    $scope.nChecked = 0;
+    $scope.isBan = true;
+    $scope.search = "";
+
+    $scope.onSelectAdvisor = function() {
+        var tmp = 0;
+        $scope.isBan = false;
+        for (var k in $scope.checked) {
+            if ($scope.checked[k]) {
+                tmp++;
+                if (!$scope.advisors[k].ban == true) {
+                    $scope.isBan = true;
+                }
+            }
+        }
+        $scope.nChecked = tmp;
+    }
+
+    $scope.onBanUsers = function() {
+        for (var k in $scope.checked) {
+            if ($scope.checked[k]) {
+                firebaseHelper.getFireBaseInstance(["profiles", k]).update({
+                    ban: true,
+                    ban_date: Date.now()
+                }, function(error) {
+                    $scope.onSelectAdvisor();
+                    $scope.$apply();
+                })
+            }
+        }
+    }
+
+    $scope.onUnbanUsers = function() {
+        for (var k in $scope.checked) {
+            if ($scope.checked[k]) {
+                firebaseHelper.getFireBaseInstance(["profiles", k]).update({
+                    ban: false,
+                    ban_date: 0
+                }, function(error) {
+                    $scope.onSelectAdvisor();
+                    $scope.$apply();
+                })
+            }
+        }
+    }
+
     $scope.onAddAdvisor = function() {
         var email = $scope.addUserEmail;
         var display_name = $scope.addUserDisplayName;
@@ -52,15 +99,33 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
         $scope.addUserMode = false;
     }
 
-    $scope.onResetPassword = function(email) {
-        firebaseHelper.resetPassword(email, {
-            success: function(data) {
-                $rootScope.notifySuccess();
-            },
-            error: function() {
-                $rootScope.notifyError();
+    $scope.onResetPassword = function() {
+        if ($scope.nChecked == 1) {
+            for (var k in $scope.checked) {
+                if ($scope.checked[k]) {
+                    firebaseHelper.resetPassword($scope.advisors[k].email, {
+                        success: function(data) {
+                            $rootScope.notifySuccess();
+                        },
+                        error: function() {
+                            $rootScope.notifyError();
+                        }
+                    });
+                }
+                break;
             }
-        });
+        }
+    }
+
+    $scope.onEditUser = function(user) {
+        if (typeof(user)!="undefined" && user) {
+            alert(user.uid)
+        } else {
+            for (var k in $scope.checked) {
+                alert(k);
+                break;
+            }
+        }
     }
 
     var init = function() {
@@ -74,15 +139,19 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
         $scope.addUserEmail = "";
         $scope.addUserDisplayName = "";
 
+        $scope.advisors = {};
         firebaseHelper.getFireBaseInstance("profiles").orderByChild("role").equalTo("advisor").on('value', function(snapshot) {
-            $scope.advisors = [];
             snapshot.forEach(function(childSnapshot) {
                 var uid = childSnapshot.key();
+                var ban = childSnapshot.val().ban;
                 firebaseHelper.getFireBaseInstance(["profiles_pub", uid]).on('value', function(snapshot2) {
-                    $scope.advisors.push(snapshot2.val());
+                    var obj = snapshot2.val();
+                    obj.uid = uid;
+                    obj.ban = ban;
+                    $scope.advisors[uid] = obj;
                     setTimeout(function() {
                         $scope.$digest();
-                    }, 100);
+                    })
                 })
             });
         })
