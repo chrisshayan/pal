@@ -14,7 +14,7 @@
         <fragment
             android:id="@+id/fragment_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/toolbar_height"
             class="vietnamworks.com.pal.fragments.FragmentPostHeader"
             tools:layout="@layout/fragment_header" />
 

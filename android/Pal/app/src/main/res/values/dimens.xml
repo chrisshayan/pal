@@ -7,6 +7,7 @@
     <dimen name="base_padding_half">8dp</dimen>
     <dimen name="base_padding_quarter">4dp</dimen>
 
+    <dimen name="toolbar_height">60dp</dimen>
     <!--common card-->
     <dimen name="card_corner_radius">0dp</dimen>
     <dimen name="card_elevation">3dp</dimen>
