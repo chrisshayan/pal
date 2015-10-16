@@ -10,11 +10,11 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
 
     .state('login', {
         url: '/login',
-        templateUrl: "app/auth/login.html"
+        templateUrl: "app/modules/auth/login.html"
     })
     .state('change_pass', {
         url: '/change_pass',
-        templateUrl: "app/auth/change_pass.html"
+        templateUrl: "app/modules/auth/change_pass.html"
     })
 
     .state('index', {
@@ -29,22 +29,22 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
     })
     .state('index.tasks', {
         url: "/tasks",
-        templateUrl: "app/tasks/tasks.html",
+        templateUrl: "app/modules/tasks/tasks.html",
         data: { pageTitle: 'Tasks' }
     })
     .state('index.advisors', {
         url: "/advisors",
-        templateUrl: "app/advisors/advisors.html",
+        templateUrl: "app/modules/advisors/advisors.html",
         data: { pageTitle: 'Advisors view' }
     })
     .state('index.topics', {
         url: "/topics",
-        templateUrl: "app/topics/topics.html",
+        templateUrl: "app/modules/topics/topics.html",
         data: { pageTitle: 'Topics view' }
     })
     .state('index.create_post', {
         url: "/create_post",
-        templateUrl: "app/create_post/create_post.html",
+        templateUrl: "app/modules/create_post/create_post.html",
         data: { pageTitle: 'Create Post' }
     })
 
