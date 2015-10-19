@@ -8,49 +8,12 @@ window.TopicStatus = {
     Enable: 1
 }
 
-function Topic () {
-    this.property = {
+function Topic (obj) {
+    BaseEntity.call(this, {
         title: "",
         status: TopicStatus.Enable,
         type: TopicType.Speaking
-    };
-    if (obj) {
-        this.data = JSON.parse(JSON.stringify(this.property));
-        for (var k in obj) {
-            this.data[k] = obj[k];
-        }
-    } else {
-        this.data = JSON.parse(JSON.stringify(this.property));
-    }
+    }, obj);
 }
-
-Topic.prototype.set = function(k, v) {
-    this.data[k] = v;
-}
-
-Topic.prototype.get = function(k) {
-    if (k) {
-        return this.data[k];
-    } else {
-        return this.data;
-    }
-}
-
-Topic.prototype.doCreate = function(by) {
-    this.data.created_by = by;
-    this.data.created_date = Date.now();
-    this.data.last_modified_by = by;
-    this.data.last_modified_date = Date.now();
-    this.computeIndex();
-    return this;
-}
-
-Topic.prototype.doModify = function(by) {
-    this.data.last_modified_by = by;
-    this.data.last_modified_date = Date.now();
-    this.computeIndex();
-    return this;
-}
-
-Topic.prototype.computeIndex = function() {
-}
+Topic.prototype = Object.create(BaseEntity.prototype);
+Topic.prototype.constructor = Topic;

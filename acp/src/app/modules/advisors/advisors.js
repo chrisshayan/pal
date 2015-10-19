@@ -1,4 +1,4 @@
-angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval,$state ) {
+angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval,$state, $uibModal, AdvisorService) {
 
     $scope.checked = {};
     $scope.nChecked = 0;
@@ -119,10 +119,10 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
 
     $scope.onEditUser = function(user) {
         if (typeof(user)!="undefined" && user) {
-            alert(user.uid)
+            $scope.openAdvisorModal(user.$id);
         } else {
             for (var k in $scope.checked) {
-                alert(k);
+                $scope.openAdvisorModal(k);
                 break;
             }
         }
@@ -140,21 +140,30 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
         $scope.addUserDisplayName = "";
 
         $scope.advisors = {};
-        firebaseHelper.getFireBaseInstance("profiles").orderByChild("role").equalTo("advisor").on('value', function(snapshot) {
-            snapshot.forEach(function(childSnapshot) {
-                var uid = childSnapshot.key();
-                var ban = childSnapshot.val().ban;
-                firebaseHelper.getFireBaseInstance(["profiles_pub", uid]).on('value', function(snapshot2) {
-                    var obj = snapshot2.val();
-                    obj.uid = uid;
-                    obj.ban = ban;
-                    $scope.advisors[uid] = obj;
-                    setTimeout(function() {
-                        $scope.$digest();
-                    })
-                })
+
+        var onRecordUpdate = function(snapshot, mode) {
+            var uid = snapshot.key();
+            var ban = snapshot.val().ban;
+            AdvisorService.getAdvisorById(uid, function(data) {
+                $scope.advisors[uid] = data;
+                data.ban = ban;
+                setTimeout(function(id, mode) {
+                    $scope.$digest();
+                    $(id).addClass(mode == "add"?'text-info':'text-warning');
+                    setTimeout(function(id, mode) {
+                        $(id).removeClass(mode == "add"?'text-info':'text-warning');
+                    }, 2000, id, mode);
+                }, 100, "#advisor_" + data.$id, mode);
             });
-        })
+        }
+
+        var ref = firebaseHelper.getFireBaseInstance("profiles").orderByChild("role").equalTo("advisor");
+        ref.on('child_added', function(snapshot) {
+            onRecordUpdate(snapshot, "add");
+        });
+        ref.on('child_changed', function(snapshot) {
+            onRecordUpdate(snapshot, "changed");
+        });
     }
 
     $scope.loading = true;
@@ -165,4 +174,53 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
             init();
         });
     }
-})
+
+    $scope.openAdvisorModal = function(id) {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'advisor_modal.html',
+            controller: 'AdvisorModalCtrl',
+            size: 'lg',
+            resolve: {
+                item: function () {
+                    return $scope.advisors[id];
+                }
+            }
+        });
+
+        modalInstance.result.then(function (data, isnew) {
+            var obj = new Advisor(data);
+            if (isnew) {
+                obj.doCreate(firebaseHelper.getUID());
+            } else {
+                obj.doModify(firebaseHelper.getUID());
+                firebaseHelper.getFireBaseInstance(["profiles_pub", obj.get("$id")]).update(obj.getProperty(), function(error) {
+                    if (error) {
+                        $rootScope.notifyError(error);
+                    } else {
+                        firebaseHelper.getFireBaseInstance(["profiles", obj.get("$id")]).update({
+                            pub_profile_last_update: Date.now()
+                        }, function(error) {
+                            $rootScope.notifySuccess();
+                        });
+                    }
+                });
+            }
+        });
+    }
+});
+
+angular.module('inspinia').controller('AdvisorModalCtrl', function($scope, $modalInstance, item, cs) {
+    $scope.advisor = cs.purify(item || {});
+    $scope.isNewUser = true;
+    if ($scope.advisor.$id) {
+        $scope.isNewUser = false;
+    }
+    $scope.onDone = function () {
+        $modalInstance.close(cs.purify($scope.advisor), $scope.isNewUser);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+});

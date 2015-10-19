@@ -25,7 +25,7 @@ window.PostHelper = {
 }
 
 function Post (obj) {
-    this.property = {
+    BaseEntity.call(this, {
         created_date: 0,
         created_by: "",
         last_modified_date: 0,
@@ -48,50 +48,11 @@ function Post (obj) {
         //indexing
         index_user_status: "",
         index_user_type: ""
-    }
-    if (obj) {
-        this.data = JSON.parse(JSON.stringify(this.property));
-        for (var k in obj) {
-            this.data[k] = obj[k];
-        }
-    } else {
-        this.data = JSON.parse(JSON.stringify(this.property));
-    }
-}
-Post.prototype.set = function(k, v) {
-    this.data[k] = v;
-    return this;
+    }, obj);
 }
 
-Post.prototype.push = function(k, v) {
-    this.data[k] = this.data[k] || [];
-    this.data[k].push(v)
-    return this;
-}
-
-Post.prototype.get = function(k) {
-    if (k) {
-        return this.data[k];
-    } else {
-        return this.data;
-    }
-}
-
-Post.prototype.doCreate = function(by) {
-    this.data.created_by = by;
-    this.data.created_date = Date.now();
-    this.data.last_modified_by = by;
-    this.data.last_modified_date = Date.now();
-    this.computeIndex();
-    return this;
-}
-
-Post.prototype.doModify = function(by) {
-    this.data.last_modified_by = by;
-    this.data.last_modified_date = Date.now();
-    this.computeIndex();
-    return this;
-}
+Post.prototype = Object.create(BaseEntity.prototype);
+Post.prototype.constructor = Post;
 
 Post.prototype.computeIndex = function() {
     this.data.index_user_status = PostHelper.buildIndex(this.data.created_by, this.data.status);
