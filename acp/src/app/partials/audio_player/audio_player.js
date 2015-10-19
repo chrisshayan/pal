@@ -20,12 +20,12 @@ angular.module('inspinia')
                 $scope.convertFrom = ext;
             }
 
-            console.log("create audio player", $scope.convertFrom, "->", $scope.convertTo, $scope.audio);
+            // console.log("create audio player", $scope.convertFrom, "->", $scope.convertTo, $scope.audio);
 
             if ($scope.convertFrom && $scope.convertTo && ($scope.convertFrom != $scope.convertTo)) {
                 $scope.audio = "https://api.cloudconvert.com/convert?apikey=3suj4KZn3UoTKbksedeKLiDLIBQ9JBl0CBzVQ6FV_IKknHzkcHTEUT_DP6O2DopvIWSM4-nL1w0xIZCd1INaJQ&input=download&download=inline&inputformat=" + $scope.convertFrom + "&outputformat=" + $scope.convertTo + "&file=" + $scope.audio;
             }
-            
+
             $scope.audioPlayer = null;
             $scope.toggleAudio = function(){
                 if (!$scope.audioPlayer) {
