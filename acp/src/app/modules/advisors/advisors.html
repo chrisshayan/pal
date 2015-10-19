@@ -2,28 +2,6 @@
     <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
-            <div class="ibox" ng-show="addUserMode">
-                <div class="ibox-title">
-                    <h5>New advisor</h5>
-                </div>
-                <div class="ibox-content">
-                    <form role="form" ng-submit="onAddAdvisor()">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input ng-model="addUserEmail" type="email" placeholder="Enter email" class="form-control" require=""/>
-                        </div>
-                        <div class="form-group">
-                            <label>Display name</label>
-                            <input ng-model="addUserDisplayName" type="text" placeholder="Display name" class="form-control" require=""/>
-                        </div>
-                        <div class="pull-right" >
-                            <button ng-click="onCancelAddAdvisor()" class="btn btn-sm btn-primary m-t-n-xs"><strong>Cancel</strong></button>
-                            <button ng-disabled="!addUserEmail || !addUserDisplayName" class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Add</strong></button>
-                        </div>
-                        <label> &nbsp; </label>
-                    </form>
-                </div>
-            </div>
             <div class="ibox">
                 <div class="ibox-title">
                     <h5>Advisor list</h5>
@@ -33,7 +11,7 @@
                 <div class="ibox-content">
                     <div class="row" style="margin-bottom:5px">
                         <div class="col-md-12">
-                            <a ng-show="!addUserMode" ng-click="addUserMode=!addUserMode" class="btn btn-sm btn-white"> <i class="fa fa-plus"> Add</i> </a>
+                            <a ng-show="!addUserMode" ng-click="onAddAdvisor()" class="btn btn-sm btn-white"> <i class="fa fa-plus"> Add</i> </a>
                             <a ng-show="nChecked==1" ng-click="onEditUser()" class="btn btn-sm btn-white"> <i class="fa fa-pencil"> Edit</i> </a>
                             <a ng-show="nChecked==1" ng-click="onResetPassword()" class="btn btn-sm btn-white"> <i class="fa fa-cog"> Reset password</i> </a>
                             <a ng-show="nChecked>0 && isBan" ng-click="onBanUsers()" class="btn btn-sm btn-white"> <i class="fa fa-ban"> Ban user</i> </a>
@@ -47,12 +25,15 @@
                                     <td>
                                         <checkbox ng-id="{{r.$id}}" ng-model="checked[r.$id]" ng-changed="onSelectAdvisor(r.$id)"></checkbox>
                                     </td>
-                                    <td class="issue-info">
-                                        <span ng-if="!r.ban">{{r.display_name}}</span>
-                                        <span ng-if="r.ban" style="text-decoration: line-through;">{{r.display_name}}</span>
+                                    <td class="issue-info" ng-class="{'text-muted':r.ban}">
+                                        {{r.display_name}}
                                     </td>
-                                    <td>
+                                    <td ng-class="{'text-muted':r.ban}">
                                         {{r.email}}
+                                    </td>
+                                    <td ng-class="{'text-muted':r.ban}">
+                                        <i class="fa fa-fw fa-check-circle-o" ng-if="!r.ban" tooltip-placement="top" tooltip="Active"></i>
+                                        <i class="fa fa-fw fa-ban" ng-if="r.ban" tooltip-placement="top" tooltip="Ban"></i>
                                     </td>
                                 </tr>
                             </tbody>
@@ -71,17 +52,17 @@
             <form role="form">
                 <div class="form-group">
                     <label>Email</label>
-                    <input ng-readonly="!isNewUser" ng-model="advisor.email" type="email" placeholder="Enter email" class="form-control" require=""/>
+                    <input ng-readonly="!isNewUser || isProcessing" ng-model="advisor.email" type="email" placeholder="Enter email" class="form-control" require=""/>
                 </div>
                 <div class="form-group">
                     <label>Display name</label>
-                    <input ng-model="advisor.display_name" type="text" placeholder="Display name" class="form-control" require=""/>
+                    <input ng-readonly="isProcessing" ng-model="advisor.display_name" type="text" placeholder="Display name" class="form-control" require=""/>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-disabled="!advisor.email || !advisor.display_name" ng-click="onDone()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-disabled="isProcessing || !advisor.email || !advisor.display_name" ng-click="onDone()">OK</button>
+            <button class="btn btn-warning" type="button" ng-disabled="isProcessing" ng-click="cancel()">Cancel</button>
         </div>
     </script>
 </div>
