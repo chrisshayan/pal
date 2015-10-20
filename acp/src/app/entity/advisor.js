@@ -2,7 +2,7 @@ function Advisor (obj) {
     BaseEntity.call(this, {
         email: "",
         display_name: "",
-        school_id: ""
+        school: ""
     }, obj);
 }
 Advisor.prototype = Object.create(BaseEntity.prototype);

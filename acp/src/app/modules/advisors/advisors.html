@@ -41,7 +41,7 @@
                                         {{r.email}}
                                     </td>
                                     <td ng-class="{'text-muted':r.ban}">
-                                        {{schools[r.school] || 'unknown'}}
+                                        {{schools[r.school].name || 'unknown'}}
                                     </td>
                                     <td ng-class="{'text-muted':r.ban}">
                                         <i class="fa fa-fw fa-check-circle-o" ng-if="!r.ban" tooltip-placement="top" tooltip="Active"></i>
@@ -63,12 +63,19 @@
         <div class="modal-body">
             <form role="form">
                 <div class="form-group">
-                    <label>Email</label>
+                    <label>Email (*)</label>
                     <input ng-readonly="!isNewUser || isProcessing" ng-model="data.email" type="email" placeholder="Enter email" class="form-control" require=""/>
                 </div>
                 <div class="form-group">
-                    <label>Display name</label>
+                    <label>Display name (*)</label>
                     <input ng-readonly="isProcessing" ng-model="data.display_name" type="text" placeholder="Display name" class="form-control" require=""/>
+                </div>
+                <div class="form-group">
+                    <label>School</label>
+                    <select class="form-control" ng-readonly="isProcessing" ng-model="data.school">
+                        <option value="">Select school (optional)</option>
+                        <option ng-repeat="n in schools" value="{{n.$id}}">{{n.name}}</option>
+                    </select>
                 </div>
             </form>
         </div>

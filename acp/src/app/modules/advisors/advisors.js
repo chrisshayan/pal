@@ -135,20 +135,29 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
             size: 'lg',
             resolve: {
                 item: function () {
-                    return $scope.data[id];
+                    return {
+                        data: $scope.data[id],
+                        schools: $scope.schools
+                    }
                 }
             }
         });
     }
 });
 
-angular.module('inspinia').controller('AdvisorModalCtrl', function($rootScope, $scope, $modalInstance, item, cs, firebaseHelper, AdvisorService) {
-    $scope.data = cs.purify(item || {});
+angular.module('inspinia').controller('AdvisorModalCtrl', function($rootScope, $scope, $timeout, $modalInstance, item, cs, firebaseHelper, AdvisorService) {
+    item = item || {};
     $scope.isNewUser = true;
     $scope.isProcessing = false;
-    if ($scope.data.$id) {
-        $scope.isNewUser = false;
-    }
+    $scope.schools = item.schools;
+
+    $timeout(function() {
+        $scope.data = cs.purify(item.data || {});
+        if ($scope.data.$id) {
+            $scope.isNewUser = false;
+        }
+    }, 500);
+
     $scope.onDone = function () {
         if (!$scope.isProcessing && $scope.data.email && $scope.data.display_name) {
             $scope.isProcessing = true;
