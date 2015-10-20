@@ -12,4 +12,14 @@ angular.module('inspinia').service('SchoolService', function ($rootScope, fireba
             });
         }
     }
+
+    this.getOnce = function(schoolsRef, callback) {
+        firebaseHelper.getFireBaseInstance("schools").once('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+                schoolsRef[childSnapshot.key()] = childSnapshot.val();
+                schoolsRef[childSnapshot.key()].$id = childSnapshot.key();
+            })
+            if (callback) {callback();}
+        })
+    }
 });

@@ -1,16 +1,21 @@
-angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval,$state, $uibModal, AdvisorService) {
+angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval,$state, $uibModal, AdvisorService, SchoolService) {
 
     $scope.checked = {};
     $scope.nChecked = 0;
     $scope.isBan = true;
 
-    $scope.onSelectAdvisor = function() {
+    $scope.schools = {}
+    SchoolService.getOnce($scope.schools, function() {
+        $scope.$apply();
+    });
+
+    $scope.onSelectItem = function() {
         var tmp = 0;
         $scope.isBan = false;
         for (var k in $scope.checked) {
             if ($scope.checked[k]) {
                 tmp++;
-                if (!$scope.advisors[k].ban == true) {
+                if (!$scope.data[k].ban == true) {
                     $scope.isBan = true;
                 }
             }
@@ -25,7 +30,7 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
                     ban: true,
                     ban_date: Date.now()
                 }, function(error) {
-                    $scope.onSelectAdvisor();
+                    $scope.onSelectItem();
                     $scope.$apply();
                 })
             }
@@ -46,15 +51,15 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
         }
     }
 
-    $scope.onAddAdvisor = function() {
-        $scope.openAdvisorModal();
+    $scope.onAddItem = function() {
+        $scope.openModal();
     }
 
     $scope.onResetPassword = function() {
         if ($scope.nChecked == 1) {
             for (var k in $scope.checked) {
                 if ($scope.checked[k]) {
-                    firebaseHelper.resetPassword($scope.advisors[k].email, {
+                    firebaseHelper.resetPassword($scope.data[k].email, {
                         success: function(data) {
                             $rootScope.notifySuccess();
                         },
@@ -68,12 +73,12 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
         }
     }
 
-    $scope.onEditUser = function(user) {
+    $scope.onEditItem = function(user) {
         if (typeof(user)!="undefined" && user) {
-            $scope.openAdvisorModal(user.$id);
+            $scope.openModal(user.$id);
         } else {
             for (var k in $scope.checked) {
-                $scope.openAdvisorModal(k);
+                $scope.openModal(k);
                 break;
             }
         }
@@ -86,13 +91,13 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
             return;
         }
 
-        $scope.advisors = {};
+        $scope.data = {};
 
         var onRecordUpdate = function(snapshot, mode) {
             var uid = snapshot.key();
             var ban = snapshot.val().ban;
             AdvisorService.getAdvisorById(uid, function(data) {
-                $scope.advisors[uid] = data;
+                $scope.data[uid] = data;
                 data.ban = ban;
                 setTimeout(function(id, mode) {
                     $scope.$digest();
@@ -100,7 +105,7 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
                     setTimeout(function(id, mode) {
                         $(id).removeClass(mode == "add"?'text-info':'text-warning');
                     }, 2000, id, mode);
-                }, 100, "#advisor_" + data.$id, mode);
+                }, 100, "#item_" + data.$id, mode);
             });
         }
 
@@ -122,7 +127,7 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
         });
     }
 
-    $scope.openAdvisorModal = function(id) {
+    $scope.openModal = function(id) {
         var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'advisor_modal.html',
@@ -130,7 +135,7 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
             size: 'lg',
             resolve: {
                 item: function () {
-                    return $scope.advisors[id];
+                    return $scope.data[id];
                 }
             }
         });
@@ -138,16 +143,16 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
 });
 
 angular.module('inspinia').controller('AdvisorModalCtrl', function($rootScope, $scope, $modalInstance, item, cs, firebaseHelper, AdvisorService) {
-    $scope.advisor = cs.purify(item || {});
+    $scope.data = cs.purify(item || {});
     $scope.isNewUser = true;
     $scope.isProcessing = false;
-    if ($scope.advisor.$id) {
+    if ($scope.data.$id) {
         $scope.isNewUser = false;
     }
     $scope.onDone = function () {
-        if (!$scope.isProcessing && $scope.advisor.email && $scope.advisor.display_name) {
+        if (!$scope.isProcessing && $scope.data.email && $scope.data.display_name) {
             $scope.isProcessing = true;
-            var obj = new Advisor(cs.purify($scope.advisor));
+            var obj = new Advisor(cs.purify($scope.data));
             var email = obj.get('email');
             if ($scope.isNewUser) {
                 var password = md5(Date.now() + Math.random());
