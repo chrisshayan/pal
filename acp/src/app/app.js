@@ -30,22 +30,26 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
     .state('index.tasks', {
         url: "/tasks",
         templateUrl: "app/modules/tasks/tasks.html",
-        data: { pageTitle: 'Tasks' }
     })
     .state('index.advisors', {
         url: "/advisors",
         templateUrl: "app/modules/advisors/advisors.html",
-        data: { pageTitle: 'Advisors view' }
     })
     .state('index.topics', {
         url: "/topics",
         templateUrl: "app/modules/topics/topics.html",
-        data: { pageTitle: 'Topics view' }
+    })
+    .state('index.cities', {
+        url: "/cities",
+        templateUrl: "app/modules/cities/cities.html",
+    })
+    .state('index.nations', {
+        url: "/nations",
+        templateUrl: "app/modules/nations/nations.html",
     })
     .state('index.create_post', {
         url: "/create_post",
         templateUrl: "app/modules/create_post/create_post.html",
-        data: { pageTitle: 'Create Post' }
     })
 
     $urlRouterProvider.otherwise('/index/tasks');

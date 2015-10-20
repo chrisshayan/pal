@@ -36,7 +36,12 @@
             <li ui-sref-active="active" ng-if="info.role=='admin'">
                 <a ui-sref="index.advisors"><i class="fa fa-desktop"></i> <span class="nav-label">Manage Advisor</span></a>
             </li>
-
+            <li ui-sref-active="active" ng-if="info.role=='admin'">
+                <a ui-sref="index.nations"><i class="fa fa-desktop"></i> <span class="nav-label">Manage Nation</span></a>
+            </li>
+            <li ui-sref-active="active" ng-if="info.role=='admin'">
+                <a ui-sref="index.cities"><i class="fa fa-desktop"></i> <span class="nav-label">Manage City</span></a>
+            </li>
         </ul>
 
     </div>
