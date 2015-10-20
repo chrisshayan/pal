@@ -145,7 +145,7 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
     }
 });
 
-angular.module('inspinia').controller('AdvisorModalCtrl', function($rootScope, $scope, $timeout, $modalInstance, item, cs, firebaseHelper, AdvisorService) {
+angular.module('inspinia').controller('AdvisorModalCtrl', function($rootScope, $scope, $timeout, $modalInstance, item, cs, firebaseHelper, AdvisorService, MailService) {
     item = item || {};
     $scope.isNewUser = true;
     $scope.isProcessing = false;
@@ -186,6 +186,7 @@ angular.module('inspinia').controller('AdvisorModalCtrl', function($rootScope, $
                                         $rootScope.notifyError("Fail to create user public profile " + error);
                                         firebaseHelper.getFireBaseInstance().removeUser({email: email, password: password}, function(){});
                                     } else {
+                                        MailService.sendAdvisorGreeting(email, BASE_URL);
                                         $rootScope.notifySuccess("Successfully created user account");
                                         $modalInstance.close();
                                     }
