@@ -1,8 +1,9 @@
-angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval,$state, $uibModal, AdvisorService, SchoolService) {
+angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval,$state, $uibModal, AdvisorService, SchoolService, MailService) {
 
     $scope.checked = {};
     $scope.nChecked = 0;
     $scope.isBan = true;
+    $scope.isReinvite = false;
 
     $scope.schools = {}
     SchoolService.getOnce($scope.schools, function() {
@@ -12,15 +13,38 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
     $scope.onSelectItem = function() {
         var tmp = 0;
         $scope.isBan = false;
+        $scope.isReinvite = false;
         for (var k in $scope.checked) {
             if ($scope.checked[k]) {
                 tmp++;
                 if (!$scope.data[k].ban == true) {
                     $scope.isBan = true;
                 }
+                if (!$scope.data[k].confirmed) {
+                    $scope.isReinvite = true;
+                }
             }
         }
         $scope.nChecked = tmp;
+    }
+
+    $scope.onReinvite = function() {
+        for (var k in $scope.checked) {
+            if ($scope.checked[k] && !$scope.data[k].confirmed) {
+                firebaseHelper.getFireBaseInstance(["profiles", k]).once('value', function(snapshot) {
+                    var val = snapshot.val();
+                    var password = val.first_password;
+                    var email = $scope.data[k].email;
+                    firebaseHelper.getFireBaseInstance(["confirm_token", k]).set({
+                        email: email,
+                        password: password
+                    }, function() {
+                        $rootScope.notifySuccess();
+                        MailService.sendAdvisorGreeting(email, BASE_URL + "/#/activate/" + k);
+                    });
+                })
+            }
+        }
     }
 
     $scope.onBanUsers = function() {
@@ -175,7 +199,7 @@ angular.module('inspinia').controller('AdvisorModalCtrl', function($rootScope, $
                         $rootScope.notifyError(error);
                         $scope.isProcessing = false;
                     } else {
-                        firebaseHelper.getFireBaseInstance(["profiles", userData.uid]).set({role: 'advisor'}, function(error) {
+                        firebaseHelper.getFireBaseInstance(["profiles", userData.uid]).set({role: 'advisor', first_password: password}, function(error) {
                             if (error) {
                                 $scope.isProcessing = false;
                                 $rootScope.notifyError("Fail to create user profile " + error);
@@ -188,7 +212,13 @@ angular.module('inspinia').controller('AdvisorModalCtrl', function($rootScope, $
                                         $rootScope.notifyError("Fail to create user public profile " + error);
                                         firebaseHelper.getFireBaseInstance().removeUser({email: email, password: password}, function(){});
                                     } else {
-                                        MailService.sendAdvisorGreeting(email, BASE_URL);
+                                        firebaseHelper.getFireBaseInstance(["confirm_token", userData.uid]).set({
+                                            email: email,
+                                            password: password
+                                        }, function() {
+                                            MailService.sendAdvisorGreeting(email, BASE_URL + "/#/activate/" + userData.uid);
+                                        });
+
                                         $rootScope.notifySuccess("Successfully created user account");
                                         $modalInstance.close();
                                     }

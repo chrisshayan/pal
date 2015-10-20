@@ -14,6 +14,7 @@
                             <a ng-click="onAddItem()" class="btn btn-sm btn-white"> <i class="fa fa-plus"> Add</i> </a>
                             <a ng-show="nChecked==1" ng-click="onEditItem()" class="btn btn-sm btn-white"> <i class="fa fa-pencil"> Edit</i> </a>
                             <a ng-show="nChecked==1" ng-click="onResetPassword()" class="btn btn-sm btn-white"> <i class="fa fa-cog"> Reset password</i> </a>
+                            <a ng-show="nChecked==1 && isReinvite" ng-click="onReinvite()" class="btn btn-sm btn-white"> <i class="fa fa-envelope-o"> Re-invite</i> </a>
                             <a ng-show="nChecked>0 && isBan" ng-click="onBanUsers()" class="btn btn-sm btn-white"> <i class="fa fa-ban"> Ban user</i> </a>
                             <a ng-show="nChecked>0 && !isBan" ng-click="onUnbanUsers()" class="btn btn-sm btn-white"> <i class="fa fa-check"> Unban user</i> </a>
                         </div>

@@ -15,13 +15,13 @@ angular.module('inspinia').controller('ChangePassCtrl', function ($scope, $state
 	$scope.onChangePassword = function() {
         firebaseHelper.updatePassword($scope.password, $scope.new_password, {
             success: function(data) {
-                $state.go("index.main");
+                $state.go("index.tasks");
             }
         });
 		return true;
 	}
 
 	$scope.goBack = function() {
-		$state.go("index.main");
+		$state.go("index.tasks");
 	}
 });
