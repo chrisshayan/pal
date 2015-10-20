@@ -44,8 +44,9 @@
                                         {{schools[r.school].name || 'unknown'}}
                                     </td>
                                     <td ng-class="{'text-muted':r.ban}">
-                                        <i class="fa fa-fw fa-check-circle-o" ng-if="!r.ban" tooltip-placement="top" tooltip="Active"></i>
-                                        <i class="fa fa-fw fa-ban" ng-if="r.ban" tooltip-placement="top" tooltip="Ban"></i>
+                                        <span class="badge badge-primary" ng-if="r.confirmed && !r.ban" tooltip-placement="top" tooltip="Active"> Active</span>
+                                        <span class="badge badge-danger" ng-if="r.ban" tooltip-placement="top" tooltip="Banned"> Banned</span>
+                                        <span class="badge badge-warning" ng-if="!r.confirmed && !r.ban" tooltip-placement="top" tooltip="Wait for confirm"> Pending</span>
                                     </td>
                                 </tr>
                             </tbody>

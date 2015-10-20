@@ -96,9 +96,11 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
         var onRecordUpdate = function(snapshot, mode) {
             var uid = snapshot.key();
             var ban = snapshot.val().ban;
+            var confirmed = snapshot.val().confirmed;
             AdvisorService.getAdvisorById(uid, function(data) {
                 $scope.data[uid] = data;
                 data.ban = ban;
+                data.confirmed = confirmed;
                 setTimeout(function(id, mode) {
                     $scope.$digest();
                     $(id).addClass(mode == "add"?'text-info':'text-warning');
