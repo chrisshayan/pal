@@ -1,0 +1,5 @@
+PORT = 4041;
+HOST = "http://localhost" + (PORT?(":" + PORT):"");
+SENDGRID_API_KEY = "";
+SENDER_EMAIL = "";
+FIREBASE_ENDPOINT = "";

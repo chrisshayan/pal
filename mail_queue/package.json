@@ -1,0 +1,13 @@
+{
+  "name": "mail_queue",
+  "version": "0.0.1",
+  "dependencies": {
+    "firebase": "^2.3.1",
+    "firebase-queue": "^1.2.1",
+    "sendgrid": "^1.9.2"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}
