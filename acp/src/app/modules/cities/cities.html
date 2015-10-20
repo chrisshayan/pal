@@ -65,14 +65,14 @@
                     <div class="input-group">
                         <input ng-readonly="isProcessing" ng-model="data.vi" type="text" placeholder="Tên tiếng Việt" class="input-sm form-control" require=""/>
                         <span class="input-group-btn">
-                            <a ng-click="data.vi = data.en" class="btn btn-sm btn-primary"> Auto</a> 
+                            <a ng-click="data.vi = data.en" class="btn btn-sm btn-primary"> Auto</a>
                         </span></div>
                     </div>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-disabled="isProcessing || !data.en || !data.vi" ng-click="onDone()">OK</button>
+            <button class="btn btn-primary" type="button" ng-disabled="isProcessing || !data.en || !data.vi || !data.nation" ng-click="onDone()">OK</button>
             <button class="btn btn-warning" type="button" ng-disabled="isProcessing" ng-click="cancel()">Cancel</button>
         </div>
     </script>
