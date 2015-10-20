@@ -26,7 +26,8 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
             firebaseHelper
                 .getFireBaseInstance("posts")
                 .orderByChild("index_advisior_status")
-                .startAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1)));
+                .startAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1))
+                .endAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1)));
     }
     if (firebaseHelper.getRole()) {
         init();
