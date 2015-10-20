@@ -1,4 +1,13 @@
 angular.module('inspinia').controller('SchoolsCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval,$state, $uibModal) {
+    $scope.sortedBy = "name";
+    $scope.sortBy = function(key) {
+        if ($scope.sortedBy === key) {
+            $scope.sortedBy = "-" + key;
+        } else {
+            $scope.sortedBy = key;
+        }
+    }
+
     $scope.onAdd = function() {
         $scope.openModal();
     }
@@ -22,7 +31,6 @@ angular.module('inspinia').controller('SchoolsCtrl', function ($scope, firebaseH
             var value = snapshot.val()
             $scope.data[key] = value;
             $scope.data[key].$id = key;
-            console.log(key, value);
             setTimeout(function(key, mode) {
                 $scope.$digest();
                 $(key).addClass(mode == "add"?'text-info':'text-warning');

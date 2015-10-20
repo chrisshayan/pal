@@ -19,13 +19,19 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Address</th>
-                                    <th>City</th>
+                                    <th><a href="#" ng-click="sortBy('name')">
+                                        <i class="fa fa-fw" ng-class="{'fa-sort':sortedBy!='name' && sortedBy!='-name', 'text-muted':sortedBy!='name' && sortedBy!='-name', 'fa-sort-desc':sortedBy=='-name', 'fa-sort-asc':sortedBy=='name'}"></i>
+                                        Name</a></th>
+                                    <th><a href="#" ng-click="sortBy('address')">
+                                        <i class="fa fa-fw" ng-class="{'fa-sort':sortedBy!='address' && sortedBy!='-address', 'text-muted':sortedBy!='address' && sortedBy!='-address', 'fa-sort-desc':sortedBy=='-address', 'fa-sort-asc':sortedBy=='address'}"></i>
+                                        Address</a></th>
+                                    <th><a href="#" ng-click="sortBy('city')">
+                                        <i class="fa fa-fw" ng-class="{'fa-sort':sortedBy!='city' && sortedBy!='-city', 'text-muted':sortedBy!='city' && sortedBy!='-city', 'fa-sort-desc':sortedBy=='-city', 'fa-sort-asc':sortedBy=='city'}"></i>
+                                        City</a></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="r in data" ng-click="onEdit(r.$id)" style="cursor:pointer" id="item_{{r.$id}}">
+                                <tr ng-repeat="r in data | toArray | orderBy: sortedBy" ng-click="onEdit(r.$id)" style="cursor:pointer" id="item_{{r.$id}}">
                                     <td>
                                         {{$index + 1}}
                                     </td>
