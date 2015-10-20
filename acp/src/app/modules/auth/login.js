@@ -2,6 +2,10 @@ angular.module('inspinia').controller('LoginCtrl', function ($scope, $state, fir
 	$scope.email = "";
 	$scope.password = "";
 	$scope.isForgotPasswordMode = false;
+	$scope.$on("user:login", function(data) {
+		$state.go("index.tasks");
+	});
+	
 	$scope.onlogin = function() {
 		if ($scope.isForgotPasswordMode) {
 			firebaseHelper.resetPassword($scope.email, {
@@ -14,11 +18,7 @@ angular.module('inspinia').controller('LoginCtrl', function ($scope, $state, fir
 				}
 			});
 		} else {
-			firebaseHelper.login($scope.email, $scope.password, {
-	            success: function(data) {
-	                $state.go("index.tasks");
-	            }
-	        });
+			firebaseHelper.login($scope.email, $scope.password);
 		}
 		return true;
 	}

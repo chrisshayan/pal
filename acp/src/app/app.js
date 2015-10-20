@@ -78,6 +78,10 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
 })
 
 .run(function($rootScope, $state, notify) {
+    $rootScope.$on("user:logout", function() {
+		$state.go("login");
+	});
+
     $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
         console.log("$stateChangeError", error);
         if (error === "AUTH_REQUIRED") {
