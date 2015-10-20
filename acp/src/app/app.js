@@ -39,18 +39,36 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         url: "/topics",
         templateUrl: "app/modules/topics/topics.html",
     })
-    .state('index.cities', {
-        url: "/cities",
-        templateUrl: "app/modules/cities/cities.html",
-    })
-    .state('index.nations', {
-        url: "/nations",
-        templateUrl: "app/modules/nations/nations.html",
-    })
     .state('index.create_post', {
         url: "/create_post",
         templateUrl: "app/modules/create_post/create_post.html",
     })
+
+    .state('database', {
+        abstract: true,
+        url: "/database",
+        templateUrl: "components/common/content.html",
+        resolve: {
+            currentAuth: function(firebaseHelper) {
+                return firebaseHelper.auth.$requireAuth();
+            }
+        }
+    })
+    .state('database.cities', {
+        url: "/cities",
+        templateUrl: "app/modules/cities/cities.html",
+    })
+    .state('database.nations', {
+        url: "/nations",
+        templateUrl: "app/modules/nations/nations.html",
+    })
+    .state('database.schools', {
+        url: "/schools",
+        templateUrl: "app/modules/schools/schools.html",
+    })
+
+
+    ;
 
     $urlRouterProvider.otherwise('/index/tasks');
 })

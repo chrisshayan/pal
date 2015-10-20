@@ -36,11 +36,14 @@
             <li ui-sref-active="active" ng-if="info.role=='admin'">
                 <a ui-sref="index.advisors"><i class="fa fa-desktop"></i> <span class="nav-label">Manage Advisor</span></a>
             </li>
-            <li ui-sref-active="active" ng-if="info.role=='admin'">
-                <a ui-sref="index.nations"><i class="fa fa-desktop"></i> <span class="nav-label">Manage Nation</span></a>
-            </li>
-            <li ui-sref-active="active" ng-if="info.role=='admin'">
-                <a ui-sref="index.cities"><i class="fa fa-desktop"></i> <span class="nav-label">Manage City</span></a>
+
+            <li ng-class="{active: state.includes('database')}" ng-if="info.role=='admin'">
+                <a href=""><i class="fa fa-edit"></i> <span class="nav-label">Database</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" ng-class="{in: state.includes('database')}">
+                    <li ui-sref-active="active"><a ui-sref="database.nations">Nation</a></li>
+                    <li ui-sref-active="active"><a ui-sref="database.cities">City</a></li>
+                    <li ui-sref-active="active"><a ui-sref="database.schools">School</a></li>
+                </ul>
             </li>
         </ul>
 
