@@ -1,5 +1,6 @@
 angular.module('inspinia').service('CityService', function ($rootScope, firebaseHelper) {
     this.update = function(entity, onComplete) {
+        entity.doCreateOrModify(firebaseHelper.getUID());
         var id = entity.get("$id");
         if (id) {
             firebaseHelper.getFireBaseInstance(["cities", entity.get("$id")]).update(entity.getProperty(), function(error) {

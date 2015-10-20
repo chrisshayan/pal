@@ -1,5 +1,10 @@
 function BaseEntity(property, obj) {
-    this.property = property;
+    this.property = property || {};
+    this.property.created_by = this.property.created_by || "";
+    this.property.created_date = this.property.created_date || 0;
+    this.property.last_modified_by = this.property.last_modified_by || "";
+    this.property.last_modified_date = this.property.last_modified_date || 0;
+    
     if (obj) {
         this.data = JSON.parse(JSON.stringify(this.property));
         for (var k in obj) {
@@ -46,5 +51,16 @@ BaseEntity.prototype.doModify = function(by) {
     return this;
 }
 
+BaseEntity.prototype.doCreateOrModify = function(by) {
+    if (!this.data.created_by) {
+        this.doCreate(by);
+    } else {
+        this.doModify(by);
+    }
+    this.computeIndex();
+    return this;
+}
+
 BaseEntity.prototype.computeIndex = function() {
+    return this;
 }
