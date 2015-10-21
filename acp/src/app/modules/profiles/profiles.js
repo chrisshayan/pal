@@ -1,5 +1,6 @@
 angular.module('inspinia').controller('ProfileCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval, $state, AdvisorService, SchoolService, CityService) {
     $scope.loading = true;
+    $scope.NO_AVATAR = NO_AVATAR;
 
     $scope.schools = {}
     SchoolService.getOnce($scope.schools, function() {

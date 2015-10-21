@@ -22,6 +22,7 @@
                 <input name="" type="password" class="form-control" placeholder="New password confirm" required="" ng-model="new_password_confirm">
             </div>
             <button type="submit" class="btn btn-primary block full-width m-b" ng-disabled="!ready || !new_password || new_password != new_password_confirm">Change Password</button>
+            <a ng-if="testmode" ng-click="onDoTest()" class="btn btn-primary block full-width m-b">Test</a>
         </form>
         <p class="m-t"> <small>PAL &copy; 2015</small> </p>
     </div>
@@ -32,6 +33,11 @@
         </div>
         <div class="modal-body">
             <form role="form">
+                <div class="form-group">
+                    <label>Avatar (*)</label><br/>
+                    <img style="cursor:pointer" ng-click="onChangeAvatar()" width="80px" ng-src="{{data.avatar || NO_AVATAR}}"/> <br/>
+                    <a href="" ng-click="onChangeAvatar()">Upload</a>
+                </div>
                 <div class="form-group">
                     <label>First name (*)</label>
                     <input ng-readonly="isProcessing" ng-model="data.first_name" type="text" placeholder="First name" class="form-control"/>
@@ -65,7 +71,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-disabled="isProcessing || !data.first_name || !data.last_name || !data.exp" ng-click="onDone()">OK</button>
+            <button class="btn btn-primary" type="button" ng-disabled="isProcessing || !data.first_name || !data.last_name || !data.exp || !data.avatar" ng-click="onDone()">OK</button>
             <button class="btn btn-warning" type="button" ng-disabled="isProcessing" ng-click="cancel()">Skip</button>
         </div>
     </script>

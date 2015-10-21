@@ -8,6 +8,8 @@ angular.module('inspinia').controller('ActivateCtrl', function ($scope, $rootSco
     var token = $stateParams.token;
 	$scope.user_profile = null;
 
+	// $scope.testmode = true;
+
     if (!token) {
         $rootScope.notifyError("No token found");
         $timeout(function() {
@@ -66,6 +68,16 @@ angular.module('inspinia').controller('ActivateCtrl', function ($scope, $rootSco
 		return true;
 	}
 
+	$scope.onDoTest = function() {
+		$scope.ready = false;
+		AdvisorService.getAdvisorById(user_id, function(obj) {
+			$scope.ready = true;
+			$scope.user_profile = obj;
+			$scope.openModal();
+			$scope.$apply();
+		});
+	}
+
 	$scope.schools = {}
     SchoolService.getOnce($scope.schools, function() {
         $scope.$apply();
@@ -97,7 +109,8 @@ angular.module('inspinia').controller('ActivateCtrl', function ($scope, $rootSco
 
 
 angular.module('inspinia').controller('ActivateModalCtrl', function($rootScope, $scope, $timeout, $modalInstance, item, cs, firebaseHelper, AdvisorService, $state) {
-    item = item || {};
+	$scope.NO_AVATAR = NO_AVATAR;
+	item = item || {};
     $scope.isProcessing = false;
 	$scope.schools = item.schools;
     $scope.cities = item.cities;
@@ -124,6 +137,33 @@ angular.module('inspinia').controller('ActivateModalCtrl', function($rootScope, 
 			});
         }
     };
+
+	$scope.onChangeAvatar = function() {
+        cloudinary.openUploadWidget({
+            upload_preset: 'nyiclrxf',
+            multiple: 'false',
+            cropping: 'server',
+            cropping_aspect_ratio: "1.0",
+            cropping_default_selection_ratio: "1.0",
+            max_file_size: "2097152"
+        }, function(error, result) {
+            if (error) {
+                $rootScope.notifyError(error);
+            } else {
+                var coordinates = result[0].coordinates;
+                var url = result[0].secure_url;
+                var path = result[0].path;
+                if (coordinates && coordinates.custom && coordinates.custom[0]) {
+                    coordinates = coordinates.custom[0];
+                    var alt_path = "c_crop,g_custom,x_" + coordinates[0] + ",y_" + coordinates[1] + ",w_" + coordinates[2] + ",h_" + coordinates[3] + "/" + path;
+                    url = url.replace(path, alt_path)
+                }
+                $scope.data.avatar = url;
+                $scope.$apply();
+            }
+            // console.log(error, result)
+        });
+    }
 
     $scope.cancel = function () {
         $scope.isProcessing = false;
