@@ -20,6 +20,10 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         url: '/activate/:token',
         templateUrl: "app/modules/auth/activate.html"
     })
+    .state('error', {
+        url: '/error',
+        templateUrl: "app/modules/error/error.html"
+    })
 
     .state('index', {
         abstract: true,

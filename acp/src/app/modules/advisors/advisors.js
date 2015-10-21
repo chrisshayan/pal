@@ -35,12 +35,15 @@ angular.module('inspinia').controller('AdvisorsCtrl', function ($scope, firebase
                     var val = snapshot.val();
                     var password = val.first_password;
                     var email = $scope.data[k].email;
+                    var checksum_key = md5(Date.now() + Math.random());
+                    var checksum = md5(email + password + checksum_key);
+
                     firebaseHelper.getFireBaseInstance(["confirm_token", k]).set({
                         email: email,
                         password: password
                     }, function() {
                         $rootScope.notifySuccess();
-                        MailService.sendAdvisorGreeting(email, BASE_URL + "/#/activate/" + k);
+                        MailService.sendAdvisorGreeting(email, BASE_URL + "/#/activate/" + (checksum_key + checksum + userData.uid));
                     });
                 })
             }
@@ -212,11 +215,14 @@ angular.module('inspinia').controller('AdvisorModalCtrl', function($rootScope, $
                                         $rootScope.notifyError("Fail to create user public profile " + error);
                                         firebaseHelper.getFireBaseInstance().removeUser({email: email, password: password}, function(){});
                                     } else {
+                                        var checksum_key = md5(Date.now() + Math.random());
+                                        var checksum = md5(email + password + checksum_key);
                                         firebaseHelper.getFireBaseInstance(["confirm_token", userData.uid]).set({
                                             email: email,
-                                            password: password
+                                            password: password,
+                                            checksum: checksum
                                         }, function() {
-                                            MailService.sendAdvisorGreeting(email, BASE_URL + "/#/activate/" + userData.uid);
+                                            MailService.sendAdvisorGreeting(email, BASE_URL + "/#/activate/" + (checksum_key + checksum + userData.uid));
                                         });
 
                                         $rootScope.notifySuccess("Successfully created user account");

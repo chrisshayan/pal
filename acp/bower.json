@@ -16,9 +16,9 @@
     "font-awesome": "~4.3.0",
     "jquery": "~2.1.1",
     "metisMenu": "~2.0.2",
-    "ng-firebase-helper": "rickyngk/ng-firebase-helper#~0.1.0",
     "PACE": "https://github.com/HubSpot/pace.git#~1.0.2",
-    "animate.css": "~3.4.0"
+    "animate.css": "~3.4.0",
+    "ng-firebase-helper": "rickyngk/ng-firebase-helper"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.4"

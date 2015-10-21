@@ -14,21 +14,33 @@ angular.module('inspinia').controller('ActivateCtrl', function ($scope, $rootSco
         return;
     }
 
-    firebaseHelper.getFireBaseInstance(["confirm_token", token]).once('value', function(snapshot) {
+	var checksum_key = token.substring(0,32);
+	var checksum = token.substring(32,64);
+	var user_id = token.substring(64,token.length);
+
+    firebaseHelper.getFireBaseInstance(["confirm_token", user_id]).once('value', function(snapshot) {
         var val = snapshot.val();
         if (val == null) {
             $rootScope.notifyError("Invalid token");
             $timeout(function() {
-                $state.go("index.tasks");
-            }, 3000);
+                $state.go("error");
+            }, 1000);
             return;
         } else {
-            $scope.email = val.email;
-            $scope.password = val.password;
-            $scope.new_password = "";
-        	$scope.new_password_confirm = "";
-            $scope.ready = true;
-            $scope.$apply();
+			var data_checksum = md5(val.email + val.password + checksum_key);
+			if (data_checksum == val.checksum && data_checksum == checksum) {
+				$scope.email = val.email;
+	            $scope.password = val.password;
+	            $scope.new_password = "";
+	        	$scope.new_password_confirm = "";
+	            $scope.ready = true;
+	            $scope.$apply();
+			} else {
+				$rootScope.notifyError("Token checksum failure");
+				$timeout(function() {
+	                $state.go("error");
+	            }, 1000);
+			}
         }
     });
 
