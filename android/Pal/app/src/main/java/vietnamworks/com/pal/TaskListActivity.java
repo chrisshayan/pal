@@ -360,12 +360,15 @@ class MyCustomCardStackViewDelegate implements CustomCardStackViewDelegate {
 
         p = AppModel.topics.getData().get(mid);
         ccsv.getMid().showData(p.getId(), p.getType(), TaskListActivity.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+
+        p = AppModel.topics.getData().get(front);
+        ccsv.getFront().showData(p.getId(), p.getType(), TaskListActivity.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
     }
 
     @Override
     public void onBeforeChangedActiveItem(int front, int mid, int back, CustomCardStackView ccsv) {
-        Topic p = AppModel.topics.getData().get(back);
-        ccsv.getFront().showData(p.getId(), p.getType(), TaskListActivity.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
+        //Topic p = AppModel.topics.getData().get(back);
+        //ccsv.getFront().showData(p.getId(), p.getType(), TaskListActivity.getCardIcon(p.getType()), p.getTypeName(), p.getTitle());
     }
 
     @Override
