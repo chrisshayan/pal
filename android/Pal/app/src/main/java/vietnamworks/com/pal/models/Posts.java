@@ -61,6 +61,6 @@ public class Posts extends AbstractContainer<Post> {
     }
 
     public static void markAsRead(String postId) {
-        FirebaseService.newRef(Arrays.asList("posts", postId, "hasRead")).setValue(true);
+        FirebaseService.newRef(Arrays.asList("posts", postId, "has_read")).setValue(true);
     }
 }
