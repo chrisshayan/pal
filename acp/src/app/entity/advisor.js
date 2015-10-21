@@ -1,5 +1,6 @@
 function Advisor (obj) {
     BaseEntity.call(this, {
+        avatar: "",
         email: "",
         display_name: "",
         first_name: "",

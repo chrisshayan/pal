@@ -18,6 +18,11 @@
             </div>
             <div class="ibox-content">
                 <form method="get" class="form-horizontal" ng-submit="onPost()">
+                    <div class="form-group"><label class="col-sm-2 control-label">Avatar</label>
+                        <div class="col-sm-10">
+                            <img style="cursor:pointer" ng-click="onChangeAvatar()" width="160px" ng-src="{{profile.avatar || 'http://res.cloudinary.com/duynk/image/upload/v1445408726/pal/no-avatar.jpg'}}"/>
+                        </div>
+                    </div>
                     <div class="form-group"><label class="col-sm-2 control-label">First name</label>
                         <div class="col-sm-10"><input ng-model="profile.first_name" type="text" class="form-control" require=""></div>
                     </div>

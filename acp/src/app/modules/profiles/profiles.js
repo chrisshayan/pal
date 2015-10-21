@@ -29,6 +29,31 @@ angular.module('inspinia').controller('ProfileCtrl', function ($scope, firebaseH
         return true;
     }
 
+    $scope.onChangeAvatar = function() {
+        cloudinary.openUploadWidget({
+            upload_preset: 'nyiclrxf',
+            multiple: 'false',
+            cropping: 'server',
+            cropping_aspect_ratio: "1.0",
+            cropping_default_selection_ratio: "1.0",
+        }, function(error, result) {
+            if (error) {
+                $rootScope.notifyError(error);
+            } else {
+                var coordinates = result[0].coordinates;
+                var url = result[0].secure_url;
+                var path = result[0].path;
+                if (coordinates && coordinates.custom && coordinates.custom[0]) {
+                    coordinates = coordinates.custom[0];
+                    var alt_path = "c_crop,g_custom,x_" + coordinates[0] + ",y_" + coordinates[1] + ",w_" + coordinates[2] + ",h_" + coordinates[3] + "/" + path;
+                    url = url.replace(path, alt_path)
+                }
+                $scope.profile.avatar = url;
+                $scope.$apply();
+            }
+            // console.log(error, result)
+        });
+    }
 
     var init = function() {
         AdvisorService.getAdvisorById(firebaseHelper.getUID(), function(data) {
