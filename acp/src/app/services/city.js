@@ -12,4 +12,14 @@ angular.module('inspinia').service('CityService', function ($rootScope, firebase
             });
         }
     }
+
+    this.getOnce = function(schoolsRef, callback) {
+        firebaseHelper.getFireBaseInstance("cities").once('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+                schoolsRef[childSnapshot.key()] = childSnapshot.val();
+                schoolsRef[childSnapshot.key()].$id = childSnapshot.key();
+            })
+            if (callback) {callback();}
+        })
+    }
 });

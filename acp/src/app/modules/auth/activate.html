@@ -25,4 +25,54 @@
         </form>
         <p class="m-t"> <small>PAL &copy; 2015</small> </p>
     </div>
+
+    <script type="text/ng-template" id="activate_modal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Update your profile</h3>
+        </div>
+        <div class="modal-body">
+            <form role="form">
+                <div class="form-group">
+                    <label>First name (*)</label>
+                    <input ng-readonly="isProcessing" ng-model="data.first_name" type="text" placeholder="First name" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label>Last name (*)</label>
+                    <input ng-readonly="isProcessing" ng-model="data.last_name" type="text" placeholder="Last name" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label>School</label>
+                    <select class="form-control" ng-readonly="isProcessing" ng-model="data.school">
+                        <option value="">Select school (optional)</option>
+                        <option ng-repeat="n in schools" value="{{n.$id}}">{{n.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Year of experience (*)</label>
+                    <select class="form-control" ng-readonly="isProcessing" ng-model="data.exp">
+                        <option value="0">Select experience tier</option>
+                        <option value="1">Less then 2 years</option>
+                        <option value="2">2-5 years</option>
+                        <option value="5">5-10 years</option>
+                        <option value="11">more than 10 years</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input ng-readonly="isProcessing" ng-model="data.address" type="text" placeholder="Address" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <select class="form-control" ng-readonly="isProcessing" ng-model="data.city">
+                        <option value="">Select city</option>
+                        <option ng-repeat="n in cities" value="{{n.$id}}">{{n.en}}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-disabled="isProcessing || !data.first_name || !data.last_name || !data.exp" ng-click="onDone()">OK</button>
+            <button class="btn btn-warning" type="button" ng-disabled="isProcessing" ng-click="cancel()">Skip</button>
+        </div>
+    </script>
 </div>
