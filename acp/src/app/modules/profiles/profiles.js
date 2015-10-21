@@ -36,6 +36,7 @@ angular.module('inspinia').controller('ProfileCtrl', function ($scope, firebaseH
             cropping: 'server',
             cropping_aspect_ratio: "1.0",
             cropping_default_selection_ratio: "1.0",
+            max_file_size: "2097152"
         }, function(error, result) {
             if (error) {
                 $rootScope.notifyError(error);
