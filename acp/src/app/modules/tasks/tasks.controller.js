@@ -83,7 +83,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                             if (current.status === PostStatus.Ready) {
                                 current = new Post(current)
                                     .set("status", PostStatus.AdvisorProcessing)
-                                    .set("hasRead", false)
+                                    .set("has_read", false)
                                     .set("advisor_id", uid)
                                     .doModify(uid)
                                     .get();

@@ -76,7 +76,7 @@ public class PostCardAdapter extends RecyclerView.Adapter<PostCardAdapter.CardVi
             view.score.setText(p.getScore() > 0?p.getScore() + "":"?");
             view.setItemId(p.getId());
 
-            if (!p.isHasRead()) {
+            if (!p.isHas_read()) {
                 view.title.setTypeface(BaseActivity.RobotoB);
                 view.status.setTypeface(BaseActivity.RobotoBI);
                 view.lastModifiedDate.setTypeface(BaseActivity.RobotoBI);

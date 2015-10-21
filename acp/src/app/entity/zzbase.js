@@ -4,7 +4,7 @@ function BaseEntity(property, obj) {
     this.property.created_date = this.property.created_date || 0;
     this.property.last_modified_by = this.property.last_modified_by || "";
     this.property.last_modified_date = this.property.last_modified_date || 0;
-    
+
     if (obj) {
         this.data = JSON.parse(JSON.stringify(this.property));
         for (var k in obj) {
@@ -17,6 +17,7 @@ function BaseEntity(property, obj) {
 
 BaseEntity.prototype.set = function(k, v) {
     this.data[k] = v;
+    return this;
 }
 
 BaseEntity.prototype.get = function(k) {
