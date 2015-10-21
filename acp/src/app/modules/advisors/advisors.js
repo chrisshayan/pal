@@ -188,9 +188,12 @@ angular.module('inspinia').controller('AdvisorModalCtrl', function($rootScope, $
     }, 500);
 
     $scope.onDone = function () {
-        if (!$scope.isProcessing && $scope.data.email && $scope.data.display_name) {
+        if (!$scope.isProcessing && $scope.data.email && $scope.data.first_name && $scope.data.last_name) {
             $scope.isProcessing = true;
             var obj = new Advisor(cs.purify($scope.data));
+            if (!obj.get('display_name')) {
+                obj.set('display_name', obj.get('first_name') + " " + obj.get('last_name'));
+            }
             var email = obj.get('email');
             if ($scope.isNewUser) {
                 var password = md5(Date.now() + Math.random());

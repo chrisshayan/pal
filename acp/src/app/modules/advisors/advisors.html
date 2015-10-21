@@ -69,8 +69,16 @@
                     <input ng-readonly="!isNewUser || isProcessing" ng-model="data.email" type="email" placeholder="Enter email" class="form-control" require=""/>
                 </div>
                 <div class="form-group">
-                    <label>Display name (*)</label>
-                    <input ng-readonly="isProcessing" ng-model="data.display_name" type="text" placeholder="Display name" class="form-control" require=""/>
+                    <label>First name (*)</label>
+                    <input ng-readonly="isProcessing" ng-model="data.first_name" type="text" placeholder="First name" class="form-control" require=""/>
+                </div>
+                <div class="form-group">
+                    <label>Last name (*)</label>
+                    <input ng-readonly="isProcessing" ng-model="data.last_name" type="text" placeholder="Last name" class="form-control" require=""/>
+                </div>
+                <div class="form-group">
+                    <label>Display name</label>
+                    <input ng-readonly="isProcessing" ng-model="data.display_name" type="text" placeholder="Display name" class="form-control"/>
                 </div>
                 <div class="form-group">
                     <label>School</label>
@@ -82,7 +90,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-disabled="isProcessing || !data.email || !data.display_name" ng-click="onDone()">OK</button>
+            <button class="btn btn-primary" type="button" ng-disabled="isProcessing || !data.email || !data.first_name || !data.last_name" ng-click="onDone()">OK</button>
             <button class="btn btn-warning" type="button" ng-disabled="isProcessing" ng-click="cancel()">Cancel</button>
         </div>
     </script>
