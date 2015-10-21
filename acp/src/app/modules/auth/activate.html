@@ -43,7 +43,6 @@
                 <div class="form-group">
                     <label>School</label>
                     <select class="form-control" ng-readonly="isProcessing" ng-model="data.school">
-                        <option value="">Select school (optional)</option>
                         <option ng-repeat="n in schools" value="{{n.$id}}">{{n.name}}</option>
                     </select>
                 </div>
@@ -55,10 +54,6 @@
                         <option value="5">5-10 years</option>
                         <option value="11">more than 10 years</option>
                     </select>
-                </div>
-                <div class="form-group">
-                    <label>Address</label>
-                    <input ng-readonly="isProcessing" ng-model="data.address" type="text" placeholder="Address" class="form-control"/>
                 </div>
                 <div class="form-group">
                     <label>City</label>
