@@ -65,3 +65,9 @@ BaseEntity.prototype.doCreateOrModify = function(by) {
 BaseEntity.prototype.computeIndex = function() {
     return this;
 }
+
+BaseEntity.prototype.push = function(k, v) {
+    this.data[k] = this.data[k] || [];
+    this.data[k].push(v)
+    return this;
+}
