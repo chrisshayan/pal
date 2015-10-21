@@ -1,20 +1,26 @@
 <div ng-controller="TasksCtrl">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-12">
-            <h2>Tasks <span ng-show="numOfWaitingPost != null">(Avail. {{numOfWaitingPost}})</span>
-                <button ng-cloak ng-show="numOfWaitingPost >= 0" ng-click="onPickTask()" ng-disabled="!newPosts || !numOfWaitingPost || pickTaskCountDown > 0" class="btn btn-primary dim btn-dim pull-right" type="button">
-                    <i ng-if="pickTaskCountDown == 0" i class="fa fa-plus"></i>
-                    <span ng-if="pickTaskCountDown > 0">{{pickTaskCountDown}}</span>
-                </button>
+            <h2>My Tasks
+                <a ng-show="!loading &&!hasFullfillProfile" class="btn btn-primary pull-right" ui-sref="index.profiles">Complete your profiles</a></li>
             </h2>
         </div>
     </div>
-    <div class="wrapper wrapper-content animated fadeInRight">
+
+    <div ng-if="loading" style="margin-top:25%;">
+        <div class="sk-spinner sk-spinner-rotating-plane"></div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight" ng-show="!loading && hasFullfillProfile">
         <div class="row animated fadeInRight">
             <div class="col-lg-6">
                 <div class="ibox">
                     <div class="ibox-content">
-                        <h3>To-do</h3>
+                        <h3>In queue</h3>
+                        <div style="text-align:center">
+                            <a class="btn btn-primary btn-rounded btn-block" href="">Take a task</a>
+                        </div>
+                        <div class="hr-line-dashed"></div>
                         <ul class="connectList agile-list" style="padding:0">
                             <li class="info-element" ng-show="newPosts && newPosts.length == 0">
                                 <h4>No data</h4>
@@ -23,7 +29,7 @@
                                 <div class="sk-double-bounce1"></div>
                                 <div class="sk-double-bounce2"></div>
                             </div>
-                            <custom-post ng-repeat = "p in newPosts" ref="p"></custom-post>
+                            <custom-post read-only="true" ng-repeat = "p in newPosts" ref="p"></custom-post>
                         </ul>
                     </div>
                 </div>

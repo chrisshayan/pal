@@ -5,9 +5,11 @@ angular.module('inspinia')
         transclude: true,
         scope: {
             ref: '=',
-            group: '@'
+            group: '@',
+            readOnly: "@"
         },
         controller: function($scope, firebaseHelper, $sce, $rootScope, cs, $http, parseHelper) {
+            $scope.cursor = $scope.readOnly?"text":"pointer";
             $scope.isShowDetail = false;
             $scope.formatTime = cs.formatTime;
             $scope.formatDate = cs.formatDate;

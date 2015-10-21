@@ -62,7 +62,9 @@ angular.module('inspinia').controller('ProfileCtrl', function ($scope, firebaseH
             $scope.profile = data;
             $scope.loading = false;
             $scope.role = firebaseHelper.getRole();
-            $scope.$apply();
+            setTimeout(function() {
+                $scope.$apply();
+            });
         })
     }
 

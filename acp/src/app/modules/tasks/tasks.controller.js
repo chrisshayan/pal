@@ -1,6 +1,9 @@
 'use strict';
 
 angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval) {
+    $scope.loading = true;
+    $scope.hasFullfillProfile = false;
+
     $scope.formatTime = cs.formatTime;
     $scope.formatDate = cs.formatDate;
     $scope.formatDateTime = cs.formatDateTime;
@@ -16,11 +19,18 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
     });
 
     var init = function() {
+        var pubProfile = firebaseHelper.getPublicProfile();
+        $scope.hasFullfillProfile = firebaseHelper.getRole() == 'admin' ||
+            (
+                pubProfile.first_name && pubProfile.last_name && pubProfile.avatar && pubProfile.exp
+            );
+
         $scope.newPosts = firebaseHelper.syncArray(
             firebaseHelper
                 .getFireBaseInstance("posts")
-                .orderByChild("index_advisior_status")
-                .equalTo(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing)));
+                .orderByChild("status")
+                .equalTo(PostStatus.Ready)
+                .limitToFirst(5));
 
         $scope.completedPosts = firebaseHelper.syncArray(
             firebaseHelper
@@ -28,8 +38,9 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                 .orderByChild("index_advisior_status")
                 .startAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1))
                 .endAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1)));
+        $scope.loading = false;
     }
-    if (firebaseHelper.getRole()) {
+    if (firebaseHelper.hasAlreadyLogin()) {
         init();
     } else {
         $scope.$on("user:login", function() {

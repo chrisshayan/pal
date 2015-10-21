@@ -1,4 +1,4 @@
-<li class="">
+<li ng-style="{'cursor':cursor}">
     <h4 style="display:block" ng-click="onOpenTask()">
         {{data.title}}<br/>
         <small><i class="fa fa-fw fa-user"></i>{{user_display_name}}</small><br/>
@@ -8,7 +8,7 @@
             <audio-player audio="{{data.audio}}"></audio-player>
         </div>
     </h4>
-    <div ng-show="isShowDetail">
+    <div ng-show="isShowDetail && !readOnly">
         <hr ng-if="!isSubmitting && data.text"/>
         <div class="row" ng-show="!isSubmitting">
             <div class="col-md-12 col-xs-12" style="text-align:left" ng-show="!isSpeakingTask()">
