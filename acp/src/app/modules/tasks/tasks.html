@@ -16,8 +16,10 @@
         <div class="row animated fadeIn">
             <div class="col-lg-6">
                 <div class="ibox">
-                    <div class="ibox-content">
+                    <div class="ibox-title">
                         <h3>To do</h3>
+                    </div>
+                    <div class="ibox-content">
                         <div style="min-height:60px">
                             <p ng-if="newPosts && (newPosts.length + pendingPosts.length) == 0">There is no task</p>
                             <p ng-if="newPosts && (newPosts.length + pendingPosts.length) == 1">There is 1 task</p>
@@ -44,9 +46,11 @@
 
             <div class="col-lg-6">
                 <div class="ibox">
-                    <div class="ibox-content">
+                    <div class="ibox-title">
                         <h3>Done</h3>
-                        <div ng-show="role=='advisor'" style="min-height:60px">
+                    </div>
+                    <div class="ibox-content">
+                        <div style="min-height:60px">
                             <div class="row" >
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     <p ng-if="completedPosts && completedPosts.length == 0">You have completed no task</p>
