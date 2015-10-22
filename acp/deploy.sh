@@ -8,3 +8,4 @@ do
         ssh -i id_rsa_iamprogrammer_work admin@iamprogrammer.work "mkdir -p /usr/share/nginx/html/pal/$folder"
     fi
 done
+open http://iamprogrammer.work/pal
