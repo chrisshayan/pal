@@ -3,8 +3,11 @@
         {{data.title}}<br/>
         <small><i class="fa fa-fw fa-user"></i>{{user_display_name}}</small><br/>
         <small><i class="fa fa-fw fa-clock-o"></i>{{formatDateTime(data.last_modified_date)}}</small>
-        <span class="badge badge-info pull-right"><i class="fa fa-fw" ng-class="{'fa-microphone':isSpeakingTask(), 'fa-paragraph':!isSpeakingTask()}"></i></span>
-        <span class="badge badge-success pull-right" style="margin-right:5px">{{data.score}} <i class="fa fa-star"></i></span>
+        <span class="badge badge-info pull-right">
+            <span ng-if="isSpeakingTask()">Speaking</span>
+            <span ng-if="!isSpeakingTask()">Writing</span>
+        </span>
+        <span class="badge badge-warning pull-right" style="margin-right:5px">{{data.score}} <i class="fa fa-star"></i></span>
     </h4>
     <div ng-show="isShowDetail">
         <hr/>
