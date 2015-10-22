@@ -96,7 +96,7 @@
                 <div class="col-md-12 col-xs-12 form-group">
                     <h4>{{user_display_name}} says:</h4>
                     <p style="font-size:10pt">{{data.text}}</p>
-                    <div style="text-align:center">
+                    <div style="text-align:center" ng-show="data.audio">
                         <audio-player audio="{{data.audio}}"></audio-player>
                     </div>
                 </div>

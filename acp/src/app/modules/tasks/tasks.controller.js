@@ -198,8 +198,24 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
             $scope.isPickingTask = false;
             updateUserLevel();
         }, function () {
-            $scope.isPickingTask = false;
-            updateUserLevel();
+            if (firebaseHelper.getUID()) {
+                var data = post.get();
+                firebaseHelper.getFireBaseInstance(["posts", data.$id]).update({
+                    status: PostStatus.Ready,
+                    index_user_status: PostHelper.buildIndex(data.created_by, PostStatus.Ready),
+                    index_advisior_status: PostHelper.buildIndex(data.advisor_id, PostStatus.Ready)
+                }, function(error) {
+                    if (error) {
+                        $rootScope.notifyError(error);
+                    } else {
+                        // $rootScope.notifySuccess("You have rejected a task");
+                    }
+                    $scope.isPickingTask = false;
+                    updateUserLevel();
+                });
+            } else {
+                $rootScope.notifyError("Something wrong");
+            }
         });
     }
 
@@ -302,22 +318,6 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
     }
 
     $scope.cancel = function () {
-        if (firebaseHelper.getUID()) {
-            firebaseHelper.getFireBaseInstance(["posts", $scope.data.$id]).update({
-                status: PostStatus.Ready,
-                index_user_status: PostHelper.buildIndex($scope.data.created_by, PostStatus.Ready),
-                index_advisior_status: PostHelper.buildIndex($scope.data.advisor_id, PostStatus.Ready)
-            }, function(error) {
-                if (error) {
-                    $rootScope.notifyError(error);
-                } else {
-                    $rootScope.notifySuccess("You have rejected a task");
-                }
-            });
-        } else {
-            $rootScope.notifyError("Something wrong");
-        }
-
         $scope.isSubmitting = false;
         $modalInstance.dismiss('cancel');
     };
