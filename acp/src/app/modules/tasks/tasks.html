@@ -77,7 +77,8 @@
                     <h4>Your comment:</h4>
                 </div>
                 <div class="col-md-10 col-xs-10 form-group" style="text-align:center">
-                    <textarea ng-readonly="isSubmitting" ng-model="comment" rows="10" class="form-control" style="resize:vertical" placeholder="Your comment"></textarea>
+                    <textarea maxlength="{{config.max_advisor_comment_length}}" ng-readonly="isSubmitting" ng-model="comment" rows="10" class="form-control" style="resize:vertical" placeholder="Your comment"></textarea>
+                    <span class="pull-right">{{config.max_advisor_comment_length - comment.length}} letters left</span>
                 </div>
                 <div class="col-md-2 col-xs-2" style="text-align:center">
                     <button ng-show="isRecording" class="btn btn-warning dim" type="button" ng-click="stopRecord()"><i class="fa fa-stop"></i></button>

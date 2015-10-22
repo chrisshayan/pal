@@ -85,7 +85,7 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
     $urlRouterProvider.otherwise('/index/tasks');
 })
 
-.run(function($rootScope, $state, notify) {
+.run(function($rootScope, $state, notify, firebaseHelper) {
     $rootScope.$on("user:logout", function() {
 		$state.go("login");
 	});
@@ -109,5 +109,7 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         message = message || "Uh-oh, something went wrong!";
         notify({ message: message, classes: 'alert-danger', templateUrl: $rootScope.inspiniaTemplate});
     }
+
+    firebaseHelper.bindObject("config", $rootScope, 'config');
 })
 ;
