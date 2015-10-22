@@ -11,14 +11,17 @@
         <div class="sk-spinner sk-spinner-rotating-plane"></div>
     </div>
 
-    <div class="wrapper wrapper-content animated fadeInRight" ng-show="!loading && hasFullfillProfile">
-        <div class="row animated fadeInRight">
+    <div class="wrapper wrapper-content animated fadeIn" ng-show="!loading && hasFullfillProfile">
+        <div class="row animated fadeIn">
             <div class="col-lg-6">
                 <div class="ibox">
                     <div class="ibox-content">
                         <h3>In queue</h3>
                         <div style="text-align:center">
-                            <a class="btn btn-primary btn-rounded btn-block" href="">Take a task</a>
+                            <a ng-disabled="isPickingTask" class="btn btn-primary btn-rounded btn-block noselect" href="" ng-click="onPickTask()">
+                                <span ng-if="!isPickingTask">Take a task</span>
+                                <span ng-if="isPickingTask">Loading ...</span>
+                            </a>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <ul class="connectList agile-list" style="padding:0">
@@ -54,4 +57,48 @@
             </div>
         </div>
     </div>
+    <script type="text/ng-template" id="task_modal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">{{data.title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12 col-xs-12 form-group">
+                    <h4>{{user_display_name}} says:</h4>
+                    <p style="font-size:10pt">{{data.text}}</p>
+                    <div style="text-align:center">
+                        <audio-player audio="{{data.audio}}"></audio-player>
+                    </div>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <h4>Your comment:</h4>
+                </div>
+                <div class="col-md-10 col-xs-10 form-group" style="text-align:center">
+                    <textarea ng-readonly="isSubmitting" ng-model="comment" rows="10" class="form-control" style="resize:vertical" placeholder="Your comment"></textarea>
+                </div>
+                <div class="col-md-2 col-xs-2" style="text-align:center">
+                    <button ng-show="isRecording" class="btn btn-warning dim" type="button" ng-click="stopRecord()"><i class="fa fa-stop"></i></button>
+                    <button ng-hide="isRecording" class="btn btn-success dim" type="button" ng-click="startRecord()"><i class="fa fa-microphone"></i></button>
+                    <button ng-disabled="isSubmitting" ng-show="teacher_audio && !teacher_audio.playing && !isRecording" class="btn btn-success dim" type="button" ng-click="playStopRecord()"><i class="fa fa-play"></i></button>
+                    <button ng-disabled="isSubmitting" ng-show="teacher_audio && teacher_audio.playing && !isRecording" class="btn btn-warning dim" type="button" ng-click="playStopRecord()"><i class="fa fa-pause"></i></button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="text-align:center; margin: 10px 0 10px 0" ng-mouseleave="pre_vote=vote">
+                    <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote == 0 || pre_vote == 0, 'fa-star': vote >= 1 && pre_vote >= 1, 'text-warning': vote >= 1 || pre_vote >= 1}" ng-mouseover="pre_vote=1" ng-click="vote=1"></span>
+                    <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 2  || pre_vote < 2 , 'fa-star': vote >= 2 && pre_vote >= 2, 'text-warning': vote >= 2 || pre_vote >= 2}" ng-mouseover="pre_vote=2" ng-click="vote=2"></span>
+                    <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 3  || pre_vote < 3 , 'fa-star': vote >= 3 && pre_vote >= 3, 'text-warning': vote >= 3 || pre_vote >= 3}" ng-mouseover="pre_vote=3" ng-click="vote=3"></span>
+                    <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 4  || pre_vote < 4 , 'fa-star': vote >= 4 && pre_vote >= 4, 'text-warning': vote >= 4 || pre_vote >= 4}" ng-mouseover="pre_vote=4" ng-click="vote=4"></span>
+                    <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 5  || pre_vote < 5 , 'fa-star': vote >= 5 && pre_vote >= 5, 'text-warning': vote >= 5 || pre_vote >= 5}" ng-mouseover="pre_vote=5" ng-click="vote=5"></span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-disabled="isSubmitting || (!comment && !audioRecorder) || !vote" ng-click="onDone()">OK</button>
+            <button class="btn btn-warning" type="button" ng-disabled="isSubmitting" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
 </div>

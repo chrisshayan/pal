@@ -23,7 +23,7 @@ angular.module('inspinia')
             $scope.data = $scope.ref;
 
             $scope.user = firebaseHelper.getFireBaseInstance(["profiles_pub", $scope.data.created_by, "display_name"]).once('value', function(snapshot) {
-                $scope.user_display_name = snapshot.val() || "Unknowned";
+                $scope.user_display_name = snapshot.val() || "Unknown";
                 setTimeout(function(){
                     $scope.$digest();
                 }, 100);

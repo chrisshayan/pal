@@ -6,9 +6,18 @@ function BaseEntity(property, obj) {
     this.property.last_modified_date = this.property.last_modified_date || 0;
 
     if (obj) {
-        this.data = JSON.parse(JSON.stringify(this.property));
-        for (var k in obj) {
-            this.data[k] = obj[k];
+        if (typeof(obj.key) == "function" && typeof(obj.val) == "function") { //snapshot
+            this.data = JSON.parse(JSON.stringify(this.property));
+            var val = obj.val();
+            for (var k in val) {
+                this.data[k] = val[k];
+            }
+            this.data["$id"] = obj.key();
+        } else {
+            this.data = JSON.parse(JSON.stringify(this.property));
+            for (var k in obj) {
+                this.data[k] = obj[k];
+            }
         }
     } else {
         this.data = JSON.parse(JSON.stringify(this.property));

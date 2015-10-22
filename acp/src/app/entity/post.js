@@ -47,7 +47,8 @@ function Post (obj) {
 
         //indexing
         index_user_status: "",
-        index_user_type: ""
+        index_user_type: "",
+        index_advisior_status: ""
     }, obj);
 }
 
