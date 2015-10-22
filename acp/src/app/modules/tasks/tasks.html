@@ -1,9 +1,21 @@
 <div ng-controller="TasksCtrl">
     <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-12">
-            <h2>My Tasks
-                <a ng-show="!loading &&!hasFullfillProfile" class="btn btn-primary pull-right" ui-sref="index.profiles">Complete your profiles</a></li>
-            </h2>
+        <div class="col-lg-6 col-md-6 col-xs-6">
+            <h2>My Tasks</h2>
+        </div>
+        <div class="col-lg-6 col-md-6 col-xs-6">
+            <h2 ng-show="!loading &&!hasFullfillProfile"><a class="btn btn-primary pull-right" ui-sref="index.profiles">Complete your profiles</a></h2>
+            <div class="row"  ng-show="!loading && hasFullfillProfile && role=='advisor'" style="margin-top:30px">
+                <div class="col-lg-3 col-md-3 col-xs-3" style="text-align:right">
+                    <span>{{userLevel}}</span>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-6">
+                    <progressbar value="userLevelPercent" type="info" class="progress-striped"></progressbar>
+                </div>
+                <div class="col-lg-3 col-md-3 col-xs-3">
+                    <span>{{userPoints}}/{{userNextLevelPoints}} pts</span>
+                </div>
+            </div>
         </div>
     </div>
 

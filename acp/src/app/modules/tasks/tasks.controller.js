@@ -8,6 +8,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
     $scope.formatDate = cs.formatDate;
     $scope.formatDateTime = cs.formatDateTime;
     $scope.newPosts = null;
+    $scope.role = "";
 
     $scope.isPickingTask = false;
 
@@ -18,8 +19,38 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
         }, 100);
     });
 
+    $scope.userPoints = 0;
+    $scope.userLevel = "";
+    $scope.userNextLevelPoints = 0;
+    $scope.userLevelPercent = 0;
+    var updateUserLevel = function() {
+        if (firebaseHelper.hasAlreadyLogin() && $rootScope.config) {
+            $scope.userPoints = firebaseHelper.getPublicProfile().points || 0;
+
+            var scale = $rootScope.config.advisor_level_scales;
+            console.log($rootScope.config.advisor_level_scales);
+            for (var k in scale) {
+                console.log(scale[k].min_points);
+                if (scale[k].min_points <= $scope.userPoints) {
+                    $scope.userLevel = scale[k].name;
+                } else {
+                    $scope.userNextLevelPoints = scale[k].min_points;
+                    break;
+                }
+            }
+            if (!$scope.userNextLevelPoints) {
+                $scope.userNextLevelPoints = $scope.userPoints + 1;
+            }
+            $scope.userLevelPercent = Math.round (($scope.userPoints*1.0/$scope.userNextLevelPoints)*100);
+        }
+        setTimeout(function() {
+            $scope.$apply();
+        })
+    }
+
     var init = function() {
         var pubProfile = firebaseHelper.getPublicProfile();
+        $scope.role = firebaseHelper.getRole();
         $scope.hasFullfillProfile = firebaseHelper.getRole() == 'admin' ||
             (
                 pubProfile.first_name && pubProfile.last_name && pubProfile.avatar && pubProfile.exp
@@ -38,6 +69,8 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                 .orderByChild("index_advisior_status")
                 .startAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1))
                 .endAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1)));
+
+        updateUserLevel();
         $scope.loading = false;
     }
     if (firebaseHelper.hasAlreadyLogin()) {
@@ -152,8 +185,10 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
         });
         modalInstance.result.then(function () {
             $scope.isPickingTask = false;
+            updateUserLevel();
         }, function () {
             $scope.isPickingTask = false;
+            updateUserLevel();
         });
     }
 
