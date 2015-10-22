@@ -188,7 +188,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
 });
 
 
-angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $scope, $timeout, $modalInstance, cs, item, firebaseHelper, $http, parseHelper) {
+angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $scope, $timeout, $modalInstance, cs, item, firebaseHelper, $http, parseHelper, notify, AdvisorService) {
     $scope.data = cs.purify(item.get());
 
     $scope.formatTime = cs.formatTime;
@@ -311,7 +311,13 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                 $rootScope.notifyError("Fail to save data");
             } else {
                 $modalInstance.close();
-                $rootScope.notifySuccess("You have solved a task");
+                //update user score
+                AdvisorService.addEvaluatingPoint(firebaseHelper.getUID(), $scope.data.$id, function(pts) {
+                    notify({
+                        message:"Congratulation! You've earned " + pts + " point " + (pts>1?"s":"") + " from evaluating user post",
+                        classes: 'alert-success'
+                    });
+                });
                 parseHelper.push($scope.data.created_by, "You've got new feedback from advisor");
             }
             $scope.isSubmitting = false;

@@ -8,7 +8,8 @@ function Advisor (obj) {
         exp: 0,
         city: "",
         address: "",
-        school: ""
+        school: "",
+        points: ""
     }, obj);
 }
 Advisor.prototype = Object.create(BaseEntity.prototype);
