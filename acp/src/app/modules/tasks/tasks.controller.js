@@ -46,6 +46,23 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
         })
     }
 
+    $scope.hasMoreDoneTask = false;
+    $scope.totalDoneTaskLoaded = 10;
+    $scope.onLoadMoreDoneTask = function() {
+        $scope.totalDoneTaskLoaded = $scope.totalDoneTaskLoaded + 1;
+        $scope.completedPosts = firebaseHelper.syncArray(
+            firebaseHelper
+                .getFireBaseInstance("posts")
+                .orderByChild("index_advisior_status")
+                .startAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1))
+                .endAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1))
+                .limitToFirst($scope.totalDoneTaskLoaded));
+
+        $scope.completedPosts.$loaded().then(function(list) {
+            $scope.hasMoreDoneTask = $scope.totalDoneTaskLoaded == list.length;
+        })
+    }
+
     var init = function() {
         var pubProfile = firebaseHelper.getPublicProfile();
         $scope.role = firebaseHelper.getRole();
@@ -59,7 +76,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                 .getFireBaseInstance("posts")
                 .orderByChild("status")
                 .equalTo(PostStatus.Ready)
-                .limitToFirst(5));
+                .limitToFirst(20));
 
         $scope.onLoadMoreDoneTask();
 
@@ -187,7 +204,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
     }
 
     $scope.onPickTask = function() {
-        if ($scope.isPickingTask) {
+        if ($scope.isPickingTask || !$scope.newPosts || $scope.newPosts.length == 0) {
             return;
         }
         $scope.isPickingTask = true;
@@ -213,24 +230,6 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
             $scope.isPickingTask = false;
             $state.go("login");
         }
-    }
-
-
-    $scope.hasMoreDoneTask = false;
-    $scope.totalDoneTaskLoaded = 10;
-    $scope.onLoadMoreDoneTask = function() {
-        $scope.totalDoneTaskLoaded = $scope.totalDoneTaskLoaded + 1;
-        $scope.completedPosts = firebaseHelper.syncArray(
-            firebaseHelper
-                .getFireBaseInstance("posts")
-                .orderByChild("index_advisior_status")
-                .startAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1))
-                .endAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1))
-                .limitToFirst($scope.totalDoneTaskLoaded));
-
-        $scope.completedPosts.$loaded().then(function(list) {
-            $scope.hasMoreDoneTask = $scope.totalDoneTaskLoaded == list.length;
-        })
     }
 });
 
