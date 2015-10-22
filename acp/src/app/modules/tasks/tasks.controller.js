@@ -12,6 +12,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
 
     $scope.isPickingTask = false;
 
+
     $scope.stat = firebaseHelper.getFireBaseInstance(["posts"]).orderByChild("status").equalTo(PostStatus.Ready).on('value', function(snapshot) {
         $scope.numOfWaitingPost = snapshot.numChildren();
         setTimeout(function() {
@@ -26,11 +27,8 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
     var updateUserLevel = function() {
         if (firebaseHelper.hasAlreadyLogin() && $rootScope.config) {
             $scope.userPoints = firebaseHelper.getPublicProfile().points || 0;
-
             var scale = $rootScope.config.advisor_level_scales;
-            console.log($rootScope.config.advisor_level_scales);
             for (var k in scale) {
-                console.log(scale[k].min_points);
                 if (scale[k].min_points <= $scope.userPoints) {
                     $scope.userLevel = scale[k].name;
                 } else {
@@ -63,12 +61,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                 .equalTo(PostStatus.Ready)
                 .limitToFirst(5));
 
-        $scope.completedPosts = firebaseHelper.syncArray(
-            firebaseHelper
-                .getFireBaseInstance("posts")
-                .orderByChild("index_advisior_status")
-                .startAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1))
-                .endAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1)));
+        $scope.onLoadMoreDoneTask();
 
         updateUserLevel();
         $scope.loading = false;
@@ -80,6 +73,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
             init();
         })
     }
+
 
     var getNewTask = function(callback) {
         var uid = firebaseHelper.getUID();
@@ -219,6 +213,24 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
             $scope.isPickingTask = false;
             $state.go("login");
         }
+    }
+
+
+    $scope.hasMoreDoneTask = false;
+    $scope.totalDoneTaskLoaded = 10;
+    $scope.onLoadMoreDoneTask = function() {
+        $scope.totalDoneTaskLoaded = $scope.totalDoneTaskLoaded + 1;
+        $scope.completedPosts = firebaseHelper.syncArray(
+            firebaseHelper
+                .getFireBaseInstance("posts")
+                .orderByChild("index_advisior_status")
+                .startAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1))
+                .endAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1))
+                .limitToFirst($scope.totalDoneTaskLoaded));
+
+        $scope.completedPosts.$loaded().then(function(list) {
+            $scope.hasMoreDoneTask = $scope.totalDoneTaskLoaded == list.length;
+        })
     }
 });
 
