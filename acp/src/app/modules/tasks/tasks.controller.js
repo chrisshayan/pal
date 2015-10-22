@@ -78,6 +78,14 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                 .equalTo(PostStatus.Ready)
                 .limitToFirst(20));
 
+        $scope.pendingPosts = firebaseHelper.syncArray(
+            firebaseHelper
+                .getFireBaseInstance("posts")
+                .orderByChild("index_advisior_status")
+                .startAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing))
+                .endAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing))
+                .limitToFirst(1));
+
         $scope.onLoadMoreDoneTask();
 
         updateUserLevel();

@@ -19,11 +19,11 @@
                     <div class="ibox-content">
                         <h3>To do</h3>
                         <div style="min-height:60px">
-                            <p ng-if="newPosts && newPosts.length == 0">There is no task</p>
-                            <p ng-if="newPosts && newPosts.length == 1">There is 1 task</p>
-                            <p ng-if="newPosts && newPosts.length > 1">There are {{newPosts.length >= 20?"20+":newPosts.length}} tasks</p>
+                            <p ng-if="newPosts && (newPosts.length + pendingPosts.length) == 0">There is no task</p>
+                            <p ng-if="newPosts && (newPosts.length + pendingPosts.length) == 1">There is 1 task</p>
+                            <p ng-if="newPosts && (newPosts.length + pendingPosts.length) > 1">There are {{newPosts.length >= 20?"20+":newPosts.length}} tasks</p>
                             <div style="text-align:center">
-                                <a ng-disabled="isPickingTask || !newPosts.length" class="btn btn-primary btn-block noselect" href="" ng-click="onPickTask()">
+                                <a ng-disabled="isPickingTask || (!(newPosts.length + pendingPosts.length > 0))" class="btn btn-primary btn-block noselect" href="" ng-click="onPickTask()">
                                     <span ng-if="!isPickingTask">Take a task</span>
                                     <span ng-if="isPickingTask">Loading ...</span>
                                 </a>
@@ -31,13 +31,11 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <ul class="connectList agile-list" style="padding:0">
-                            <li class="info-element" ng-show="newPosts && newPosts.length == 0">
-                                <h4>No data</h4>
-                            </li>
                             <div class="sk-spinner sk-spinner-double-bounce" ng-if="!newPosts">
                                 <div class="sk-double-bounce1"></div>
                                 <div class="sk-double-bounce2"></div>
                             </div>
+                            <custom-post ng-repeat = "p in pendingPosts | limitTo:1" ref="p"></custom-post>
                             <custom-post ng-repeat = "p in newPosts | limitTo:5" ref="p"></custom-post>
                         </ul>
                     </div>
@@ -70,9 +68,6 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <ul class="connectList agile-list" style="padding:0">
-                            <li class="warning-element" ng-show="completedPosts && completedPosts.length == 0">
-                                <h4>No data</h4>
-                            </li>
                             <div class="sk-spinner sk-spinner-double-bounce" ng-if="!completedPosts">
                                 <div class="sk-double-bounce1"></div>
                                 <div class="sk-double-bounce2"></div>
