@@ -228,7 +228,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
     }
 
     $scope.onPickTask = function() {
-        if ($scope.isPickingTask || !$scope.newPosts || (newPosts.length + pendingPosts.length == 0)) {
+        if ($scope.isPickingTask || !$scope.newPosts || ($scope.newPosts.length == 0 && $scope.pendingPosts.length == 0)) {
             return;
         }
         $scope.isPickingTask = true;
