@@ -80,11 +80,11 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public static void applyFont(final View v) {
-        applyFont(v, RobotoL);
+        applyFont(v, RobotoR);
     }
 
     public static void applyFont(final View v, String font_des) {
-        Typeface t = RobotoL;
+        Typeface t = RobotoR;
         font_des = font_des.toLowerCase();
         boolean isItalic = false;
         boolean isBold = false;

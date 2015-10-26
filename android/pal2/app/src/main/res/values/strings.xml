@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Pal</string>
+
+    <string-array name="tutor_header">
+        <item>Learn English for Free</item>
+        <item>Practice pronunciation with experienced English teachers</item>
+        <item>Track your learning progress</item>
+    </string-array>
+
+    <string-array name="tutor_body">
+        <item>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</item>
+        <item>Lorem ipsum dolor sit amet, consectetur adipiscing elit</item>
+        <item>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</item>
+    </string-array>
 </resources>
