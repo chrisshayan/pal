@@ -1,10 +1,19 @@
 package vietnamworks.com.pal.services;
 
+import android.content.Context;
+
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
+import java.util.List;
+
+import vietnamworks.com.pal.configurations.FirebaseSettings;
+
 /**
  * Created by duynk on 10/1/15.
  */
 public class FirebaseService {
-    /*
     public static final String API_URL = FirebaseSettings.APP_URL;
     public static AuthData authData;
     public static Context context = null;
@@ -61,5 +70,4 @@ public class FirebaseService {
             }
         });
     }
-    */
 }
