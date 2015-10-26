@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -56,8 +57,17 @@ public class BaseActivity extends AppCompatActivity {
         RobotoB = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
         RobotoBI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-BoldItalic.ttf");
         RobotoI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Italic.ttf");
+    }
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
+        {
+            this.moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -150,12 +160,18 @@ public class BaseActivity extends AppCompatActivity {
 
     public void openActivity(Class<?> cls) {
         Intent intent = new Intent(BaseActivity.sInstance, cls);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
     public void openActivity(Class<?> cls, Bundle b) {
         Intent intent = new Intent(BaseActivity.sInstance, cls);
         intent.putExtras(b);
+        startActivity(intent);
+    }
+
+    public void openActivity(Class<?> cls, boolean withHistory) {
+        Intent intent = new Intent(BaseActivity.sInstance, cls);
         startActivity(intent);
     }
 

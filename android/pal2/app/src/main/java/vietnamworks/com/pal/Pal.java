@@ -3,6 +3,7 @@ package vietnamworks.com.pal;
 import android.app.Application;
 
 import vietnamworks.com.pal.services.FileUploadService;
+import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.ParseService;
 
 /**
@@ -17,7 +18,7 @@ public class Pal extends Application {
     public void onCreate() {
         super.onCreate();
         ParseService.init(this);
-        //FirebaseService.init();
+        FirebaseService.init();
         FileUploadService.init();
     }
 }
