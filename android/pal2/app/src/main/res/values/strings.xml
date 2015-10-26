@@ -12,4 +12,8 @@
         <item>Lorem ipsum dolor sit amet, consectetur adipiscing elit</item>
         <item>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</item>
     </string-array>
+
+    <string name="skip">Skip</string>
+    <string name="done">Done</string>
+    <string name="next">Next</string>
 </resources>

@@ -8,9 +8,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.fragments.OnBoardingFragment;
@@ -20,6 +22,7 @@ import vietnamworks.com.pal.fragments.OnBoardingFragment;
  */
 public class OnBoardingActivity extends BaseActivity {
     int nPages;
+    int currentPageIndex = 0;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
 
@@ -55,6 +58,7 @@ public class OnBoardingActivity extends BaseActivity {
     }
 
     public void SetPageIndex(int index) {
+        currentPageIndex = index;
         LinearLayout indicators = (LinearLayout) findViewById(R.id.tutor_indicator_holder);
         indicators.removeAllViewsInLayout();
 
@@ -71,12 +75,15 @@ public class OnBoardingActivity extends BaseActivity {
         for (int i = 0; i < mPagerAdapter.getCount(); i++) {
             ImageView img = new ImageView(this);
             img.setImageDrawable(index != i?circle:filled_circle);
+            img.setAlpha(0.75f);
             indicators.addView(img);
 
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(15, 15);
             lp.setMargins(10, 0, 10, 0);
             img.setLayoutParams(lp);
         }
+
+        ((TextView) findViewById(R.id.btn_next)).setText(getString(index >= nPages -1?R.string.done:R.string.next));
     }
 
     private class TutorScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
@@ -98,5 +105,20 @@ public class OnBoardingActivity extends BaseActivity {
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
         }
+    }
+
+    /**
+     * button events
+     */
+    public void onNext(View v) {
+        if (currentPageIndex >= nPages - 1) {
+            onSkip(v);
+        } else {
+            mPager.setCurrentItem(++currentPageIndex, true);
+        }
+    }
+
+    public void onSkip(View v) {
+
     }
 }

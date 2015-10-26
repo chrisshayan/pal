@@ -6,4 +6,6 @@
     <color name="colorPrimaryDark">#1976d2</color>
     <color name="colorAccent">#2196f3</color>
     <color name="colorPrimaryLight">#FFFFFF</color>
+
+    <color name="colorDivider">#FFFFFF</color>
 </resources>
