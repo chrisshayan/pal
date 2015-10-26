@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/SplashScreenTheme" >
-        <activity android:name=".activities.MainActivity" >
+        <activity android:name=".activities.SplashScreenActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -5,7 +5,7 @@ import android.view.WindowManager;
 
 import vietnamworks.com.pal.R;
 
-public class MainActivity extends BaseActivity {
+public class SplashScreenActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
