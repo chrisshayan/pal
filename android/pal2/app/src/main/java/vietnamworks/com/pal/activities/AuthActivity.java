@@ -1,5 +1,6 @@
 package vietnamworks.com.pal.activities;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +18,7 @@ public class AuthActivity extends BaseActivity {
     final static int STATE_LOGIN = 0;
     final static int STATE_REGISTER = 1;
     final static int STATE_REGISTER_SUCCESS = 2;
-    int state;
+    int state = -999;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +34,7 @@ public class AuthActivity extends BaseActivity {
         setState(STATE_LOGIN);
     }
 
-    public void setState(final int _state) {
-        this.state = _state;
+    private void setSetFragmentVisibility() {
         setTimeout(new Runnable() {
             @Override
             public void run() {
@@ -42,6 +42,58 @@ public class AuthActivity extends BaseActivity {
                     loginFragment.getView().setVisibility(state == STATE_LOGIN ? View.VISIBLE : View.INVISIBLE);
                     registerFragment.getView().setVisibility(state == STATE_REGISTER ? View.VISIBLE : View.INVISIBLE);
                     registerSuccessFragment.getView().setVisibility(state == STATE_REGISTER_SUCCESS ? View.VISIBLE : View.INVISIBLE);
+                }catch (Exception E) {
+
+                }
+            }
+        });
+    }
+
+    private Animator.AnimatorListener stateTransitionAnimationListener = new Animator.AnimatorListener() {
+        @Override
+        public void onAnimationStart(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            setSetFragmentVisibility();
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+
+        }
+    };
+
+    public void setState(final int _state) {
+        final int last_state = this.state;
+        this.state = _state;
+        setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (last_state == STATE_LOGIN) {
+                        loginFragment.getView().animate().alpha(0).start();
+                    } else if (last_state == STATE_REGISTER) {
+                        registerFragment.getView().animate().alpha(0).start();
+                    } else if (last_state == STATE_REGISTER_SUCCESS) {
+                        registerSuccessFragment.getView().animate().alpha(0).start();
+                    } else {
+                        setSetFragmentVisibility();
+                    }
+                    if (_state == STATE_LOGIN) {
+                        loginFragment.getView().animate().alpha(1).setListener(stateTransitionAnimationListener).start();
+                    } else if (_state == STATE_REGISTER) {
+                        registerFragment.getView().animate().alpha(1).setListener(stateTransitionAnimationListener).start();
+                    } else if (_state == STATE_REGISTER_SUCCESS) {
+                        registerSuccessFragment.getView().animate().alpha(1).setListener(stateTransitionAnimationListener).start();
+                    }
                 } catch (Exception E) {
                     E.printStackTrace();
                 }
