@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="@dimen/base_padding_4x"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    android:elevation="5dp"
+    android:background="@color/colorPrimaryLight">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/register_thank"
+        android:id="@+id/textView2"
+        android:textColor="@color/colorTextMuted"
+        android:gravity="center" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:id="@+id/imageView3"
+        android:src="@drawable/ic_big_success"
+        android:layout_margin="@dimen/base_padding_8x" />
+
+    <View
+        android:layout_height="1px"
+        android:layout_width="fill_parent"
+        android:background="@color/colorDividerDark"
+        android:alpha="0.5" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/share"
+            android:id="@+id/button2"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="onShare" />
+
+        <Space
+            android:layout_width="@dimen/base_padding_4x"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/close"
+            android:id="@+id/button3"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="onCloseRegisterSuccessDialog" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

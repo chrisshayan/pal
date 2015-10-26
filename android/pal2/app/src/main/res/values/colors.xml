@@ -10,6 +10,9 @@
     <color name="colorTextPrimary">#000000</color>
     <color name="colorTextMuted">#666666</color>
     <color name="colorTextLight">#FFFFFF</color>
+    <color name="colorTextSuccess">#4caf50</color>
+
 
     <color name="colorDivider">#FFFFFF</color>
+    <color name="colorDividerDark">#000000</color>
 </resources>

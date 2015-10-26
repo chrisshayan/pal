@@ -71,5 +71,16 @@
             tools:layout="@layout/fragment_login"
             android:layout_marginLeft="@dimen/base_padding_4x"
             android:layout_marginRight="@dimen/base_padding_4x" />
+
+        <fragment
+            android:layout_width="@dimen/auth_dialog_width"
+            android:layout_height="wrap_content"
+            android:name="vietnamworks.com.pal.fragments.RegisterSuccessFragment"
+            android:id="@+id/fragment_register_success"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            tools:layout="@layout/fragment_login"
+            android:layout_marginLeft="@dimen/base_padding_4x"
+            android:layout_marginRight="@dimen/base_padding_4x" />
     </RelativeLayout>
 </FrameLayout>
