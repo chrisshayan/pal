@@ -1,4 +1,4 @@
-package vietnamworks.com.pal;
+package vietnamworks.com.pal.activities;
 
 import android.content.Context;
 import android.content.Intent;

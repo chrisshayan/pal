@@ -1,7 +1,9 @@
-package vietnamworks.com.pal;
+package vietnamworks.com.pal.activities;
 
 import android.os.Bundle;
 import android.view.WindowManager;
+
+import vietnamworks.com.pal.R;
 
 public class MainActivity extends BaseActivity {
 
