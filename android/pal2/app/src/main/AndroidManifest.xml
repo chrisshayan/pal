@@ -32,6 +32,8 @@
         </activity>
         <activity android:name=".activities.OnBoardingActivity" android:theme="@style/SplashScreenTheme">
         </activity>
+        <activity android:name=".activities.AuthActivity" android:theme="@style/SplashScreenTheme">
+        </activity>
 
 
         <!--start parse service-->

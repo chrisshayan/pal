@@ -7,5 +7,9 @@
     <color name="colorAccent">#2196f3</color>
     <color name="colorPrimaryLight">#FFFFFF</color>
 
+    <color name="colorTextPrimary">#000000</color>
+    <color name="colorTextMuted">#666666</color>
+    <color name="colorTextLight">#FFFFFF</color>
+
     <color name="colorDivider">#FFFFFF</color>
 </resources>

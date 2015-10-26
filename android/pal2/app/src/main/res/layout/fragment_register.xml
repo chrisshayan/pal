@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="@dimen/base_padding_4x"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    android:elevation="5dp"
+    android:background="@color/colorPrimaryLight">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/email_address"
+        android:id="@+id/textView"
+        android:textColor="@color/colorTextMuted" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/email"
+        android:textColor="@color/colorTextPrimary"
+        android:textColorHint="@color/colorTextMuted"
+        android:hint="@string/your_email_adress" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_padding_4x" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/your_full_name"
+        android:id="@+id/textView2"
+        android:textColor="@color/colorTextMuted" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/fullname"
+        android:textColor="@color/colorTextPrimary"
+        android:textColorHint="@color/colorTextMuted"
+        android:hint="@string/your_full_name" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/button2"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+        <Space
+            android:layout_width="@dimen/base_padding_4x"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/button3"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+    </LinearLayout>
+
+</LinearLayout>

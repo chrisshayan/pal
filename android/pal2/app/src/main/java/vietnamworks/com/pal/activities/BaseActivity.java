@@ -34,6 +34,7 @@ public class BaseActivity extends AppCompatActivity {
     public static Typeface RobotoBI;
     public static Typeface RobotoI;
     public static Typeface RobotoLI;
+    public static Typeface Bubblegum;
 
     static Toast toast;
 
@@ -57,6 +58,8 @@ public class BaseActivity extends AppCompatActivity {
         RobotoB = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
         RobotoBI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-BoldItalic.ttf");
         RobotoI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Italic.ttf");
+
+        Bubblegum = Typeface.createFromAsset(getAssets(),"fonts/Bubblegum.ttf");
     }
 
     @Override

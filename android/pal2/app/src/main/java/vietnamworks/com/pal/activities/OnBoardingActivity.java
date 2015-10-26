@@ -31,9 +31,6 @@ public class OnBoardingActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        System.out.println("..... onCreate OnBoardingActivity");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);;
 
@@ -122,6 +119,6 @@ public class OnBoardingActivity extends BaseActivity {
     }
 
     public void onSkip(View v) {
-
+        openActivity(AuthActivity.class);
     }
 }
