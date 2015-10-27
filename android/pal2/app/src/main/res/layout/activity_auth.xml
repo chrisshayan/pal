@@ -112,4 +112,15 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/app_name"
+        android:id="@+id/app_title_alt"
+        android:textSize="20sp"
+        android:textColor="@color/colorTextLight"
+        android:layout_margin="@dimen/base_padding_4x"
+        android:alpha="0" />
 </FrameLayout>
