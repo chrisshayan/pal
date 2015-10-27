@@ -22,7 +22,7 @@
                 android:id="@+id/app_title"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:textSize="40dp"
+                android:textSize="40sp"
                 android:textColor="@color/colorTextLight" />
         </RelativeLayout>
 
@@ -33,7 +33,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/auth_footer_height"
             android:background="@color/colorPrimaryLight">
 
             <ImageView
@@ -46,41 +46,70 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-        <fragment
-            android:layout_width="@dimen/auth_dialog_width"
-            android:layout_height="wrap_content"
-            android:name="vietnamworks.com.pal.fragments.LoginFragment"
-            android:id="@+id/fragment_login"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            tools:layout="@layout/fragment_login"
-            android:layout_marginLeft="@dimen/base_padding_4x"
-            android:layout_marginRight="@dimen/base_padding_4x" />
+            <fragment
+                android:layout_width="@dimen/auth_dialog_width"
+                android:layout_height="wrap_content"
+                android:name="vietnamworks.com.pal.fragments.LoginFragment"
+                android:id="@+id/fragment_login"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                tools:layout="@layout/fragment_login"
+                android:layout_marginLeft="@dimen/base_padding_4x"
+                android:layout_marginRight="@dimen/base_padding_4x" />
 
-        <fragment
-            android:layout_width="@dimen/auth_dialog_width"
-            android:layout_height="wrap_content"
-            android:name="vietnamworks.com.pal.fragments.RegisterFragment"
-            android:id="@+id/fragment_register"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            tools:layout="@layout/fragment_login"
-            android:layout_marginLeft="@dimen/base_padding_4x"
-            android:layout_marginRight="@dimen/base_padding_4x" />
+            <fragment
+                android:layout_width="@dimen/auth_dialog_width"
+                android:layout_height="wrap_content"
+                android:name="vietnamworks.com.pal.fragments.RegisterFragment"
+                android:id="@+id/fragment_register"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                tools:layout="@layout/fragment_login"
+                android:layout_marginLeft="@dimen/base_padding_4x"
+                android:layout_marginRight="@dimen/base_padding_4x" />
 
-        <fragment
-            android:layout_width="@dimen/auth_dialog_width"
-            android:layout_height="wrap_content"
-            android:name="vietnamworks.com.pal.fragments.RegisterSuccessFragment"
-            android:id="@+id/fragment_register_success"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            tools:layout="@layout/fragment_login"
-            android:layout_marginLeft="@dimen/base_padding_4x"
-            android:layout_marginRight="@dimen/base_padding_4x" />
-    </RelativeLayout>
+            <fragment
+                android:layout_width="@dimen/auth_dialog_width"
+                android:layout_height="wrap_content"
+                android:name="vietnamworks.com.pal.fragments.RegisterSuccessFragment"
+                android:id="@+id/fragment_register_success"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                tools:layout="@layout/fragment_login"
+                android:layout_marginLeft="@dimen/base_padding_4x"
+                android:layout_marginRight="@dimen/base_padding_4x" />
+
+            <fragment
+                android:layout_width="@dimen/auth_dialog_width"
+                android:layout_height="wrap_content"
+                android:name="vietnamworks.com.pal.fragments.RegisterErrorFragment"
+                android:id="@+id/fragment_register_error"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                tools:layout="@layout/fragment_login"
+                android:layout_marginLeft="@dimen/base_padding_4x"
+                android:layout_marginRight="@dimen/base_padding_4x" />
+
+            <fragment
+                android:layout_width="@dimen/auth_dialog_width"
+                android:layout_height="wrap_content"
+                android:name="vietnamworks.com.pal.fragments.AuthProcessingFragment"
+                android:id="@+id/fragment_auth_processing"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                tools:layout="@layout/fragment_login"
+                android:layout_marginLeft="@dimen/base_padding_4x"
+                android:layout_marginRight="@dimen/base_padding_4x" />
+        </RelativeLayout>
+
+    </LinearLayout>
 </FrameLayout>

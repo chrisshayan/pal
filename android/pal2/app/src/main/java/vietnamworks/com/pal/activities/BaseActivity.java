@@ -3,6 +3,7 @@ package vietnamworks.com.pal.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,7 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +62,20 @@ public class BaseActivity extends AppCompatActivity {
         RobotoI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Italic.ttf");
 
         Bubblegum = Typeface.createFromAsset(getAssets(),"fonts/Bubblegum.ttf");
+
+        final View activityRootView = getWindow().getDecorView().findViewById(android.R.id.content);
+        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
+                boolean isSoftKeyShown = r.height() < getScreenHeight()*0.8;
+                onLayoutChanged(r, isSoftKeyShown);
+            }
+        });
+    }
+
+    public void onLayoutChanged(Rect r, boolean isSoftKeyShown) {
     }
 
     @Override

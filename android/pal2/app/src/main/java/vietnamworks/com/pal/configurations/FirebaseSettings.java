@@ -5,4 +5,5 @@ package vietnamworks.com.pal.configurations;
  */
 public interface FirebaseSettings {
     final static String APP_URL = "https://pal-dev.firebaseio.com";
+    final static String TOKEN = "kpvtYMZWb8O21QgBgrEehFFYV2mnaDdnrBWvJL7E";
 }

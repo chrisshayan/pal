@@ -30,4 +30,10 @@
     <string name="register_thank">Thank for your interest.\nYour request has been queued.</string>
     <string name="send_to">Send to</string>
     <string name="share_text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</string>
+    <string name="register_fail">Fail to connect server. Please try again later!</string>
+    <string name="require_email">Email is required</string>
+    <string name="require_password">Password is required</string>
+    <string name="invalid_email">Invalid email format</string>
+    <string name="require_full_name">Full name is required</string>
+    <string name="processing">Processing</string>
 </resources>
