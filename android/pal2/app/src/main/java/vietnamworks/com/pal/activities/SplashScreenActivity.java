@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.services.FirebaseService;
 
 public class SplashScreenActivity extends BaseActivity {
 
@@ -16,12 +17,26 @@ public class SplashScreenActivity extends BaseActivity {
 
         setContentView(R.layout.activity_main);
 
-        BaseActivity.sInstance.setTimeout(new Runnable() {
+        setTimeout(new Runnable() {
             @Override
             public void run() {
-                openActivity(OnBoardingActivity.class);
+                if (FirebaseService.checkAuthSync()) {
+                    setTimeout(new Runnable() {
+                        @Override
+                        public void run() {
+                            openActivity(TimelineActivity.class);
+                        }
+                    }, 3000);
+                } else {
+                    setTimeout(new Runnable() {
+                        @Override
+                        public void run() {
+                            openActivity(OnBoardingActivity.class);
+                        }
+                    }, 3000);
+                }
             }
-        }, 3000);
+        }, 1000);
     }
 
     @Override

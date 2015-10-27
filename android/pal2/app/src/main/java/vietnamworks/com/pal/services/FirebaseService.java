@@ -17,9 +17,57 @@ public class FirebaseService {
     public static final String API_URL = FirebaseSettings.APP_URL;
     public static AuthData authData;
     public static Context context = null;
+    public static boolean isConnected;
+
+    public interface OnConnectStatusChanged {
+        void onStatusChanged(boolean status);
+    }
+    private OnConnectStatusChanged onConnectStatusChangedListener;
+    private static FirebaseService sInstance = new FirebaseService();
+
+    public FirebaseService() {
+    }
+
+    public void SetOnConnectStatusChangedListener(OnConnectStatusChanged listener) {
+        onConnectStatusChangedListener = listener;
+    }
 
     public static void init() {
+        isConnected = false;
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
+
+        /*
+        Firebase connectedRef = new Firebase(API_URL + "/.info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                isConnected = connected;
+                if (sInstance.onConnectStatusChangedListener != null) {
+                    sInstance.onConnectStatusChangedListener.onStatusChanged(connected);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+                System.err.println("Listener was cancelled");
+            }
+        });
+        */
+
+        /*
+        Firebase ref = new Firebase(API_URL);
+        ref.addAuthStateListener(new Firebase.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(AuthData authData) {
+                if (authData != null) {
+                    FirebaseService.authData = authData;
+                } else {
+                    // user is not logged in
+                }
+            }
+        });
+        */
     }
 
     public static void setContext(Context ctx) {
@@ -69,5 +117,15 @@ public class FirebaseService {
                 }
             }
         });
+    }
+
+    public static boolean checkAuthSync() {
+        AuthData authData = newRef().getAuth();
+        if (authData != null) {
+            FirebaseService.authData = authData;
+            return true;
+        } else {
+            return false;
+        }
     }
 }
