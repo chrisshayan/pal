@@ -36,4 +36,10 @@
     <string name="invalid_email">Invalid email format</string>
     <string name="require_full_name">Full name is required</string>
     <string name="processing">Processing</string>
+    <string name="title_activity_timeline">TimelineActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

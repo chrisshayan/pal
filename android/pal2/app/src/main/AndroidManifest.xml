@@ -16,28 +16,34 @@
         android:protectionLevel="signature" />
 
     <application
-        android:launchMode="singleTop"
         android:name=".Pal"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:launchMode="singleTop"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".activities.SplashScreenActivity" android:theme="@style/SplashScreenTheme">
+        <activity
+            android:name=".activities.SplashScreenActivity"
+            android:theme="@style/SplashScreenTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.OnBoardingActivity" android:theme="@style/SplashScreenTheme">
+        <activity
+            android:name=".activities.OnBoardingActivity"
+            android:theme="@style/SplashScreenTheme" >
         </activity>
-        <activity android:name=".activities.AuthActivity" android:theme="@style/SplashScreenTheme">
+        <activity
+            android:name=".activities.AuthActivity"
+            android:theme="@style/SplashScreenTheme" >
         </activity>
 
-
-        <!--start parse service-->
+        <!-- start parse service -->
         <service android:name="com.parse.PushService" />
+
         <receiver
             android:name="com.parse.ParsePushBroadcastReceiver"
             android:exported="false" >
@@ -57,7 +63,12 @@
                 <category android:name="vietnamworks.com.pal" />
             </intent-filter>
         </receiver>
-        <!--end parse service-->
+        <!-- end parse service -->
+        <activity
+            android:name=".activities.TimelineActivity"
+            android:label="@string/title_activity_timeline"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package vietnamworks.com.pal.activities;
 
 import android.animation.Animator;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -25,7 +26,9 @@ import vietnamworks.com.pal.fragments.LoginFragment;
 import vietnamworks.com.pal.fragments.RegisterErrorFragment;
 import vietnamworks.com.pal.fragments.RegisterFragment;
 import vietnamworks.com.pal.fragments.RegisterSuccessFragment;
+import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.services.ParseService;
 
 /**
  * Created by duynk on 10/26/15.
@@ -141,6 +144,7 @@ public class AuthActivity extends BaseActivity {
                     } else if (_state == STATE_REGISTER_ERROR) {
                         registerErrorFragment.getView().animate().setDuration(100).alpha(1).setListener(stateTransitionAnimationListener).start();
                     } else if (_state == STATE_PROCESSING) {
+                        hideKeyboard();
                         authProcessingFragment.getView().animate().setDuration(100).alpha(1).setListener(stateTransitionAnimationListener).start();
                     }
                 } catch (Exception E) {
@@ -275,7 +279,19 @@ public class AuthActivity extends BaseActivity {
                 }
             });
         } else {
-            //TODO: do login
+            setState(STATE_PROCESSING);
+            FirebaseService.login(email, password, new AsyncCallback() {
+                @Override
+                public void onSuccess(Context ctx, Object obj) {
+                    ParseService.RegisterUser(FirebaseService.authData.getUid());
+                    openActivity(TimelineActivity.class);
+                }
+
+                @Override
+                public void onError(Context ctx, int code, String message) {
+                    setState(STATE_REGISTER_ERROR);
+                }
+            });
         }
     }
 }
