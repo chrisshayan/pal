@@ -128,4 +128,8 @@ public class FirebaseService {
             return false;
         }
     }
+
+    public static void logout() {
+        newRef().unauth();
+    }
 }
