@@ -17,18 +17,15 @@
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
         android:text="Demi Silverstone"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:gravity="center"
-        android:textColor="@color/colorTextLight"
-        android:padding="@dimen/base_padding_haft" />
+        android:padding="@dimen/base_padding_haft"
+        style="@style/Text.Medium.Light" />
 
     <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
         android:text="Beginner" android:id="@+id/textView"
         android:gravity="center"
         android:paddingBottom="@dimen/base_padding_2x"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/colorTextLight"
-        android:textSize="@dimen/font_xs" />
+        style="@style/Text.ExtraSmall.Light" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -45,22 +42,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/posted"
                 android:id="@+id/textView3"
                 android:gravity="center"
-                android:textColor="@color/colorTextLight"
                 android:padding="@dimen/base_padding"
-                android:textSize="@dimen/font_xs" />
+                style="@style/Text.ExtraSmall.Light" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="0"
                 android:id="@+id/total_posts"
                 android:gravity="center"
-                android:textColor="@color/colorTextLight" />
+                style="@style/Text.Small.Light" />
         </LinearLayout>
 
         <LinearLayout
@@ -72,22 +66,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/avg_point"
                 android:id="@+id/textView6"
                 android:gravity="center"
-                android:textColor="@color/colorTextLight"
                 android:padding="@dimen/base_padding"
-                android:textSize="@dimen/font_xs" />
+                style="@style/Text.ExtraSmall.Light" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="0"
                 android:id="@+id/avg_points"
                 android:gravity="center"
-                android:textColor="@color/colorTextLight" />
+                style="@style/Text.Small.Light" />
         </LinearLayout>
 
         <LinearLayout
@@ -99,23 +90,20 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/following"
                 android:id="@+id/textView8"
                 android:gravity="center"
-                android:textColor="@color/colorTextLight"
                 android:padding="@dimen/base_padding"
-                android:textSize="@dimen/font_xs" />
+                style="@style/Text.ExtraSmall.Light" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="0"
                 android:id="@+id/total_following"
                 android:gravity="center"
-                android:textColor="@color/colorTextLight"
-                android:textIsSelectable="false" />
+                android:textIsSelectable="false"
+                style="@style/Text.Small.Light" />
         </LinearLayout>
     </LinearLayout>
 

@@ -37,21 +37,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
                 android:id="@+id/tutor_header"
-                android:textColor="@color/colorPrimaryLight"
-                android:layout_margin="@dimen/base_padding" />
+                android:layout_margin="@dimen/base_padding"
+                style="@style/Text.Large.Light" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Medium Text"
                 android:id="@+id/tutor_body"
                 android:padding="@dimen/base_padding"
-                android:textColor="@color/colorPrimaryLight"
-                android:layout_margin="@dimen/base_padding" />
+                android:layout_margin="@dimen/base_padding"
+                style="@style/Text.Small.Light" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

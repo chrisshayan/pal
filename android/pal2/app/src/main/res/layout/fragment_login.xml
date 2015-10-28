@@ -12,10 +12,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/email_address"
         android:id="@+id/textView"
-        android:textColor="@color/colorTextMuted" />
+        style="@style/Text.Small.Muted" />
 
     <EditText
         android:layout_width="match_parent"
@@ -23,7 +22,6 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/email"
-        android:textColor="@color/colorTextPrimary"
         android:textColorHint="@color/colorTextMuted"
         android:hint="@string/your_email_adress" />
 
@@ -34,10 +32,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/password"
         android:id="@+id/textView2"
-        android:textColor="@color/colorTextMuted" />
+        style="@style/Text.Small.Muted" />
 
     <EditText
         android:layout_width="match_parent"
@@ -45,7 +42,7 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/password"
-        android:textColor="@color/colorTextPrimary"
+        android:textColor="@color/colorTextDefault"
         android:textColorHint="@color/colorTextMuted"
         android:hint="@string/password_placeholder" />
 
@@ -61,7 +58,8 @@
             android:text="@string/register"
             android:id="@+id/button2"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onOpenRequestInvite" />
+            android:onClick="onOpenRequestInvite"
+            style="@style/Text.Small" />
 
         <Space
             android:layout_width="@dimen/base_padding_4x"
@@ -73,8 +71,8 @@
             android:text="@string/login"
             android:id="@+id/button3"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:textColor="@color/colorTextSuccess"
-            android:onClick="onLogin" />
+            android:onClick="onLogin"
+            style="@style/Text.Small.Success" />
     </LinearLayout>
 
 

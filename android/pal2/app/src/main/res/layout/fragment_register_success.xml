@@ -12,11 +12,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/register_thank"
         android:id="@+id/textView2"
-        android:textColor="@color/colorTextMuted"
-        android:gravity="center" />
+        android:gravity="center"
+        style="@style/Text.Small.Muted" />
 
     <ImageView
         android:layout_width="fill_parent"
@@ -43,7 +42,8 @@
             android:text="@string/share"
             android:id="@+id/button2"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onShare" />
+            android:onClick="onShare"
+            style="@style/Text.Small" />
 
         <Space
             android:layout_width="@dimen/base_padding_4x"
@@ -55,7 +55,8 @@
             android:text="@string/close"
             android:id="@+id/button3"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onCloseRegisterResultDialog" />
+            android:onClick="onCloseRegisterResultDialog"
+            style="@style/Text.Small" />
     </LinearLayout>
 
 

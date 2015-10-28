@@ -26,13 +26,12 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/all_posts"
             android:id="@+id/textView10"
             android:layout_weight="1"
-            android:textColor="@color/colorTextPrimary"
             android:gravity="fill_vertical"
-            android:layout_marginLeft="@dimen/base_padding_4x" />
+            android:layout_marginLeft="@dimen/base_padding_4x"
+            style="@style/Text.Small" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,7 +39,7 @@
             android:text="1"
             android:id="@+id/num_of_posts"
             android:layout_marginRight="@dimen/base_padding"
-            style="@style/TextAppearance.Badge" />
+            style="@style/Text.Badge" />
     </LinearLayout>
 
     <LinearLayout
@@ -63,13 +62,12 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/recent_evaluated_post"
             android:id="@+id/textView13"
             android:layout_weight="1"
-            android:textColor="@color/colorTextPrimary"
             android:gravity="fill_vertical"
-            android:layout_marginLeft="@dimen/base_padding_4x" />
+            android:layout_marginLeft="@dimen/base_padding_4x"
+            style="@style/Text.Small" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -77,7 +75,7 @@
             android:text="1"
             android:id="@+id/num_of_evaluated_post"
             android:layout_marginRight="@dimen/base_padding"
-            style="@style/TextAppearance.Badge" />
+            style="@style/Text.Badge" />
     </LinearLayout>
 
     <View
@@ -106,12 +104,11 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/logout"
             android:id="@+id/textView14"
             android:layout_weight="1"
-            android:textColor="@color/colorTextPrimary"
             android:gravity="center_vertical"
-            android:layout_marginLeft="@dimen/base_padding_4x" />
+            android:layout_marginLeft="@dimen/base_padding_4x"
+            style="@style/Text.Small" />
     </LinearLayout>
 </LinearLayout>

@@ -8,11 +8,11 @@
     <color name="colorPrimaryLight">#FFFFFF</color>
     <color name="colorPrimarySemiBlack">#B2000000</color>
 
-    <color name="colorTextPrimary">#000000</color>
+    <color name="colorTextDefault">#000000</color>
     <color name="colorTextMuted">#999999</color>
     <color name="colorTextLight">#FFFFFF</color>
     <color name="colorTextSuccess">#4caf50</color>
-
+    <color name="colorTextPrimary">#2196f3</color>
 
     <color name="colorDivider">#FFFFFF</color>
     <color name="colorDividerDark">#000000</color>

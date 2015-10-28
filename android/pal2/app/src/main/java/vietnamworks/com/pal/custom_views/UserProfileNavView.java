@@ -1,4 +1,4 @@
-package vietnamworks.com.pal.fragments;
+package vietnamworks.com.pal.custom_views;
 
 import android.content.Context;
 import android.os.Handler;
@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.activities.BaseActivity;
 
 /**
  * Created by duynk on 10/28/15.
@@ -54,6 +55,7 @@ public class UserProfileNavView extends LinearLayout {
             hasInit = true;
             updateStat(total_posts, avg_point, total_following);
         }
+        BaseActivity.applyFont(this);
     }
 
     private void initializeViews(Context context) {

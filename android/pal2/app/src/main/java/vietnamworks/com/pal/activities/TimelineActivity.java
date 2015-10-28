@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
-import vietnamworks.com.pal.fragments.UserProfileNavView;
+import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.services.FirebaseService;
 
 public class TimelineActivity extends BaseActivity {
@@ -113,7 +113,7 @@ public class TimelineActivity extends BaseActivity {
             public void run() {
                 closeDrawer();
             }
-        }, 1000);
+        }, 500);
     }
 
     public void onOpenRecentEvaluatedPost(View v) {
@@ -122,7 +122,7 @@ public class TimelineActivity extends BaseActivity {
             public void run() {
                 closeDrawer();
             }
-        }, 1000);
+        }, 500);
     }
 
     public void onLogout(View v) {
@@ -133,7 +133,7 @@ public class TimelineActivity extends BaseActivity {
                 openActivity(AuthActivity.class);
                 closeDrawer();
             }
-        }, 1000);
+        }, 500);
 
     }
 }

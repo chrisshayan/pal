@@ -12,11 +12,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/register_fail"
         android:id="@+id/textView2"
-        android:textColor="@color/colorTextMuted"
-        android:gravity="center" />
+        android:gravity="center"
+        style="@style/Text.Small.Muted" />
 
     <ImageView
         android:layout_width="fill_parent"
@@ -43,7 +42,8 @@
             android:text="@string/close"
             android:id="@+id/button3"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onCloseRegisterResultDialog" />
+            android:onClick="onCloseRegisterResultDialog"
+            style="@style/Text.Small" />
     </LinearLayout>
 
 

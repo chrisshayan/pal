@@ -34,8 +34,8 @@
             android:text="@string/skip"
             android:id="@+id/button"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:textColor="@color/colorTextLight"
-            android:onClick="onSkip" />
+            android:onClick="onSkip"
+            style="@style/Text.Small.Light" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -52,8 +52,8 @@
             android:text="@string/next"
             android:id="@+id/btn_next"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:textColor="@color/colorTextLight"
-            android:onClick="onNext" />
+            android:onClick="onNext"
+            style="@style/Text.Small.Light" />
     </LinearLayout>
 
 </LinearLayout>

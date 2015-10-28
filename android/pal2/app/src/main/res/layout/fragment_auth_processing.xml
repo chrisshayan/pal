@@ -23,7 +23,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/processing"
         android:id="@+id/textView4"
         android:layout_centerVertical="true"
@@ -31,7 +30,8 @@
         android:layout_alignStart="@+id/space"
         android:layout_alignBottom="@+id/space"
         android:gravity="center"
-        android:layout_marginTop="@dimen/base_padding_2x" />
+        android:layout_marginTop="@dimen/base_padding_2x"
+        style="@style/Text.Small.Muted" />
 
 
 
