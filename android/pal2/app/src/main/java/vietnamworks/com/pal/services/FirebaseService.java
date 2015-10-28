@@ -147,13 +147,17 @@ public class FirebaseService {
     }
 
     public static String GetUserProfileStringValue(String key, String default_value) {
+        String re = null;
         if (sInstance.userProfile != null && sInstance.userProfile.containsKey(key)) {
             Object obj = sInstance.userProfile.get(key);
             if (obj instanceof String) {
-                return (String)obj;
+                re =  (String)obj;
             }
         }
-        return default_value;
+        if (re == null || re.isEmpty()) {
+            re = default_value;
+        }
+        return re;
     }
 
     public static int GetUserProfileIntValue(String key, int default_value) {

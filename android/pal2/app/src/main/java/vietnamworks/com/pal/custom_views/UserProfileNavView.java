@@ -103,7 +103,6 @@ public class UserProfileNavView extends LinearLayout {
                     txtUserLevel.setText(level);
                     txtUserName.setText(name);
                     if (avatar != null && avatar.trim().length() > 0) {
-                        System.out.println(".... User avatar: " + avatar);
                         Picasso.with(getContext()).load(avatar).placeholder(R.drawable.ic_action_account_box).into(imgAvatar);
                     } else {
                         imgAvatar.setImageResource(R.drawable.ic_action_account_box);

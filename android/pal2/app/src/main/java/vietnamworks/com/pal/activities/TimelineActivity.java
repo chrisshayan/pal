@@ -52,7 +52,7 @@ public class TimelineActivity extends BaseActivity {
                     );
                     navHeaderView.updateProfile(
                             FirebaseService.GetUserProfileStringValue("display_name"),
-                            "Beginner",
+                            FirebaseService.GetUserProfileStringValue("level_name"),
                             FirebaseService.GetUserProfileStringValue("avatar")
                     );
                 }
