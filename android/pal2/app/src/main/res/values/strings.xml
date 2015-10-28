@@ -16,6 +16,7 @@
     <string name="skip">Skip</string>
     <string name="done">Done</string>
     <string name="next">Next</string>
+    <string name="go">Go</string>
 
     <!-- authentication screen!-->
     <string name="email_address">Email address</string>

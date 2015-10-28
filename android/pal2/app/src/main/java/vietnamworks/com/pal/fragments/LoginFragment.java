@@ -3,12 +3,16 @@ package vietnamworks.com.pal.fragments;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.activities.AuthActivity;
 import vietnamworks.com.pal.activities.BaseActivity;
 
 /**
@@ -29,6 +33,19 @@ public class LoginFragment extends BaseFragment {
 
         txtEmail = (EditText)rootView.findViewById(R.id.email);
         txtPassword = (EditText)rootView.findViewById(R.id.password);
+
+        txtPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((actionId == R.id.action_sign_in || actionId == EditorInfo.IME_NULL)) {
+                    if (event == null) {
+                        ((AuthActivity) getActivity()).onLogin(v);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
 
         return rootView;
     }

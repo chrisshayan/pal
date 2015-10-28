@@ -44,6 +44,8 @@
         android:id="@+id/password"
         android:textColor="@color/colorTextDefault"
         android:textColorHint="@color/colorTextMuted"
+        android:imeActionId="@+id/action_sign_in"
+        android:imeActionLabel="@string/login"
         android:hint="@string/password_placeholder" />
 
     <LinearLayout
