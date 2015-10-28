@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,9 @@ public class BaseActivity extends AppCompatActivity {
 
     static Toast toast;
 
+    private boolean isKeyboardShown;
+    private Rect screenRegion;
+
     public BaseActivity() {
         super();
         BaseActivity.sInstance = this;
@@ -63,6 +67,7 @@ public class BaseActivity extends AppCompatActivity {
 
         Bubblegum = Typeface.createFromAsset(getAssets(),"fonts/Bubblegum.ttf");
 
+        isKeyboardShown = false;
         final View activityRootView = getWindow().getDecorView().findViewById(android.R.id.content);
         activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -70,6 +75,8 @@ public class BaseActivity extends AppCompatActivity {
                 Rect r = new Rect();
                 getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
                 boolean isSoftKeyShown = r.height() < getScreenHeight()*0.8;
+                isKeyboardShown = isSoftKeyShown;
+                screenRegion = r;
                 onLayoutChanged(r, isSoftKeyShown);
             }
         });
@@ -104,7 +111,13 @@ public class BaseActivity extends AppCompatActivity {
             toast.cancel();
             toast = null;
         }
+
         toast = Toast.makeText(sInstance.getBaseContext(),message, Toast.LENGTH_SHORT);
+        if (sInstance.isKeyboardShown) {
+            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, getScreenHeight() - getStatusBarHeight() - sInstance.screenRegion.height());
+        } else {
+            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        }
         toast.show();
     }
 
@@ -217,6 +230,14 @@ public class BaseActivity extends AppCompatActivity {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public void showKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(view, 0);
         }
     }
 
