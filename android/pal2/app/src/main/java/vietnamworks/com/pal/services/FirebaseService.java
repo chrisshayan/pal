@@ -3,9 +3,13 @@ package vietnamworks.com.pal.services;
 import android.content.Context;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import vietnamworks.com.pal.configurations.FirebaseSettings;
@@ -25,11 +29,27 @@ public class FirebaseService {
     private OnConnectStatusChanged onConnectStatusChangedListener;
     private static FirebaseService sInstance = new FirebaseService();
 
+
+    public interface UserProfileListener {
+        void onChanged(HashMap<String, Object> data);
+    }
+    private UserProfileListener onUserProfileDataChanged;
+
+    Firebase profileRef;
+    HashMap<String, Object> userProfile;
+
     public FirebaseService() {
     }
 
-    public void SetOnConnectStatusChangedListener(OnConnectStatusChanged listener) {
-        onConnectStatusChangedListener = listener;
+    public static void SetOnConnectStatusChangedListener(OnConnectStatusChanged listener) {
+        sInstance.onConnectStatusChangedListener = listener;
+    }
+
+    public static void SetUserProfileListener(UserProfileListener listener) {
+        sInstance.onUserProfileDataChanged = listener;
+        if (sInstance.userProfile != null && listener != null) {
+            listener.onChanged(sInstance.userProfile);
+        }
     }
 
     public static void init() {
@@ -100,6 +120,67 @@ public class FirebaseService {
         return newRef(str.toString());
     }
 
+    private ValueEventListener publicProfileListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            userProfile = dataSnapshot.getValue(HashMap.class);
+            if (onUserProfileDataChanged != null) {
+                onUserProfileDataChanged.onChanged(userProfile);
+            }
+        }
+
+        @Override
+        public void onCancelled(FirebaseError firebaseError) {
+
+        }
+    };
+
+    private void listenToProfile() {
+        if (profileRef == null) {
+            profileRef = newRef(Arrays.asList("profiles_pub", authData.getUid()));
+            profileRef.addValueEventListener(publicProfileListener);
+        }
+    }
+
+    public static String GetUserProfileStringValue(String key) {
+        return GetUserProfileStringValue(key, "");
+    }
+
+    public static String GetUserProfileStringValue(String key, String default_value) {
+        if (sInstance.userProfile != null && sInstance.userProfile.containsKey(key)) {
+            Object obj = sInstance.userProfile.get(key);
+            if (obj instanceof String) {
+                return (String)obj;
+            }
+        }
+        return default_value;
+    }
+
+    public static int GetUserProfileIntValue(String key, int default_value) {
+        if (sInstance.userProfile != null && sInstance.userProfile.containsKey(key)) {
+            Object obj = sInstance.userProfile.get(key);
+            if (obj instanceof Long) {
+                return ((Long)obj).intValue();
+            } else if (obj instanceof Integer) {
+                return (int)obj;
+            }
+        }
+        return default_value;
+    }
+
+    public static float GetUserProfileFloatValue(String key, float default_value) {
+        if (sInstance.userProfile != null && sInstance.userProfile.containsKey(key)) {
+            Object obj = sInstance.userProfile.get(key);
+            if (obj instanceof Float) {
+                return (float)obj;
+            } else if (obj instanceof Double) {
+                return ((Double)obj).floatValue();
+            }
+        }
+        return default_value;
+    }
+
+
     public static void login(String email, String password, final AsyncCallback callback) {
         newRef().authWithPassword(email, password, new Firebase.AuthResultHandler() {
             @Override
@@ -108,6 +189,7 @@ public class FirebaseService {
                 if (callback != null) {
                     callback.onSuccess(FirebaseService.context,  null);
                 }
+                sInstance.listenToProfile();
             }
 
             @Override
@@ -123,6 +205,7 @@ public class FirebaseService {
         AuthData authData = newRef().getAuth();
         if (authData != null) {
             FirebaseService.authData = authData;
+            sInstance.listenToProfile();
             return true;
         } else {
             return false;
@@ -131,5 +214,12 @@ public class FirebaseService {
 
     public static void logout() {
         newRef().unauth();
+        if (sInstance.profileRef != null) {
+            sInstance.profileRef.removeEventListener(sInstance.publicProfileListener);
+            sInstance.profileRef = null;
+            sInstance.userProfile = null;
+            sInstance.onUserProfileDataChanged = null;
+        }
+
     }
 }

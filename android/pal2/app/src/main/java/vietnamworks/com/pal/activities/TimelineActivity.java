@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.services.FirebaseService;
@@ -33,11 +35,29 @@ public class TimelineActivity extends BaseActivity {
 
 
         navHeaderView = UserProfileNavView.create(this, 0, 0, 0);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.addHeaderView(navHeaderView);
 
         setNumberOfUnreadPostUI(200);
         setNumberOfUnreadEvaluatedPostUI(0);
+
+        FirebaseService.SetUserProfileListener(new FirebaseService.UserProfileListener() {
+            @Override
+            public void onChanged(HashMap<String, Object> data) {
+                if (navHeaderView != null) {
+                    navHeaderView.updateStat(
+                            FirebaseService.GetUserProfileIntValue("total_posts", 0),
+                            FirebaseService.GetUserProfileFloatValue("avg_points", 0),
+                            FirebaseService.GetUserProfileIntValue("total_following", 0)
+                    );
+                    navHeaderView.updateProfile(
+                            FirebaseService.GetUserProfileStringValue("display_name"),
+                            "Beginner",
+                            FirebaseService.GetUserProfileStringValue("avatar")
+                    );
+                }
+            }
+        });
     }
 
     @Override
@@ -71,6 +91,13 @@ public class TimelineActivity extends BaseActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        FirebaseService.SetUserProfileListener(null);
+    }
+
 
     private void closeDrawer() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

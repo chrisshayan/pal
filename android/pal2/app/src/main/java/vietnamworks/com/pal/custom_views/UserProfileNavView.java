@@ -5,8 +5,11 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
@@ -15,7 +18,8 @@ import vietnamworks.com.pal.activities.BaseActivity;
  * Created by duynk on 10/28/15.
  */
 public class UserProfileNavView extends LinearLayout {
-    TextView txtTotalPosts, txtAvgPoints, txtTotalFollowing;
+    TextView txtTotalPosts, txtAvgPoints, txtTotalFollowing, txtUserName, txtUserLevel;
+    ImageView imgAvatar;
     private boolean hasInit = false;
     int total_posts;
     float avg_point;
@@ -52,8 +56,12 @@ public class UserProfileNavView extends LinearLayout {
             txtTotalPosts = (TextView) findViewById(R.id.total_posts);
             txtAvgPoints = (TextView) findViewById(R.id.avg_points);
             txtTotalFollowing = (TextView) findViewById(R.id.total_following);
+            txtUserLevel = (TextView) findViewById(R.id.user_level);
+            txtUserName = (TextView) findViewById(R.id.username);
+            imgAvatar = (ImageView) findViewById(R.id.avatar);
             hasInit = true;
             updateStat(total_posts, avg_point, total_following);
+            updateProfile("", "", "");
         }
         BaseActivity.applyFont(this);
     }
@@ -81,6 +89,25 @@ public class UserProfileNavView extends LinearLayout {
                     }
                     String txt_follow = total_following + "";
                     txtTotalFollowing.setText(txt_follow);
+                }
+            });
+        }
+    }
+
+    public void updateProfile(final String name, final  String level, final String avatar) {
+        if (hasInit) {
+            final int pts = Math.round(avg_point * 10);
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    txtUserLevel.setText(level);
+                    txtUserName.setText(name);
+                    if (avatar != null && avatar.trim().length() > 0) {
+                        System.out.println(".... User avatar: " + avatar);
+                        Picasso.with(getContext()).load(avatar).placeholder(R.drawable.ic_action_account_box).into(imgAvatar);
+                    } else {
+                        imgAvatar.setImageResource(R.drawable.ic_action_account_box);
+                    }
                 }
             });
         }
