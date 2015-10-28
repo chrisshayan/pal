@@ -53,7 +53,6 @@ public class AuthActivity extends BaseActivity {
         setContentView(R.layout.activity_auth);;
 
         applyFont((TextView) findViewById(R.id.app_title), Bubblegum);
-        applyFont((TextView) findViewById(R.id.app_title_alt), Bubblegum);
 
         loginFragment = (LoginFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_login);
         registerFragment = (RegisterFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_register);
@@ -68,8 +67,13 @@ public class AuthActivity extends BaseActivity {
         setTimeout(new Runnable() {
             @Override
             public void run() {
-                findViewById(R.id.app_title).animate().alpha(isSoftKeyShown ? 0.0f : 1.0f).setDuration(100).start();
-                findViewById(R.id.app_title_alt).animate().alpha(isSoftKeyShown ? 1.0f : 0.0f).setDuration(100).start();
+                View v =  findViewById(R.id.app_title);
+                float offset_y = v.getY();
+                v.animate()
+                        .scaleX(isSoftKeyShown ? 0.5f : 1.0f)
+                        .scaleY(isSoftKeyShown ? 0.5f : 1.0f)
+                        .translationY(isSoftKeyShown ? -offset_y/2 : 0f)
+                        .setDuration(100).start();
             }
         });
         loginFragment.onLayoutChanged();
