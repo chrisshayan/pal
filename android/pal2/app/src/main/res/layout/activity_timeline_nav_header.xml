@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark" android:orientation="vertical"
-    android:gravity="bottom|center">
+    android:gravity="center">
 
     <ImageView android:layout_width="@dimen/nav_avatar_size" android:layout_height="@dimen/nav_avatar_size"
         android:id="@+id/imageView"
@@ -25,20 +25,20 @@
     <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
         android:text="Beginner" android:id="@+id/textView"
         android:gravity="center"
-        android:paddingBottom="@dimen/base_padding_4x"
+        android:paddingBottom="@dimen/base_padding_2x"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/colorTextLight" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:baselineAligned="false">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
@@ -64,7 +64,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
@@ -90,7 +90,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView

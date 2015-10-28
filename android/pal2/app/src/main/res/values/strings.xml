@@ -42,8 +42,13 @@
     <string name="posted">Posted</string>
     <string name="avg_point">Avg. points</string>
     <string name="following">Following</string>
+
+    <string name="all_posts">All posts</string>
+    <string name="recent_evaluated_post">Recent evaluated posts</string>
+    <string name="logout">Logout</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
+
 </resources>
