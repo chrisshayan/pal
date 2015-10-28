@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark" android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="bottom|center">
 
     <ImageView android:layout_width="@dimen/nav_avatar_size" android:layout_height="@dimen/nav_avatar_size"
         android:id="@+id/imageView"
@@ -27,7 +27,8 @@
         android:gravity="center"
         android:paddingBottom="@dimen/base_padding_2x"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/colorTextLight" />
+        android:textColor="@color/colorTextLight"
+        android:textSize="@dimen/font_xs" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -49,14 +50,15 @@
                 android:id="@+id/textView3"
                 android:gravity="center"
                 android:textColor="@color/colorTextLight"
-                android:padding="@dimen/base_padding" />
+                android:padding="@dimen/base_padding"
+                android:textSize="@dimen/font_xs" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="0"
-                android:id="@+id/textView5"
+                android:id="@+id/total_posts"
                 android:gravity="center"
                 android:textColor="@color/colorTextLight" />
         </LinearLayout>
@@ -75,14 +77,15 @@
                 android:id="@+id/textView6"
                 android:gravity="center"
                 android:textColor="@color/colorTextLight"
-                android:padding="@dimen/base_padding" />
+                android:padding="@dimen/base_padding"
+                android:textSize="@dimen/font_xs" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="0"
-                android:id="@+id/textView7"
+                android:id="@+id/avg_points"
                 android:gravity="center"
                 android:textColor="@color/colorTextLight" />
         </LinearLayout>
@@ -101,16 +104,18 @@
                 android:id="@+id/textView8"
                 android:gravity="center"
                 android:textColor="@color/colorTextLight"
-                android:padding="@dimen/base_padding" />
+                android:padding="@dimen/base_padding"
+                android:textSize="@dimen/font_xs" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="0"
-                android:id="@+id/textView9"
+                android:id="@+id/total_following"
                 android:gravity="center"
-                android:textColor="@color/colorTextLight" />
+                android:textColor="@color/colorTextLight"
+                android:textIsSelectable="false" />
         </LinearLayout>
     </LinearLayout>
 

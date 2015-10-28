@@ -8,23 +8,36 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
-    <style name = "SplashScreenTheme" parent = "Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 
     <style name="fab_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
+
+
+    <style name="TextAppearance.xs" parent="@android:style/TextAppearance.Small">
+        <item name="android:textSize">@dimen/font_xs</item>
+    </style>
+
+    <style name="TextAppearance.Badge" parent="@style/TextAppearance.xs">
+        <item name="android:textAppearance">@style/TextAppearance.xs</item>
+        <item name="android:paddingTop">@dimen/base_padding_haft</item>
+        <item name="android:paddingBottom">@dimen/base_padding_haft</item>
+        <item name="android:paddingLeft">@dimen/base_padding</item>
+        <item name="android:paddingRight">@dimen/base_padding</item>
+        <item name="android:minWidth">@dimen/badge_min_width</item>
+        <item name="android:background">@drawable/shape_badge</item>
+        <item name="android:textColor">@color/colorTextLight</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

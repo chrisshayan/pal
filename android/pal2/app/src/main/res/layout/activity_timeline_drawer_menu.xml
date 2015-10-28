@@ -37,15 +37,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="1"
             android:id="@+id/num_of_posts"
-            android:background="@drawable/shape_badge"
-            android:padding="@dimen/base_padding"
             android:layout_marginRight="@dimen/base_padding"
-            android:minWidth="@dimen/nav_menu_item_badge_min_height"
-            android:textColor="@color/colorTextLight"
-            android:gravity="center" />
+            style="@style/TextAppearance.Badge" />
     </LinearLayout>
 
     <LinearLayout
@@ -79,22 +74,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="1"
             android:id="@+id/num_of_evaluated_post"
-            android:background="@drawable/shape_badge"
-            android:padding="@dimen/base_padding"
             android:layout_marginRight="@dimen/base_padding"
-            android:minWidth="@dimen/nav_menu_item_badge_min_height"
-            android:textColor="@color/colorTextLight"
-            android:gravity="center" />
+            style="@style/TextAppearance.Badge" />
     </LinearLayout>
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="@color/colorDividerDark"
-        android:alpha="0.25"></View>
+        android:alpha="0.25"/>
 
     <LinearLayout
         android:orientation="horizontal"

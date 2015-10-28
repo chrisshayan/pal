@@ -10,8 +10,7 @@
 
     <android.support.design.widget.NavigationView android:id="@+id/nav_view"
         android:layout_width="wrap_content" android:layout_height="match_parent"
-        android:layout_gravity="start" android:fitsSystemWindows="true"
-        app:headerLayout="@layout/activity_timeline_nav_header">
+        android:layout_gravity="start" android:fitsSystemWindows="true">
         <include layout="@layout/activity_timeline_drawer_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -12,11 +12,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.fragments.UserProfileNavView;
 import vietnamworks.com.pal.services.FirebaseService;
 
-public class TimelineActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class TimelineActivity extends BaseActivity {
 
+    UserProfileNavView navHeaderView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +31,10 @@ public class TimelineActivity extends BaseActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+
+        navHeaderView = UserProfileNavView.create(this, 0, 0, 0);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.addHeaderView(navHeaderView);
 
         setNumberOfUnreadPostUI(200);
         setNumberOfUnreadEvaluatedPostUI(0);
@@ -67,15 +70,6 @@ public class TimelineActivity extends BaseActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     private void closeDrawer() {
