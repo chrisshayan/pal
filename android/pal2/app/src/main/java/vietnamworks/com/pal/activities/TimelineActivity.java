@@ -21,12 +21,12 @@ import java.util.HashMap;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.common.Utils;
-import vietnamworks.com.pal.configurations.Application;
-import vietnamworks.com.pal.configurations.FileUploadService;
+import vietnamworks.com.pal.configurations.AppConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.fragments.ComposerFragment;
 import vietnamworks.com.pal.fragments.TimelineFragment;
 import vietnamworks.com.pal.models.AppModel;
+import vietnamworks.com.pal.services.FileUploadService;
 import vietnamworks.com.pal.services.FirebaseService;
 
 public class TimelineActivity extends BaseActivity {
@@ -270,10 +270,10 @@ public class TimelineActivity extends BaseActivity {
         } else {
             String post_id = AppModel.posts.addAudioAsync(subject, topic, message);
             String server_file_path = Utils.getAudioServerFileName(FirebaseService.authData.getUid(), post_id);
-            FileUploadService.Upload(
+            FileUploadService.upload(
                     this,
                     post_id,
-                    Application.AudioUploadURL,
+                    AppConfig.AudioUploadURL,
                     audio,
                     server_file_path);
         }

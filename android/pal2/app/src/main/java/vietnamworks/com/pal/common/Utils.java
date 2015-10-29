@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Random;
 
 import vietnamworks.com.pal.activities.BaseActivity;
-import vietnamworks.com.pal.configurations.Application;
+import vietnamworks.com.pal.configurations.AppConfig;
 
 /**
  * Created by duynk on 10/27/15.
@@ -96,11 +96,11 @@ public class Utils {
     }
 
     public static String getSampleRecordPath() {
-        return getHomeDir() + "/" + currentSampleRecordSeed + "_" + Application.SampleRecorderFilename;
+        return getHomeDir() + "/" + currentSampleRecordSeed + "_" + AppConfig.SampleRecorderFilename;
     }
 
     public static String getAudioServerFileName(String user_id, String post_id) {
-        return "user_" + user_id + "_" + post_id + "_" + System.currentTimeMillis() + Application.RecorderFileExt;
+        return "user_" + user_id + "_" + post_id + "_" + System.currentTimeMillis() + AppConfig.RecorderFileExt;
     }
 
     public static String padRight(String s, int n) {
