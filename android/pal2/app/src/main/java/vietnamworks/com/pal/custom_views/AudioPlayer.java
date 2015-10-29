@@ -33,6 +33,11 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
     ImageButton btnPlay, btnRemove;
     ProgressBar progressBar;
     TextView txtTimer;
+    private AudioPlayerCallback callback;
+
+    public interface AudioPlayerCallback {
+        void onRemoveAudio();
+    }
 
     public AudioPlayer(Context context) {
         super(context);
@@ -83,7 +88,9 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
             btnRemove.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if (callback != null) {
+                        callback.onRemoveAudio();
+                    }
                 }
             });
         }
@@ -154,7 +161,7 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
             @Override
             public void run() {
                 btnPlay.setImageResource(R.drawable.ic_av_play_circle_outline);
-                progressBar.setProgress((int) Math.min(currentPosition / duration, 100));
+                progressBar.setProgress(0);
             }
         });
     }
@@ -190,16 +197,18 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
                         BaseActivity.sInstance.setTimeout(new Runnable() {
                             @Override
                             public void run() {
-                                currentPosition++;
                                 int percent = 0;
                                 if (duration > 0) {
                                     percent = (int) Math.min(currentPosition * 100f / duration, 100);
                                 }
+                                currentPosition++;
                                 progressBar.setProgress(percent);
                             }
                         });
 
-                    };
+                    }
+
+                    ;
                 }, 1000, 1000);
             }
         });
@@ -217,5 +226,9 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
                 txtTimer.setText("__:__");
             }
         });
+    }
+
+    public void setAudioPlayerCallback(AudioPlayerCallback callback) {
+        this.callback = callback;
     }
 }

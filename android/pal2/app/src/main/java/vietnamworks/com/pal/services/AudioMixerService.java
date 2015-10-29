@@ -66,7 +66,9 @@ public class AudioMixerService {
 
     private void _stop(AudioMixerCallback sender) {
         if (mPlayer == null) {
-            sender.onMixerStop();
+            if (sender != null ) {
+                sender.onMixerStop();
+            }
         } else {
             try {
                 mPlayer.stop();
@@ -75,7 +77,9 @@ public class AudioMixerService {
             } catch (Exception e) {
 
             }
-            sender.onMixerStop();
+            if (sender != null ) {
+                sender.onMixerStop();
+            }
             currentAudioSubscriber = null;
         }
     }
@@ -86,5 +90,9 @@ public class AudioMixerService {
 
     public static void stop(AudioMixerCallback callback) {
         sInstance._stop(callback);
+    }
+
+    public static void stop() {
+        sInstance._stop(null);
     }
 }

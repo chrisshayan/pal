@@ -6,6 +6,9 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import vietnamworks.com.pal.activities.BaseActivity;
+import vietnamworks.com.pal.configurations.Application;
+
 /**
  * Created by duynk on 10/27/15.
  */
@@ -41,5 +44,24 @@ public class Utils {
 
     public static boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+
+    public static String getHomeDir() {
+        return BaseActivity.applicationDataPath;
+    }
+
+    public static String currentSampleRecordSeed = System.currentTimeMillis() + "";
+
+    public static void newSampleRecord() {
+        currentSampleRecordSeed = System.currentTimeMillis() + "";
+    }
+
+    public static String getSampleRecordPath() {
+        return getHomeDir() + "/" + currentSampleRecordSeed + "_" + Application.SampleRecorderFilename;
+    }
+
+    public static String getAudioServerFileName(String user_id, String post_id) {
+        return "user_" + user_id + "_" + post_id + "_" + System.currentTimeMillis() + Application.RecorderFileExt;
     }
 }
