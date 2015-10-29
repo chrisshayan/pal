@@ -7,12 +7,10 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -86,6 +84,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        this.moveTaskToBack(true);
+    }
+
+    /*
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
@@ -95,6 +99,7 @@ public class BaseActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+    */
 
     @Override
     protected void onDestroy() {
@@ -181,13 +186,28 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void openFragment(android.support.v4.app.Fragment f, int holder_id, boolean addToBackStack) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(holder_id, f);
+    public void pushFragment(android.support.v4.app.Fragment f, int holder_id, boolean addToBackStack) {
         if (addToBackStack) {
-            transaction.addToBackStack(null);
+            getSupportFragmentManager().beginTransaction().add(holder_id, f).addToBackStack(null).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(holder_id, f).commit();
         }
-        transaction.commit();
+    }
+
+    public void pushFragment(android.support.v4.app.Fragment f, int holder_id) {
+        pushFragment(f, holder_id, true);
+    }
+
+    public void openFragment(android.support.v4.app.Fragment f, int holder_id, boolean addToBackStack) {
+        if (addToBackStack) {
+            getSupportFragmentManager().beginTransaction().replace(holder_id, f).addToBackStack(null).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(holder_id, f).commit();
+        }
+    }
+
+    public void openFragment(android.support.v4.app.Fragment f, int holder_id) {
+        openFragment(f, holder_id, false);
     }
 
     public void openActivity(Class<?> cls) {
@@ -205,10 +225,6 @@ public class BaseActivity extends AppCompatActivity {
     public void openActivity(Class<?> cls, boolean withHistory) {
         Intent intent = new Intent(BaseActivity.sInstance, cls);
         startActivity(intent);
-    }
-
-    public void openFragment(android.support.v4.app.Fragment f, int holder_id) {
-        openFragment(f, holder_id, false);
     }
 
     public void showActionBar() {

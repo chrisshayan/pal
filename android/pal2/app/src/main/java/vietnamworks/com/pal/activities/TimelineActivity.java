@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+
 import java.util.HashMap;
 
 import vietnamworks.com.pal.R;
@@ -29,7 +31,7 @@ public class TimelineActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        openFragment(new TimelineFragment(), R.id.fragment_holder);
+        pushFragment(new TimelineFragment(), R.id.fragment_holder);
 
         //drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -71,9 +73,12 @@ public class TimelineActivity extends BaseActivity {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }
+
     }
 
     @Override
@@ -171,7 +176,13 @@ public class TimelineActivity extends BaseActivity {
     }
 
     public void onOpenSaySomethingComposer(View v) {
-        openFragment(new ComposerFragment(), R.id.fragment_holder, true);
+        ((FloatingActionsMenu)findViewById(R.id.multiple_actions)).collapse();
+        setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                pushFragment(new ComposerFragment(), R.id.fragment_holder);
+            }
+        }, 500);
     }
 
     public void onOpenChallengeList(View v) {
