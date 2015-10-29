@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Pal</string>
+    <string name="title_timeline">Timeline</string>
+    <string name="title_composer">Composer</string>
 
     <string-array name="tutor_header">
         <item>Learn English for Free</item>
@@ -39,7 +41,7 @@
     <string name="processing">Processing</string>
     <string name="title_activity_timeline">TimelineActivity</string>
 
-    <!--nav-->
+    <!--drawer-->
     <string name="posted">Posted</string>
     <string name="avg_point">Avg. points</string>
     <string name="following">Following</string>

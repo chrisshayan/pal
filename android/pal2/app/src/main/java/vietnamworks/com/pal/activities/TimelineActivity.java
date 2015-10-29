@@ -138,6 +138,12 @@ public class TimelineActivity extends BaseActivity {
                 item.setVisible(f != null && f instanceof ComposerFragment);
             }
         }
+
+        if (f instanceof ComposerFragment) {
+            getSupportActionBar().setTitle(R.string.title_composer);
+        } else if (f instanceof  TimelineFragment) {
+            getSupportActionBar().setTitle(R.string.title_timeline);
+        }
     }
 
     private void closeDrawer() {
