@@ -180,7 +180,7 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
                 String _min = (min<10)?"0"+min:min+"";
                 String _sec = (sec<10)?"0"+sec:sec+"";
                 String time = _min + ":" + _sec;
-                btnPlay.setImageResource(R.drawable.ic_av_pause_circle_outline);
+                btnPlay.setImageResource(R.drawable.ic_av_stop_circle_outline);
                 txtTimer.setText(time);
 
                 if (mTimer != null) {
@@ -222,7 +222,7 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
         BaseActivity.sInstance.setTimeout(new Runnable() {
             @Override
             public void run() {
-                btnPlay.setImageResource(R.drawable.ic_av_pause_circle_outline);
+                btnPlay.setImageResource(R.drawable.ic_av_stop_circle_outline);
                 txtTimer.setText("__:__");
             }
         });
