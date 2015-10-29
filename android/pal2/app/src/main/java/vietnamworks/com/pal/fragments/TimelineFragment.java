@@ -17,7 +17,7 @@ public class TimelineFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout containing a title and body text.
         ViewGroup rootView = (ViewGroup) inflater
-                .inflate(R.layout.activity_timeline_content, container, false);
+                .inflate(R.layout.fragment_timeline_content, container, false);
 
         BaseActivity.applyFont(rootView);
         return rootView;
