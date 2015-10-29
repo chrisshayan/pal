@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context="vietnamworks.com.pal.activities.TimelineActivity">
 
     <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
@@ -16,48 +16,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/activity_timeline_content" />
-
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/multiple_actions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_addButtonColorNormal="@color/colorPrimaryDark"
-            fab:fab_addButtonColorPressed="@color/colorPrimary"
-            fab:fab_addButtonPlusIconColor="@color/colorTextLight"
-            fab:fab_labelStyle="@style/fab_labels_style"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true">
-
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_a"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/colorPrimaryDark"
-                fab:fab_title="Say something"
-                fab:fab_colorPressed="@color/colorPrimary"
-                fab:fab_icon="@drawable/ic_communication_chat"
-                fab:fab_size="mini"/>
-
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_b"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_colorNormal="@color/colorPrimaryDark"
-                fab:fab_title="Pick up a challenge"
-                fab:fab_colorPressed="@color/colorPrimary"
-                fab:fab_icon="@drawable/ic_editor_border_color"
-                fab:fab_size="mini"/>
-
-
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
-    </RelativeLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_holder"/>
+</LinearLayout>

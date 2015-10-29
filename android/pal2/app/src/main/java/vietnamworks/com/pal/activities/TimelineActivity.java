@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
+import vietnamworks.com.pal.fragments.TimelineFragment;
 import vietnamworks.com.pal.services.FirebaseService;
 
 public class TimelineActivity extends BaseActivity {
@@ -27,13 +28,16 @@ public class TimelineActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        openFragment(new TimelineFragment(), R.id.fragment_holder);
+
+        //drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
+        //drawer -- header
         navHeaderView = UserProfileNavView.create(this, 0, 0, 0);
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.addHeaderView(navHeaderView);
@@ -41,6 +45,7 @@ public class TimelineActivity extends BaseActivity {
         setNumberOfUnreadPostUI(200);
         setNumberOfUnreadEvaluatedPostUI(0);
 
+        //listen to user profile changed then update drawer
         FirebaseService.SetUserProfileListener(new FirebaseService.UserProfileListener() {
             @Override
             public void onChanged(HashMap<String, Object> data) {
