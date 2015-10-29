@@ -12,14 +12,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alexbbb.uploadservice.AbstractUploadServiceReceiver;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.common.Utils;
+import vietnamworks.com.pal.configurations.Application;
+import vietnamworks.com.pal.configurations.FileUploadService;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.fragments.ComposerFragment;
 import vietnamworks.com.pal.fragments.TimelineFragment;
+import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.services.FirebaseService;
 
 public class TimelineActivity extends BaseActivity {
@@ -106,6 +113,13 @@ public class TimelineActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_send) {
+            Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+            if (f instanceof ComposerFragment) {
+                if (submitAudioTask((ComposerFragment)f)) {
+                    onBackPressed();
+                }
+            }
+
             return true;
         } else if (id == android.R.id.home) {
             int deep = getSupportFragmentManager().getBackStackEntryCount();
@@ -126,6 +140,18 @@ public class TimelineActivity extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         FirebaseService.SetUserProfileListener(null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uploadReceiver.register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        uploadReceiver.unregister(this);
     }
 
     private void updateToolbar() {
@@ -224,4 +250,58 @@ public class TimelineActivity extends BaseActivity {
     public void onOpenChallengeList(View v) {
         //TODO: open challenge list
     }
+
+    private boolean submitAudioTask(ComposerFragment f) {
+        String audio = f.getAudioPath();
+        String subject = f.getSubject();
+        String topic = f.getTopic();
+        String message = f.getMessage().trim();
+
+        if (audio == null && message.length() == 0) {
+            toast(R.string.empty_message);
+            return false;
+        }
+
+        if (audio == null) { //text
+            AppModel.posts.addText(subject, topic, message);
+        } else {
+            String post_id = AppModel.posts.addAudioAsync(subject, topic, message);
+            String server_file_path = Utils.getAudioServerFileName(FirebaseService.authData.getUid(), post_id);
+            FileUploadService.Upload(
+                    this,
+                    post_id,
+                    Application.AudioUploadURL,
+                    Utils.getSampleRecordPath(),
+                    server_file_path);
+        }
+        toast(R.string.create_post_successful);
+        return true;
+    }
+
+    private final AbstractUploadServiceReceiver uploadReceiver =
+            new AbstractUploadServiceReceiver() {
+                @Override
+                public void onProgress(String uploadId, int progress) {
+                    System.out.println("The progress of the upload with ID " + uploadId + " is: " + progress);
+                }
+
+                @Override
+                public void onError(String uploadId, Exception exception) {
+                    System.out.println("Error in upload with ID: " + uploadId + ". " + exception.getLocalizedMessage() + " " + exception);
+                    AppModel.posts.raiseError(uploadId);
+                }
+
+                @Override
+                public void onCompleted(String uploadId,
+                                        int serverResponseCode,
+                                        String serverResponseMessage) {
+                    try {
+                        JSONObject obj = new JSONObject(serverResponseMessage);
+                        AppModel.posts.updateAudioLink(uploadId, obj.getString("url"));
+                    }catch (Exception E) {
+                        AppModel.posts.raiseError(uploadId);
+                        E.printStackTrace();
+                    }
+                }
+            };
 }

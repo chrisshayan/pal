@@ -61,5 +61,7 @@
 
     <!--composer-->
     <string name="composer_hint">Enter your idea here</string>
+    <string name="create_post_successful">Your post has been saved</string>
+    <string name="empty_message">Nothing to post</string>
 
 </resources>

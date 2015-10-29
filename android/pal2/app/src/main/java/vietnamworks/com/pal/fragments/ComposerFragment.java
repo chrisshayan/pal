@@ -32,7 +32,7 @@ public class ComposerFragment extends BaseFragment {
     private TextView txtSubject;
     private EditText inputMessage;
 
-    public String GetAudioPath() {
+    public String getAudioPath() {
         if (hasAudio) {
             return Utils.getSampleRecordPath();
         } else {
@@ -146,5 +146,25 @@ public class ComposerFragment extends BaseFragment {
             });
         }
         return this;
+    }
+
+    public String getTopic() {
+        if (topicRef == null) {
+            return "";
+        } else {
+            return topicRef;
+        }
+    }
+
+    public String getSubject() {
+        if (postTitle == null) {
+            return "";
+        } else {
+            return postTitle;
+        }
+    }
+
+    public String getMessage() {
+        return inputMessage.getText().toString();
     }
 }
