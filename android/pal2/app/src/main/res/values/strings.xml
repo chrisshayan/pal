@@ -57,4 +57,7 @@
     <!--action bar-->
     <string name="send">Send</string>
 
+    <!--composer-->
+    <string name="composer_hint">Enter your idea here</string>
+
 </resources>

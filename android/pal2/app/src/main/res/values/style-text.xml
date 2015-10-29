@@ -68,8 +68,8 @@
 
 
     <style name="Text.Badge" parent="@style/Text.ExtraSmall.Light">
-        <item name="android:paddingTop">@dimen/base_padding_haft</item>
-        <item name="android:paddingBottom">@dimen/base_padding_haft</item>
+        <item name="android:paddingTop">@dimen/base_padding_half</item>
+        <item name="android:paddingBottom">@dimen/base_padding_half</item>
         <item name="android:paddingLeft">@dimen/base_padding</item>
         <item name="android:paddingRight">@dimen/base_padding</item>
         <item name="android:minWidth">@dimen/badge_min_width</item>

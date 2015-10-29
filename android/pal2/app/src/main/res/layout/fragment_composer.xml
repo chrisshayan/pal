@@ -23,6 +23,42 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true" />
+
     </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/base_padding_4x">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/textView5" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorDividerDark"
+            android:alpha="0.5"
+            android:layout_marginTop="@dimen/base_padding_2x"
+            android:layout_marginBottom="@dimen/base_padding_2x"></View>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/editText"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
+            android:background="#00000000"
+            android:hint="@string/composer_hint"
+            android:gravity="top" />
+
+        <vietnamworks.com.pal.custom_views.AudioPlayer android:id="@+id/player" android:layout_height="wrap_content" android:layout_width="wrap_content">
+        </vietnamworks.com.pal.custom_views.AudioPlayer>
+    </LinearLayout>
 
 </FrameLayout>

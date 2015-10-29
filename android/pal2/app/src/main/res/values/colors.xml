@@ -16,5 +16,6 @@
 
     <color name="colorDivider">#FFFFFF</color>
     <color name="colorDividerDark">#000000</color>
+    <color name="colorDividerDarkAlpha">#33000000</color>
 
 </resources>

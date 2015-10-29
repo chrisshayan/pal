@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
 
-    <dimen name="base_padding_haft">2dp</dimen>
+    <dimen name="base_padding_half">2dp</dimen>
     <dimen name="base_padding">4dp</dimen>
     <dimen name="base_padding_2x">8dp</dimen>
     <dimen name="base_padding_4x">16dp</dimen>

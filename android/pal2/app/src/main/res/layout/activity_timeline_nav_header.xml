@@ -17,7 +17,7 @@
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:text="Demi Silverstone"
         android:gravity="center"
-        android:padding="@dimen/base_padding_haft"
+        android:padding="@dimen/base_padding_half"
         style="@style/Text.Medium.Light"
         android:id="@+id/username" />
 
