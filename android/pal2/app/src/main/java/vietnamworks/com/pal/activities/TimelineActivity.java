@@ -2,6 +2,7 @@ package vietnamworks.com.pal.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,6 +25,9 @@ import vietnamworks.com.pal.services.FirebaseService;
 public class TimelineActivity extends BaseActivity {
 
     UserProfileNavView navHeaderView;
+    DrawerLayout drawer;
+    ActionBarDrawerToggle toggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,13 +35,8 @@ public class TimelineActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        pushFragment(new TimelineFragment(), R.id.fragment_holder);
-
-        //drawer
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, 0, 0);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_image_dehaze);
 
         //drawer -- header
         navHeaderView = UserProfileNavView.create(this, 0, 0, 0);
@@ -65,6 +64,16 @@ public class TimelineActivity extends BaseActivity {
                 }
             }
         });
+
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                int deep = getSupportFragmentManager().getBackStackEntryCount();
+                getSupportActionBar().setHomeAsUpIndicator(deep == 0 ? R.drawable.ic_image_dehaze : R.drawable.ic_hardware_keyboard_backspace);
+            }
+        });
+
+        openFragment(new TimelineFragment(), R.id.fragment_holder);
     }
 
     @Override
@@ -96,6 +105,16 @@ public class TimelineActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == android.R.id.home) {
+            int deep = getSupportFragmentManager().getBackStackEntryCount();
+            if (deep == 0) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                drawer.openDrawer(navigationView);
+            } else {
+                getSupportFragmentManager().popBackStackImmediate();
+            }
             return true;
         }
 
