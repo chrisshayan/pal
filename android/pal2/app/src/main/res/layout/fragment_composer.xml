@@ -35,8 +35,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medium Text"
-            android:id="@+id/textView5"
+            android:text="@string/say_something"
+            android:id="@+id/subject"
             style="@style/Text.Medium" />
         <View
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:id="@+id/editText"
+            android:id="@+id/message"
             android:inputType="textMultiLine"
             android:scrollbars="vertical"
             android:background="#00000000"

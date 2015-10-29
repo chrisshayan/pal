@@ -1,11 +1,14 @@
 package vietnamworks.com.pal.fragments;
 
+import android.app.Activity;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -23,6 +26,11 @@ public class ComposerFragment extends BaseFragment {
     private MediaRecorder myAudioRecorder;
     private AudioPlayer audioPlayer;
     private boolean hasAudio = false;
+    private String postTitle;
+    private String topicRef;
+
+    private TextView txtSubject;
+    private EditText inputMessage;
 
     public String GetAudioPath() {
         if (hasAudio) {
@@ -101,6 +109,9 @@ public class ComposerFragment extends BaseFragment {
             }
         });
 
+        txtSubject = (TextView)rootView.findViewById(R.id.subject);
+        inputMessage = (EditText)rootView.findViewById(R.id.message);
+        setTopic(this.postTitle, this.topicRef);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         return rootView;
@@ -116,5 +127,24 @@ public class ComposerFragment extends BaseFragment {
             btnRecorder.setColorPressedResId(R.color.colorPrimary);
             btnRecorder.setIcon(R.drawable.ic_av_mic);
         }
+    }
+
+    public ComposerFragment setTopic(String title, String topicRef) {
+        this.postTitle = title;
+        this.topicRef = topicRef;
+        Activity act = getActivity();
+        if (act != null) {
+            ((BaseActivity)act).setTimeout(new Runnable() {
+                @Override
+                public void run() {
+                    if (postTitle != null) {
+                        txtSubject.setText(postTitle);
+                    } else {
+                        txtSubject.setText(R.string.say_something);
+                    }
+                }
+            });
+        }
+        return this;
     }
 }
