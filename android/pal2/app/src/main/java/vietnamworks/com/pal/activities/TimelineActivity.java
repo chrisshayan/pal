@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
+import vietnamworks.com.pal.fragments.ComposerFragment;
 import vietnamworks.com.pal.fragments.TimelineFragment;
 import vietnamworks.com.pal.services.FirebaseService;
 
@@ -167,5 +168,13 @@ public class TimelineActivity extends BaseActivity {
             }
         }, 500);
 
+    }
+
+    public void onOpenSaySomethingComposer(View v) {
+        openFragment(new ComposerFragment(), R.id.fragment_holder, true);
+    }
+
+    public void onOpenChallengeList(View v) {
+        //TODO: open challenge list
     }
 }

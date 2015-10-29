@@ -30,8 +30,9 @@
                 android:id="@+id/action_a"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onOpenSaySomethingComposer"
                 fab:fab_colorNormal="@color/colorPrimaryDark"
-                fab:fab_title="Say something"
+                fab:fab_title="@string/say_something"
                 fab:fab_colorPressed="@color/colorPrimary"
                 fab:fab_icon="@drawable/ic_communication_chat"
                 fab:fab_size="mini"/>
@@ -41,8 +42,9 @@
                 android:id="@+id/action_b"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onOpenChallengeList"
                 fab:fab_colorNormal="@color/colorPrimaryDark"
-                fab:fab_title="Pick up a challenge"
+                fab:fab_title="@string/pick_up_challenge"
                 fab:fab_colorPressed="@color/colorPrimary"
                 fab:fab_icon="@drawable/ic_editor_border_color"
                 fab:fab_size="mini"/>

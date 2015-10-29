@@ -52,4 +52,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
 
+    <!--fab-->
+    <string name="say_something">Say something</string>
+    <string name="pick_up_challenge">Pick up a challenge</string>
+
 </resources>
