@@ -116,6 +116,7 @@ public class TimelineActivity extends BaseActivity {
             Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
             if (f instanceof ComposerFragment) {
                 if (submitAudioTask((ComposerFragment)f)) {
+                    hideKeyboard();
                     onBackPressed();
                 }
             }
@@ -252,6 +253,8 @@ public class TimelineActivity extends BaseActivity {
     }
 
     private boolean submitAudioTask(ComposerFragment f) {
+        f.stopRecoder();
+
         String audio = f.getAudioPath();
         String subject = f.getSubject();
         String topic = f.getTopic();
@@ -271,7 +274,7 @@ public class TimelineActivity extends BaseActivity {
                     this,
                     post_id,
                     Application.AudioUploadURL,
-                    Utils.getSampleRecordPath(),
+                    audio,
                     server_file_path);
         }
         toast(R.string.create_post_successful);

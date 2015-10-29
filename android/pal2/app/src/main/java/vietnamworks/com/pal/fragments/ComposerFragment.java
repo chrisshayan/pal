@@ -117,6 +117,19 @@ public class ComposerFragment extends BaseFragment {
         return rootView;
     }
 
+    public void stopRecoder() {
+        if (myAudioRecorder != null) { //recording, stop now
+            myAudioRecorder.stop();
+            myAudioRecorder.reset();
+            myAudioRecorder.release();
+            myAudioRecorder = null;
+            updateUI(false);
+            audioPlayer.setAudioSource(Utils.getSampleRecordPath(), true);
+            audioPlayer.setVisibility(View.VISIBLE);
+            hasAudio = true;
+        }
+    }
+
     private void updateUI(boolean isplaying) {
         if (isplaying) {
             btnRecorder.setColorNormalResId(R.color.colorFABDanger);
