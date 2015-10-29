@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.alexbbb.uploadservice.UploadRequest;
-import com.alexbbb.uploadservice.UploadService;
+import com.alexbbb.uploadservice.MultipartUploadRequest;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.TimelineActivity;
@@ -15,9 +14,7 @@ import vietnamworks.com.pal.activities.TimelineActivity;
  */
 public class FileUploadService {
     public static void Upload(final Context context, String id, String server, String filepath, String server_file_name) {
-        final UploadRequest request = new UploadRequest(context,
-                id,
-                server);
+        final MultipartUploadRequest request = new MultipartUploadRequest(context, id, server);
         request.addFileToUpload(filepath,
                 "parameter-name",
                 server_file_name,
@@ -35,7 +32,7 @@ public class FileUploadService {
         request.setNotificationClickIntent(new Intent(context, TimelineActivity.class));
 
         try {
-            UploadService.startUpload(request);
+            request.startUpload();
 
         } catch (Exception exc) {
             Log.e("AndroidUploadService", exc.getLocalizedMessage(), exc);
