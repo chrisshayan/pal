@@ -298,6 +298,9 @@ public class TimelineActivity extends BaseActivity {
                 public void onCompleted(String uploadId,
                                         int serverResponseCode,
                                         String serverResponseMessage) {
+                    System.out.println("Upload with ID " + uploadId
+                            + " has been completed with HTTP " + serverResponseCode
+                            + ". Response from server: " + serverResponseMessage);
                     try {
                         JSONObject obj = new JSONObject(serverResponseMessage);
                         AppModel.posts.updateAudioLink(uploadId, obj.getString("url"));
