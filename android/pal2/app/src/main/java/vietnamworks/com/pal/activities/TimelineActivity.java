@@ -2,10 +2,10 @@ package vietnamworks.com.pal.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,14 +25,12 @@ import vietnamworks.com.pal.services.FirebaseService;
 public class TimelineActivity extends BaseActivity {
 
     UserProfileNavView navHeaderView;
-    DrawerLayout drawer;
-    ActionBarDrawerToggle toggle;
-
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -70,6 +68,8 @@ public class TimelineActivity extends BaseActivity {
             public void onBackStackChanged() {
                 int deep = getSupportFragmentManager().getBackStackEntryCount();
                 getSupportActionBar().setHomeAsUpIndicator(deep == 0 ? R.drawable.ic_image_dehaze : R.drawable.ic_hardware_keyboard_backspace);
+
+                updateToolbar();
             }
         });
 
@@ -93,6 +93,7 @@ public class TimelineActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.timeline, menu);
+        updateToolbar();
         return true;
     }
 
@@ -104,7 +105,7 @@ public class TimelineActivity extends BaseActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_send) {
             return true;
         } else if (id == android.R.id.home) {
             int deep = getSupportFragmentManager().getBackStackEntryCount();
@@ -127,6 +128,17 @@ public class TimelineActivity extends BaseActivity {
         FirebaseService.SetUserProfileListener(null);
     }
 
+    private void updateToolbar() {
+        Menu menu = toolbar.getMenu();
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            int id = item.getItemId();
+            if (id == R.id.action_send) {
+                item.setVisible(f != null && f instanceof ComposerFragment);
+            }
+        }
+    }
 
     private void closeDrawer() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

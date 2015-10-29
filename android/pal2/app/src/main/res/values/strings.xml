@@ -54,4 +54,7 @@
     <string name="say_something">Say something</string>
     <string name="pick_up_challenge">Pick up a challenge</string>
 
+    <!--action bar-->
+    <string name="send">Send</string>
+
 </resources>
