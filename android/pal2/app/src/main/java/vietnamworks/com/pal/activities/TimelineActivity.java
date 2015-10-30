@@ -90,7 +90,6 @@ public class TimelineActivity extends BaseActivity {
             drawer.closeDrawer(GravityCompat.START);
         } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
-            hideKeyboard();
         } else {
             super.onBackPressed();
         }
@@ -131,6 +130,7 @@ public class TimelineActivity extends BaseActivity {
                 drawer.openDrawer(navigationView);
             } else {
                 getSupportFragmentManager().popBackStackImmediate();
+                hideKeyboard();
             }
             return true;
         }
