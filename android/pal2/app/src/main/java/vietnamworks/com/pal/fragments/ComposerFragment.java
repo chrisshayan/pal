@@ -115,6 +115,8 @@ public class ComposerFragment extends BaseFragment {
         setTopic(this.postTitle, this.topicRef);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
+        inputMessage.requestFocus();
+
         return rootView;
     }
 
@@ -138,7 +140,7 @@ public class ComposerFragment extends BaseFragment {
             btnRecorder.setColorPressedResId(R.color.colorFABDanger_Pressed);
             btnRecorder.setIcon(R.drawable.ic_av_stop);
             */
-            btnRecorder.setImageResource(R.drawable.ic_av_stop);
+            btnRecorder.setImageResource(R.drawable.ic_av_stop_circle_outline_danger);
         } else {
             /*
             btnRecorder.setColorNormalResId(R.color.colorPrimaryDark);
