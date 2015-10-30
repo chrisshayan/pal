@@ -8,9 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
@@ -22,7 +21,7 @@ import vietnamworks.com.pal.services.AudioMixerService;
  * Created by duynk on 10/29/15.
  */
 public class ComposerFragment extends BaseFragment {
-    FloatingActionButton btnRecorder;
+    ImageButton btnRecorder;
     private MediaRecorder myAudioRecorder;
     private AudioPlayer audioPlayer;
     private boolean hasAudio = false;
@@ -59,17 +58,19 @@ public class ComposerFragment extends BaseFragment {
             }
         });
 
-        btnRecorder = (FloatingActionButton)rootView.findViewById(R.id.recorder);
+        btnRecorder = (ImageButton)rootView.findViewById(R.id.recorder);
         btnRecorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AudioMixerService.stop();
 
                 if (myAudioRecorder != null) { //recording, stop now
-                    myAudioRecorder.stop();
-                    myAudioRecorder.reset();
-                    myAudioRecorder.release();
-                    myAudioRecorder = null;
+                    try {
+                        myAudioRecorder.stop();
+                        myAudioRecorder.reset();
+                        myAudioRecorder.release();
+                        myAudioRecorder = null;
+                    } catch (Exception E) {}
                     updateUI(false);
                     audioPlayer.setAudioSource(Utils.getSampleRecordPath(), true);
                     audioPlayer.setVisibility(View.VISIBLE);
@@ -132,13 +133,19 @@ public class ComposerFragment extends BaseFragment {
 
     private void updateUI(boolean isplaying) {
         if (isplaying) {
+            /*
             btnRecorder.setColorNormalResId(R.color.colorFABDanger);
             btnRecorder.setColorPressedResId(R.color.colorFABDanger_Pressed);
             btnRecorder.setIcon(R.drawable.ic_av_stop);
+            */
+            btnRecorder.setImageResource(R.drawable.ic_av_stop);
         } else {
+            /*
             btnRecorder.setColorNormalResId(R.color.colorPrimaryDark);
             btnRecorder.setColorPressedResId(R.color.colorPrimary);
             btnRecorder.setIcon(R.drawable.ic_av_mic);
+            */
+            btnRecorder.setImageResource(R.drawable.ic_av_mic);
         }
     }
 

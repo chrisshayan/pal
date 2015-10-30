@@ -7,8 +7,6 @@
     android:layout_height="wrap_content"
     android:visibility="visible"
     android:orientation="horizontal"
-    android:elevation="5dp"
-    android:background="@drawable/shape_audio_player"
     android:gravity="center_vertical">
 
     <ImageButton

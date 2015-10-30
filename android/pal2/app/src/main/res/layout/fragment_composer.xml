@@ -9,35 +9,18 @@
     android:background="@color/colorPrimaryLight">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/recorder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_icon="@drawable/ic_av_mic"
-            fab:fab_colorNormal="@color/colorPrimaryDark"
-            fab:fab_colorPressed="@color/colorPrimary"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true" />
-
-    </RelativeLayout>
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/base_padding_4x">
+        android:layout_height="match_parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/say_something"
             android:id="@+id/subject"
-            style="@style/Text.Medium" />
+            style="@style/Text.Medium"
+            android:layout_margin="@dimen/base_padding_2x" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
@@ -55,10 +38,36 @@
             android:scrollbars="vertical"
             android:background="#00000000"
             android:hint="@string/composer_hint"
-            android:gravity="top" />
+            android:gravity="top"
+            android:layout_margin="@dimen/base_padding_2x" />
 
-        <vietnamworks.com.pal.custom_views.AudioPlayer android:id="@+id/player" android:layout_height="wrap_content" android:layout_width="wrap_content">
-        </vietnamworks.com.pal.custom_views.AudioPlayer>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#10000000"
+            android:gravity="center_vertical">
+
+            <vietnamworks.com.pal.custom_views.AudioPlayer android:id="@+id/player" android:layout_height="match_parent" android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+            </vietnamworks.com.pal.custom_views.AudioPlayer>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimaryLight"></View>
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/recorder"
+                android:src="@drawable/ic_av_mic"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="fitCenter"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>
