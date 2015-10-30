@@ -35,7 +35,7 @@
                 fab:fab_colorNormal="@color/colorPrimaryDark"
                 fab:fab_title="@string/say_something"
                 fab:fab_colorPressed="@color/colorPrimary"
-                fab:fab_icon="@drawable/ic_communication_chat"
+                fab:fab_icon="@drawable/ic_editor_border_color"
                 fab:fab_size="mini"/>
 
 
@@ -47,7 +47,7 @@
                 fab:fab_colorNormal="@color/colorPrimaryDark"
                 fab:fab_title="@string/pick_up_challenge"
                 fab:fab_colorPressed="@color/colorPrimary"
-                fab:fab_icon="@drawable/ic_editor_border_color"
+                fab:fab_icon="@drawable/ic_communication_chat"
                 fab:fab_size="mini"/>
 
 
