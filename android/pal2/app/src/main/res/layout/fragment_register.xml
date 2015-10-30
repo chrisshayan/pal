@@ -12,27 +12,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/email_address"
-        android:id="@+id/textView"
-        style="@style/Text.Small.Muted" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/email"
-        android:textColor="@color/colorTextDefault"
-        android:textColorHint="@color/colorTextMuted"
-        android:hint="@string/your_email_adress" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/base_padding_4x" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/your_full_name"
         android:id="@+id/textView2"
         style="@style/Text.Small.Muted" />
@@ -48,6 +27,29 @@
         android:imeActionId="@+id/action_register"
         android:imeActionLabel="@string/go"
         android:hint="@string/your_full_name" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_padding_4x" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email_address"
+        android:id="@+id/textView"
+        style="@style/Text.Small.Muted" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/email"
+        android:textColor="@color/colorTextDefault"
+        android:textColorHint="@color/colorTextMuted"
+        android:hint="@string/your_email_adress" />
+
+
 
     <LinearLayout
         android:orientation="horizontal"
