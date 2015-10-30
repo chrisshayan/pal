@@ -63,5 +63,7 @@
     <string name="composer_hint">Enter your idea here</string>
     <string name="create_post_successful">Your post has been saved</string>
     <string name="empty_message">Nothing to post</string>
+    <string name="guide_user_recorder_1">Touch microphone icon to start recording</string>
+    <string name="guide_user_recorder_2">Touch stop icon to stop recording</string>
 
 </resources>

@@ -30,6 +30,7 @@ public class ComposerFragment extends BaseFragment {
 
     private TextView txtSubject;
     private EditText inputMessage;
+    private TextView txtHint;
 
     public String getAudioPath() {
         if (hasAudio) {
@@ -48,12 +49,17 @@ public class ComposerFragment extends BaseFragment {
 
         BaseActivity.applyFont(rootView);
 
+        txtHint = (TextView)rootView.findViewById(R.id.recorder_hint);
+        txtHint.setVisibility(View.VISIBLE);
+        txtHint.setText(getString(R.string.guide_user_recorder_1));
+
         audioPlayer = (AudioPlayer)rootView.findViewById(R.id.player);
         audioPlayer.setVisibility(View.INVISIBLE);
         audioPlayer.setAudioPlayerCallback(new AudioPlayer.AudioPlayerCallback() {
             @Override
             public void onRemoveAudio() {
                 audioPlayer.setVisibility(View.INVISIBLE);
+                txtHint.setVisibility(View.VISIBLE);
                 hasAudio = false;
             }
         });
@@ -74,6 +80,7 @@ public class ComposerFragment extends BaseFragment {
                     updateUI(false);
                     audioPlayer.setAudioSource(Utils.getSampleRecordPath(), true);
                     audioPlayer.setVisibility(View.VISIBLE);
+                    txtHint.setVisibility(View.INVISIBLE);
                     hasAudio = true;
 
                 } else { //start recording
@@ -81,6 +88,8 @@ public class ComposerFragment extends BaseFragment {
                     Utils.newSampleRecord();
 
                     audioPlayer.setVisibility(View.INVISIBLE);
+                    txtHint.setVisibility(View.VISIBLE);
+
                     audioPlayer.setAudioSource(null);
 
                     myAudioRecorder = new MediaRecorder();
@@ -116,6 +125,7 @@ public class ComposerFragment extends BaseFragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         inputMessage.requestFocus();
+        ((BaseActivity) getActivity()).showKeyboard();
 
         return rootView;
     }
@@ -130,24 +140,18 @@ public class ComposerFragment extends BaseFragment {
             audioPlayer.setAudioSource(Utils.getSampleRecordPath(), true);
             audioPlayer.setVisibility(View.VISIBLE);
             hasAudio = true;
+
+            txtHint.setVisibility(View.INVISIBLE);
         }
     }
 
     private void updateUI(boolean isplaying) {
         if (isplaying) {
-            /*
-            btnRecorder.setColorNormalResId(R.color.colorFABDanger);
-            btnRecorder.setColorPressedResId(R.color.colorFABDanger_Pressed);
-            btnRecorder.setIcon(R.drawable.ic_av_stop);
-            */
             btnRecorder.setImageResource(R.drawable.ic_av_stop_circle_outline_danger);
+            txtHint.setText(getString(R.string.guide_user_recorder_2));
         } else {
-            /*
-            btnRecorder.setColorNormalResId(R.color.colorPrimaryDark);
-            btnRecorder.setColorPressedResId(R.color.colorPrimary);
-            btnRecorder.setIcon(R.drawable.ic_av_mic);
-            */
             btnRecorder.setImageResource(R.drawable.ic_av_mic);
+            txtHint.setText(getString(R.string.guide_user_recorder_1));
         }
     }
 

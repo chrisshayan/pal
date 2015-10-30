@@ -20,6 +20,7 @@ public class TimelineFragment extends BaseFragment {
                 .inflate(R.layout.fragment_timeline_content, container, false);
 
         BaseActivity.applyFont(rootView);
+        ((BaseActivity) getActivity()).hideKeyboard();
         return rootView;
     }
 }

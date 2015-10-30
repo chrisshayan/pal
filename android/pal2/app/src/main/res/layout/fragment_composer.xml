@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/say_something"
             android:id="@+id/subject"
-            style="@style/Text.Medium"
+            style="@style/Text.Large.Muted"
             android:layout_margin="@dimen/base_padding_2x" />
         <View
             android:layout_width="match_parent"
@@ -48,11 +48,26 @@
             android:background="#10000000"
             android:gravity="center_vertical">
 
-            <vietnamworks.com.pal.custom_views.AudioPlayer android:id="@+id/player" android:layout_height="match_parent" android:layout_width="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
-            </vietnamworks.com.pal.custom_views.AudioPlayer>
+            <FrameLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
+                <vietnamworks.com.pal.custom_views.AudioPlayer android:id="@+id/player" android:layout_height="match_parent" android:layout_width="fill_parent"
+                    android:gravity="center_vertical">
+                </vietnamworks.com.pal.custom_views.AudioPlayer>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/recorder_hint"
+                    android:gravity="center"
+                    style="@style/Text.Small.Muted"
+                    android:autoText="false" />
+            </FrameLayout>
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
