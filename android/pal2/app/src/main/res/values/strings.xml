@@ -27,7 +27,7 @@
     <string name="password_placeholder">********</string>
     <string name="your_full_name">Your full name</string>
     <string name="login">Login</string>
-    <string name="register">Request invite</string>
+    <string name="register">Request an invite</string>
     <string name="close">Close</string>
     <string name="share">Share</string>
     <string name="register_thank">Thank for your interest.\nYour request has been queued.</string>
