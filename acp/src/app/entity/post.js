@@ -40,7 +40,7 @@ function Post (obj) {
         text: "",
         ref_topic: "",
         advisor_id: "",
-        hasRead: true,
+        has_read: true,
         next: "",
         prev: "",
         satisfy_score: 0,

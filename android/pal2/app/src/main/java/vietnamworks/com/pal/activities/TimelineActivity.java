@@ -13,6 +13,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alexbbb.uploadservice.AbstractUploadServiceReceiver;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import org.json.JSONObject;
@@ -26,6 +30,7 @@ import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.fragments.ComposerFragment;
 import vietnamworks.com.pal.fragments.PostListFragment;
 import vietnamworks.com.pal.models.AppModel;
+import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.services.FileUploadService;
 import vietnamworks.com.pal.services.FirebaseService;
 
@@ -34,6 +39,11 @@ public class TimelineActivity extends BaseActivity {
     private PostListFragment evaluatedPostsFragment;
     UserProfileNavView navHeaderView;
     Toolbar toolbar;
+
+    Query queryTotalUnreadPosts;
+    Query queryTotalUnreadEvaluatedPosts;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +59,7 @@ public class TimelineActivity extends BaseActivity {
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.addHeaderView(navHeaderView);
 
-        setNumberOfUnreadPostUI(200);
+        setNumberOfUnreadPostUI(0);
         setNumberOfUnreadEvaluatedPostUI(0);
 
         //listen to user profile changed then update drawer
@@ -82,7 +92,34 @@ public class TimelineActivity extends BaseActivity {
         });
         onOpenAllPosts(null);
         getSupportActionBar().setTitle(R.string.title_timeline);
+
+        queryTotalUnreadPosts = Posts.getUnreadPostsCounterRef();
+        queryTotalUnreadEvaluatedPosts = Posts.getUnreadEvaluatedPostsCounterRef();
     }
+
+    private ValueEventListener onChangedUnreadPostsValue = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            setNumberOfUnreadPostUI((int)dataSnapshot.getChildrenCount());
+        }
+
+        @Override
+        public void onCancelled(FirebaseError firebaseError) {
+
+        }
+    };
+
+    private ValueEventListener onChangedUnreadEvaluatedPostsValue = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            setNumberOfUnreadEvaluatedPostUI((int)dataSnapshot.getChildrenCount());
+        }
+
+        @Override
+        public void onCancelled(FirebaseError firebaseError) {
+
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -148,12 +185,20 @@ public class TimelineActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        queryTotalUnreadPosts.addValueEventListener(onChangedUnreadPostsValue);
+        queryTotalUnreadEvaluatedPosts.addValueEventListener(onChangedUnreadEvaluatedPostsValue);
+
         uploadReceiver.register(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        queryTotalUnreadPosts.removeEventListener(onChangedUnreadPostsValue);
+        queryTotalUnreadEvaluatedPosts.removeEventListener(onChangedUnreadEvaluatedPostsValue);
+
         uploadReceiver.unregister(this);
     }
 

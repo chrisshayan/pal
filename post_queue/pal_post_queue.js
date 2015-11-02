@@ -50,12 +50,21 @@ function onChanged(snapshot) {
         users_posts.child(val.created_by).child("evaluated").child(key).setWithPriority(obj, val.last_modified_date);
     }
 
-
     if (val.status === PostStatus.Sync) {
         posts.child(key).update({
             status: PostStatus.Ready
         });
-    } 
+    }
+
+    if (val.has_read === false) {
+        users_posts.child(val.created_by).child("unread").child(key).set(true);
+        if (val.status == PostStatus.AdvisorEvaluated) {
+            users_posts.child(val.created_by).child("evaluated_unread").child(key).set(true);
+        }
+    } else {
+        users_posts.child(val.created_by).child("unread").child(key).remove();
+        users_posts.child(val.created_by).child("evaluated_unread").child(key).remove();
+    }
 }
 
 

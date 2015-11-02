@@ -32,6 +32,7 @@ public class PostListFragment extends BaseFragment {
     public final static int FILTER_EVALUATED = 1;
     int filterType = FILTER_ALL;
 
+
     private PostItemAdapter mAdapter;
     Query dataRef;
     RecyclerView recyclerView;

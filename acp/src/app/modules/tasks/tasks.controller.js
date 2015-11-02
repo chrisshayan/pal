@@ -342,7 +342,7 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                     recent = new Post(recent)
                         .set("status", PostStatus.AdvisorEvaluated)
                         .set("score", $scope.vote)
-                        .set("hasRead", false)
+                        .set("has_read", false)
                         .push("conversation", {
                             created_date: Date.now(),
                             uid: uid,
