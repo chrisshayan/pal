@@ -68,11 +68,14 @@ public class PostListFragment extends BaseFragment {
             dataRef = FirebaseService.newRef("posts");
             int mode = filterType;
             String uid = FirebaseService.authData.getUid();
+
             if (mode == FILTER_ALL) {
-                dataRef.orderByChild("created_by").equalTo(uid).addValueEventListener(dataValueEventListener);
+                String index_from = Post.buildUserStatusIndex(uid, Post.STATUS_NONE, "");
+                dataRef.orderByChild("index_user_status").startAt(index_from).addValueEventListener(dataValueEventListener);
             } else if (mode == FILTER_EVALUATED) {
-                String index = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED);
-                dataRef.orderByChild("index_user_status").equalTo(index).addValueEventListener(dataValueEventListener);
+                String index_from = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED, "");
+                String index_to = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED, "z");
+                dataRef.orderByChild("index_user_status").startAt(index_from).endAt(index_to).addValueEventListener(dataValueEventListener);
             }
             dataRef.keepSynced(true);
         }

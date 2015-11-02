@@ -1,4 +1,5 @@
 String.prototype.padRight = String.prototype.padRight || function(l,c) {return this+Array(l-this.length+1).join(c||" ")}
+String.prototype.padLeft = String.prototype.padLeft || function (n,str){return Array(n-String(this).length+1).join(str||' ')+this;}
 
 window.PostStatus = {
     None: 0,
@@ -20,7 +21,7 @@ window.PostType = {
 
 window.PostHelper = {
     buildIndex: function(uid, val) {
-        return uid.padRight(48) + (val + "").padRight(4);
+        return uid.padRight(48) + (val + "").padLeft(4) + (Date.now() + "").padLeft(16);
     }
 }
 
