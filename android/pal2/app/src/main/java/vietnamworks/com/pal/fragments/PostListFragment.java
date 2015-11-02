@@ -74,6 +74,7 @@ public class PostListFragment extends BaseFragment {
                 String index = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED);
                 dataRef.orderByChild("index_user_status").equalTo(index).addValueEventListener(dataValueEventListener);
             }
+            dataRef.keepSynced(true);
         }
         recyclerView.setAdapter(mAdapter);
     }
