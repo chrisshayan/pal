@@ -44,7 +44,6 @@ public class Post extends BaseEntity {
     String text = "";
     String index_user_status = "";
     String index_user_type = "";
-    int type = RecentTopic.TYPE_WRITING;
     boolean has_read = true;
     long user_last_requested = 0;
     Object conversation;
@@ -84,7 +83,6 @@ public class Post extends BaseEntity {
         text = obj.get("text").toString();
         index_user_status = obj.get("index_user_status").toString();
         index_user_type = obj.get("index_user_type").toString();
-        type = (int)obj.get("type");
         has_read = (boolean)obj.get("has_read");
         user_last_requested = BaseEntity.safeGetLong(obj, "user_last_requested");
         conversation = obj.get("conversation");
@@ -184,15 +182,6 @@ public class Post extends BaseEntity {
 
     public void setNext(String next) {
         this.next = next;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.index_user_type = buildUserTypeIndex(this.getCreated_by(), type);
-        this.type = type;
     }
 
     public String getIndex_user_status() {

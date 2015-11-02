@@ -23,7 +23,6 @@ public class Posts extends AbstractContainer<Post> {
         Firebase ref = FirebaseService.newRef("posts").push();
         p.setUser_last_request(System.currentTimeMillis());
         p.setStatus(p.getStatus()); //update status index
-        p.setType(p.getType()); //update type index
         ref.setValue(p);
         ref.setPriority(-System.currentTimeMillis());
 
