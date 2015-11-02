@@ -112,7 +112,7 @@ public class TimelineActivity extends BaseActivity {
     private ValueEventListener onChangedUnreadEvaluatedPostsValue = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            setNumberOfUnreadEvaluatedPostUI((int)dataSnapshot.getChildrenCount());
+            setNumberOfUnreadEvaluatedPostUI((int) dataSnapshot.getChildrenCount());
         }
 
         @Override
@@ -293,8 +293,8 @@ public class TimelineActivity extends BaseActivity {
                 if (!(f instanceof  PostListFragment) || ((PostListFragment) f).getFilterType()  != PostListFragment.FILTER_EVALUATED) {
                     if (evaluatedPostsFragment == null) {
                         evaluatedPostsFragment = PostListFragment.createEvaluatedList();
-                        pushFragment(evaluatedPostsFragment, R.id.fragment_holder);
                     }
+                    pushFragment(evaluatedPostsFragment, R.id.fragment_holder);
                 }
                 if (f instanceof  PostListFragment) {
                     ((PostListFragment)f).refresh();
