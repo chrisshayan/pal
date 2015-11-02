@@ -68,10 +68,12 @@ public class TimelineItem extends RecyclerView.ViewHolder {
             txtSubject.setTypeface(BaseActivity.RobotoB);
             txtSub1.setTypeface(BaseActivity.RobotoL);
             txtSub2.setTypeface(BaseActivity.RobotoL);
+            txtText.setTypeface(BaseActivity.RobotoL);
         } else {
             txtSubject.setTypeface(BaseActivity.RobotoR);
             txtSub1.setTypeface(BaseActivity.RobotoL);
             txtSub2.setTypeface(BaseActivity.RobotoL);
+            txtText.setTypeface(BaseActivity.RobotoL);
         }
     }
 
