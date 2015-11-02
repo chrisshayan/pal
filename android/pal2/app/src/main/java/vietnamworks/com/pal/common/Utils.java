@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.configurations.AppConfig;
@@ -49,6 +50,27 @@ public class Utils {
     public static String getDateString(Date date, String format) {
         java.text.DateFormat df = new SimpleDateFormat(format);
         return df.format(date);
+    }
+
+    public static String getDuration(long timestamp) {
+        long now = getMillis();
+        long minutes = (Math.max(now - timestamp, 0)/1000)/60;
+
+        if (minutes <= 1) { //less than 1 min
+            return "just updated";
+        } else if (minutes < 60) {
+            return minutes + " mins";
+        } else if (minutes < 24*60) {
+            return (minutes/60) + " hours";
+        } else if (minutes < 7*24*60) {
+            return (minutes/(24*60)) + " days";
+        } else {
+            return getDateString(timestamp);
+        }
+    }
+
+    public static long getMillis() {
+        return Calendar.getInstance(TimeZone.getTimeZone("GMT")).getTimeInMillis();
     }
 
     public static String hash(String input, final String method) {

@@ -55,12 +55,12 @@ public class TimelineItem extends RecyclerView.ViewHolder {
     public void highlight(boolean val) {
         if (val) {
             txtSubject.setTypeface(BaseActivity.RobotoB);
-            txtSub1.setTypeface(BaseActivity.RobotoLI);
-            txtSub2.setTypeface(BaseActivity.RobotoLI);
+            txtSub1.setTypeface(BaseActivity.RobotoL);
+            txtSub2.setTypeface(BaseActivity.RobotoL);
         } else {
             txtSubject.setTypeface(BaseActivity.RobotoR);
-            txtSub1.setTypeface(BaseActivity.RobotoLI);
-            txtSub2.setTypeface(BaseActivity.RobotoLI);
+            txtSub1.setTypeface(BaseActivity.RobotoL);
+            txtSub2.setTypeface(BaseActivity.RobotoL);
         }
     }
 
@@ -93,7 +93,7 @@ public class TimelineItem extends RecyclerView.ViewHolder {
                 title = BaseActivity.sInstance.getString(R.string.you_said);
             }
         }
-        setValue(title, Utils.getDateString(p.getLast_modified_date()), p.getStatusString(), p.getText(), p.getAudio());
+        setValue(title, Utils.getDuration(p.getLast_modified_date()), p.getStatusString(), p.getText(), p.getAudio());
     }
 
     public void setValue(String icon, Post p) {

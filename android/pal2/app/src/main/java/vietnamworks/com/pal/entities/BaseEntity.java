@@ -2,6 +2,7 @@ package vietnamworks.com.pal.entities;
 
 import java.util.HashMap;
 
+import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.services.FirebaseService;
 
 /**
@@ -56,13 +57,13 @@ public class BaseEntity {
 
     public void create() {
         created_by = FirebaseService.authData.getUid();
-        created_date = System.currentTimeMillis();
+        created_date = Utils.getMillis();
         modify();
     }
 
     public void modify() {
         last_modified_by = FirebaseService.authData.getUid();
-        last_modified_date = System.currentTimeMillis();
+        last_modified_date = Utils.getMillis();
     }
 
     public void modifyOrCreate() {
