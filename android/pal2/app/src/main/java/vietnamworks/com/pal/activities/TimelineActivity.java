@@ -269,11 +269,9 @@ public class TimelineActivity extends BaseActivity {
                 if (!(f instanceof  PostListFragment) || ((PostListFragment) f).getFilterType()  != PostListFragment.FILTER_ALL) {
                     if (allPostsFragment == null) {
                         allPostsFragment = PostListFragment.createAllPosts();
-                        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-                            openFragment(allPostsFragment, R.id.fragment_holder);
-                        } else {
-                            pushFragment(allPostsFragment, R.id.fragment_holder);
-                        }
+                        openFragment(allPostsFragment, R.id.fragment_holder);
+                    } else {
+                        openFragment(allPostsFragment, R.id.fragment_holder);
                     }
                 }
                 if (f instanceof  PostListFragment) {
@@ -294,7 +292,7 @@ public class TimelineActivity extends BaseActivity {
                     if (evaluatedPostsFragment == null) {
                         evaluatedPostsFragment = PostListFragment.createEvaluatedList();
                     }
-                    pushFragment(evaluatedPostsFragment, R.id.fragment_holder);
+                    openFragment(evaluatedPostsFragment, R.id.fragment_holder);
                 }
                 if (f instanceof  PostListFragment) {
                     ((PostListFragment)f).refresh();
