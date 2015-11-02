@@ -118,7 +118,7 @@ public class Post extends BaseEntity {
         return status;
     }
 
-    public String getStatusString() {
+    public String statusString() {
         return STATUS_TEXT[status];
     }
 

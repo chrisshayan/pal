@@ -133,7 +133,7 @@ public class TimelineItem extends RecyclerView.ViewHolder {
             }
         }
 
-        setValue(title, Utils.getDuration(p.getLast_modified_date()), p.getStatusString(), p.getText(), p.getAudio(), preview_mode);
+        setValue(title, Utils.getDuration(p.getLast_modified_date()), p.statusString(), p.getText(), p.getAudio(), preview_mode);
     }
 
     public void setValue(String icon, Post p) {
@@ -142,7 +142,7 @@ public class TimelineItem extends RecyclerView.ViewHolder {
 
     public void setValue(String icon, Post p, boolean preview_mode) {
         Picasso.with(ctx).load(icon).into(this.icon);
-        setValue(p.getTitle(), Utils.getDateString(p.getLast_modified_date()), p.getStatusString(), p.getText(), p.getAudio(), preview_mode);
+        setValue(p.getTitle(), Utils.getDateString(p.getLast_modified_date()), p.statusString(), p.getText(), p.getAudio(), preview_mode);
     }
 
     public void setItemId(String id) {
