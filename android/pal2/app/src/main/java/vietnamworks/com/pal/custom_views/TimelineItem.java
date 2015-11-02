@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.common.Utils;
@@ -24,7 +26,8 @@ public class TimelineItem extends RecyclerView.ViewHolder {
     ImageView icon;
     TextView txtSubject, txtSub1, txtSub2, txtText;
     AudioPlayer player;
-    ViewGroup textGroup, audioGroup;
+    ViewGroup textGroup, audioGroup, scoreGroup;
+    ArrayList<ImageView> stars = new ArrayList<>();
 
     Context ctx;
 
@@ -38,6 +41,14 @@ public class TimelineItem extends RecyclerView.ViewHolder {
         player = (AudioPlayer) itemView.findViewById(R.id.player);
         textGroup = (ViewGroup) itemView.findViewById(R.id.text_group);
         audioGroup = (ViewGroup) itemView.findViewById(R.id.audio_group);
+        scoreGroup = (ViewGroup) itemView.findViewById(R.id.star);
+
+        stars.add((ImageView) itemView.findViewById(R.id.star1));
+        stars.add((ImageView) itemView.findViewById(R.id.star2));
+        stars.add((ImageView) itemView.findViewById(R.id.star3));
+        stars.add((ImageView) itemView.findViewById(R.id.star4));
+        stars.add((ImageView) itemView.findViewById(R.id.star5));
+
         this.ctx = ctx;
         BaseActivity.applyFont(itemView);
     }
@@ -67,7 +78,7 @@ public class TimelineItem extends RecyclerView.ViewHolder {
     public void setValue(String subject, String sub1, String sub2, String text, String audio_url) {
         txtSubject.setText(subject);
         txtSub1.setText(sub1 == null ? "" : sub1);
-        txtSub2.setText(sub2 == null?"":sub2);
+        txtSub2.setText(sub2 == null ? "" : sub2);
         if (text != null && text.length() > 0) {
             txtText.setText(text);
             textGroup.setVisibility(View.VISIBLE);
@@ -93,6 +104,22 @@ public class TimelineItem extends RecyclerView.ViewHolder {
                 title = BaseActivity.sInstance.getString(R.string.you_said);
             }
         }
+
+        int score = p.getScore();
+        if (score <= 0) {
+            scoreGroup.setVisibility(View.GONE);
+            txtSub2.setVisibility(View.VISIBLE);
+        } else {
+            scoreGroup.setVisibility(View.VISIBLE);
+            txtSub2.setVisibility(View.GONE);
+            for (int i = 0; i < score; i++) {
+                stars.get(i).setAlpha(1.0f);
+            }
+            for (int i = score; i < stars.size(); i++) {
+                stars.get(i).setAlpha(0.25f);
+            }
+        }
+
         setValue(title, Utils.getDuration(p.getLast_modified_date()), p.getStatusString(), p.getText(), p.getAudio());
     }
 
