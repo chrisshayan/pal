@@ -207,10 +207,7 @@ public class Post extends BaseEntity {
     public void setHas_read(boolean has_read) {
         this.has_read = has_read;
     }
-
-    public static String buildUserTypeIndex(String userid, int type) {
-        return Utils.padRight(userid, 48) + Utils.padRight(type + "", 4) ;
-    }
+    
     public static String buildUserStatusIndex(String userid, int status) {
         return Utils.padRight(userid, 48) + Utils.padRight(status + "", 4) ;
     }
