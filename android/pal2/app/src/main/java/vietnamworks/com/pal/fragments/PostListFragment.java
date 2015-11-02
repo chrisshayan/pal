@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import java.util.HashMap;
@@ -21,6 +21,7 @@ import vietnamworks.com.pal.activities.TimelineActivity;
 import vietnamworks.com.pal.custom_views.TimelineItem;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.models.AppModel;
+import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.services.FirebaseService;
 
 /**
@@ -32,7 +33,7 @@ public class PostListFragment extends BaseFragment {
     int filterType = FILTER_ALL;
 
     private PostItemAdapter mAdapter;
-    Firebase dataRef;
+    Query dataRef;
     RecyclerView recyclerView;
 
     @Override
@@ -65,19 +66,19 @@ public class PostListFragment extends BaseFragment {
         Activity _act = this.getActivity();
         if (_act != null) {
             TimelineActivity act = (TimelineActivity) _act;
-            dataRef = FirebaseService.newRef("posts");
+
             int mode = filterType;
             String uid = FirebaseService.authData.getUid();
 
             if (mode == FILTER_ALL) {
-                String index_from = Post.buildUserStatusIndex(uid, Post.STATUS_NONE, "");
-                dataRef.orderByChild("index_user_status").startAt(index_from).addValueEventListener(dataValueEventListener);
+                dataRef = Posts.getAllPostsRef();
             } else if (mode == FILTER_EVALUATED) {
-                String index_from = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED, "");
-                String index_to = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED, "z");
-                dataRef.orderByChild("index_user_status").startAt(index_from).endAt(index_to).addValueEventListener(dataValueEventListener);
+                dataRef = Posts.getEvaluatedPostsRef();
+                //String index_from = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED, "");
+                //String index_to = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED, "z");
+                //dataRef.orderByChild("index_user_status").startAt(index_from).endAt(index_to).addValueEventListener(dataValueEventListener);
             }
-            dataRef.keepSynced(true);
+            dataRef.addValueEventListener(dataValueEventListener);
         }
         recyclerView.setAdapter(mAdapter);
     }

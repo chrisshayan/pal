@@ -15,18 +15,20 @@ public class Post extends BaseEntity {
     public final static int STATUS_NONE                     = 0;                                //0
     public final static int STATUS_USER_PENDING             = STATUS_NONE + 1;                  //1
     public final static int STATUS_USER_ERROR               = STATUS_USER_PENDING + 1;          //2
-    public final static int STATUS_READY                    = STATUS_USER_ERROR + 1;            //3
-    public final static int STATUS_ADVISOR_PROCESSING       = STATUS_READY + 1;                 //4
-    public final static int STATUS_ADVISOR_EVALUATED        = STATUS_ADVISOR_PROCESSING + 1;    //5
-    public final static int STATUS_USER_CONVERSATION        = STATUS_ADVISOR_EVALUATED + 1;     //6
-    public final static int STATUS_ADVISOR_CONVERSATION     = STATUS_USER_CONVERSATION + 1;     //7
-    public final static int STATUS_CLOSED_BY_USER           = STATUS_ADVISOR_CONVERSATION + 1;  //8
-    public final static int STATUS_CLOSED_AND_REDO          = STATUS_CLOSED_BY_USER + 1;        //9
+    public final static int STATUS_SYNC                     = STATUS_USER_ERROR + 1;            //3
+    public final static int STATUS_READY                    = STATUS_SYNC + 1;                  //4
+    public final static int STATUS_ADVISOR_PROCESSING       = STATUS_READY + 1;                 //5
+    public final static int STATUS_ADVISOR_EVALUATED        = STATUS_ADVISOR_PROCESSING + 1;    //6
+    public final static int STATUS_USER_CONVERSATION        = STATUS_ADVISOR_EVALUATED + 1;     //7
+    public final static int STATUS_ADVISOR_CONVERSATION     = STATUS_USER_CONVERSATION + 1;     //8
+    public final static int STATUS_CLOSED_BY_USER           = STATUS_ADVISOR_CONVERSATION + 1;  //9
+    public final static int STATUS_CLOSED_AND_REDO          = STATUS_CLOSED_BY_USER + 1;        //10
 
     public static String[] STATUS_TEXT = {
             "None",
             "Pending",
             "Error",
+            "Uploading", //sync
             "Wait for advisor", //ready
             "Processing",
             "Evaluated",
@@ -43,7 +45,6 @@ public class Post extends BaseEntity {
     String audio = "";
     String text = "";
     String index_user_status = "";
-    String index_user_type = "";
     boolean has_read = true;
     long user_last_requested = 0;
     Object conversation;
@@ -70,31 +71,30 @@ public class Post extends BaseEntity {
     }
 
     private void importFromHashMap(HashMap<String, Object> obj) {
-        this.setCreated_date((long) obj.get("created_date"));
-        this.setCreated_by(obj.get("created_by").toString());
-        this.setLast_modified_date((long) obj.get("last_modified_date"));
-        this.setLast_modified_by(obj.get("last_modified_by").toString());
+        this.created_date = BaseEntity.safeGetLong(obj, "created_date");
+        this.created_by = BaseEntity.safeGetString(obj, "created_by");
+        this.last_modified_date = BaseEntity.safeGetLong(obj, "last_modified_date");
+        this.last_modified_by = BaseEntity.safeGetString(obj, "last_modified_by");
 
         //core
         title = obj.get("title").toString();
-        ref_topic = obj.get("ref_topic").toString();
+        ref_topic =  BaseEntity.safeGetString(obj, "ref_topic");
         status = (int)obj.get("status");
         audio = obj.get("audio").toString();
         text = obj.get("text").toString();
-        index_user_status = obj.get("index_user_status").toString();
-        index_user_type = obj.get("index_user_type").toString();
+        index_user_status = BaseEntity.safeGetString(obj, "index_user_status");
         has_read = (boolean)obj.get("has_read");
         user_last_requested = BaseEntity.safeGetLong(obj, "user_last_requested");
         conversation = obj.get("conversation");
 
         //evaluate
         score = (int)obj.get("score");
-        satisfy_score = (int)obj.get("satisfy_score");
-        advisor_id = obj.get("advisor_id").toString();
+        satisfy_score = BaseEntity.safeGetInt(obj, "satisfy_score");
+        advisor_id = BaseEntity.safeGetString(obj, "advisor_id");
 
         //for re-post
-        prev = obj.get("prev").toString();
-        next = obj.get("next").toString();
+        prev = BaseEntity.safeGetString(obj, "prev");
+        next = BaseEntity.safeGetString(obj, "next");
     }
 
 
@@ -190,14 +190,6 @@ public class Post extends BaseEntity {
 
     public void setIndex_user_status(String channel_status) {
         this.index_user_status = index_user_status;
-    }
-
-    public String getIndex_user_type() {
-        return index_user_type;
-    }
-
-    public void setIndex_user_type(String index_user_type) {
-        this.index_user_type = index_user_type;
     }
 
     public boolean isHas_read() {

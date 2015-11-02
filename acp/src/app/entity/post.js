@@ -5,13 +5,14 @@ window.PostStatus = {
     None: 0,
     UserPending: 1,
     UserError: 2,
-    Ready: 3,
-    AdvisorProcessing: 4,
-    AdvisorEvaluated: 5,
-    UserConversation :6,
-    AdvisorConversation: 7,
-    ClosedByUser: 8,
-    ClosedByRedo: 9
+    Sync: 3,
+    Ready: 4,
+    AdvisorProcessing: 5,
+    AdvisorEvaluated: 6,
+    UserConversation :7,
+    AdvisorConversation: 8,
+    ClosedByUser: 9,
+    ClosedByRedo: 10
 }
 
 window.PostType = {

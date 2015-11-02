@@ -1,6 +1,7 @@
 package vietnamworks.com.pal.models;
 
 import com.firebase.client.Firebase;
+import com.firebase.client.Query;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +35,7 @@ public class Posts extends AbstractContainer<Post> {
         p.setRef_topic(ref_topic);
         p.setText(text);
         p.setTitle(title);
-        p.setStatus(Post.STATUS_READY);
+        p.setStatus(Post.STATUS_SYNC);
         return add(p);
     }
 
@@ -50,7 +51,7 @@ public class Posts extends AbstractContainer<Post> {
     public static void updateAudioLink(String postId, String audioLink) {
         Firebase ref = FirebaseService.newRef(Arrays.asList("posts", postId));
         ref.child("audio").setValue(audioLink);
-        ref.child("status").setValue(Post.STATUS_READY);
+        ref.child("status").setValue(Post.STATUS_SYNC);
     }
 
     public static void raiseError(String postId) {
@@ -59,5 +60,13 @@ public class Posts extends AbstractContainer<Post> {
 
     public static void markAsRead(String postId) {
         FirebaseService.newRef(Arrays.asList("posts", postId, "has_read")).setValue(true);
+    }
+
+    public static Query getAllPostsRef() {
+        return FirebaseService.newRef(Arrays.asList("users_posts", FirebaseService.authData.getUid(), "all"));
+    }
+
+    public static Query getEvaluatedPostsRef() {
+        return FirebaseService.newRef(Arrays.asList("users_posts", FirebaseService.authData.getUid(), "evaluated"));
     }
 }
