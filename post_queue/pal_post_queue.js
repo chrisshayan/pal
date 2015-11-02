@@ -40,10 +40,10 @@ function onChanged(snapshot) {
         text: val.text
     }
 
-    users_posts.child(val.created_by).child("all").child(key).setWithPriority(obj, -val.last_modified_date);
+    users_posts.child(val.created_by).child("all").child(key).setWithPriority(obj, val.last_modified_date);
 
     if (val.status === PostStatus.AdvisorEvaluated) {
-        users_posts.child(val.created_by).child("evaluated").child(key).setWithPriority(obj, -val.last_modified_date);
+        users_posts.child(val.created_by).child("evaluated").child(key).setWithPriority(obj, val.last_modified_date);
     }
 
 

@@ -63,10 +63,10 @@ public class Posts extends AbstractContainer<Post> {
     }
 
     public static Query getAllPostsRef() {
-        return FirebaseService.newRef(Arrays.asList("users_posts", FirebaseService.authData.getUid(), "all"));
+        return FirebaseService.newRef(Arrays.asList("users_posts", FirebaseService.authData.getUid(), "all")).orderByPriority();
     }
 
     public static Query getEvaluatedPostsRef() {
-        return FirebaseService.newRef(Arrays.asList("users_posts", FirebaseService.authData.getUid(), "evaluated"));
+        return FirebaseService.newRef(Arrays.asList("users_posts", FirebaseService.authData.getUid(), "evaluated")).orderByPriority();
     }
 }
