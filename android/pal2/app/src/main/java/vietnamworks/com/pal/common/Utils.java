@@ -2,6 +2,7 @@ package vietnamworks.com.pal.common;
 
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Base64;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -73,6 +74,16 @@ public class Utils {
             return Math.round(minutes/(24*60f)) + " days";
         } else {
             return getDateString(timestamp);
+        }
+    }
+
+    public static String getBase64(String input) {
+        try {
+            byte[] data = input.getBytes("UTF-8");
+            String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+            return base64;
+        } catch (Exception E) {
+            return "";
         }
     }
 
