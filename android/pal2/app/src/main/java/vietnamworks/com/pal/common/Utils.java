@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.StringTokenizer;
 import java.util.TimeZone;
 
 import vietnamworks.com.pal.activities.BaseActivity;
@@ -48,8 +49,7 @@ public class Utils {
     }
 
     public static String getDateString(Date date, String format) {
-        java.text.DateFormat df = new SimpleDateFormat(format);
-        return df.format(date);
+        return new SimpleDateFormat(format).format(date);
     }
 
     public static String getDuration(long timestamp) {
@@ -60,10 +60,17 @@ public class Utils {
             return "just updated";
         } else if (minutes < 60) {
             return minutes + " mins";
-        } else if (minutes < 24*60) {
-            return (minutes/60) + " hours";
+        } else if (minutes < 2*60) {
+            long min = (minutes%60);
+            if (min > 2) {
+                return "1 hr " + min +" mins";
+            } else {
+                return "1 hr " + min +" min";
+            }
+        } else if (minutes < 24*2*60) {
+            return Math.round(minutes / 60f) + " hrs";
         } else if (minutes < 7*24*60) {
-            return (minutes/(24*60)) + " days";
+            return Math.round(minutes/(24*60f)) + " days";
         } else {
             return getDateString(timestamp);
         }
@@ -136,5 +143,22 @@ public class Utils {
     public static int randomInt(int min, int max) {
         Random r = new Random();
         return r.nextInt(max - min + 1) + min;
+    }
+
+    public static int numOfWords(String s) {
+        String trim = s.trim();
+        if (trim.isEmpty())
+            return 0;
+        return trim.split("\\s+").length;
+    }
+
+    public static String getFirstWords(String s, int n) {
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(s);
+        for(int i = 0; i < n && st.hasMoreTokens(); i++) {
+            sb.append(st.nextToken());
+            sb.append(" ");
+        }
+        return sb.toString();
     }
 }

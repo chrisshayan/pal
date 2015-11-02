@@ -231,6 +231,9 @@ public class TimelineActivity extends BaseActivity {
                         }
                     }
                 }
+                if (f instanceof  PostListFragment) {
+                    ((PostListFragment)f).refresh();
+                }
             }
         }, 500);
     }
@@ -247,6 +250,9 @@ public class TimelineActivity extends BaseActivity {
                         evaluatedPostsFragment = PostListFragment.createEvaluatedList();
                         pushFragment(evaluatedPostsFragment, R.id.fragment_holder);
                     }
+                }
+                if (f instanceof  PostListFragment) {
+                    ((PostListFragment)f).refresh();
                 }
             }
         }, 500);

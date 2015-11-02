@@ -53,14 +53,14 @@ public class TimelineItem extends RecyclerView.ViewHolder {
         BaseActivity.applyFont(itemView);
     }
 
-    public void setValue(int icon, String subject, String sub1, String sub2, String text, String audio_url) {
+    public void setValue(int icon, String subject, String sub1, String sub2, String text, String audio_url, boolean preview) {
         Picasso.with(ctx).load(icon).into(this.icon);
-        setValue(subject, sub1, sub2, text, audio_url);
+        setValue(subject, sub1, sub2, text, audio_url, preview);
     }
 
-    public void setValue(String iconURL, String subject, String sub1, String sub2, String text, String audio_url) {
+    public void setValue(String iconURL, String subject, String sub1, String sub2, String text, String audio_url, boolean preview) {
         Picasso.with(ctx).load(iconURL).into(this.icon);
-        setValue(subject, sub1, sub2, text, audio_url);
+        setValue(subject, sub1, sub2, text, audio_url, preview);
     }
 
     public void highlight(boolean val) {
@@ -75,7 +75,14 @@ public class TimelineItem extends RecyclerView.ViewHolder {
         }
     }
 
-    public void setValue(String subject, String sub1, String sub2, String text, String audio_url) {
+    public void setValue(String subject, String sub1, String sub2, String text, String audio_url, boolean preview_mode) {
+        if (preview_mode) {
+            int l = text.length();
+            text = Utils.getFirstWords(text, 24);
+            if (text.length() < l) {
+                text = text + "...";
+            }
+        }
         txtSubject.setText(subject);
         txtSub1.setText(sub1 == null ? "" : sub1);
         txtSub2.setText(sub2 == null ? "" : sub2);
@@ -95,10 +102,14 @@ public class TimelineItem extends RecyclerView.ViewHolder {
     }
 
     public void setValue(int icon, Post p) {
+        setValue(icon, p, false);
+    }
+
+    public void setValue(int icon, Post p, boolean preview_mode) {
         Picasso.with(ctx).load(icon).into(this.icon);
         String title = p.getTitle();
         if (title == null || title.length() == 0) {
-            if (p.getAudio() == null && p.getAudio().length() == 0) {
+            if (p.getAudio() == null || p.getAudio().length() == 0) {
                 title = BaseActivity.sInstance.getString(R.string.you_wrote);
             } else {
                 title = BaseActivity.sInstance.getString(R.string.you_said);
@@ -120,12 +131,16 @@ public class TimelineItem extends RecyclerView.ViewHolder {
             }
         }
 
-        setValue(title, Utils.getDuration(p.getLast_modified_date()), p.getStatusString(), p.getText(), p.getAudio());
+        setValue(title, Utils.getDuration(p.getLast_modified_date()), p.getStatusString(), p.getText(), p.getAudio(), preview_mode);
     }
 
     public void setValue(String icon, Post p) {
+        setValue(icon, p, false);
+    }
+
+    public void setValue(String icon, Post p, boolean preview_mode) {
         Picasso.with(ctx).load(icon).into(this.icon);
-        setValue(p.getTitle(), Utils.getDateString(p.getLast_modified_date()), p.getStatusString(), p.getText(), p.getAudio());
+        setValue(p.getTitle(), Utils.getDateString(p.getLast_modified_date()), p.getStatusString(), p.getText(), p.getAudio(), preview_mode);
     }
 
     public void setItemId(String id) {

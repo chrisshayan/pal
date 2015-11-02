@@ -126,6 +126,9 @@ public class PostListFragment extends BaseFragment {
         return filterType;
     }
 
+    public void refresh() {
+        mAdapter.notifyDataSetChanged();
+    }
 
     static class PostItemAdapter extends RecyclerView.Adapter<TimelineItem> {
         @Override
@@ -136,8 +139,7 @@ public class PostListFragment extends BaseFragment {
         @Override
         public TimelineItem onCreateViewHolder(ViewGroup viewGroup, int i) {
             View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cv_timeline_item, viewGroup, false);
-            TimelineItem view = new TimelineItem(v, viewGroup.getContext());
-            return view;
+            return new TimelineItem(v, viewGroup.getContext());
         }
 
         @Override
@@ -151,7 +153,7 @@ public class PostListFragment extends BaseFragment {
                 } else if (p.getStatus() == Post.STATUS_ADVISOR_EVALUATED) {
                     icon = R.drawable.ic_evaluated;
                 }
-                view.setValue( icon, p);
+                view.setValue( icon, p, true);
                 view.highlight(!p.isHas_read());
             }
         }
