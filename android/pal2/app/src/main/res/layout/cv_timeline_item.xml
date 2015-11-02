@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="Ei errem zril intellegat vis"
             android:id="@+id/subject"
-            style="@style/Text.Medium"
+            style="@style/Text.Small"
             android:layout_marginBottom="@dimen/base_padding"
             android:layout_marginTop="@dimen/base_padding" />
 
@@ -51,14 +51,14 @@
                 android:layout_height="wrap_content"
                 android:text="19 minutes ago"
                 android:id="@+id/desc1"
-                style="@style/Text.Small.Muted" />
+                style="@style/Text.ExtraSmall.Muted" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="waiting"
                 android:id="@+id/desc2"
-                style="@style/Text.Small.Muted"
+                style="@style/Text.ExtraSmall.Muted"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
@@ -72,7 +72,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="1px"
                 android:background="@color/colorDividerDarkAlpha"
                 android:layout_marginTop="@dimen/base_padding"
                 android:layout_marginBottom="@dimen/base_padding" />
@@ -91,8 +91,13 @@
             android:layout_height="match_parent"
             android:id="@+id/audio_group">
 
-            <vietnamworks.com.pal.custom_views.AudioPlayer android:id="@+id/player" android:layout_height="match_parent" android:layout_width="fill_parent"
-                android:gravity="center_vertical">
+            <vietnamworks.com.pal.custom_views.AudioPlayer
+                xmlns:player="http://schemas.android.com/apk/res/vietnamworks.com.pal"
+                android:id="@+id/player"
+                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:gravity="center_vertical"
+                player:removable="false">
             </vietnamworks.com.pal.custom_views.AudioPlayer>
         </LinearLayout>
 

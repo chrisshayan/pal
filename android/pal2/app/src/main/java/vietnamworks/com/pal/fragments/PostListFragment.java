@@ -145,7 +145,13 @@ public class PostListFragment extends BaseFragment {
             Post p = AppModel.posts.getData().get(i);
             if (p != null) {
                 view.setItemId(p.getId());
-                view.setValue( R.drawable.ic_action_done_all, p);
+                int icon = R.drawable.ic_queueing;
+                if (p.getStatus() == Post.STATUS_ADVISOR_PROCESSING) {
+                    icon = R.drawable.ic_evaluating;
+                } else if (p.getStatus() == Post.STATUS_ADVISOR_EVALUATED) {
+                    icon = R.drawable.ic_evaluated;
+                }
+                view.setValue( icon, p);
                 view.highlight(!p.isHas_read());
             }
         }

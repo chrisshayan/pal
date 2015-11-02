@@ -1,6 +1,7 @@
 package vietnamworks.com.pal.custom_views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.media.MediaPlayer;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -33,6 +34,7 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
     ImageButton btnPlay, btnRemove;
     ProgressBar progressBar;
     TextView txtTimer;
+    boolean removable;
     private AudioPlayerCallback callback;
 
     public interface AudioPlayerCallback {
@@ -46,11 +48,24 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
 
     public AudioPlayer(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs, 0);
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AudioPlayer, 0, 0);
+        try {
+            removable = ta.getBoolean(R.styleable.AudioPlayer_removable, false);
+        } finally {
+            ta.recycle();
+        }
         initializeViews(context);
     }
 
     public AudioPlayer(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AudioPlayer, 0, 0);
+        try {
+            removable = ta.getBoolean(R.styleable.AudioPlayer_removable, false);
+        } finally {
+            ta.recycle();
+        }
         initializeViews(context);
     }
 
@@ -93,6 +108,9 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
                     }
                 }
             });
+            if (!this.removable) {
+                btnRemove.setVisibility(GONE);
+            }
         }
         BaseActivity.applyFont(this);
     }
