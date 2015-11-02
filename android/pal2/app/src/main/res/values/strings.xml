@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Pal</string>
     <string name="title_timeline">Timeline</string>
+    <string name="title_evaluated_posts">Evaluated posted</string>
     <string name="title_composer">Composer</string>
 
     <string-array name="tutor_header">

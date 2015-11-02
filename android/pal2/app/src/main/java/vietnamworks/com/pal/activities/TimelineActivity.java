@@ -25,13 +25,13 @@ import vietnamworks.com.pal.configurations.AppConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.fragments.ComposerFragment;
 import vietnamworks.com.pal.fragments.PostListFragment;
-import vietnamworks.com.pal.fragments.TimelineFragment;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.services.FileUploadService;
 import vietnamworks.com.pal.services.FirebaseService;
 
 public class TimelineActivity extends BaseActivity {
-
+    private PostListFragment allPostsFragment;
+    private PostListFragment evaluatedPostsFragment;
     UserProfileNavView navHeaderView;
     Toolbar toolbar;
     @Override
@@ -80,8 +80,7 @@ public class TimelineActivity extends BaseActivity {
                 updateToolbar();
             }
         });
-
-        openFragment(new TimelineFragment(), R.id.fragment_holder);
+        onOpenAllPosts(null);
     }
 
     @Override
@@ -170,8 +169,12 @@ public class TimelineActivity extends BaseActivity {
 
         if (f instanceof ComposerFragment) {
             getSupportActionBar().setTitle(R.string.title_composer);
-        } else if (f instanceof  TimelineFragment) {
-            getSupportActionBar().setTitle(R.string.title_timeline);
+        } else if (f instanceof PostListFragment) {
+            if (((PostListFragment)f).getFilterType() == PostListFragment.FILTER_ALL) {
+                getSupportActionBar().setTitle(R.string.title_timeline);
+            } else {
+                getSupportActionBar().setTitle(R.string.title_evaluated_posts);
+            }
         }
     }
 
@@ -210,9 +213,8 @@ public class TimelineActivity extends BaseActivity {
         });
     }
 
-    private PostListFragment allPostsFragment;
-    private PostListFragment evaluatedPostsFragment;
     public void onOpenAllPosts(View v) {
+        hideKeyboard();
         closeDrawer();
         setTimeout(new Runnable() {
             @Override
@@ -221,7 +223,12 @@ public class TimelineActivity extends BaseActivity {
                 if (!(f instanceof  PostListFragment) || ((PostListFragment) f).getFilterType()  != PostListFragment.FILTER_ALL) {
                     if (allPostsFragment == null) {
                         allPostsFragment = PostListFragment.createAllPosts();
-                        pushFragment(allPostsFragment, R.id.fragment_holder);
+                        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                            openFragment(allPostsFragment, R.id.fragment_holder);
+                        } else {
+                            pushFragment(allPostsFragment, R.id.fragment_holder);
+                        }
+
                     }
                 }
             }
@@ -229,15 +236,16 @@ public class TimelineActivity extends BaseActivity {
     }
 
     public void onOpenRecentEvaluatedPost(View v) {
+        hideKeyboard();
         closeDrawer();
         setTimeout(new Runnable() {
             @Override
             public void run() {
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
                 if (!(f instanceof  PostListFragment) || ((PostListFragment) f).getFilterType()  != PostListFragment.FILTER_EVALUATED) {
-                    if (allPostsFragment == null) {
-                        allPostsFragment = PostListFragment.createEvaluatedList();
-                        pushFragment(allPostsFragment, R.id.fragment_holder);
+                    if (evaluatedPostsFragment == null) {
+                        evaluatedPostsFragment = PostListFragment.createEvaluatedList();
+                        pushFragment(evaluatedPostsFragment, R.id.fragment_holder);
                     }
                 }
             }

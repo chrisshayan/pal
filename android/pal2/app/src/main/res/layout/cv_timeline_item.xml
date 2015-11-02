@@ -18,13 +18,14 @@
             android:id="@+id/icon"
             android:src="@drawable/ic_big_success"
             android:layout_marginLeft="@dimen/base_padding"
-            android:layout_marginRight="@dimen/base_padding" />
+            android:layout_marginRight="@dimen/base_padding_2x" />
 
         <View
             android:layout_width="1px"
             android:layout_height="fill_parent"
             android:background="@color/colorDividerDarkAlpha"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="@dimen/base_padding" />
     </LinearLayout>
 
     <LinearLayout
