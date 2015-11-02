@@ -81,6 +81,7 @@ public class TimelineActivity extends BaseActivity {
             }
         });
         onOpenAllPosts(null);
+        getSupportActionBar().setTitle(R.string.title_timeline);
     }
 
     @Override
@@ -228,7 +229,6 @@ public class TimelineActivity extends BaseActivity {
                         } else {
                             pushFragment(allPostsFragment, R.id.fragment_holder);
                         }
-
                     }
                 }
             }
