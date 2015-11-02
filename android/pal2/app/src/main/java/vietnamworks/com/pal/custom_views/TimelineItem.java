@@ -68,14 +68,14 @@ public class TimelineItem extends RecyclerView.ViewHolder {
         txtSubject.setText(subject);
         txtSub1.setText(sub1 == null ? "" : sub1);
         txtSub2.setText(sub2 == null?"":sub2);
-        if (text != null) {
+        if (text != null && text.length() > 0) {
             txtText.setText(text);
             textGroup.setVisibility(View.VISIBLE);
         } else {
             textGroup.setVisibility(View.GONE);
         }
 
-        if (audio_url != null) {
+        if (audio_url != null && audio_url.length() > 0) {
             player.setAudioSource(audio_url);
             audioGroup.setVisibility(View.VISIBLE);
         } else {

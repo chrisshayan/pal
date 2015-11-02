@@ -70,4 +70,10 @@
     <!--post list-->
     <string name="you_wrote">You wrote</string>
     <string name="you_said">You said</string>
+
+    <!-- place holder text-->
+    <string name="placeholder_text_extra_short">Lorem ipsum</string>
+    <string name="placeholder_text_short">Lorem ipsum dolor sit amet</string>
+    <string name="placeholder_text_medium">Ei errem zril intellegat vis, vix wisi tempor no, sit munere ocurreret ad. His debet nominati no, ius volutpat scripserit liberavisse at</string>
+    <string name="placeholder_text_long">Mazim viris facilis cu sed, eos vidisse adolescens an. Eum iudico omnium instructior ne. Ut est integre ancillae erroribus. Te mei causae percipitur. Vis ei suavitate dignissim euripidis. Ea omnis soleat sit, ea libris integre cum.</string>
 </resources>
