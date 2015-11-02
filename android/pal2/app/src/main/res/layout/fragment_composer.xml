@@ -52,7 +52,9 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/base_padding_4x"
+                android:layout_marginRight="@dimen/base_padding_4x">
 
                 <vietnamworks.com.pal.custom_views.AudioPlayer android:id="@+id/player" android:layout_height="match_parent" android:layout_width="fill_parent"
                     android:gravity="center_vertical">

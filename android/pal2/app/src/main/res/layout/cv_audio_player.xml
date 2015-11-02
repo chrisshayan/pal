@@ -1,9 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:paddingTop="@dimen/base_padding_2x"
     android:paddingBottom="@dimen/base_padding_2x"
-    android:paddingLeft="@dimen/base_padding_4x"
-    android:paddingRight="@dimen/base_padding_4x"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:visibility="visible"
     android:orientation="horizontal"
@@ -18,11 +16,12 @@
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="150dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/progress_bar"
         android:layout_marginLeft="@dimen/base_padding"
-        android:max="100" />
+        android:max="100"
+        android:layout_weight="1" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -1,0 +1,107 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    android:orientation="horizontal"
+    android:layout_margin="@dimen/base_padding"
+    android:gravity="center_vertical" android:id="@+id/holder">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/icon"
+            android:src="@drawable/ic_big_success"
+            android:layout_marginLeft="@dimen/base_padding"
+            android:layout_marginRight="@dimen/base_padding" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="fill_parent"
+            android:background="@color/colorDividerDarkAlpha"
+            android:layout_marginTop="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ei errem zril intellegat vis"
+            android:id="@+id/subject"
+            style="@style/Text.Medium"
+            android:layout_marginBottom="@dimen/base_padding"
+            android:layout_marginTop="@dimen/base_padding" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="19 minutes ago"
+                android:id="@+id/desc1"
+                style="@style/Text.Small.Muted" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="waiting"
+                android:id="@+id/desc2"
+                style="@style/Text.Small.Muted"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/text_group">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorDividerDarkAlpha"
+                android:layout_marginTop="@dimen/base_padding"
+                android:layout_marginBottom="@dimen/base_padding" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lorem ipsum dolor sit amet, ius ea eligendi deleniti hendrerit, eos et tota fierent voluptaria. Mea mucius omittam qualisque cu, meliore constituam ne mel, id audiam mentitum vim. Quodsi labitur nec ex. Eam eu dico phaedrum."
+                android:id="@+id/text"
+                style="@style/Text.Small" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/audio_group">
+
+            <vietnamworks.com.pal.custom_views.AudioPlayer android:id="@+id/player" android:layout_height="match_parent" android:layout_width="fill_parent"
+                android:gravity="center_vertical">
+            </vietnamworks.com.pal.custom_views.AudioPlayer>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorDividerDarkAlpha"
+            android:layout_marginTop="@dimen/base_padding_2x"
+            android:layout_marginBottom="@dimen/base_padding_2x" />
+    </LinearLayout>
+
+</LinearLayout>

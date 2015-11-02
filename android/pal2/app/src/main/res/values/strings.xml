@@ -66,4 +66,7 @@
     <string name="guide_user_recorder_1">Touch microphone icon to start recording</string>
     <string name="guide_user_recorder_2">Touch stop icon to stop recording</string>
 
+    <!--post list-->
+    <string name="you_wrote">You wrote</string>
+    <string name="you_said">You said</string>
 </resources>

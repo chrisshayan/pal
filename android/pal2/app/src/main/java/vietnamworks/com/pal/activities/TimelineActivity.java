@@ -24,6 +24,7 @@ import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.configurations.AppConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.fragments.ComposerFragment;
+import vietnamworks.com.pal.fragments.PostListFragment;
 import vietnamworks.com.pal.fragments.TimelineFragment;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.services.FileUploadService;
@@ -115,7 +116,7 @@ public class TimelineActivity extends BaseActivity {
         if (id == R.id.action_send) {
             Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
             if (f instanceof ComposerFragment) {
-                if (submitAudioTask((ComposerFragment)f)) {
+                if (submitTask((ComposerFragment) f)) {
                     hideKeyboard();
                     onBackPressed();
                 }
@@ -209,20 +210,36 @@ public class TimelineActivity extends BaseActivity {
         });
     }
 
+    private PostListFragment allPostsFragment;
+    private PostListFragment evaluatedPostsFragment;
     public void onOpenAllPosts(View v) {
+        closeDrawer();
         setTimeout(new Runnable() {
             @Override
             public void run() {
-                closeDrawer();
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+                if (!(f instanceof  PostListFragment) || ((PostListFragment) f).getFilterType()  != PostListFragment.FILTER_ALL) {
+                    if (allPostsFragment == null) {
+                        allPostsFragment = PostListFragment.createAllPosts();
+                        pushFragment(allPostsFragment, R.id.fragment_holder);
+                    }
+                }
             }
         }, 500);
     }
 
     public void onOpenRecentEvaluatedPost(View v) {
+        closeDrawer();
         setTimeout(new Runnable() {
             @Override
             public void run() {
-                closeDrawer();
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+                if (!(f instanceof  PostListFragment) || ((PostListFragment) f).getFilterType()  != PostListFragment.FILTER_EVALUATED) {
+                    if (allPostsFragment == null) {
+                        allPostsFragment = PostListFragment.createEvaluatedList();
+                        pushFragment(allPostsFragment, R.id.fragment_holder);
+                    }
+                }
             }
         }, 500);
     }
@@ -253,7 +270,7 @@ public class TimelineActivity extends BaseActivity {
         //TODO: open challenge list
     }
 
-    private boolean submitAudioTask(ComposerFragment f) {
+    private boolean submitTask(ComposerFragment f) {
         f.stopRecoder();
 
         String audio = f.getAudioPath();
