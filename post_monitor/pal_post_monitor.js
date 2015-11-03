@@ -27,6 +27,8 @@ posts.on('child_removed', function(snapshot) {
     var key = snapshot.key();
     users_posts.child(val.created_by).child("all").child(key).remove();
     users_posts.child(val.created_by).child("evaluated").child(key).remove();
+    users_posts.child(val.created_by).child("unread").child(key).remove();
+    users_posts.child(val.created_by).child("evaluated_unread").child(key).remove();
 });
 
 
