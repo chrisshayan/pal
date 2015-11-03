@@ -12,6 +12,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.HashMap;
 
@@ -19,9 +20,9 @@ import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.activities.TimelineActivity;
 import vietnamworks.com.pal.common.Utils;
+import vietnamworks.com.pal.custom_views.TimelineItemBaseView;
 import vietnamworks.com.pal.custom_views.TimelineItemNullView;
 import vietnamworks.com.pal.custom_views.TimelineItemView;
-import vietnamworks.com.pal.custom_views.TimelineItemBaseView;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.models.Posts;
@@ -39,6 +40,8 @@ public class PostListFragment extends BaseFragment {
     private PostItemAdapter mAdapter;
     Query dataRef;
     RecyclerView recyclerView;
+    View overlay;
+    FloatingActionsMenu fab;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,30 @@ public class PostListFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mAdapter = new PostItemAdapter();
 
+        overlay = (View) rootView.findViewById(R.id.overlay);
+        overlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fab.collapse();
+                return;
+            }
+        });
+        fab = (FloatingActionsMenu) rootView.findViewById(R.id.fab);
+
+        fab.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+            @Override
+            public void onMenuExpanded() {
+                overlay.setVisibility(View.VISIBLE);
+                overlay.setAlpha(0);
+                overlay.animate().alpha(0.25f).setDuration(200).start();
+            }
+
+            @Override
+            public void onMenuCollapsed() {
+                overlay.setVisibility(View.GONE);
+            }
+        });
+
         return rootView;
     };
 
@@ -79,6 +106,8 @@ public class PostListFragment extends BaseFragment {
             dataRef.addValueEventListener(dataValueEventListener);
         }
         recyclerView.setAdapter(mAdapter);
+        fab.collapseImmediately();
+        overlay.setVisibility(View.GONE);
     }
 
     @Override

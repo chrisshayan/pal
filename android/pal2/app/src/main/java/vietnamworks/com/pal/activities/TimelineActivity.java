@@ -317,7 +317,7 @@ public class TimelineActivity extends BaseActivity {
     }
 
     public void onOpenSaySomethingComposer(View v) {
-        ((FloatingActionsMenu)findViewById(R.id.multiple_actions)).collapse();
+        ((FloatingActionsMenu)findViewById(R.id.fab)).collapseImmediately();
         setTimeout(new Runnable() {
             @Override
             public void run() {
