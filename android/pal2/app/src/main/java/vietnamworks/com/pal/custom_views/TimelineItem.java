@@ -1,6 +1,7 @@
 package vietnamworks.com.pal.custom_views;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,13 @@ import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.entities.Post;
+import vietnamworks.com.pal.fragments.PostDetailFragment;
+import vietnamworks.com.pal.models.Posts;
 
 /**
  * Created by duynk on 11/2/15.
  */
-public class TimelineItem extends RecyclerView.ViewHolder {
+public class TimelineItem extends RecyclerView.ViewHolder implements View.OnClickListener {
     boolean hasInit;
     String itemId;
 
@@ -28,6 +31,7 @@ public class TimelineItem extends RecyclerView.ViewHolder {
     AudioPlayer player;
     ViewGroup textGroup, audioGroup, scoreGroup;
     ArrayList<ImageView> stars = new ArrayList<>();
+    View holder;
 
     Context ctx;
 
@@ -48,6 +52,9 @@ public class TimelineItem extends RecyclerView.ViewHolder {
         stars.add((ImageView) itemView.findViewById(R.id.star3));
         stars.add((ImageView) itemView.findViewById(R.id.star4));
         stars.add((ImageView) itemView.findViewById(R.id.star5));
+
+        holder = (View)itemView.findViewById(R.id.holder);
+        holder.setOnClickListener(this);
 
         this.ctx = ctx;
         BaseActivity.applyFont(itemView);
@@ -147,5 +154,19 @@ public class TimelineItem extends RecyclerView.ViewHolder {
 
     public void setItemId(String id) {
         this.itemId = id;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Posts.markAsRead(itemId);
+        BaseActivity.sInstance.setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                Bundle b = new Bundle();
+                b.putString("id", itemId);
+                BaseActivity.sInstance.openFragment(PostDetailFragment.create(b), R.id.fragment_holder, true);
+            }
+        }, 200);
+
     }
 }
