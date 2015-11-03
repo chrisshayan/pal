@@ -22,7 +22,6 @@ import vietnamworks.com.pal.custom_views.TimelineItem;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.models.Posts;
-import vietnamworks.com.pal.services.FirebaseService;
 
 /**
  * Created by duynk on 11/2/15.
@@ -67,18 +66,12 @@ public class PostListFragment extends BaseFragment {
         Activity _act = this.getActivity();
         if (_act != null) {
             TimelineActivity act = (TimelineActivity) _act;
-
             int mode = filterType;
-            String uid = FirebaseService.authData.getUid();
-
             if (mode == FILTER_ALL) {
-                dataRef = Posts.getAllPostsRef();
+                dataRef = Posts.getAllPostsQuery();
             } else if (mode == FILTER_EVALUATED) {
-                dataRef = Posts.getEvaluatedPostsRef();
-                //String index_from = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED, "");
-                //String index_to = Post.buildUserStatusIndex(uid, Post.STATUS_ADVISOR_EVALUATED, "z");
-                //dataRef.orderByChild("index_user_status").startAt(index_from).endAt(index_to).addValueEventListener(dataValueEventListener);
-            }
+                dataRef = Posts.getEvaluatedPostsQuery();
+             }
             dataRef.addValueEventListener(dataValueEventListener);
         }
         recyclerView.setAdapter(mAdapter);
@@ -161,6 +154,20 @@ public class PostListFragment extends BaseFragment {
                 }
                 view.setValue( icon, p, true);
                 view.highlight(!p.isHas_read());
+                view.setClickEventListener(new TimelineItem.OnClickEventListener() {
+                    @Override
+                    public void onClicked(final String itemId) {
+                        Posts.markAsRead(itemId);
+                        BaseActivity.sInstance.setTimeout(new Runnable() {
+                            @Override
+                            public void run() {
+                                Bundle b = new Bundle();
+                                b.putString("id", itemId);
+                                BaseActivity.sInstance.openFragment(PostDetailFragment.create(b), R.id.fragment_holder, true);
+                            }
+                        }, 200);
+                    }
+                });
             }
         }
     }

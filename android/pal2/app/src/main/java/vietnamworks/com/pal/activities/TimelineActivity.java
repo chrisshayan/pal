@@ -74,9 +74,9 @@ public class TimelineActivity extends BaseActivity {
                             FirebaseService.GetUserProfileIntValue("total_following", 0)
                     );
                     navHeaderView.updateProfile(
-                            FirebaseService.GetUserProfileStringValue("display_name"),
-                            FirebaseService.GetUserProfileStringValue("level_name"),
-                            FirebaseService.GetUserProfileStringValue("avatar")
+                            FirebaseService.getUserProfileStringValue("display_name"),
+                            FirebaseService.getUserProfileStringValue("level_name"),
+                            FirebaseService.getUserProfileStringValue("avatar")
                     );
                 }
             }
@@ -92,10 +92,10 @@ public class TimelineActivity extends BaseActivity {
             }
         });
         onOpenAllPosts(null);
-        getSupportActionBar().setTitle(R.string.title_timeline);
+        setTitle(R.string.title_timeline);
 
-        queryTotalUnreadPosts = Posts.getUnreadPostsCounterRef();
-        queryTotalUnreadEvaluatedPosts = Posts.getUnreadEvaluatedPostsCounterRef();
+        queryTotalUnreadPosts = Posts.getUnreadPostsCounterQuery();
+        queryTotalUnreadEvaluatedPosts = Posts.getUnreadEvaluatedPostsCounterQuery();
     }
 
     private ValueEventListener onChangedUnreadPostsValue = new ValueEventListener() {
@@ -215,15 +215,15 @@ public class TimelineActivity extends BaseActivity {
         }
 
         if (f instanceof ComposerFragment) {
-            getSupportActionBar().setTitle(R.string.title_composer);
+            setTitle(R.string.title_composer);
         } else if (f instanceof PostListFragment) {
             if (((PostListFragment)f).getFilterType() == PostListFragment.FILTER_ALL) {
-                getSupportActionBar().setTitle(R.string.title_timeline);
+                setTitle(R.string.title_timeline);
             } else {
-                getSupportActionBar().setTitle(R.string.title_evaluated_posts);
+                setTitle(R.string.title_evaluated_posts);
             }
         } else if (f instanceof PostDetailFragment) {
-            getSupportActionBar().setTitle(Utils.getFirstWordsExtra(((PostDetailFragment) f).getTitle(), 5));
+            setTitle("");
         }
     }
 

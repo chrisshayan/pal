@@ -71,6 +71,10 @@
     <string name="you_wrote">You wrote</string>
     <string name="you_said">You said</string>
 
+    <!--post detail-->
+    <string name="said">said</string>
+    <string name="advisor_said">Advisor said</string>
+
     <!-- place holder text-->
     <string name="placeholder_text_extra_short">Lorem ipsum</string>
     <string name="placeholder_text_short">Lorem ipsum dolor sit amet</string>

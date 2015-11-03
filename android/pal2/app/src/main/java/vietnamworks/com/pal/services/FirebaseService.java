@@ -142,11 +142,11 @@ public class FirebaseService {
         }
     }
 
-    public static String GetUserProfileStringValue(String key) {
-        return GetUserProfileStringValue(key, "");
+    public static String getUserProfileStringValue(String key) {
+        return getUserProfileStringValue(key, "");
     }
 
-    public static String GetUserProfileStringValue(String key, String default_value) {
+    public static String getUserProfileStringValue(String key, String default_value) {
         String re = null;
         if (sInstance.userProfile != null && sInstance.userProfile.containsKey(key)) {
             Object obj = sInstance.userProfile.get(key);

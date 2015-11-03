@@ -54,10 +54,33 @@ public class TimelineItem extends RecyclerView.ViewHolder implements View.OnClic
         stars.add((ImageView) itemView.findViewById(R.id.star5));
 
         holder = (View)itemView.findViewById(R.id.holder);
-        holder.setOnClickListener(this);
+
+        scoreGroup.setVisibility(View.GONE);
 
         this.ctx = ctx;
         BaseActivity.applyFont(itemView);
+    }
+
+    public interface OnClickEventListener {
+        void onClicked(String itemId);
+    }
+
+    public void setClickEventListener(final OnClickEventListener l) {
+        holder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                l.onClicked(itemId);
+            }
+        });
+    }
+
+    public void setOnAvatarClickEventListener(final OnClickEventListener l) {
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                l.onClicked(itemId);
+            }
+        });
     }
 
     public void setValue(int icon, String subject, String sub1, String sub2, String text, String audio_url, boolean preview) {
@@ -149,11 +172,46 @@ public class TimelineItem extends RecyclerView.ViewHolder implements View.OnClic
 
     public void setValue(String icon, Post p, boolean preview_mode) {
         Picasso.with(ctx).load(icon).into(this.icon);
-        setValue(p.getTitle(), Utils.getDateString(p.getLast_modified_date()), p.statusString(), p.getText(), p.getAudio(), preview_mode);
+        String title = p.getTitle();
+        if (title == null || title.length() == 0) {
+            if (p.getAudio() == null || p.getAudio().length() == 0) {
+                title = BaseActivity.sInstance.getString(R.string.you_wrote);
+            } else {
+                title = BaseActivity.sInstance.getString(R.string.you_said);
+            }
+        }
+
+        int score = p.getScore();
+        if (score <= 0) {
+            scoreGroup.setVisibility(View.GONE);
+            txtSub2.setVisibility(View.VISIBLE);
+        } else {
+            scoreGroup.setVisibility(View.VISIBLE);
+            txtSub2.setVisibility(View.GONE);
+            for (int i = 0; i < score; i++) {
+                stars.get(i).setAlpha(1.0f);
+            }
+            for (int i = score; i < stars.size(); i++) {
+                stars.get(i).setAlpha(0.25f);
+            }
+        }
+        setValue(title, Utils.getDuration(p.getLast_modified_date()), p.statusString(), p.getText(), p.getAudio(), preview_mode);
     }
 
     public void setItemId(String id) {
         this.itemId = id;
+    }
+
+    public void setIcon(int icon) {
+        Picasso.with(ctx).load(icon).into(this.icon);
+    }
+
+    public void setIcon(String icon) {
+        Picasso.with(ctx).load(icon).into(this.icon);
+    }
+
+    public void setSubject(String subject) {
+        txtSubject.setText(subject);
     }
 
     @Override
@@ -168,6 +226,5 @@ public class TimelineItem extends RecyclerView.ViewHolder implements View.OnClic
                 BaseActivity.sInstance.openFragment(PostDetailFragment.create(b), R.id.fragment_holder, true);
             }
         }, 200);
-
     }
 }

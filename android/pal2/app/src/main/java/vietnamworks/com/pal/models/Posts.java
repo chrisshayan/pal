@@ -62,19 +62,23 @@ public class Posts extends AbstractContainer<Post> {
         FirebaseService.newRef(Arrays.asList("posts", postId, "has_read")).setValue(true);
     }
 
-    public static Query getAllPostsRef() {
+    public static Query getAllPostsQuery() {
         return FirebaseService.newRef(Arrays.asList("users_posts", FirebaseService.authData.getUid(), "all")).orderByPriority();
     }
 
-    public static Query getEvaluatedPostsRef() {
+    public static Query getEvaluatedPostsQuery() {
         return FirebaseService.newRef(Arrays.asList("users_posts", FirebaseService.authData.getUid(), "evaluated")).orderByPriority();
     }
 
-    public static Query getUnreadPostsCounterRef() {
+    public static Query getUnreadPostsCounterQuery() {
         return FirebaseService.newRef(Arrays.asList("users_posts", FirebaseService.authData.getUid(), "unread")).limitToFirst(100);
     }
-    public static Query getUnreadEvaluatedPostsCounterRef() {
+    public static Query getUnreadEvaluatedPostsCounterQuery() {
         return FirebaseService.newRef(Arrays.asList("users_posts", FirebaseService.authData.getUid(), "evaluated_unread")).limitToFirst(100);
+    }
+
+    public static Query getPostDetailQuery(String id) {
+        return FirebaseService.newRef(Arrays.asList("posts", id));
     }
 
 }

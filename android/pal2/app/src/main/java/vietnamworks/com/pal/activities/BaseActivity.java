@@ -298,5 +298,20 @@ public class BaseActivity extends AppCompatActivity {
         return result;
     }
 
+    public void setTitle(String title) {
+        ActionBar b =  getSupportActionBar();
+        if (b != null) {
+            b.setTitle(title);
+        }
+    }
+
+    public void setTitle(int title) {
+        ActionBar b =  getSupportActionBar();
+        if (b != null) {
+            b.setTitle(title);
+        }
+    }
+
+
     public static BaseActivity sInstance;
 }
