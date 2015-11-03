@@ -43,7 +43,7 @@ public class PostListFragment extends BaseFragment {
     View overlay;
     FloatingActionsMenu fab;
 
-    int pageSize = 2;
+    int pageSize = 100;
     int dataSize = pageSize;
 
 
