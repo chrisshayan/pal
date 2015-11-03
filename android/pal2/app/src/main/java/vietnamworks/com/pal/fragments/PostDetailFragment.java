@@ -18,7 +18,7 @@ import java.util.HashMap;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.common.Utils;
-import vietnamworks.com.pal.custom_views.TimelineItem;
+import vietnamworks.com.pal.custom_views.TimelineItemView;
 import vietnamworks.com.pal.entities.BaseEntity;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.models.Posts;
@@ -85,7 +85,7 @@ public class PostDetailFragment extends BaseFragment {
     }
 
 
-    class PostItemAdapter extends RecyclerView.Adapter<TimelineItem> {
+    class PostItemAdapter extends RecyclerView.Adapter<TimelineItemView> {
         @Override
         public int getItemCount() {
             if (post != null) {
@@ -95,13 +95,13 @@ public class PostDetailFragment extends BaseFragment {
         }
 
         @Override
-        public TimelineItem onCreateViewHolder(ViewGroup viewGroup, int i) {
+        public TimelineItemView onCreateViewHolder(ViewGroup viewGroup, int i) {
             View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cv_timeline_item, viewGroup, false);
-            return new TimelineItem(v, viewGroup.getContext());
+            return new TimelineItemView(v, viewGroup.getContext());
         }
 
         @Override
-        public void onBindViewHolder(final TimelineItem view, final int i) {
+        public void onBindViewHolder(final TimelineItemView view, final int i) {
             if (i == 0) {
                 String avatar = FirebaseService.getUserProfileStringValue("avatar");
                 if (avatar != null && !avatar.isEmpty()) {

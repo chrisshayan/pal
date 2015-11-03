@@ -19,9 +19,9 @@ import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.activities.TimelineActivity;
 import vietnamworks.com.pal.common.Utils;
-import vietnamworks.com.pal.custom_views.ListItemNullView;
-import vietnamworks.com.pal.custom_views.TimelineItem;
+import vietnamworks.com.pal.custom_views.TimelineItemNullView;
 import vietnamworks.com.pal.custom_views.TimelineItemView;
+import vietnamworks.com.pal.custom_views.TimelineItemBaseView;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.models.Posts;
@@ -133,21 +133,21 @@ public class PostListFragment extends BaseFragment {
         mAdapter.notifyDataSetChanged();
     }
 
-    static class PostItemAdapter extends RecyclerView.Adapter<TimelineItemView> {
+    static class PostItemAdapter extends RecyclerView.Adapter<TimelineItemBaseView> {
         @Override
         public int getItemCount() {
             return AppModel.posts.getData().size() + 1;
         }
 
         @Override
-        public TimelineItemView onCreateViewHolder(ViewGroup viewGroup, int type) {
+        public TimelineItemBaseView onCreateViewHolder(ViewGroup viewGroup, int type) {
             int count = getItemCount();
             if (type == 0) {
                 View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cv_timeline_item, viewGroup, false);
-                return new TimelineItem(v, viewGroup.getContext());
+                return new TimelineItemView(v, viewGroup.getContext());
             } else {
                 View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cv_timeline_end, viewGroup, false);
-                return new ListItemNullView(v);
+                return new TimelineItemNullView(v);
             }
 
         }
@@ -159,9 +159,9 @@ public class PostListFragment extends BaseFragment {
         }
 
         @Override
-        public void onBindViewHolder(final TimelineItemView v, final int i) {
-            if (v instanceof TimelineItem) {
-                TimelineItem view = (TimelineItem)v;
+        public void onBindViewHolder(final TimelineItemBaseView v, final int i) {
+            if (v instanceof TimelineItemView) {
+                TimelineItemView view = (TimelineItemView)v;
                 Post p = AppModel.posts.getData().get(i);
                 if (p != null) {
                     view.setItemId(p.getId());
@@ -173,7 +173,7 @@ public class PostListFragment extends BaseFragment {
                     }
                     view.setValue(icon, p, true);
                     view.highlight(!p.isHas_read());
-                    view.setClickEventListener(new TimelineItem.OnClickEventListener() {
+                    view.setClickEventListener(new TimelineItemView.OnClickEventListener() {
                         @Override
                         public void onClicked(final String itemId) {
                             Posts.markAsRead(itemId);
@@ -189,7 +189,7 @@ public class PostListFragment extends BaseFragment {
                     });
                 }
             } else {
-                ListItemNullView view = (ListItemNullView)v;
+                TimelineItemNullView view = (TimelineItemNullView)v;
                 long created_date = FirebaseService.getUserProfileLongValue("created_date", 0);
                 if (created_date > 0) {
                     String time = Utils.getDuration(created_date);

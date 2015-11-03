@@ -9,9 +9,9 @@ import vietnamworks.com.pal.activities.BaseActivity;
 /**
  * Created by duynk on 11/3/15.
  */
-public class ListItemNullView extends TimelineItemView {
+public class TimelineItemNullView extends TimelineItemBaseView {
     TextView txtSubject;
-    public ListItemNullView(View itemView) {
+    public TimelineItemNullView(View itemView) {
         super(itemView);
         txtSubject = (TextView) itemView.findViewById(R.id.subject);
         BaseActivity.applyFont(itemView, BaseActivity.RobotoLI);
