@@ -22,7 +22,6 @@ posts.on('child_added',   onChanged);
 posts.on('child_changed', onChanged);
 
 posts.on('child_removed', function(snapshot) {
-    console.log(snapshot.val());
     var val = snapshot.val();
     var key = snapshot.key();
     users_posts.child(val.created_by).child("all").child(key).remove();
