@@ -18,6 +18,8 @@ import java.util.HashMap;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.common.Utils;
+import vietnamworks.com.pal.custom_views.TimelineItemBaseView;
+import vietnamworks.com.pal.custom_views.TimelineItemNullView;
 import vietnamworks.com.pal.custom_views.TimelineItemView;
 import vietnamworks.com.pal.entities.BaseEntity;
 import vietnamworks.com.pal.entities.Post;
@@ -85,63 +87,78 @@ public class PostDetailFragment extends BaseFragment {
     }
 
 
-    class PostItemAdapter extends RecyclerView.Adapter<TimelineItemView> {
+    class PostItemAdapter extends RecyclerView.Adapter<TimelineItemBaseView> {
         @Override
         public int getItemCount() {
             if (post != null) {
-                return post.getConversationList().size() + 1;
+                return post.getConversationList().size() + 2;
             }
             return 0;
         }
 
         @Override
-        public TimelineItemView onCreateViewHolder(ViewGroup viewGroup, int i) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cv_timeline_item, viewGroup, false);
-            return new TimelineItemView(v, viewGroup.getContext());
+        public int getItemViewType(int position) {
+            int count = getItemCount();
+            return (count > 1 && position < count - 1)?0:1;
+        }
+
+
+        @Override
+        public TimelineItemBaseView onCreateViewHolder(ViewGroup viewGroup, int type) {
+            if (type == 0) {
+                View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cv_timeline_item, viewGroup, false);
+                return new TimelineItemView(v, viewGroup.getContext());
+            } else {
+                View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cv_timeline_end, viewGroup, false);
+                return new TimelineItemNullView(v);
+            }
         }
 
         @Override
-        public void onBindViewHolder(final TimelineItemView view, final int i) {
-            if (i == 0) {
-                String avatar = FirebaseService.getUserProfileStringValue("avatar");
-                if (avatar != null && !avatar.isEmpty()) {
-                    view.setValue(avatar, post);
+        public void onBindViewHolder(final TimelineItemBaseView v, final int i) {
+            if (v instanceof TimelineItemView) {
+                final TimelineItemView view = (TimelineItemView) v;
+                if (i == 0) {
+                    String avatar = FirebaseService.getUserProfileStringValue("avatar");
+                    if (avatar != null && !avatar.isEmpty()) {
+                        view.setValue(avatar, post);
+                    } else {
+                        view.setValue(R.drawable.ic_action_account_circle_dark, post);
+                    }
                 } else {
-                    view.setValue(R.drawable.ic_action_account_circle_dark, post);
-                }
-            } else {
-                HashMap<String, Object> conversation = post.getConversationList().get(i-1);
-                view.setValue(R.drawable.ic_action_account_circle_dark,
-                        getString(R.string.advisor_said),
-                        Utils.getDuration((long)conversation.get("created_date")),
-                        "",
-                        conversation.get("text").toString(),
-                        conversation.get("audio").toString(),
-                        false
-                );
+                    HashMap<String, Object> conversation = post.getConversationList().get(i - 1);
+                    view.setValue(R.drawable.ic_action_account_circle_dark,
+                            getString(R.string.advisor_said),
+                            Utils.getDuration((long) conversation.get("created_date")),
+                            "",
+                            conversation.get("text").toString(),
+                            conversation.get("audio").toString(),
+                            false
+                    );
 
-                UserProfiles.getUserProfile(conversation.get("uid").toString(), getContext(), new AsyncCallback() {
-                    @Override
-                    public void onSuccess(Context ctx, Object obj) {
-                        DataSnapshot dataSnapshot = (DataSnapshot)obj;
-                        HashMap<String, Object> data = dataSnapshot.getValue(HashMap.class);
-                        if (data.containsKey("avatar")) {
-                            String avatar = data.get("avatar").toString();
-                            if (!avatar.isEmpty()) {
-                                view.setIcon(avatar);
-                            }
-                            String display_name = BaseEntity.safeGetString(data, "display_name");
-                            if (display_name != null && !display_name.isEmpty()) {
-                                view.setSubject(display_name + " " + getString(R.string.said));
+                    UserProfiles.getUserProfile(conversation.get("uid").toString(), getContext(), new AsyncCallback() {
+                        @Override
+                        public void onSuccess(Context ctx, Object obj) {
+                            DataSnapshot dataSnapshot = (DataSnapshot) obj;
+                            HashMap<String, Object> data = dataSnapshot.getValue(HashMap.class);
+                            if (data.containsKey("avatar")) {
+                                String avatar = data.get("avatar").toString();
+                                if (!avatar.isEmpty()) {
+                                    view.setIcon(avatar);
+                                }
+                                String display_name = BaseEntity.safeGetString(data, "display_name");
+                                if (display_name != null && !display_name.isEmpty()) {
+                                    view.setSubject(display_name + " " + getString(R.string.said));
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onError(Context ctx, int error_code, String message) {
+                        @Override
+                        public void onError(Context ctx, int error_code, String message) {
 
-                    }
-                });
+                        }
+                    });
+                }
             }
         }
     }
