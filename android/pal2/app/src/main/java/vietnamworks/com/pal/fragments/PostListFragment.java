@@ -43,6 +43,10 @@ public class PostListFragment extends BaseFragment {
     View overlay;
     FloatingActionsMenu fab;
 
+    int pageSize = 2;
+    int dataSize = pageSize;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,10 +103,10 @@ public class PostListFragment extends BaseFragment {
             TimelineActivity act = (TimelineActivity) _act;
             int mode = filterType;
             if (mode == FILTER_ALL) {
-                dataRef = Posts.getAllPostsQuery();
+                dataRef = Posts.getAllPostsQuery().limitToFirst(dataSize);
             } else if (mode == FILTER_EVALUATED) {
-                dataRef = Posts.getEvaluatedPostsQuery();
-             }
+                dataRef = Posts.getEvaluatedPostsQuery().limitToFirst(dataSize);
+            }
             dataRef.addValueEventListener(dataValueEventListener);
         }
         recyclerView.setAdapter(mAdapter);
@@ -162,7 +166,7 @@ public class PostListFragment extends BaseFragment {
         mAdapter.notifyDataSetChanged();
     }
 
-    static class PostItemAdapter extends RecyclerView.Adapter<TimelineItemBaseView> {
+    class PostItemAdapter extends RecyclerView.Adapter<TimelineItemBaseView> {
         @Override
         public int getItemCount() {
             return AppModel.posts.getData().size() + 1;
@@ -223,6 +227,18 @@ public class PostListFragment extends BaseFragment {
                 if (created_date > 0) {
                     String time = Utils.getDuration(created_date);
                     view.setText(String.format(BaseActivity.sInstance.getString(R.string.joined_at), time));
+                }
+
+                if (dataSize == getItemCount() - 1) {
+                    dataSize += pageSize;
+                    int mode = filterType;
+                    dataRef.removeEventListener(dataValueEventListener);
+                    if (mode == FILTER_ALL) {
+                        dataRef = Posts.getAllPostsQuery().limitToFirst(dataSize);
+                    } else if (mode == FILTER_EVALUATED) {
+                        dataRef = Posts.getEvaluatedPostsQuery().limitToFirst(dataSize);
+                    }
+                    dataRef.addValueEventListener(dataValueEventListener);
                 }
             }
         }
