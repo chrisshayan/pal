@@ -14,7 +14,7 @@ public class TimelineItemNullView extends TimelineItemBaseView {
     public TimelineItemNullView(View itemView) {
         super(itemView);
         txtSubject = (TextView) itemView.findViewById(R.id.subject);
-        BaseActivity.applyFont(itemView, BaseActivity.RobotoLI);
+        BaseActivity.applyFont(itemView, BaseActivity.RobotoL);
     }
 
     public void setText(String text) {

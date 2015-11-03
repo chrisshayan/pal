@@ -178,7 +178,7 @@ public class PostDetailFragment extends BaseFragment {
                     }
                     BaseActivity.sInstance.setTitle(Utils.getFirstWordsExtra(title, 5));
                 }
-            }, 500);
+            }, 100);
         }
 
         @Override
