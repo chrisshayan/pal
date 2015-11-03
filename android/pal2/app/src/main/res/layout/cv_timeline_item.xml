@@ -17,8 +17,8 @@
         android:gravity="center_horizontal">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/post_avatar_size"
+            android:layout_height="@dimen/post_avatar_size"
             android:id="@+id/icon"
             android:src="@drawable/ic_big_success"
             android:contentDescription="@null" />
@@ -35,7 +35,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginLeft="@dimen/base_padding_2x">
+        android:layout_marginLeft="@dimen/base_padding_2x"
+        android:minHeight="@dimen/post_item_min_height">
 
         <TextView
             android:layout_width="wrap_content"
@@ -81,7 +82,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
+                        android:layout_height="@dimen/post_star_size"
                         android:id="@+id/star1"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_action_grade"
@@ -89,7 +90,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
+                        android:layout_height="@dimen/post_star_size"
                         android:id="@+id/star2"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_action_grade"
@@ -97,7 +98,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
+                        android:layout_height="@dimen/post_star_size"
                         android:id="@+id/star3"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_action_grade"
@@ -105,7 +106,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
+                        android:layout_height="@dimen/post_star_size"
                         android:id="@+id/star4"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_action_grade"
@@ -113,7 +114,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
+                        android:layout_height="@dimen/post_star_size"
                         android:id="@+id/star5"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_action_grade"
