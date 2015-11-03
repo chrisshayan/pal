@@ -28,6 +28,7 @@ import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.configurations.AppConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.fragments.ComposerFragment;
+import vietnamworks.com.pal.fragments.PostDetailFragment;
 import vietnamworks.com.pal.fragments.PostListFragment;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.models.Posts;
@@ -221,6 +222,8 @@ public class TimelineActivity extends BaseActivity {
             } else {
                 getSupportActionBar().setTitle(R.string.title_evaluated_posts);
             }
+        } else if (f instanceof PostDetailFragment) {
+            getSupportActionBar().setTitle(Utils.getFirstWordsExtra(((PostDetailFragment) f).getTitle(), 5));
         }
     }
 

@@ -172,4 +172,18 @@ public class Utils {
         }
         return sb.toString();
     }
+
+    public static String getFirstWordsExtra(String s, int n) {
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(s);
+        for(int i = 0; i < n && st.hasMoreTokens(); i++) {
+            sb.append(st.nextToken());
+            sb.append(" ");
+        }
+        String re = sb.toString();
+        if (re.length() < s.length()) {
+            re = re + "...";
+        }
+        return re;
+    }
 }

@@ -164,6 +164,7 @@ public class TimelineItem extends RecyclerView.ViewHolder implements View.OnClic
             public void run() {
                 Bundle b = new Bundle();
                 b.putString("id", itemId);
+                b.putString("title", txtSubject.getText().toString());
                 BaseActivity.sInstance.openFragment(PostDetailFragment.create(b), R.id.fragment_holder, true);
             }
         }, 200);
