@@ -160,7 +160,7 @@ public class FirebaseService {
         return re;
     }
 
-    public static int GetUserProfileIntValue(String key, int default_value) {
+    public static int getUserProfileIntValue(String key, int default_value) {
         if (sInstance.userProfile != null && sInstance.userProfile.containsKey(key)) {
             Object obj = sInstance.userProfile.get(key);
             if (obj instanceof Long) {
@@ -172,7 +172,19 @@ public class FirebaseService {
         return default_value;
     }
 
-    public static float GetUserProfileFloatValue(String key, float default_value) {
+    public static long getUserProfileLongValue(String key, int default_value) {
+        if (sInstance.userProfile != null && sInstance.userProfile.containsKey(key)) {
+            Object obj = sInstance.userProfile.get(key);
+            if (obj instanceof Long) {
+                return (long)obj;
+            } else if (obj instanceof Integer) {
+                return (long)obj;
+            }
+        }
+        return default_value;
+    }
+
+    public static float getUserProfileFloatValue(String key, float default_value) {
         if (sInstance.userProfile != null && sInstance.userProfile.containsKey(key)) {
             Object obj = sInstance.userProfile.get(key);
             if (obj instanceof Float) {

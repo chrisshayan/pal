@@ -69,9 +69,9 @@ public class TimelineActivity extends BaseActivity {
             public void onChanged(HashMap<String, Object> data) {
                 if (navHeaderView != null) {
                     navHeaderView.updateStat(
-                            FirebaseService.GetUserProfileIntValue("total_posts", 0),
-                            FirebaseService.GetUserProfileFloatValue("avg_points", 0),
-                            FirebaseService.GetUserProfileIntValue("total_following", 0)
+                            FirebaseService.getUserProfileIntValue("total_posts", 0),
+                            FirebaseService.getUserProfileFloatValue("avg_points", 0),
+                            FirebaseService.getUserProfileIntValue("total_following", 0)
                     );
                     navHeaderView.updateProfile(
                             FirebaseService.getUserProfileStringValue("display_name"),

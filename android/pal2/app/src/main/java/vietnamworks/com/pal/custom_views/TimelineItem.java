@@ -1,8 +1,6 @@
 package vietnamworks.com.pal.custom_views;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,13 +14,11 @@ import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.entities.Post;
-import vietnamworks.com.pal.fragments.PostDetailFragment;
-import vietnamworks.com.pal.models.Posts;
 
 /**
  * Created by duynk on 11/2/15.
  */
-public class TimelineItem extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class TimelineItem extends TimelineItemView {
     boolean hasInit;
     String itemId;
 
@@ -212,19 +208,5 @@ public class TimelineItem extends RecyclerView.ViewHolder implements View.OnClic
 
     public void setSubject(String subject) {
         txtSubject.setText(subject);
-    }
-
-    @Override
-    public void onClick(View v) {
-        Posts.markAsRead(itemId);
-        BaseActivity.sInstance.setTimeout(new Runnable() {
-            @Override
-            public void run() {
-                Bundle b = new Bundle();
-                b.putString("id", itemId);
-                b.putString("title", txtSubject.getText().toString());
-                BaseActivity.sInstance.openFragment(PostDetailFragment.create(b), R.id.fragment_holder, true);
-            }
-        }, 200);
     }
 }
