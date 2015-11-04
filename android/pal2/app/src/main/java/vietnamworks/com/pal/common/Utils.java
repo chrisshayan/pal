@@ -58,7 +58,7 @@ public class Utils {
         long minutes = (Math.max(now - timestamp, 0)/1000)/60;
 
         if (minutes <= 1) { //less than 1 min
-            return "just updated";
+            return 1 + " min";
         } else if (minutes < 60) {
             return minutes + " mins";
         } else if (minutes < 2*60) {
