@@ -83,7 +83,7 @@
         <item>Beginning</item>
         <item>Pre-intermediate</item>
         <item>Intermediate</item>
-        <item>Advance</item>
+        <item>Advanced</item>
     </string-array>
     <string name="single_view">%1$s view</string>
     <string name="n_view">%1$s views</string>

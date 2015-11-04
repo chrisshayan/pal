@@ -9,7 +9,6 @@ public class Topic extends BaseEntity {
     private String title;
     private int status;
     private int level;
-    private String category;
     long views;
     long submits;
 
@@ -25,14 +24,6 @@ public class Topic extends BaseEntity {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public long getViews() {
@@ -56,7 +47,6 @@ public class Topic extends BaseEntity {
         super.importData(obj);
 
         setLevel(safeGetInt(obj, "level", 0));
-        setCategory(safeGetString(obj, "category", ""));
         setStatus(safeGetInt(obj, "status", 0));
         setTitle(safeGetString(obj, "title", ""));
         setViews(safeGetLong(obj, "views", 0));

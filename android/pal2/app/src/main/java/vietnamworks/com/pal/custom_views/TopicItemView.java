@@ -19,7 +19,7 @@ public class TopicItemView extends RecyclerView.ViewHolder {
 
     public final static int LEVEL_COLORS[] = {0xff34495e, 0xff2e8ece, 0xff27ae60, 0xffe74c3c};
 
-    TextView subject, content, level, total_views, total_done;
+    TextView content, level, total_views, total_done;
     View topBar, holder;
     String itemId;
 
@@ -30,18 +30,16 @@ public class TopicItemView extends RecyclerView.ViewHolder {
     public TopicItemView(View itemView) {
         super(itemView);
         topBar = (View) itemView.findViewById(R.id.topbar);
-        subject = (TextView) itemView.findViewById(R.id.cateogry);
         content = (TextView) itemView.findViewById(R.id.content);
         level = (TextView) itemView.findViewById(R.id.level);
         holder = (View) itemView.findViewById(R.id.holder);
         total_views = (TextView) itemView.findViewById(R.id.total_views);
         total_done = (TextView) itemView.findViewById(R.id.total_done);
 
-        BaseActivity.applyFont(subject, BaseActivity.RobotoR);
         BaseActivity.applyFont(itemView, BaseActivity.RobotoL);
     }
 
-    public void setData(String itemId, final int l, final String s, final String c, final long views, final long done) {
+    public void setData(String itemId, final int l, final String s, final long views, final long done) {
         this.itemId = itemId;
         BaseActivity.timeout(new Runnable() {
             @Override
@@ -49,11 +47,7 @@ public class TopicItemView extends RecyclerView.ViewHolder {
                 int lv = Math.max(Math.min(l, LEVEL_COLORS.length - 1), 0);
                 topBar.setBackgroundColor(LEVEL_COLORS[lv]);
                 level.setText(BaseActivity.sInstance.getResources().getStringArray(R.array.topics_level)[lv]);
-                if (s == null || s.isEmpty()) {
-                    subject.setText(BaseActivity.sInstance.getString(R.string.common_topic));
-                } else {
-                    subject.setText(s);
-                }
+
                 if (views > 1) {
                     total_views.setText(String.format(BaseActivity.sInstance.getString(R.string.n_view), Utils.counterFormat(views)));
                 } else {
@@ -65,8 +59,7 @@ public class TopicItemView extends RecyclerView.ViewHolder {
                 } else {
                     total_done.setText(String.format(BaseActivity.sInstance.getString(R.string.single_submit), Utils.counterFormat(done)));
                 }
-
-                content.setText(c);
+                content.setText(s);
             }
         });
     }
