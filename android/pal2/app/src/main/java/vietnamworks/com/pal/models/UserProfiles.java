@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.MutableData;
+import com.firebase.client.Transaction;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
@@ -31,6 +33,25 @@ public class UserProfiles extends AbstractContainer<UserProfiles> {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    public static void increaseNumOfPost() {
+        FirebaseService.newRef(Arrays.asList("profiles_pub", FirebaseService.authData.getUid(), "total_posts")).runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                if(mutableData.getValue() == null) {
+                    mutableData.setValue(1);
+                } else {
+                    mutableData.setValue((Long) mutableData.getValue() + 1);
+                }
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(FirebaseError firebaseError, boolean b, DataSnapshot dataSnapshot) {
 
             }
         });
