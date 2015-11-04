@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/say_something"
             android:id="@+id/subject"
-            style="@style/Text.Large.Muted"
+            style="@style/Text.Medium.Muted"
             android:layout_margin="@dimen/base_padding_2x" />
         <View
             android:layout_width="match_parent"
