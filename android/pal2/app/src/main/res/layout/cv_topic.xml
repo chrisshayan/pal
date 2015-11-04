@@ -16,25 +16,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:background="?android:selectableItemBackground"
         android:id="@+id/holder"
         >
             <View
-                android:layout_width="fill_parent"
-                android:layout_height="4dp"
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
                 android:background="@color/colorPrimary"
                 android:id="@+id/topbar" />
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/base_padding_2x">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/base_padding_2x">
 
                     <TextView
@@ -57,6 +57,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
                         style="@style/Text.ExtraSmall.Muted" />
+
                 </RelativeLayout>
 
                 <View
@@ -64,14 +65,79 @@
                     android:layout_height="1px"
                     android:background="@color/colorDividerDarkAlpha"/>
 
-                <TextView
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/placeholder_text_short"
-                    android:id="@+id/content"
-                    android:layout_marginTop="@dimen/base_padding_2x"
-                    style="@style/Text.Small" />
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/placeholder_text_short"
+                        android:id="@+id/content"
+                        android:layout_marginTop="@dimen/base_padding_2x"
+                        style="@style/Text.Small"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="@dimen/base_padding_2x" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/base_padding_2x">
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView5"
+                            android:src="@drawable/ic_navigation_chevron_right"
+                            android:scaleType="fitCenter" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3k views"
+                            android:id="@+id/total_views"
+                            style="@style/Text.ExtraSmall.Muted" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorDividerDarkAlpha"
+                        android:layout_marginLeft="@dimen/base_padding"
+                        android:layout_marginRight="@dimen/base_padding"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal" >
+
+                        <TextView
+                            style="@style/Text.ExtraSmall.Muted"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3k accepted"
+                            android:id="@+id/total_done" />
+                    </LinearLayout>
+                </LinearLayout>
+
             </LinearLayout>
 
     </LinearLayout>

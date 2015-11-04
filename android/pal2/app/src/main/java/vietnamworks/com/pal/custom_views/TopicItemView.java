@@ -35,8 +35,7 @@ public class TopicItemView extends RecyclerView.ViewHolder {
         holder = (View) itemView.findViewById(R.id.holder);
 
         BaseActivity.applyFont(subject, BaseActivity.RobotoR);
-        BaseActivity.applyFont(level, BaseActivity.RobotoL);
-        BaseActivity.applyFont(content, BaseActivity.RobotoL);
+        BaseActivity.applyFont(itemView, BaseActivity.RobotoL);
     }
 
     public void setData(String itemId, final int l, final String s, final String c) {
