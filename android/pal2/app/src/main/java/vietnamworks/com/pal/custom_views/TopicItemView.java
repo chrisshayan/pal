@@ -19,19 +19,20 @@ public class TopicItemView extends RecyclerView.ViewHolder {
 
     public final static int LEVEL_COLORS[] = {0xff34495e, 0xff2e8ece, 0xff27ae60, 0xffe74c3c};
 
-    TextView content, level, total_views, total_done;
+    TextView content, txtLevel, total_views, total_done;
     View topBar, holder;
-    String itemId;
+    String itemId, hint;
+    int level;
 
     public interface OnClickEventListener {
-        void onClicked(String itemId, String subject);
+        void onClicked(String itemId, String subject, int level, String hint);
     }
 
     public TopicItemView(View itemView) {
         super(itemView);
         topBar = (View) itemView.findViewById(R.id.topbar);
         content = (TextView) itemView.findViewById(R.id.content);
-        level = (TextView) itemView.findViewById(R.id.level);
+        txtLevel = (TextView) itemView.findViewById(R.id.level);
         holder = (View) itemView.findViewById(R.id.holder);
         total_views = (TextView) itemView.findViewById(R.id.total_views);
         total_done = (TextView) itemView.findViewById(R.id.total_done);
@@ -39,14 +40,16 @@ public class TopicItemView extends RecyclerView.ViewHolder {
         BaseActivity.applyFont(itemView, BaseActivity.RobotoL);
     }
 
-    public void setData(String itemId, final int l, final String s, final long views, final long done) {
+    public void setData(String itemId, final int _level, final String _content, String hint, final long views, final long done) {
         this.itemId = itemId;
+        this.hint = hint;
+        this.level =  Math.max(Math.min(_level, LEVEL_COLORS.length - 1), 0);
         BaseActivity.timeout(new Runnable() {
             @Override
             public void run() {
-                int lv = Math.max(Math.min(l, LEVEL_COLORS.length - 1), 0);
+                int lv = level;
                 topBar.setBackgroundColor(LEVEL_COLORS[lv]);
-                level.setText(BaseActivity.sInstance.getResources().getStringArray(R.array.topics_level)[lv]);
+                txtLevel.setText(BaseActivity.sInstance.getResources().getStringArray(R.array.topics_level)[lv]);
 
                 if (views > 1) {
                     total_views.setText(String.format(BaseActivity.sInstance.getString(R.string.n_view), Utils.counterFormat(views)));
@@ -59,7 +62,7 @@ public class TopicItemView extends RecyclerView.ViewHolder {
                 } else {
                     total_done.setText(String.format(BaseActivity.sInstance.getString(R.string.single_submit), Utils.counterFormat(done)));
                 }
-                content.setText(s);
+                content.setText(_content);
             }
         });
     }
@@ -68,7 +71,7 @@ public class TopicItemView extends RecyclerView.ViewHolder {
         holder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                l.onClicked(itemId, content.getText().toString());
+                l.onClicked(itemId, content.getText().toString(), level, hint);
             }
         });
     }

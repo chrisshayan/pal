@@ -9,6 +9,7 @@ public class Topic extends BaseEntity {
     private String title;
     private int status;
     private int level;
+    private String hint;
     long views;
     long submits;
 
@@ -42,6 +43,14 @@ public class Topic extends BaseEntity {
         this.submits = submits;
     }
 
+    public String getHint() {
+        return hint;
+    }
+
+    public void setHint(String hint) {
+        this.hint = hint;
+    }
+
     @Override
     public Topic importData(HashMap<String, Object> obj) {
         super.importData(obj);
@@ -51,6 +60,7 @@ public class Topic extends BaseEntity {
         setTitle(safeGetString(obj, "title", ""));
         setViews(safeGetLong(obj, "views", 0));
         setSubmits(safeGetLong(obj, "submits", 0));
+        setHint(safeGetString(obj, "hint", ""));
 
         return this;
     }

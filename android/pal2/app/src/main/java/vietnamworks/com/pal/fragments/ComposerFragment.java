@@ -1,6 +1,8 @@
 package vietnamworks.com.pal.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,6 +33,7 @@ public class ComposerFragment extends BaseFragment {
     private TextView txtSubject;
     private EditText inputMessage;
     private TextView txtHint;
+    private ImageButton btnHint;
 
     public String getAudioPath() {
         if (hasAudio) {
@@ -39,6 +42,8 @@ public class ComposerFragment extends BaseFragment {
             return null;
         }
     }
+
+    private String tips;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -121,11 +126,30 @@ public class ComposerFragment extends BaseFragment {
 
         txtSubject = (TextView)rootView.findViewById(R.id.subject);
         inputMessage = (EditText)rootView.findViewById(R.id.message);
-        setTopic(this.postTitle, this.topicRef);
+        setTopic(this.postTitle, this.topicRef, this.tips);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         inputMessage.requestFocus();
         ((BaseActivity) getActivity()).showKeyboard();
+
+        btnHint = (ImageButton) rootView.findViewById(R.id.btnHint);
+        btnHint.setVisibility(tips != null && !tips.isEmpty()?View.VISIBLE:View.GONE);
+        btnHint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = tips;
+                new AlertDialog.Builder(BaseActivity.sInstance)
+                        .setTitle(BaseActivity.sInstance.getString(R.string.tips))
+                        .setMessage(tips)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
 
         return rootView;
     }
@@ -155,9 +179,10 @@ public class ComposerFragment extends BaseFragment {
         }
     }
 
-    public ComposerFragment setTopic(String title, String topicRef) {
+    public ComposerFragment setTopic(String title, String topicRef, String hint) {
         this.postTitle = title;
         this.topicRef = topicRef;
+        this.tips = hint;
         Activity act = getActivity();
         if (act != null) {
             ((BaseActivity)act).setTimeout(new Runnable() {
@@ -170,6 +195,9 @@ public class ComposerFragment extends BaseFragment {
                     }
                 }
             });
+        }
+        if (btnHint != null) {
+            btnHint.setVisibility(tips != null && !tips.isEmpty()?View.VISIBLE:View.GONE);
         }
         return this;
     }
