@@ -44,14 +44,12 @@ public class Post extends BaseEntity {
     int status = STATUS_NONE;
     String audio = "";
     String text = "";
-    String index_user_status = "";
     boolean has_read = true;
     long user_last_requested = 0;
     Object conversation;
 
     //evaluate
     int score = 0;
-    int satisfy_score = 0;
     String advisor_id = "";
 
     //for re-post
@@ -77,14 +75,12 @@ public class Post extends BaseEntity {
         status = (int)obj.get("status");
         audio = obj.get("audio").toString();
         text = obj.get("text").toString();
-        index_user_status = BaseEntity.safeGetString(obj, "index_user_status");
         has_read = (boolean)obj.get("has_read");
         user_last_requested = BaseEntity.safeGetLong(obj, "user_last_requested");
         conversation = obj.get("conversation");
 
         //evaluate
         score = (int)obj.get("score");
-        satisfy_score = BaseEntity.safeGetInt(obj, "satisfy_score");
         advisor_id = BaseEntity.safeGetString(obj, "advisor_id");
 
         //for re-post
@@ -119,9 +115,7 @@ public class Post extends BaseEntity {
         return STATUS_TEXT[status];
     }
 
-
     public void setStatus(int status) {
-        this.index_user_status = buildUserStatusIndex(this.getCreated_by(), status);
         this.status = status;
     }
 
@@ -149,14 +143,6 @@ public class Post extends BaseEntity {
         this.score = score;
     }
 
-    public int getSatisfy_score() {
-        return satisfy_score;
-    }
-
-    public void setSatisfy_score(int satisfy_score) {
-        this.satisfy_score = satisfy_score;
-    }
-
     public String getAdvisor_id() {
         return advisor_id;
     }
@@ -179,14 +165,6 @@ public class Post extends BaseEntity {
 
     public void setNext(String next) {
         this.next = next;
-    }
-
-    public String getIndex_user_status() {
-        return index_user_status;
-    }
-
-    public void setIndex_user_status(String channel_status) {
-        this.index_user_status = index_user_status;
     }
 
     public boolean isHas_read() {
