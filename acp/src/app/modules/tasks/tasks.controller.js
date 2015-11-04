@@ -383,7 +383,45 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                             return recent_score + 1
                         }
                     });
+                    //update user experience
+                    var exp_earn = 0;
+                    if ($scope.vote == 3) {
+                        exp_earn = 1;
+                    } else if ($scope.vote == 4) {
+                        exp_earn = 5;
+                    } else if ($scope.vote == 5) {
+                        exp_earn = 10;
+                    }
+                    firebaseHelper.getFireBaseInstance(["profiles_pub", user_id, "exp"]).transaction(function(recent_exp){
+                        if (!recent_exp) {
+                            return exp_earn;
+                        } else {
+                            return recent_exp + exp_earn;
+                        }
+                    }, function(error, committed, snapshot){
+                        if (committed) {
+                            var pts = snapshot.val();
+                            var level = 0;
+                            var level_name = 0;
+                            var scale = $rootScope.config.user_level_scales;
+                            for (var k in scale) {
+                                if (scale[k].min_points <= pts) {
+                                    level_name = scale[k].name;
+                                    level = k;
+                                } else {
+                                    break;
+                                }
+                            }
+                            firebaseHelper.getFireBaseInstance(["profiles_pub", user_id]).update({
+                                level_name: level_name,
+                                level: level
+                            });
+                        }
+                    });
                 }
+
+                
+
 
                 parseHelper.push($scope.data.created_by, "You've got new feedback from advisor");
             }
