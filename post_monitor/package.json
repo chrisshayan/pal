@@ -1,9 +1,8 @@
 {
-  "name": "post_queue",
+  "name": "post_monitor",
   "version": "0.0.1",
   "dependencies": {
-    "firebase": "^2.3.1",
-    "firebase-queue": "^1.2.1",
+    "firebase": "^2.3.1"
   },
   "devDependencies": {},
   "engines": {
