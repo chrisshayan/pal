@@ -100,7 +100,8 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="left">
+                    android:gravity="left"
+                    android:layout_marginTop="@dimen/base_padding">
 
                     <LinearLayout
                         android:orientation="horizontal"

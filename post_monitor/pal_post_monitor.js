@@ -22,49 +22,57 @@ posts.on('child_added',   onChanged);
 posts.on('child_changed', onChanged);
 
 posts.on('child_removed', function(snapshot) {
-    var val = snapshot.val();
-    var key = snapshot.key();
-    users_posts.child(val.created_by).child("all").child(key).remove();
-    users_posts.child(val.created_by).child("evaluated").child(key).remove();
-    users_posts.child(val.created_by).child("unread").child(key).remove();
-    users_posts.child(val.created_by).child("evaluated_unread").child(key).remove();
+    try {
+        var val = snapshot.val();
+        var key = snapshot.key();
+        users_posts.child(val.created_by).child("all").child(key).remove();
+        users_posts.child(val.created_by).child("evaluated").child(key).remove();
+        users_posts.child(val.created_by).child("unread").child(key).remove();
+        users_posts.child(val.created_by).child("evaluated_unread").child(key).remove();
+    } catch (e) {
+        Console.log(e);
+    }
 });
 
 
 function onChanged(snapshot) {
-    var val = snapshot.val();
-    var key = snapshot.key();
+    try {
+        var val = snapshot.val();
+        var key = snapshot.key();
 
-    var obj = {
-        status: val.status,
-        last_modified_date: val.last_modified_date,
-        audio: val.audio,
-        has_read: val.has_read,
-        score: val.score,
-        title: val.title,
-        text: val.text
-    }
-
-    users_posts.child(val.created_by).child("all").child(key).setWithPriority(obj, val.last_modified_date);
-
-    if (val.status === PostStatus.AdvisorEvaluated) {
-        users_posts.child(val.created_by).child("evaluated").child(key).setWithPriority(obj, val.last_modified_date);
-    }
-
-    if (val.status === PostStatus.Sync) {
-        posts.child(key).update({
-            status: PostStatus.Ready
-        });
-    }
-
-    if (val.has_read === false) {
-        users_posts.child(val.created_by).child("unread").child(key).set(true);
-        if (val.status == PostStatus.AdvisorEvaluated) {
-            users_posts.child(val.created_by).child("evaluated_unread").child(key).set(true);
+        var obj = {
+            status: val.status,
+            last_modified_date: val.last_modified_date,
+            audio: val.audio,
+            has_read: val.has_read,
+            score: val.score,
+            title: val.title,
+            text: val.text
         }
-    } else {
-        users_posts.child(val.created_by).child("unread").child(key).remove();
-        users_posts.child(val.created_by).child("evaluated_unread").child(key).remove();
+
+        users_posts.child(val.created_by).child("all").child(key).setWithPriority(obj, val.last_modified_date);
+
+        if (val.status === PostStatus.AdvisorEvaluated) {
+            users_posts.child(val.created_by).child("evaluated").child(key).setWithPriority(obj, val.last_modified_date);
+        }
+
+        if (val.status === PostStatus.Sync) {
+            posts.child(key).update({
+                status: PostStatus.Ready
+            });
+        }
+
+        if (val.has_read === false) {
+            users_posts.child(val.created_by).child("unread").child(key).set(true);
+            if (val.status == PostStatus.AdvisorEvaluated) {
+                users_posts.child(val.created_by).child("evaluated_unread").child(key).set(true);
+            }
+        } else {
+            users_posts.child(val.created_by).child("unread").child(key).remove();
+            users_posts.child(val.created_by).child("evaluated_unread").child(key).remove();
+        }
+    } catch (e) {
+        Console.log(e);
     }
 }
 

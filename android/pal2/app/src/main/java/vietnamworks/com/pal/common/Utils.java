@@ -186,4 +186,16 @@ public class Utils {
         }
         return re;
     }
+
+    public static String counterFormat(long count) {
+        if (count < 1000) {
+            return count + "";
+        } else if (count < 1000000) {
+            return (Math.round(count/100)/10f) + "k";
+        } else if (count < 1000000000) {
+            return (Math.round(count/1000)/100f) + "m";
+        } else {
+            return (Math.round(count/10000)/1000f) + "b";
+        }
+    }
 }

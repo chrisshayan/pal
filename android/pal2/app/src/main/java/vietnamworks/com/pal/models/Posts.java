@@ -25,7 +25,11 @@ public class Posts extends AbstractContainer<Post> {
         p.setUser_last_request(System.currentTimeMillis());
         p.setStatus(p.getStatus()); //update status index
         ref.setValue(p);
-        ref.setPriority(-System.currentTimeMillis());
+        //ref.setPriority(-System.currentTimeMillis());
+
+        if (p.getRef_topic() != null && !p.getRef_topic().isEmpty()) {
+            Topics.addSubmit(p.getRef_topic());
+        }
 
         return ref.getKey();
     }

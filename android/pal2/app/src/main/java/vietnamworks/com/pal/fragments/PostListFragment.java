@@ -108,6 +108,7 @@ public class PostListFragment extends BaseFragment {
                 dataRef = Posts.getEvaluatedPostsQuery().limitToFirst(dataSize);
             }
             dataRef.addValueEventListener(dataValueEventListener);
+            dataRef.keepSynced(true);
         }
         recyclerView.setAdapter(mAdapter);
         fab.collapseImmediately();
@@ -239,6 +240,7 @@ public class PostListFragment extends BaseFragment {
                         dataRef = Posts.getEvaluatedPostsQuery().limitToFirst(dataSize);
                     }
                     dataRef.addValueEventListener(dataValueEventListener);
+                    dataRef.keepSynced(true);
                 }
             }
         }

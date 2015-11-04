@@ -62,7 +62,7 @@ public class TopicsFragment extends BaseFragment {
     }
 
     @Override
-    public void onDetach() {
+    public void onPause() {
         super.onDetach();
         if (dataRef != null) {
             dataRef.removeEventListener(dataValueEventListener);
@@ -104,13 +104,19 @@ public class TopicsFragment extends BaseFragment {
         public void onBindViewHolder(final TopicItemView view, final int i) {
             Topic p = AppModel.topics.getData().get(i);
             if (p != null) {
-                view.setData(p.getId(), p.getLevel(), p.getCategory(), p.getTitle());
+                view.setData(p.getId(), p.getLevel(), p.getCategory(), p.getTitle(), p.getViews(), p.getSubmits());
                 view.setClickEventListener(new TopicItemView.OnClickEventListener() {
                     @Override
-                    public void onClicked(String itemId, String topic) {
-                        ComposerFragment f = new ComposerFragment();
-                        f.setTopic(topic, itemId);
-                        BaseActivity.sInstance.pushFragment(f, R.id.fragment_holder);
+                    public void onClicked(final String itemId, final String topic) {
+                        Topics.addView(itemId);
+                        BaseActivity.timeout(new Runnable() {
+                            @Override
+                            public void run() {
+                                ComposerFragment f = new ComposerFragment();
+                                f.setTopic(topic, itemId);
+                                BaseActivity.sInstance.pushFragment(f, R.id.fragment_holder);
+                            }
+                        }, 500);
                     }
                 });
             }

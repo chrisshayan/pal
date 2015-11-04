@@ -83,7 +83,12 @@ public class BaseEntity {
     public static int safeGetInt(HashMap<String, Object> obj, String key, int _default) {
         if (obj.containsKey(key)) {
             try {
-                return (int)obj.get(key);
+                Object v = obj.get(key);
+                if (v instanceof Long) {
+                    return ((Long) v).intValue();
+                } else if (v instanceof Integer) {
+                    return (int)v;
+                }
             } catch (Exception E) {
                 E.printStackTrace();
             }
@@ -98,7 +103,12 @@ public class BaseEntity {
     public static long safeGetLong(HashMap<String, Object> obj, String key, long _default) {
         if (obj.containsKey(key)) {
             try {
-                return (long)obj.get(key);
+                Object v = obj.get(key);
+                if (v instanceof Long) {
+                    return (Long)v;
+                } else if (v instanceof Integer) {
+                    return ((Integer) v).longValue();
+                }
             } catch (Exception E) {
                 E.printStackTrace();
             }
