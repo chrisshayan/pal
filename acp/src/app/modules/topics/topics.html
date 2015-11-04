@@ -22,16 +22,26 @@
                 <div class="ibox-content">
                     <form role="form" ng-submit="onAddTopic()">
                         <div class="form-group">
-                            <label>Title</label>
-                            <textarea ng-model="newTopic.title" placeholder="Enter topic" class="form-control" require=""></textarea>
+                            <label>Topic</label>
+                            <textarea ng-model="newTopic.title" placeholder="eg. Introducing yourself" class="form-control" require=""></textarea>
                         </div>
                         <div class="form-group">
+                            <label>Level</label>
+                            <select ng-model="newTopic.level" class="form-control"
+                                ng-options="parseInt(key) as value for (key, value) in ['Beginning', 'Pre-intermediate', 'Intermediate', 'Advanced']">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Hint</label>
+                            <textarea rows="6" ng-model="newTopic.hint" placeholder="eg. Where are you from? What are you doing now? What's your favourite sport? ..." class="form-control" require=""></textarea>
+                        </div>
+                        <!-- <div class="form-group">
                             <label>Type</label>
                             <select class="form-control m-b" ng-model="newTopic.type">
                                 <option value="0">audio</option>
                                 <option value="1">text</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="pull-right" >
                             <button ng-click="onCancelAddTopic()" class="btn btn-sm btn-primary m-t-n-xs"><strong>Cancel</strong></button>
                             <button ng-disabled="!newTopic.title" class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Add</strong></button>
@@ -53,7 +63,7 @@
                             <thead>
                                 <tr>
                                     <th>Title</th>
-                                    <th>Type</th>
+                                    <th>Level</th>
                                     <th class="text-right">Action</th>
                                 </tr>
                             </thead>
@@ -65,8 +75,10 @@
                                         {{r.title}}
                                     </td>
                                     <td>
-                                        <span ng-if="r.type==0">Audio</span>
-                                        <span ng-if="r.type==1">Text</span>
+                                        <span ng-if="r.level==0">Beginning</span>
+                                        <span ng-if="r.level==1">Pre-intermediate</span>
+                                        <span ng-if="r.level==2">Intermediate</span>
+                                        <span ng-if="r.level==3">Advanced</span>
                                     </td>
                                     <td class="text-right">
                                         <button ng-show="r.status == 1" ng-click="onSetTopicStatus(r.$id, 0)" class="btn btn-success btn-xs"> Disable</button>

@@ -12,7 +12,11 @@ function Topic (obj) {
     BaseEntity.call(this, {
         title: "",
         status: TopicStatus.Enable,
-        type: TopicType.Speaking
+        type: TopicType.Speaking,
+        views: 0,
+        submits: 0,
+        hint: "",
+        level: 0
     }, obj);
 }
 Topic.prototype = Object.create(BaseEntity.prototype);

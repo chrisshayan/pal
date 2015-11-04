@@ -1,5 +1,7 @@
 angular.module('inspinia').controller('TopicsCtrl', function ($scope, firebaseHelper, $rootScope, cs, $interval,$state ) {
 
+    $scope.parseInt = parseInt;
+
     $scope.onAddTopic = function() {
         if ($scope.newTopic.title) {
             $scope.newTopic.created_date = Date.now();
@@ -39,7 +41,8 @@ angular.module('inspinia').controller('TopicsCtrl', function ($scope, firebaseHe
         $scope.newTopic = {
             title: "",
             type: 0,
-            status: 1
+            status: 1,
+            level: 0
         }
     }
     var init = function() {
