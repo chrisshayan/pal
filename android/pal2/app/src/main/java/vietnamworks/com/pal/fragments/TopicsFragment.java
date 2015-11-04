@@ -107,8 +107,10 @@ public class TopicsFragment extends BaseFragment {
                 view.setData(p.getId(), p.getLevel(), p.getCategory(), p.getTitle());
                 view.setClickEventListener(new TopicItemView.OnClickEventListener() {
                     @Override
-                    public void onClicked(String itemId) {
-                        
+                    public void onClicked(String itemId, String topic) {
+                        ComposerFragment f = new ComposerFragment();
+                        f.setTopic(topic, itemId);
+                        BaseActivity.sInstance.pushFragment(f, R.id.fragment_holder);
                     }
                 });
             }

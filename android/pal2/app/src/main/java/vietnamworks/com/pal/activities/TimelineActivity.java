@@ -33,6 +33,7 @@ import vietnamworks.com.pal.fragments.PostListFragment;
 import vietnamworks.com.pal.fragments.TopicsFragment;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.models.Posts;
+import vietnamworks.com.pal.services.AudioMixerService;
 import vietnamworks.com.pal.services.FileUploadService;
 import vietnamworks.com.pal.services.FirebaseService;
 
@@ -320,7 +321,8 @@ public class TimelineActivity extends BaseActivity {
     }
 
     public void onOpenSaySomethingComposer(View v) {
-        ((FloatingActionsMenu)findViewById(R.id.fab)).collapseImmediately();
+        AudioMixerService.stop();
+                ((FloatingActionsMenu) findViewById(R.id.fab)).collapseImmediately();
         setTimeout(new Runnable() {
             @Override
             public void run() {
@@ -330,6 +332,7 @@ public class TimelineActivity extends BaseActivity {
     }
 
     public void onOpenChallengeList(View v) {
+        AudioMixerService.stop();
         ((FloatingActionsMenu)findViewById(R.id.fab)).collapseImmediately();
         setTimeout(new Runnable() {
             @Override

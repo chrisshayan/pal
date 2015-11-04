@@ -23,7 +23,7 @@ public class TopicItemView extends RecyclerView.ViewHolder {
     String itemId;
 
     public interface OnClickEventListener {
-        void onClicked(String itemId);
+        void onClicked(String itemId, String subject);
     }
 
     public TopicItemView(View itemView) {
@@ -61,7 +61,7 @@ public class TopicItemView extends RecyclerView.ViewHolder {
         holder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                l.onClicked(itemId);
+                l.onClicked(itemId, content.getText().toString());
             }
         });
     }
