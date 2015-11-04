@@ -104,7 +104,13 @@ public class TopicsFragment extends BaseFragment {
         public void onBindViewHolder(final TopicItemView view, final int i) {
             Topic p = AppModel.topics.getData().get(i);
             if (p != null) {
-                view.setData(p.getLevel(), p.getCategory(), p.getTitle());
+                view.setData(p.getId(), p.getLevel(), p.getCategory(), p.getTitle());
+                view.setClickEventListener(new TopicItemView.OnClickEventListener() {
+                    @Override
+                    public void onClicked(String itemId) {
+                        
+                    }
+                });
             }
         }
     }

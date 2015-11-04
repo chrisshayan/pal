@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/holder"
     card_view:cardElevation="2dp"
     card_view:cardBackgroundColor="@color/cardview_light_background"
     android:layout_marginLeft="@dimen/base_padding_4x"
@@ -11,13 +10,15 @@
     android:layout_marginTop="@dimen/base_padding_2x"
     android:layout_marginBottom="@dimen/base_padding_2x"
     android:baselineAligned="false"
-    android:background="?android:selectableItemBackground">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
         android:orientation="vertical"
+        android:background="?android:selectableItemBackground"
+        android:id="@+id/holder"
         >
             <View
                 android:layout_width="fill_parent"

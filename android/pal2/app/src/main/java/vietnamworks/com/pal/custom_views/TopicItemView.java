@@ -19,7 +19,12 @@ public class TopicItemView extends RecyclerView.ViewHolder {
     public final static int LEVEL_COLORS[] = {0xff34495e, 0xff2e8ece, 0xff27ae60, 0xffe74c3c};
 
     TextView subject, content, level;
-    View topBar;
+    View topBar, holder;
+    String itemId;
+
+    public interface OnClickEventListener {
+        void onClicked(String itemId);
+    }
 
     public TopicItemView(View itemView) {
         super(itemView);
@@ -27,9 +32,11 @@ public class TopicItemView extends RecyclerView.ViewHolder {
         subject = (TextView) itemView.findViewById(R.id.cateogry);
         content = (TextView) itemView.findViewById(R.id.content);
         level = (TextView) itemView.findViewById(R.id.level);
+        holder = (View) itemView.findViewById(R.id.holder);
     }
 
-    public void setData(final int l, final String s, final String c) {
+    public void setData(String itemId, final int l, final String s, final String c) {
+        this.itemId = itemId;
         BaseActivity.timeout(new Runnable() {
             @Override
             public void run() {
@@ -42,6 +49,15 @@ public class TopicItemView extends RecyclerView.ViewHolder {
                     subject.setText(s);
                 }
                 content.setText(c);
+            }
+        });
+    }
+
+    public void setClickEventListener(final OnClickEventListener l) {
+        holder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                l.onClicked(itemId);
             }
         });
     }
