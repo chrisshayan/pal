@@ -225,6 +225,8 @@ public class TimelineActivity extends BaseActivity {
             }
         } else if (f instanceof PostDetailFragment) {
             setTitle("");
+        } else if (f instanceof TopicsFragment) {
+            setTitle(R.string.title_challenge);
         }
     }
 
