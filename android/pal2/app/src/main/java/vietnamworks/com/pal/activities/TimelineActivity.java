@@ -30,6 +30,7 @@ import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.fragments.ComposerFragment;
 import vietnamworks.com.pal.fragments.PostDetailFragment;
 import vietnamworks.com.pal.fragments.PostListFragment;
+import vietnamworks.com.pal.fragments.TopicsFragment;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.services.FileUploadService;
@@ -327,7 +328,13 @@ public class TimelineActivity extends BaseActivity {
     }
 
     public void onOpenChallengeList(View v) {
-        //TODO: open challenge list
+        ((FloatingActionsMenu)findViewById(R.id.fab)).collapseImmediately();
+        setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                pushFragment(new TopicsFragment(), R.id.fragment_holder);
+            }
+        }, 500);
     }
 
     private boolean submitTask(ComposerFragment f) {

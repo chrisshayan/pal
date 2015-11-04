@@ -61,21 +61,16 @@ public class Post extends BaseEntity {
     public Post() {}
 
     public Post(DataSnapshot dataSnapshot) {
-        HashMap<String, Object> obj = dataSnapshot.getValue(HashMap.class);
-        importFromHashMap(obj);
-        this.setId(dataSnapshot.getKey());
+        importData(dataSnapshot);
     }
 
     public Post(HashMap<String, Object> obj) {
-        importFromHashMap(obj);
+        importData(obj);
     }
 
-    private void importFromHashMap(HashMap<String, Object> obj) {
-        this.created_date = BaseEntity.safeGetLong(obj, "created_date");
-        this.created_by = BaseEntity.safeGetString(obj, "created_by");
-        this.last_modified_date = BaseEntity.safeGetLong(obj, "last_modified_date");
-        this.last_modified_by = BaseEntity.safeGetString(obj, "last_modified_by");
-
+    @Override
+    public Post importData(HashMap<String, Object> obj) {
+        super.importData(obj);
         //core
         title = obj.get("title").toString();
         ref_topic =  BaseEntity.safeGetString(obj, "ref_topic");
@@ -95,6 +90,8 @@ public class Post extends BaseEntity {
         //for re-post
         prev = BaseEntity.safeGetString(obj, "prev");
         next = BaseEntity.safeGetString(obj, "next");
+
+        return this;
     }
 
 

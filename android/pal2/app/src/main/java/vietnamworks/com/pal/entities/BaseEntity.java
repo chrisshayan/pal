@@ -1,5 +1,7 @@
 package vietnamworks.com.pal.entities;
 
+import com.firebase.client.DataSnapshot;
+
 import java.util.HashMap;
 
 import vietnamworks.com.pal.common.Utils;
@@ -75,34 +77,78 @@ public class BaseEntity {
     }
 
     public static int safeGetInt(HashMap<String, Object> obj, String key) {
+        return safeGetInt(obj, key, Integer.MIN_VALUE);
+    }
+
+    public static int safeGetInt(HashMap<String, Object> obj, String key, int _default) {
         if (obj.containsKey(key)) {
             try {
-                int v = (int)obj.get(key);
-                return v;
+                return (int)obj.get(key);
             } catch (Exception E) {
+                E.printStackTrace();
             }
         }
-        return -9999;
+        return _default;
     }
 
     public static long safeGetLong(HashMap<String, Object> obj, String key) {
+        return safeGetLong(obj, key, Long.MIN_VALUE);
+    }
+
+    public static long safeGetLong(HashMap<String, Object> obj, String key, long _default) {
         if (obj.containsKey(key)) {
             try {
-                long v = (long)obj.get(key);
-                return v;
+                return (long)obj.get(key);
             } catch (Exception E) {
+                E.printStackTrace();
             }
         }
-        return -9999;
+        return -_default;
     }
 
     public static String safeGetString(HashMap<String, Object> obj, String key) {
+        return safeGetString(obj, key, null);
+    }
+
+    public static String safeGetString(HashMap<String, Object> obj, String key, String _default) {
         if (obj.containsKey(key)) {
             try {
                 return obj.get(key).toString();
             } catch (Exception E) {
+                E.printStackTrace();
             }
         }
-        return null;
+        return _default;
+    }
+
+    public static boolean safeGetBool(HashMap<String, Object> obj, String key) {
+        return safeGetBool(obj, key, false);
+    }
+
+    public static boolean safeGetBool(HashMap<String, Object> obj, String key, boolean _default) {
+        if (obj.containsKey(key)) {
+            try {
+                return (boolean)obj.get(key);
+            } catch (Exception E) {
+                E.printStackTrace();
+            }
+        }
+        return _default;
+    }
+
+    public BaseEntity importData(HashMap<String, Object> obj) {
+        this.created_date = BaseEntity.safeGetLong(obj, "created_date");
+        this.created_by = BaseEntity.safeGetString(obj, "created_by");
+        this.last_modified_date = BaseEntity.safeGetLong(obj, "last_modified_date");
+        this.last_modified_by = BaseEntity.safeGetString(obj, "last_modified_by");
+        return this;
+    }
+
+    public BaseEntity importData(DataSnapshot snapshot) {
+        if (snapshot != null) {
+            importData(snapshot.getValue(HashMap.class));
+            setId(snapshot.getKey());
+        }
+        return this;
     }
 }

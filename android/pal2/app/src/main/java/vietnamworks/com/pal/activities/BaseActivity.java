@@ -312,6 +312,13 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public static void timeout(Runnable r, long delay) {
+        BaseActivity.sInstance.setTimeout(r, delay);
+    }
+
+    public static void timeout(Runnable r) {
+        BaseActivity.sInstance.setTimeout(r);
+    }
 
     public static BaseActivity sInstance;
 }

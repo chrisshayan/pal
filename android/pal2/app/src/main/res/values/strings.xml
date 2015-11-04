@@ -76,6 +76,15 @@
     <string name="said">said</string>
     <string name="advisor_said">Advisor said</string>
 
+    <!-- topics view-->
+    <string name="common_topic">Mics</string>
+    <string-array name="topics_level">
+        <item>Beginning</item>
+        <item>Pre-intermediate</item>
+        <item>Intermediate</item>
+        <item>Advance</item>
+    </string-array>
+
     <!-- place holder text-->
     <string name="placeholder_text_extra_short">Lorem ipsum</string>
     <string name="placeholder_text_short">Lorem ipsum dolor sit amet</string>
