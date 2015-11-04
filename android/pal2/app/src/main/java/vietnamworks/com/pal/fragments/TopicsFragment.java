@@ -57,7 +57,7 @@ public class TopicsFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         recyclerView.setAdapter(null);
-        dataRef.addListenerForSingleValueEvent(dataValueEventListener);
+        dataRef.addValueEventListener(dataValueEventListener);
         recyclerView.setAdapter(mAdapter);
     }
 
