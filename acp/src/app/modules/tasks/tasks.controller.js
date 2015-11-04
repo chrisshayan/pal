@@ -372,6 +372,19 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                         classes: 'alert-success'
                     });
                 });
+
+                //update user score
+                var user_id = $scope.data.created_by;
+                if (user_id) {
+                    firebaseHelper.getFireBaseInstance(["profiles_pub", user_id, "score_" + $scope.vote]).transaction(function(recent_score){
+                        if (!recent_score) {
+                            return 1;
+                        } else {
+                            return recent_score + 1
+                        }
+                    });
+                }
+
                 parseHelper.push($scope.data.created_by, "You've got new feedback from advisor");
             }
             $scope.isSubmitting = false;

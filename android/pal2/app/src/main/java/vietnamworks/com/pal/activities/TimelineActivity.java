@@ -69,10 +69,20 @@ public class TimelineActivity extends BaseActivity {
         FirebaseService.SetUserProfileListener(new FirebaseService.UserProfileListener() {
             @Override
             public void onChanged(HashMap<String, Object> data) {
+                int score_1 = FirebaseService.getUserProfileIntValue("score_1", 0);
+                int score_2 = FirebaseService.getUserProfileIntValue("score_2", 0);
+                int score_3 = FirebaseService.getUserProfileIntValue("score_3", 0);
+                int score_4 = FirebaseService.getUserProfileIntValue("score_4", 0);
+                int score_5 = FirebaseService.getUserProfileIntValue("score_5", 0);
+                int total = score_1 + score_2 + score_3 + score_4 + score_5;
+                float score = 0;
+                if (total > 0) {
+                    score = Math.round(((score_1 + score_2 * 2 + score_3 * 3 + score_4 * 4 + score_5 * 5) * 10.0f) / total) / 10f;
+                }
                 if (navHeaderView != null) {
                     navHeaderView.updateStat(
                             FirebaseService.getUserProfileIntValue("total_posts", 0),
-                            FirebaseService.getUserProfileFloatValue("avg_points", 0),
+                            score,
                             FirebaseService.getUserProfileIntValue("total_following", 0)
                     );
                     navHeaderView.updateProfile(
