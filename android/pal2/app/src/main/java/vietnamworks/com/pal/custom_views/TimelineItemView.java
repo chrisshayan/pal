@@ -49,7 +49,7 @@ public class TimelineItemView extends TimelineItemBaseView {
         stars.add((ImageView) itemView.findViewById(R.id.star4));
         stars.add((ImageView) itemView.findViewById(R.id.star5));
 
-        holder = (View)itemView.findViewById(R.id.holder);
+        holder = itemView.findViewById(R.id.holder);
 
         scoreGroup.setVisibility(View.GONE);
 

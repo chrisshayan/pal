@@ -30,10 +30,10 @@ public class TopicItemView extends RecyclerView.ViewHolder {
 
     public TopicItemView(View itemView) {
         super(itemView);
-        topBar = (View) itemView.findViewById(R.id.topbar);
+        topBar = itemView.findViewById(R.id.topbar);
         content = (TextView) itemView.findViewById(R.id.content);
         txtLevel = (TextView) itemView.findViewById(R.id.level);
-        holder = (View) itemView.findViewById(R.id.holder);
+        holder = itemView.findViewById(R.id.holder);
         total_views = (TextView) itemView.findViewById(R.id.total_views);
         total_done = (TextView) itemView.findViewById(R.id.total_done);
 

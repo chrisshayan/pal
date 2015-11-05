@@ -142,7 +142,7 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
                                             long dur = player.getDuration();
                                             int sec = (int) dur / 1000;
                                             duration = sec;
-                                            int min = (int) sec / 60;
+                                            int min = sec / 60;
                                             sec = sec % 60;
                                             String _min = (min < 10) ? "0" + min : min + "";
                                             String _sec = (sec < 10) ? "0" + sec : sec + "";
@@ -193,7 +193,7 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
             @Override
             public void run() {
                 int sec = (int)dur/1000;
-                int min = (int)sec/60;
+                int min = sec /60;
                 sec = sec%60;
                 String _min = (min<10)?"0"+min:min+"";
                 String _sec = (sec<10)?"0"+sec:sec+"";
@@ -226,7 +226,6 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
 
                     }
 
-                    ;
                 }, 1000, 1000);
             }
         });

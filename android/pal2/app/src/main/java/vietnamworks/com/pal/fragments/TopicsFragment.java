@@ -51,7 +51,7 @@ public class TopicsFragment extends BaseFragment {
         dataRef = Topics.getAllTopicsQuery().limitToFirst(pageSize);
 
         return rootView;
-    };
+    }
 
     @Override
     public void onResume() {

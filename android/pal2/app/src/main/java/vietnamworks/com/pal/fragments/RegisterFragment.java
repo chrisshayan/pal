@@ -42,7 +42,7 @@ public class RegisterFragment extends BaseFragment {
                     return true;
                 }
                 return false;
-            };
+            }
         });
         return rootView;
     }

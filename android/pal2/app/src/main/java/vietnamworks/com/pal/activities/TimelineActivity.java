@@ -366,9 +366,9 @@ public class TimelineActivity extends BaseActivity {
         }
 
         if (audio == null) { //text
-            AppModel.posts.addText(subject, topic, message);
+            Posts.addText(subject, topic, message);
         } else {
-            String post_id = AppModel.posts.addAudioAsync(subject, topic, message);
+            String post_id = Posts.addAudioAsync(subject, topic, message);
             String server_file_path = Utils.getAudioServerFileName(FirebaseService.authData.getUid(), post_id);
             FileUploadService.upload(
                     this,
@@ -391,7 +391,7 @@ public class TimelineActivity extends BaseActivity {
                 @Override
                 public void onError(String uploadId, Exception exception) {
                     System.out.println("Error in upload with ID: " + uploadId + ". " + exception.getLocalizedMessage() + " " + exception);
-                    AppModel.posts.raiseError(uploadId);
+                    Posts.raiseError(uploadId);
                 }
 
                 @Override
@@ -403,9 +403,9 @@ public class TimelineActivity extends BaseActivity {
                             + ". Response from server: " + serverResponseMessage);
                     try {
                         JSONObject obj = new JSONObject(serverResponseMessage);
-                        AppModel.posts.updateAudioLink(uploadId, obj.getString("url"));
+                        Posts.updateAudioLink(uploadId, obj.getString("url"));
                     }catch (Exception E) {
-                        AppModel.posts.raiseError(uploadId);
+                        Posts.raiseError(uploadId);
                         E.printStackTrace();
                     }
                 }

@@ -60,7 +60,7 @@ public class PostDetailFragment extends BaseFragment {
         recyclerView.setAdapter(mAdapter);
 
         return rootView;
-    };
+    }
 
     @Override
     public void onResume() {

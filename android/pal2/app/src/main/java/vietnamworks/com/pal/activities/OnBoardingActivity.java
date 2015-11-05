@@ -32,7 +32,7 @@ public class OnBoardingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_onboarding);;
+        setContentView(R.layout.activity_onboarding);
 
         nPages = getResources().getStringArray(R.array.tutor_body).length;
 
@@ -65,11 +65,11 @@ public class OnBoardingActivity extends BaseActivity {
         Drawable circle;
         Drawable filled_circle;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            circle = (Drawable) getResources().getDrawable(R.drawable.shape_onboarding_indicator, this.getTheme());
-            filled_circle = (Drawable) getResources().getDrawable(R.drawable.shape_onboarding_selected_indicator, this.getTheme());
+            circle = getResources().getDrawable(R.drawable.shape_onboarding_indicator, this.getTheme());
+            filled_circle = getResources().getDrawable(R.drawable.shape_onboarding_selected_indicator, this.getTheme());
         } else {
-            circle = (Drawable)getResources().getDrawable(R.drawable.shape_onboarding_indicator);
-            filled_circle = (Drawable)getResources().getDrawable(R.drawable.shape_onboarding_selected_indicator);
+            circle = getResources().getDrawable(R.drawable.shape_onboarding_indicator);
+            filled_circle = getResources().getDrawable(R.drawable.shape_onboarding_selected_indicator);
         }
 
         for (int i = 0; i < mPagerAdapter.getCount(); i++) {

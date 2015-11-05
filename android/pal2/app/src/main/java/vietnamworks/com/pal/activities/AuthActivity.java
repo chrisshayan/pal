@@ -50,9 +50,9 @@ public class AuthActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auth);;
+        setContentView(R.layout.activity_auth);
 
-        applyFont((TextView) findViewById(R.id.app_title), Bubblegum);
+        applyFont(findViewById(R.id.app_title), Bubblegum);
 
         loginFragment = (LoginFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_login);
         registerFragment = (RegisterFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_register);

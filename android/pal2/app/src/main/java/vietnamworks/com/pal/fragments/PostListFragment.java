@@ -67,7 +67,7 @@ public class PostListFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mAdapter = new PostItemAdapter();
 
-        overlay = (View) rootView.findViewById(R.id.overlay);
+        overlay = rootView.findViewById(R.id.overlay);
         overlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +92,7 @@ public class PostListFragment extends BaseFragment {
         });
 
         return rootView;
-    };
+    }
 
     @Override
     public void onResume() {
