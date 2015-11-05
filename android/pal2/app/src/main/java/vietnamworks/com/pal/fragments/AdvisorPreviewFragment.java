@@ -87,14 +87,13 @@ public class AdvisorPreviewFragment extends BaseFragment {
                             txtNoVote.setVisibility(View.GONE);
                             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                                 HashMap<String, Object> data = snapshot.getValue(HashMap.class);
-                                AdvisorCommentView v = AdvisorCommentView.create(getContext(),
+                                addCommentView(AdvisorCommentView.create(getContext(),
                                         BaseEntity.safeGetString(data, "avatar"),
                                         BaseEntity.safeGetString(data, "display_name"),
                                         BaseEntity.safeGetLong(data, "created_date", 0),
                                         BaseEntity.safeGetString(data, "message"),
                                         BaseEntity.safeGetInt(data, "rate")
-                                );
-                                addCommentView(v);
+                                ));
                             }
                         }
                     }

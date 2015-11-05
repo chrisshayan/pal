@@ -101,6 +101,6 @@ public class AdvisorProfiles extends  AbstractContainer<AdvisorProfiles> {
     }
 
     public static Query getRecentComments(final String advisor) {
-        return FirebaseService.newRef(Arrays.asList("advisor_votes", advisor)).orderByChild("created_date");
+        return FirebaseService.newRef(Arrays.asList("advisor_votes", advisor)).orderByChild("created_date").startAt(0).limitToLast(5);
     }
 }
