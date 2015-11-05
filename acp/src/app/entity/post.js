@@ -22,7 +22,7 @@ window.PostType = {
 
 window.PostHelper = {
     buildIndex: function(uid, val) {
-        return uid.padRight(48) + (val + "").padLeft(4) + (Date.now() + "").padLeft(16);
+        return uid.padRight(48) + (val + "").padLeft(4);
     }
 }
 
@@ -58,8 +58,6 @@ Post.prototype = Object.create(BaseEntity.prototype);
 Post.prototype.constructor = Post;
 
 Post.prototype.computeIndex = function() {
-    this.data.index_user_status = PostHelper.buildIndex(this.data.created_by, this.data.status);
-    this.data.index_user_type = PostHelper.buildIndex(this.data.created_by, this.data.type);
     this.data.index_advisior_status = PostHelper.buildIndex(this.data.advisor_id, this.data.status);
     return this;
 }
