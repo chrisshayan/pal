@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import vietnamworks.com.pal.R;
@@ -62,7 +63,7 @@ public class RatingChart extends LinearLayout {
         final float p3 = Math.max(r3*1.0f/m, 0.01f);
         final float p2 = Math.max(r2*1.0f/m, 0.01f);
         final float p1 = Math.max(r1*1.0f/m, 0.01f);
-        final int max_width = this.getWidth();
+        final int max_width = ((ViewGroup)this.getParent()).getWidth();
         new Handler().post(new Runnable() {
             @Override
             public void run() {
