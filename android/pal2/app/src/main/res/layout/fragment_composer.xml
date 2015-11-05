@@ -39,7 +39,8 @@
                     android:src="@drawable/ic_action_info_outline"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:scaleType="fitCenter"
-                    android:padding="5dp" />
+                    android:padding="5dp"
+                    android:contentDescription="@null"/>
             </RelativeLayout>
         </LinearLayout>
 
@@ -48,7 +49,7 @@
             android:layout_height="1px"
             android:background="@color/colorDividerDark"
             android:alpha="0.5"
-            android:layout_marginBottom="@dimen/base_padding_2x"></View>
+            android:layout_marginBottom="@dimen/base_padding_2x"/>
 
         <EditText
             android:layout_width="fill_parent"
@@ -71,7 +72,7 @@
 
             <FrameLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginLeft="@dimen/base_padding_4x"
@@ -88,13 +89,12 @@
                     android:text="Small Text"
                     android:id="@+id/recorder_hint"
                     android:gravity="center"
-                    style="@style/Text.Small.Muted"
-                    android:autoText="false" />
+                    style="@style/Text.Small.Muted" />
             </FrameLayout>
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimaryLight"></View>
+                android:background="@color/colorPrimaryLight"/>
 
             <ImageButton
                 android:layout_width="60dp"
@@ -104,7 +104,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="fitCenter"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
+                android:paddingRight="15dp"
+                android:contentDescription="@null"/>
         </LinearLayout>
 
     </LinearLayout>
