@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.squareup.picasso.Picasso;
 
 import vietnamworks.com.pal.R;
@@ -18,18 +19,19 @@ import vietnamworks.com.pal.activities.BaseActivity;
  * Created by duynk on 10/28/15.
  */
 public class UserProfileNavView extends LinearLayout {
-    TextView txtTotalPosts, txtAvgPoints, txtTotalFollowing, txtUserName, txtUserLevel;
+    TextView txtTotalPosts, txtAvgPoints, txtUserName, txtUserLevel;
+    DonutProgress lvProgress;
     ImageView imgAvatar;
     private boolean hasInit = false;
     int total_posts;
     float avg_point;
-    int total_following;
+    int exp_percent;
 
-    public static UserProfileNavView create(Context context, final int total_posts, final float avg_point, final int total_following ) {
+    public static UserProfileNavView create(Context context, final int total_posts, final float avg_point, final int exp_percent ) {
         UserProfileNavView obj = new UserProfileNavView(context);
-        obj.total_posts = 0;
-        obj.avg_point = 0;
-        obj.total_following = 0;
+        obj.total_posts = total_posts;
+        obj.avg_point = avg_point;
+        obj.exp_percent = exp_percent;
         return obj;
     }
 
@@ -55,12 +57,13 @@ public class UserProfileNavView extends LinearLayout {
             super.onFinishInflate();
             txtTotalPosts = (TextView) findViewById(R.id.total_posts);
             txtAvgPoints = (TextView) findViewById(R.id.avg_points);
-            txtTotalFollowing = (TextView) findViewById(R.id.total_following);
+            lvProgress = (DonutProgress) findViewById(R.id.lv_progress);
             txtUserLevel = (TextView) findViewById(R.id.user_level);
             txtUserName = (TextView) findViewById(R.id.username);
             imgAvatar = (ImageView) findViewById(R.id.avatar);
+
             hasInit = true;
-            updateStat(total_posts, avg_point, total_following);
+            updateStat(total_posts, avg_point, exp_percent);
             updateProfile("", "", "");
         }
         BaseActivity.applyFont(this);
@@ -73,7 +76,7 @@ public class UserProfileNavView extends LinearLayout {
         onFinishInflate();
     }
 
-    public void updateStat(final int total_posts, final float avg_point, final int total_following) {
+    public void updateStat(final int total_posts, final float avg_point, final int exp_percent) {
         if (hasInit) {
             final int pts = Math.round(avg_point * 10);
             new Handler().post(new Runnable() {
@@ -87,8 +90,7 @@ public class UserProfileNavView extends LinearLayout {
                         String tmp = (pts / 10) + "." + (pts % 10);
                         txtAvgPoints.setText(tmp);
                     }
-                    String txt_follow = total_following + "";
-                    txtTotalFollowing.setText(txt_follow);
+                    lvProgress.setProgress(exp_percent);
                 }
             });
         }

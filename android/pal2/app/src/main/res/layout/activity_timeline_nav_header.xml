@@ -31,13 +31,15 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:baselineAligned="false"
+        android:gravity="top">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="top">
 
             <TextView
                 android:layout_width="match_parent"
@@ -59,34 +61,12 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.6">
+            android:layout_weight="1"
+            android:gravity="top|center_horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/avg_point"
-                android:id="@+id/textView6"
-                android:gravity="center"
-                android:padding="@dimen/base_padding"
-                style="@style/Text.ExtraSmall.Light" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:id="@+id/avg_points"
-                android:gravity="center"
-                style="@style/Text.Small.Light" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
+            <!--
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,6 +83,44 @@
                 android:id="@+id/total_following"
                 android:gravity="center"
                 android:textIsSelectable="false"
+                style="@style/Text.Small.Light" />
+
+                -->
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/lv_progress"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                custom:donut_progress="0"
+                custom:donut_unfinished_stroke_width="2dp"
+                custom:donut_finished_stroke_width="2dp"
+                custom:donut_text_color="@color/colorTextLight"
+                custom:donut_text_size="@dimen/font_xs"
+                android:layout_marginTop="@dimen/base_padding" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="top">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/avg_point"
+                android:id="@+id/textView6"
+                android:gravity="center"
+                android:padding="@dimen/base_padding"
+                style="@style/Text.ExtraSmall.Light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/avg_points"
+                android:gravity="center"
                 style="@style/Text.Small.Light" />
         </LinearLayout>
     </LinearLayout>

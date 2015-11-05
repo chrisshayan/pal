@@ -83,7 +83,7 @@ public class TimelineActivity extends BaseActivity {
                     navHeaderView.updateStat(
                             FirebaseService.getUserProfileIntValue("total_posts", 0),
                             score,
-                            FirebaseService.getUserProfileIntValue("total_following", 0)
+                            FirebaseService.getUserProfileIntValue("level_completion", 0)
                     );
                     navHeaderView.updateProfile(
                             FirebaseService.getUserProfileStringValue("display_name"),
