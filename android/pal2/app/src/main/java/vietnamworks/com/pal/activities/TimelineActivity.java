@@ -239,7 +239,7 @@ public class TimelineActivity extends BaseActivity {
         } else if (f instanceof TopicsFragment) {
             setTitle(R.string.title_challenge);
         } else if (f instanceof AdvisorPreviewFragment) {
-            setTitle(getString(R.string.title_advisor_rating));
+            setTitle(R.string.title_advisor_rating);
         }
     }
 
