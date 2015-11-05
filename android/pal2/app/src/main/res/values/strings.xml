@@ -103,7 +103,8 @@
     <!-- advisor profile -->
     <string name="vote_for_advisor">Rate for advisor</string>
     <string name="vote_for_advisor_comment">Enter your comment here</string>
-    <string name="advisor_total_vote">%1$s rating</string>
+    <string name="advisor_total_vote_single">%1$s user</string>
+    <string name="advisor_total_vote">%1$s users</string>
     <string name="thank_for_voting">Thank for your vote</string>
     <string name="no_vote">No data now</string>
 </resources>

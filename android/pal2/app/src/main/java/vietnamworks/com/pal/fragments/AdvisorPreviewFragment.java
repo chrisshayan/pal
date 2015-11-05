@@ -63,7 +63,11 @@ public class AdvisorPreviewFragment extends BaseFragment {
                         Picasso.with(ctx).load(p.getAvatar()).into(avatar);
                     }
                     txtDisplayName.setText(p.getDisplay_name());
-                    txtRate.setText(String.format(BaseActivity.sInstance.getString(R.string.advisor_total_vote), Utils.counterFormat(p.totalRating())));
+                    if (p.totalRating() > 1) {
+                        txtRate.setText(String.format(BaseActivity.sInstance.getString(R.string.advisor_total_vote), Utils.counterFormat(p.totalRating())));
+                    } else {
+                        txtRate.setText(String.format(BaseActivity.sInstance.getString(R.string.advisor_total_vote_single), Utils.counterFormat(p.totalRating())));
+                    }
                     txtScore.setText(p.avgRate() + "");
                     chart.setRating(p.getRate5(), p.getRate4(), p.getRate3(), p.getRate2(), p.getRate1());
                 }

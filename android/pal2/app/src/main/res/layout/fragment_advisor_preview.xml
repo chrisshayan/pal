@@ -118,8 +118,9 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/base_padding_8x"
-                android:paddingBottom="@dimen/base_padding_2x">
+                android:layout_marginTop="@dimen/base_padding_4x"
+                android:paddingBottom="@dimen/base_padding_2x"
+                android:layout_marginBottom="@dimen/base_padding_4x">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -135,11 +136,13 @@
                         android:textSize="40sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="1234 rating"
-                        android:id="@+id/nrate" />
+                        android:id="@+id/nrate"
+                        style="@style/Text.ExtraSmall.Muted"
+                        android:gravity="center" />
                 </LinearLayout>
 
                 <vietnamworks.com.pal.custom_views.RatingChart
@@ -150,9 +153,14 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/colorDividerDarkAlpha"/>
+
             <Space
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_padding_2x" />
 
             <TextView
                 android:layout_width="wrap_content"
