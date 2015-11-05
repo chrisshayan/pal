@@ -12,7 +12,7 @@ import vietnamworks.com.pal.configurations.ParseSettings;
  */
 public class ParseService {
     public static void init(Context ctx) {
-        Parse.enableLocalDatastore(ctx);
+        Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
         Parse.initialize(ctx, ParseSettings.APP_ID, ParseSettings.APP_KEY);
         ParseInstallation.getCurrentInstallation().saveInBackground();
     }

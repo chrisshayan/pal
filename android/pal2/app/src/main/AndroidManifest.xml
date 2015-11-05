@@ -9,12 +9,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+<!--
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission
         android:name="vietnamworks.com.pal.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-
+-->
     <application
         android:name=".Pal"
         android:allowBackup="true"
@@ -52,6 +53,8 @@
                 <action android:name="com.parse.push.intent.OPEN" />
             </intent-filter>
         </receiver>
+
+        <!--
         <receiver android:name="com.parse.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
@@ -60,6 +63,7 @@
                 <category android:name="vietnamworks.com.pal" />
             </intent-filter>
         </receiver>
+        -->
 
         <!-- end parse service -->
         <activity
