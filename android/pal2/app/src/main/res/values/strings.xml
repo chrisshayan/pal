@@ -105,6 +105,6 @@
     <string name="vote_for_advisor_comment">Enter your comment here</string>
     <string name="advisor_total_vote_single">%1$s user</string>
     <string name="advisor_total_vote">%1$s users</string>
-    <string name="thank_for_voting">Thank for your vote</string>
+    <string name="thank_for_voting">Thanks for your vote</string>
     <string name="no_vote">No data now</string>
 </resources>
