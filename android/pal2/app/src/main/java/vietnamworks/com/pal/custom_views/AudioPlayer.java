@@ -239,7 +239,7 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
         BaseActivity.sInstance.setTimeout(new Runnable() {
             @Override
             public void run() {
-                btnPlay.setImageResource(R.drawable.ic_av_stop_circle_outline);
+                btnPlay.setImageResource(R.drawable.ic_image_timelapse);
                 txtTimer.setText("__:__");
             }
         });
