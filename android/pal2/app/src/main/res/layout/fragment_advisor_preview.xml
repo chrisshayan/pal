@@ -140,4 +140,22 @@
 
     </LinearLayout>
 
+    <Space
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/no_vote"
+        android:id="@+id/no_vote" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/comments"
+        android:paddingBottom="@dimen/base_padding_2x"></LinearLayout>
+
 </LinearLayout>

@@ -3,6 +3,7 @@ package vietnamworks.com.pal.models;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.MutableData;
+import com.firebase.client.Query;
 import com.firebase.client.Transaction;
 
 import java.util.Arrays;
@@ -40,7 +41,7 @@ public class AdvisorProfiles extends  AbstractContainer<AdvisorProfiles> {
         FirebaseService.newRef(Arrays.asList("profiles_pub", advisor, "rate" + to)).runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-                if(mutableData.getValue() == null) {
+                if (mutableData.getValue() == null) {
                     mutableData.setValue(1);
                 } else {
                     mutableData.setValue((Long) mutableData.getValue() + 1);
@@ -57,24 +58,34 @@ public class AdvisorProfiles extends  AbstractContainer<AdvisorProfiles> {
 
     public static void vote(final String advisor, final int vote, final String message) {
         HashMap<String, Object> vote_detail = new HashMap<>();
-        String user_id =  FirebaseService.authData.getUid();
+        String user_id = FirebaseService.authData.getUid();
         vote_detail.put("rate", vote);
         vote_detail.put("created_date", Utils.getMillis());
         vote_detail.put("message", message);
-        FirebaseService.newRef(Arrays.asList("advisor_votes", user_id)).push().setValue(vote_detail);
-        FirebaseService.newRef(Arrays.asList("advisor_vote_rate_log", user_id, "rate")).runTransaction(new Transaction.Handler() {
+        vote_detail.put("display_name", FirebaseService.getUserProfileStringValue("display_name"));
+        vote_detail.put("avatar", FirebaseService.getUserProfileStringValue("avatar"));
+
+        FirebaseService.newRef(Arrays.asList("advisor_votes_log", advisor, user_id)).push().setValue(vote_detail);
+
+
+
+        HashMap<String, Object> vote_info = (HashMap<String, Object> )vote_detail.clone();
+        vote_info.remove("rate");
+        FirebaseService.newRef(Arrays.asList("advisor_votes", advisor, user_id)).updateChildren(vote_info);
+
+        FirebaseService.newRef(Arrays.asList("advisor_votes", advisor, user_id, "rate")).runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-                if(mutableData.getValue() == null) {
+                if (mutableData.getValue() == null) {
                     mutableData.setValue(vote);
                     updateAdvisorRate(advisor, 0, vote);
                 } else {
                     int last_vote = 0;
                     Object value = mutableData.getValue();
                     if (value instanceof Integer) {
-                        last_vote = (Integer)value;
+                        last_vote = (Integer) value;
                     } else if (value instanceof Long) {
-                        last_vote = ((Long)value).intValue();
+                        last_vote = ((Long) value).intValue();
                     }
                     updateAdvisorRate(advisor, last_vote, vote);
                     mutableData.setValue(vote);
@@ -87,5 +98,9 @@ public class AdvisorProfiles extends  AbstractContainer<AdvisorProfiles> {
 
             }
         });
+    }
+
+    public static Query getRecentComments(final String advisor) {
+        return FirebaseService.newRef(Arrays.asList("advisor_votes", advisor)).orderByChild("created_date");
     }
 }
