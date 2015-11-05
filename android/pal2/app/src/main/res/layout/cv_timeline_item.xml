@@ -81,7 +81,7 @@
                     android:id="@+id/star">
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/post_star_size"
                         android:layout_height="@dimen/post_star_size"
                         android:id="@+id/star1"
                         android:contentDescription="@null"
@@ -89,7 +89,7 @@
                         android:scaleType="fitCenter" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/post_star_size"
                         android:layout_height="@dimen/post_star_size"
                         android:id="@+id/star2"
                         android:contentDescription="@null"
@@ -97,7 +97,7 @@
                         android:scaleType="fitCenter" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/post_star_size"
                         android:layout_height="@dimen/post_star_size"
                         android:id="@+id/star3"
                         android:contentDescription="@null"
@@ -105,7 +105,7 @@
                         android:scaleType="fitCenter" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/post_star_size"
                         android:layout_height="@dimen/post_star_size"
                         android:id="@+id/star4"
                         android:contentDescription="@null"
@@ -113,7 +113,7 @@
                         android:scaleType="fitCenter" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/post_star_size"
                         android:layout_height="@dimen/post_star_size"
                         android:id="@+id/star5"
                         android:contentDescription="@null"

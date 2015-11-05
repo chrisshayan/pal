@@ -10,6 +10,11 @@
     <dimen name="base_padding_4x">16dp</dimen>
     <dimen name="base_padding_8x">32dp</dimen>
 
+
+    <dimen name="star_extra_small">10dp</dimen>
+    <dimen name="star_small">15dp</dimen>
+    <dimen name="star_medium">20dp</dimen>
+
     <dimen name="badge_min_width">30sp</dimen>
 
     <dimen name="font_xs">10sp</dimen>
@@ -30,6 +35,6 @@
     <!-- post item -->
     <dimen name="post_item_min_height">100dp</dimen>
     <dimen name="post_avatar_size">50dp</dimen>
-    <dimen name="post_star_size">20dp</dimen>
+    <dimen name="post_star_size">@dimen/star_small</dimen>
 
 </resources>

@@ -18,8 +18,8 @@
             android:layout_marginRight="@dimen/base_padding" />
 
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/star_extra_small"
+            android:layout_height="@dimen/star_extra_small"
             android:src="@drawable/ic_action_grade"
             android:contentDescription="@null" />
 
@@ -52,8 +52,8 @@
             android:layout_marginRight="@dimen/base_padding" />
 
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/star_extra_small"
+            android:layout_height="@dimen/star_extra_small"
             android:src="@drawable/ic_action_grade"
             android:contentDescription="@null" />
 
@@ -85,8 +85,8 @@
             android:layout_marginRight="@dimen/base_padding" />
 
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/star_extra_small"
+            android:layout_height="@dimen/star_extra_small"
             android:src="@drawable/ic_action_grade"
             android:contentDescription="@null" />
 
@@ -118,8 +118,8 @@
             android:layout_marginRight="@dimen/base_padding" />
 
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/star_extra_small"
+            android:layout_height="@dimen/star_extra_small"
             android:src="@drawable/ic_action_grade"
             android:contentDescription="@null" />
 
@@ -151,8 +151,8 @@
             android:layout_marginRight="@dimen/base_padding" />
 
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/star_extra_small"
+            android:layout_height="@dimen/star_extra_small"
             android:src="@drawable/ic_action_grade"
             android:contentDescription="@null" />
 
