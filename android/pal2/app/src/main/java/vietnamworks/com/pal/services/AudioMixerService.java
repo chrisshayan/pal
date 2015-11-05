@@ -36,7 +36,7 @@ public class AudioMixerService {
             try {
                 sender.onMixerPrepare();
                 mPlayer.setDataSource(url);
-                mPlayer.prepare();
+                mPlayer.prepareAsync();
                 mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(MediaPlayer mp) {

@@ -129,7 +129,7 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
             try {
                 final MediaPlayer player = new MediaPlayer();
                 player.setDataSource(audioSourcePath);
-                player.prepare();
+                player.prepareAsync();
                 player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(MediaPlayer mp) {
