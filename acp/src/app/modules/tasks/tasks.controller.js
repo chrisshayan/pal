@@ -402,19 +402,24 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                         if (committed) {
                             var pts = snapshot.val();
                             var level = 0;
-                            var level_name = 0;
+                            var level_name = "";
+                            var level_completion = 0;
+                            var next_level_point;
                             var scale = $rootScope.config.user_level_scales;
                             for (var k in scale) {
                                 if (scale[k].min_points <= pts) {
                                     level_name = scale[k].name;
                                     level = k;
                                 } else {
+                                    next_level_point = scale[k].min_points;
                                     break;
                                 }
                             }
+                            level_completion = Math.floor( (pts * 100.0) / Math.max(next_level_point, 1));
                             firebaseHelper.getFireBaseInstance(["profiles_pub", user_id]).update({
                                 level_name: level_name,
-                                level: level
+                                level: level,
+                                level_completion: level_completion
                             });
                         }
                     });
