@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.activities.BaseActivity;
+import vietnamworks.com.pal.common.ResizeWidthAnimation;
 
 /**
  * Created by duynk on 11/5/15.
@@ -49,7 +51,6 @@ public class RatingChart extends LinearLayout {
     protected void onFinishInflate() {
         if (!hasInit) {
             super.onFinishInflate();
-            setRating(0, 0, 0, 0, 0);
             hasInit = true;
         }
     }
@@ -65,11 +66,26 @@ public class RatingChart extends LinearLayout {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                rate5.animate().scaleX(p5*max_width).setDuration(100).start();
-                rate4.animate().scaleX(p4*max_width).setDuration(100).start();
-                rate3.animate().scaleX(p3*max_width).setDuration(100).start();
-                rate2.animate().scaleX(p2*max_width).setDuration(100).start();
-                rate1.animate().scaleX(p1*max_width).setDuration(100).start();
+                ResizeWidthAnimation anim5 = new ResizeWidthAnimation(rate5, (int) Math.max(p5 * max_width, BaseActivity.density));
+                anim5.setDuration(500);
+                rate5.startAnimation(anim5);
+
+                ResizeWidthAnimation anim4 = new ResizeWidthAnimation(rate4, (int) Math.max(p4 * max_width, BaseActivity.density));
+                anim4.setDuration(500);
+                rate4.startAnimation(anim4);
+
+                ResizeWidthAnimation anim3 = new ResizeWidthAnimation(rate3, (int) Math.max(p3 * max_width, BaseActivity.density));
+                anim3.setDuration(500);
+                rate3.startAnimation(anim3);
+
+                ResizeWidthAnimation anim2 = new ResizeWidthAnimation(rate2, (int) Math.max(p2 * max_width, BaseActivity.density));
+                anim2.setDuration(500);
+                rate2.startAnimation(anim2);
+
+                ResizeWidthAnimation anim1 = new ResizeWidthAnimation(rate1, (int) Math.max(p1 * max_width, BaseActivity.density));
+                anim1.setDuration(500);
+                rate1.startAnimation(anim1);
+
             }
         });
     }

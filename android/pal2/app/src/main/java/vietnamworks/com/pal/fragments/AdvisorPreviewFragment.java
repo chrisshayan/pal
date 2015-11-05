@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
+import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.custom_views.RatingChart;
 import vietnamworks.com.pal.entities.AdvisorProfile;
 import vietnamworks.com.pal.models.AdvisorProfiles;
@@ -56,7 +57,7 @@ public class AdvisorPreviewFragment extends BaseFragment {
                                 Picasso.with(ctx).load(p.getAvatar()).into(avatar);
                             }
                             txtDisplayName.setText(p.getDisplay_name());
-                            txtRate.setText(String.format(BaseActivity.sInstance.getString(R.string.advisor_total_vote), p.totalRating()));
+                            txtRate.setText(String.format(BaseActivity.sInstance.getString(R.string.advisor_total_vote), Utils.counterFormat(p.totalRating())));
                             txtScore.setText(p.avgRate() + "");
                             chart.setRating(p.getRate5(), p.getRate4(), p.getRate3(), p.getRate2(), p.getRate1());
                         }
