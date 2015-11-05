@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <View
+        android:id="@+id/rate5"
+        android:layout_width="1px"
+        android:layout_height="0dp"
+        android:background="@color/rate_5_stars"
+        android:layout_weight="1" />
+    <View
+        android:id="@+id/rate4"
+        android:layout_width="1px"
+        android:layout_height="0dp"
+        android:background="@color/rate_4_stars"
+        android:layout_weight="1" />
+    <View
+        android:id="@+id/rate3"
+        android:layout_width="1px"
+        android:layout_height="0dp"
+        android:background="@color/rate_3_stars"
+        android:layout_weight="1" />
+    <View
+        android:id="@+id/rate2"
+        android:layout_width="1px"
+        android:layout_height="0dp"
+        android:background="@color/rate_2_stars"
+        android:layout_weight="1" />
+    <View
+        android:id="@+id/rate1"
+        android:layout_width="1px"
+        android:layout_height="0dp"
+        android:background="@color/rate_1_stars"
+        android:layout_weight="1" />
+</LinearLayout>

@@ -27,11 +27,11 @@ import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.configurations.AppConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
+import vietnamworks.com.pal.fragments.AdvisorPreviewFragment;
 import vietnamworks.com.pal.fragments.ComposerFragment;
 import vietnamworks.com.pal.fragments.PostDetailFragment;
 import vietnamworks.com.pal.fragments.PostListFragment;
 import vietnamworks.com.pal.fragments.TopicsFragment;
-import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.services.AudioMixerService;
 import vietnamworks.com.pal.services.FileUploadService;
@@ -238,6 +238,8 @@ public class TimelineActivity extends BaseActivity {
             setTitle("");
         } else if (f instanceof TopicsFragment) {
             setTitle(R.string.title_challenge);
+        } else if (f instanceof AdvisorPreviewFragment) {
+            setTitle(getString(R.string.title_advisor_rating));
         }
     }
 

@@ -135,6 +135,14 @@ public class PostDetailFragment extends BaseFragment {
                             conversation.get("audio").toString(),
                             false
                     );
+                    view.setItemId(conversation.get("uid").toString());
+
+                    view.setClickEventListener(new TimelineItemView.OnClickEventListener() {
+                        @Override
+                        public void onClicked(String itemId) {
+                            BaseActivity.sInstance.pushFragment(AdvisorPreviewFragment.create(itemId), R.id.fragment_holder);
+                        }
+                    });
 
                     UserProfiles.getUserProfile(conversation.get("uid").toString(), getContext(), new AsyncCallback() {
                         @Override

@@ -4,6 +4,7 @@
     <string name="title_evaluated_posts">Evaluated posted</string>
     <string name="title_composer">Composer</string>
     <string name="title_challenge">Challenges</string>
+    <string name="title_advisor_rating">Advisor</string>
 
     <string-array name="tutor_header">
         <item>Learn English for Free</item>
@@ -21,6 +22,8 @@
     <string name="done">Done</string>
     <string name="next">Next</string>
     <string name="go">Go</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
 
     <!-- authentication screen!-->
     <string name="email_address">Email address</string>
@@ -96,4 +99,10 @@
     <string name="placeholder_text_short">Lorem ipsum dolor sit amet</string>
     <string name="placeholder_text_medium">Ei errem zril intellegat vis, vix wisi tempor no, sit munere ocurreret ad. His debet nominati no, ius volutpat scripserit liberavisse at</string>
     <string name="placeholder_text_long">Mazim viris facilis cu sed, eos vidisse adolescens an. Eum iudico omnium instructior ne. Ut est integre ancillae erroribus. Te mei causae percipitur. Vis ei suavitate dignissim euripidis. Ea omnis soleat sit, ea libris integre cum.</string>
+
+    <!-- advisor profile -->
+    <string name="vote_for_advisor">Rate for advisor</string>
+    <string name="vote_for_advisor_comment">Enter your comment here</string>
+    <string name="advisor_total_vote">%1$s rating</string>
+    <string name="thank_for_voting">Thank for your vote</string>
 </resources>

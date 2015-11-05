@@ -146,6 +146,15 @@ public class BaseEntity {
         return _default;
     }
 
+    public BaseEntity importData(Object data) {
+        if (data instanceof DataSnapshot) {
+            importData((DataSnapshot)data);
+        } else if (data instanceof HashMap) {
+            importData((HashMap<String, Object>)data);
+        }
+        return this;
+    }
+
     public BaseEntity importData(HashMap<String, Object> obj) {
         this.created_date = BaseEntity.safeGetLong(obj, "created_date");
         this.created_by = BaseEntity.safeGetString(obj, "created_by");

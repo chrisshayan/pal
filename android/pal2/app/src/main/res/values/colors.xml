@@ -2,7 +2,9 @@
 <resources>
     <color name="white">#FFFFFF</color>
 
+    <color name="colorSuccess">#4caf50</color>
     <color name="colorDanger">#E91E63</color>
+    <color name="colorWarning">#f39c12</color>
 
     <color name="colorPrimary">#2196f3</color>
     <color name="colorPrimaryDark">#1976d2</color>
@@ -13,8 +15,8 @@
     <color name="colorTextDefault">#000000</color>
     <color name="colorTextMuted">#363636</color>
     <color name="colorTextLight">#FFFFFF</color>
-    <color name="colorTextSuccess">#4caf50</color>
-    <color name="colorTextPrimary">#2196f3</color>
+    <color name="colorTextSuccess">@color/colorSuccess</color>
+    <color name="colorTextPrimary">@color/colorPrimary</color>
 
     <color name="colorDivider">#FFFFFF</color>
     <color name="colorDividerDark">#000000</color>
@@ -23,4 +25,11 @@
     <color name="colorFABDanger">@color/colorDanger</color>
     <color name="colorFABDanger_Pressed">#C2185B</color>
 
+    <color name="rate_5_stars">@color/colorSuccess</color>
+    <color name="rate_4_stars">#2ecc71</color>
+    <color name="rate_3_stars">#f1c40f</color>
+    <color name="rate_2_stars">#f39c12</color>
+    <color name="rate_1_stars">@color/colorDanger</color>
+
+    <color name="colorTextAreaBgDark">#0a000000</color>
 </resources>
