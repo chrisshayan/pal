@@ -31,7 +31,9 @@
             fab:fab_labelStyle="@style/fab_labels_style"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin">
 
 
             <com.getbase.floatingactionbutton.FloatingActionButton

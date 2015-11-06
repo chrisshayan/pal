@@ -37,4 +37,7 @@
     <dimen name="post_avatar_size">50dp</dimen>
     <dimen name="post_star_size">@dimen/star_small</dimen>
 
+
+    <!-- fab -->
+    <dimen name="fab_margin">@dimen/base_padding_2x</dimen>
 </resources>
