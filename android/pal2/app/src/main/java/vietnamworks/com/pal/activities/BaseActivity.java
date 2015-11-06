@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
@@ -122,7 +123,7 @@ public class BaseActivity extends AppCompatActivity {
             public void run() {
                 int base_padding = 0;
                 if (Utils.isLollipopOrBelow()) {
-                    base_padding = (int) (40*density);
+                    base_padding = (int) (40 * density);
                 }
                 if (toast != null) {
                     toast.cancel();
@@ -222,6 +223,15 @@ public class BaseActivity extends AppCompatActivity {
         } else {
             getSupportFragmentManager().beginTransaction().replace(holder_id, f).commit();
         }
+    }
+
+    public void openFragmentAndClean(android.support.v4.app.Fragment f, int holder_id) {
+        FragmentManager fm = getSupportFragmentManager();
+        int count = fm.getBackStackEntryCount();
+        for(int i = 0; i < count; ++i) {
+            fm.popBackStackImmediate();
+        }
+        getSupportFragmentManager().beginTransaction().replace(holder_id, f).commit();
     }
 
     public void openFragment(android.support.v4.app.Fragment f, int holder_id) {

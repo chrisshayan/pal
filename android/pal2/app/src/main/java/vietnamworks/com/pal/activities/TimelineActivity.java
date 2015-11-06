@@ -177,7 +177,8 @@ public class TimelineActivity extends BaseActivity {
             if (f instanceof ComposerFragment) {
                 if (submitTask((ComposerFragment) f)) {
                     hideKeyboard();
-                    onBackPressed();
+                    //onBackPressed();
+                    openFragmentAndClean(allPostsFragment, R.id.fragment_holder);
                 }
             }
 
