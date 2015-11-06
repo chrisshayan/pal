@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.services.FirebaseService;
 
 /**
@@ -115,19 +116,29 @@ public class BaseActivity extends AppCompatActivity {
         toast(sInstance.getString(messageId));
     }
 
-    public static void toast(String message) {
-        if (toast != null) {
-            toast.cancel();
-            toast = null;
-        }
+    public static void toast(final String message) {
+        timeout(new Runnable() {
+            @Override
+            public void run() {
+                int base_padding = 0;
+                if (Utils.isLollipopOrBelow()) {
+                    base_padding = (int) (40*density);
+                }
+                if (toast != null) {
+                    toast.cancel();
+                    toast = null;
+                }
 
-        toast = Toast.makeText(sInstance.getBaseContext(),message, Toast.LENGTH_SHORT);
-        if (sInstance.isKeyboardShown) {
-            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, getScreenHeight() - getStatusBarHeight() - sInstance.screenRegion.height());
-        } else {
-            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-        }
-        toast.show();
+                toast = Toast.makeText(sInstance.getBaseContext(), message, Toast.LENGTH_SHORT);
+                if (sInstance.isKeyboardShown) {
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, getScreenHeight() - getStatusBarHeight() - sInstance.screenRegion.height() + base_padding);
+                } else {
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, base_padding);
+                }
+                toast.show();
+            }
+        }, 500);
+
     }
 
     public static void applyFont(final View v) {
