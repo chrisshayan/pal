@@ -62,7 +62,6 @@
                     android:numStars="5"
                     android:layout_marginTop="@dimen/base_padding_2x"
                     android:stepSize="1"
-                    android:rating="3"
                     android:progressDrawable="@drawable/rating_star" />
 
                 <LinearLayout
