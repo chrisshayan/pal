@@ -33,4 +33,6 @@
     <color name="rate_1_stars">@color/colorDanger</color>
 
     <color name="colorTextAreaBgDark">#0a000000</color>
+
+    <color name="colorTimelineVBar">#9999cc</color>
 </resources>

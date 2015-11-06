@@ -3,8 +3,8 @@
     android:layout_height="wrap_content"
     android:visibility="visible"
     android:orientation="horizontal"
-    android:layout_marginLeft="@dimen/base_padding_2x"
-    android:layout_marginRight="@dimen/base_padding_2x"
+    android:paddingLeft="@dimen/base_padding_4x"
+    android:paddingRight="@dimen/base_padding_4x"
     android:layout_marginTop="@dimen/base_padding_2x"
     android:gravity="top" android:id="@+id/holder"
     android:baselineAligned="false">
