@@ -2,7 +2,7 @@
     <string name="app_name">Pal</string>
     <string name="title_timeline">Timeline</string>
     <string name="title_evaluated_posts">Evaluated posted</string>
-    <string name="title_composer">Composer</string>
+    <string name="title_composer">Compose</string>
     <string name="title_challenge">Challenges</string>
     <string name="title_advisor_rating">Advisor</string>
 
@@ -71,6 +71,7 @@
     <string name="guide_user_recorder_1">Touch microphone icon to start recording</string>
     <string name="guide_user_recorder_2">Touch stop icon to stop recording</string>
     <string name="tips">Tips</string>
+    <string name="fail_to_record">Fail to use your microphone. Try to text</string>
 
     <!--post list-->
     <string name="you_wrote">You wrote</string>

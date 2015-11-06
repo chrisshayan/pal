@@ -98,12 +98,12 @@ public class ComposerFragment extends BaseFragment {
                     audioPlayer.setAudioSource(null);
 
                     myAudioRecorder = new MediaRecorder();
-                    myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                    myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-                    myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-                    myAudioRecorder.setOutputFile(Utils.getSampleRecordPath());
-
                     try {
+                        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+                        myAudioRecorder.setOutputFile(Utils.getSampleRecordPath());
+
                         myAudioRecorder.prepare();
                         myAudioRecorder.start();
                         updateUI(true);
@@ -119,6 +119,7 @@ public class ComposerFragment extends BaseFragment {
                         myAudioRecorder = null;
                         updateUI(false);
                         e.printStackTrace();
+                        BaseActivity.toast(R.string.fail_to_record);
                     }
                 }
             }
