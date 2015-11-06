@@ -38,4 +38,6 @@
     <color name="colorFabSecondary">#607d8b</color>
     <color name="colorFabSecondaryPressed">#607d8b</color>
 
+    <color name="colorStar">#f1c40f</color>
+
 </resources>
