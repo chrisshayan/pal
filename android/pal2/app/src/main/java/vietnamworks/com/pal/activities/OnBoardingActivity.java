@@ -55,6 +55,7 @@ public class OnBoardingActivity extends BaseActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+        setTitleBarColor(R.color.colorPrimary);
     }
 
     public void SetPageIndex(int index) {

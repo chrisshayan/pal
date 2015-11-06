@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -18,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.services.FirebaseService;
 
 /**
@@ -78,6 +80,7 @@ public class BaseActivity extends AppCompatActivity {
                 onLayoutChanged(r, isSoftKeyShown);
             }
         });
+        setTitleBarColor(R.color.colorPrimaryDark);
     }
 
     public void onLayoutChanged(Rect r, boolean isSoftKeyShown) {
@@ -318,6 +321,12 @@ public class BaseActivity extends AppCompatActivity {
 
     public static void timeout(Runnable r) {
         BaseActivity.sInstance.setTimeout(r);
+    }
+
+    public static void setTitleBarColor(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            sInstance.getWindow().setStatusBarColor(sInstance.getResources().getColor(color, sInstance.getTheme()));
+        }
     }
 
     public static BaseActivity sInstance;
