@@ -90,7 +90,7 @@ public class AdvisorPreviewFragment extends BaseFragment {
                     public void run() {
                         if (dataSnapshot.getChildrenCount() > 0) {
                             txtNoVote.setVisibility(View.GONE);
-                            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 HashMap<String, Object> data = snapshot.getValue(HashMap.class);
                                 addCommentView(AdvisorCommentView.create(getContext(),
                                         BaseEntity.safeGetString(data, "avatar"),
@@ -159,7 +159,6 @@ public class AdvisorPreviewFragment extends BaseFragment {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 if (fromUser) {
                     commentView.setVisibility(View.VISIBLE);
-                    profileView.setVisibility(View.GONE);
                     comment.requestFocus();
                     BaseActivity.sInstance.showKeyboard();
                 }
@@ -170,7 +169,6 @@ public class AdvisorPreviewFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 commentView.setVisibility(View.GONE);
-                profileView.setVisibility(View.VISIBLE);
                 BaseActivity.sInstance.hideKeyboard();
                 ratingBar.setRating(0);
             }
@@ -181,7 +179,6 @@ public class AdvisorPreviewFragment extends BaseFragment {
             public void onClick(View v) {
                 AdvisorProfiles.vote(advisorId, (int) ratingBar.getRating(), comment.getText().toString().trim());
                 commentView.setVisibility(View.GONE);
-                profileView.setVisibility(View.VISIBLE);
                 BaseActivity.sInstance.hideKeyboard();
                 BaseActivity.toast(R.string.thank_for_voting);
             }
@@ -190,5 +187,12 @@ public class AdvisorPreviewFragment extends BaseFragment {
         return rootView;
     }
 
-
+    public void onLayoutChanged(final boolean isKeyboardShown) {
+        BaseActivity.timeout(new Runnable() {
+            @Override
+            public void run() {
+                profileView.setVisibility(isKeyboardShown ? View.GONE : View.VISIBLE);
+            }
+        });
+    }
 }

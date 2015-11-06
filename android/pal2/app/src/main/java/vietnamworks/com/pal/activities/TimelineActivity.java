@@ -1,5 +1,6 @@
 package vietnamworks.com.pal.activities;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -133,6 +134,14 @@ public class TimelineActivity extends BaseActivity {
 
         }
     };
+
+    @Override
+    public void onLayoutChanged(Rect r, final boolean isSoftKeyShown) {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+        if (f instanceof AdvisorPreviewFragment) {
+            ((AdvisorPreviewFragment)f).onLayoutChanged(isSoftKeyShown);
+        }
+    }
 
     @Override
     public void onBackPressed() {
