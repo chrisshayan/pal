@@ -167,6 +167,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="bottom">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/base_padding_2x"/>
+
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2px"

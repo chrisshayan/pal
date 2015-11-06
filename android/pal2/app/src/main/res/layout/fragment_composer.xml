@@ -25,12 +25,15 @@
                 android:text="@string/say_something"
                 android:id="@+id/subject"
                 style="@style/Text.Medium.Muted"
-                android:layout_margin="@dimen/base_padding_2x"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/base_padding_2x"
+                android:layout_marginTop="@dimen/base_padding_4x"
+                android:layout_marginBottom="@dimen/base_padding_4x" />
 
             <RelativeLayout
                 android:layout_width="30dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/base_padding_2x">
 
                 <ImageButton
                     android:layout_width="match_parent"
