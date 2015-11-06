@@ -1,7 +1,9 @@
 package vietnamworks.com.pal.fragments;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,6 +48,7 @@ public class PostListFragment extends BaseFragment {
     int pageSize = 100;
     int dataSize = pageSize;
 
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,25 @@ public class PostListFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mAdapter = new PostItemAdapter();
 
+        swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fab.setVisibility(View.INVISIBLE);
+                openOverlay();
+                BaseActivity.timeout(new Runnable() {
+                    @Override
+                    public void run() {
+                        fab.setVisibility(View.VISIBLE);
+                        swipeContainer.setRefreshing(false);
+                        closeOverlay();
+                    }
+                }, 1000);
+            }
+        });
+
+
         overlay = rootView.findViewById(R.id.overlay);
         overlay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,18 +102,66 @@ public class PostListFragment extends BaseFragment {
         fab.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
             public void onMenuExpanded() {
-                overlay.setVisibility(View.VISIBLE);
-                overlay.setAlpha(0);
-                overlay.animate().alpha(0.75f).setDuration(200).start();
+                openOverlay();
             }
 
             @Override
             public void onMenuCollapsed() {
-                overlay.setVisibility(View.GONE);
+                closeOverlay();
             }
         });
 
         return rootView;
+    }
+
+    private void openOverlay() {
+        overlay.setVisibility(View.VISIBLE);
+        overlay.setAlpha(0);
+        overlay.animate().alpha(0.75f).setDuration(100).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                overlay.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        }).start();
+    }
+
+    private void closeOverlay() {
+        overlay.animate().alpha(0f).setDuration(100).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                overlay.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        }).start();
     }
 
     @Override
