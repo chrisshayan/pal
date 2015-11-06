@@ -23,7 +23,7 @@
         android:ems="10"
         android:id="@+id/fullname"
         android:textColor="@color/colorTextDefault"
-        android:textColorHint="@color/colorTextMuted"
+        android:textColorHint="@color/colorTextInputHint"
         android:imeActionId="@+id/action_register"
         android:imeActionLabel="@string/go"
         android:hint="@string/your_full_name" />
@@ -46,7 +46,7 @@
         android:ems="10"
         android:id="@+id/email"
         android:textColor="@color/colorTextDefault"
-        android:textColorHint="@color/colorTextMuted"
+        android:textColorHint="@color/colorTextInputHint"
         android:hint="@string/your_email_adress" />
 
 
