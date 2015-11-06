@@ -60,7 +60,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/rating_bar"
                     android:numStars="5"
-                    android:layout_marginTop="@dimen/base_padding_2x" />
+                    android:layout_marginTop="@dimen/base_padding_2x"
+                    android:stepSize="1" />
 
                 <LinearLayout
                     android:orientation="vertical"
