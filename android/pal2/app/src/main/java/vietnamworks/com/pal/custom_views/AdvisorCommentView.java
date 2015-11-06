@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
+import vietnamworks.com.pal.common.PicassoCircleTransform;
 import vietnamworks.com.pal.common.Utils;
 
 /**
@@ -85,7 +86,7 @@ public class AdvisorCommentView extends LinearLayout {
             @Override
             public void run() {
                 if (avatar != null && !avatar.isEmpty()) {
-                    Picasso.with(getContext()).load(avatar).into(imgAvatar);
+                    Picasso.with(getContext()).load(avatar).transform(new PicassoCircleTransform()).into(imgAvatar);
                 }
                 txtDisplayName.setText(displayName);
                 if (comment != null && !comment.isEmpty()) {

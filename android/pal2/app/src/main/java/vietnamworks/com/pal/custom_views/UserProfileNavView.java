@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
+import vietnamworks.com.pal.common.PicassoCircleTransform;
 
 /**
  * Created by duynk on 10/28/15.
@@ -105,7 +106,7 @@ public class UserProfileNavView extends LinearLayout {
                     txtUserLevel.setText(level);
                     txtUserName.setText(name);
                     if (avatar != null && avatar.trim().length() > 0) {
-                        Picasso.with(getContext()).load(avatar).placeholder(R.drawable.ic_action_account_box).into(imgAvatar);
+                        Picasso.with(getContext()).load(avatar).transform(new PicassoCircleTransform()).placeholder(R.drawable.ic_action_account_box).into(imgAvatar);
                     } else {
                         imgAvatar.setImageResource(R.drawable.ic_action_account_box);
                     }

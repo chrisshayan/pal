@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
+import vietnamworks.com.pal.common.PicassoCircleTransform;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.custom_views.AdvisorCommentView;
 import vietnamworks.com.pal.custom_views.RatingChart;
@@ -60,7 +61,7 @@ public class AdvisorPreviewFragment extends BaseFragment {
                 if (ctx == getContext()) {
                     AdvisorProfile p = (AdvisorProfile) new AdvisorProfile().importData(obj);
                     if (p.getAvatar() != null && !p.getAvatar().isEmpty()) {
-                        Picasso.with(ctx).load(p.getAvatar()).into(avatar);
+                        Picasso.with(ctx).load(p.getAvatar()).transform(new PicassoCircleTransform()).into(avatar);
                     }
                     txtDisplayName.setText(p.getDisplay_name());
                     if (p.totalRating() > 1) {

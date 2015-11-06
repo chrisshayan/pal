@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
+import vietnamworks.com.pal.common.PicassoCircleTransform;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.entities.Post;
 
@@ -80,12 +81,12 @@ public class TimelineItemView extends TimelineItemBaseView {
     }
 
     public void setValue(int icon, String subject, String sub1, String sub2, String text, String audio_url, boolean preview) {
-        Picasso.with(ctx).load(icon).into(this.icon);
+        this.icon.setImageResource(icon);
         setValue(subject, sub1, sub2, text, audio_url, preview);
     }
 
     public void setValue(String iconURL, String subject, String sub1, String sub2, String text, String audio_url, boolean preview) {
-        Picasso.with(ctx).load(iconURL).into(this.icon);
+        Picasso.with(ctx).load(iconURL).transform(new PicassoCircleTransform()).into(this.icon);
         setValue(subject, sub1, sub2, text, audio_url, preview);
     }
 
@@ -134,7 +135,7 @@ public class TimelineItemView extends TimelineItemBaseView {
     }
 
     public void setValue(int icon, Post p, boolean preview_mode) {
-        Picasso.with(ctx).load(icon).into(this.icon);
+        this.icon.setImageResource(icon);
         String title = p.getTitle();
         if (title == null || title.length() == 0) {
             if (p.getAudio() == null || p.getAudio().length() == 0) {
@@ -167,7 +168,7 @@ public class TimelineItemView extends TimelineItemBaseView {
     }
 
     public void setValue(String icon, Post p, boolean preview_mode) {
-        Picasso.with(ctx).load(icon).into(this.icon);
+        Picasso.with(ctx).load(icon).transform(new PicassoCircleTransform()).into(this.icon);
         String title = p.getTitle();
         if (title == null || title.length() == 0) {
             if (p.getAudio() == null || p.getAudio().length() == 0) {
@@ -199,11 +200,11 @@ public class TimelineItemView extends TimelineItemBaseView {
     }
 
     public void setIcon(int icon) {
-        Picasso.with(ctx).load(icon).into(this.icon);
+        this.icon.setImageResource(icon);
     }
 
     public void setIcon(String icon) {
-        Picasso.with(ctx).load(icon).into(this.icon);
+        Picasso.with(ctx).load(icon).transform(new PicassoCircleTransform()).into(this.icon);
     }
 
     public void setSubject(String subject) {
