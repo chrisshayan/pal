@@ -58,8 +58,8 @@
     <string name="action_settings">Settings</string>
 
     <!--fab-->
-    <string name="say_something">Say something</string>
-    <string name="pick_up_challenge">Pick up a challenge</string>
+    <string name="say_something">SAY SOMETHING</string>
+    <string name="pick_up_challenge">PICK UP A CHALLENGE</string>
 
     <!--action bar-->
     <string name="send">Send</string>

@@ -82,7 +82,7 @@ public class PostListFragment extends BaseFragment {
             public void onMenuExpanded() {
                 overlay.setVisibility(View.VISIBLE);
                 overlay.setAlpha(0);
-                overlay.animate().alpha(0.25f).setDuration(200).start();
+                overlay.animate().alpha(0.75f).setDuration(200).start();
             }
 
             @Override

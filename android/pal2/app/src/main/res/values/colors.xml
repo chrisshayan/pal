@@ -35,4 +35,10 @@
     <color name="colorTextAreaBgDark">#0a000000</color>
 
     <color name="colorTimelineVBar">#9999cc</color>
+
+    <color name="colorFabPrimary">@color/colorPrimaryDark</color>
+    <color name="colorFabPrimaryPressed">@color/colorPrimary</color>
+    <color name="colorFabSecondary">#666699</color>
+    <color name="colorFabSecondaryPressed">#666699</color>
+
 </resources>

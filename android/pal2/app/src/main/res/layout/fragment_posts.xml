@@ -11,8 +11,8 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/colorDividerDark"
-        android:alpha="0.25"
+        android:background="@color/colorPrimaryLight"
+        android:alpha="0"
         android:id="@+id/overlay"
         android:visibility="gone" />
 
@@ -25,8 +25,8 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_addButtonColorNormal="@color/colorPrimaryDark"
-            fab:fab_addButtonColorPressed="@color/colorPrimary"
+            fab:fab_addButtonColorNormal="@color/colorFabPrimary"
+            fab:fab_addButtonColorPressed="@color/colorFabPrimaryPressed"
             fab:fab_addButtonPlusIconColor="@color/colorTextLight"
             fab:fab_labelStyle="@style/fab_labels_style"
             android:layout_alignParentRight="true"
@@ -41,9 +41,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onOpenSaySomethingComposer"
-                fab:fab_colorNormal="@color/colorPrimaryDark"
+                fab:fab_colorNormal="@color/colorFabSecondary"
                 fab:fab_title="@string/say_something"
-                fab:fab_colorPressed="@color/colorPrimary"
+                fab:fab_colorPressed="@color/colorFabSecondaryPressed"
                 fab:fab_icon="@drawable/ic_editor_border_color"
                 fab:fab_size="mini"/>
 
@@ -53,9 +53,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onOpenChallengeList"
-                fab:fab_colorNormal="@color/colorPrimaryDark"
+                fab:fab_colorNormal="@color/colorFabSecondary"
                 fab:fab_title="@string/pick_up_challenge"
-                fab:fab_colorPressed="@color/colorPrimary"
+                fab:fab_colorPressed="@color/colorFabSecondaryPressed"
                 fab:fab_icon="@drawable/ic_communication_chat"
                 fab:fab_size="mini"/>
 
