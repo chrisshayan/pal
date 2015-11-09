@@ -45,4 +45,7 @@ dependencies {
     //for local storage service
     compile 'com.snappydb:snappydb-lib:0.4.0'
     compile 'com.esotericsoftware.kryo:kryo:2.24.0'
+
+    //critercism
+    compile 'com.crittercism:crittercism-android-agent:+'
 }

@@ -2,6 +2,8 @@ package vietnamworks.com.pal;
 
 import android.app.Application;
 
+import com.crittercism.app.Crittercism;
+
 import vietnamworks.com.pal.services.FileUploadService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.LocalStorage;
@@ -22,6 +24,8 @@ public class Pal extends Application {
         FirebaseService.init();
         FileUploadService.init();
         LocalStorage.init(this);
+
+        Crittercism.initialize(getApplicationContext(), "564080588d4d8c0a00d0817d");
     }
 
     @Override
