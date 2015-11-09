@@ -11,15 +11,15 @@
     <dimen name="base_padding_8x">32dp</dimen>
 
 
-    <dimen name="star_extra_small">10dp</dimen>
-    <dimen name="star_small">15dp</dimen>
-    <dimen name="star_medium">20dp</dimen>
+    <dimen name="star_extra_small">12sp</dimen>
+    <dimen name="star_small">14sp</dimen>
+    <dimen name="star_medium">16sp</dimen>
 
     <dimen name="badge_min_width">30sp</dimen>
 
-    <dimen name="font_xs">10sp</dimen>
-    <dimen name="font_s">12sp</dimen>
-    <dimen name="font_m">15sp</dimen>
+    <dimen name="font_xs">12sp</dimen>
+    <dimen name="font_s">14sp</dimen>
+    <dimen name="font_m">16sp</dimen>
     <dimen name="font_l">18sp</dimen>
 
     <!-- nav -->
