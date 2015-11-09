@@ -5,6 +5,7 @@ import android.view.WindowManager;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.services.LocalStorage;
 
 public class SplashScreenActivity extends BaseActivity {
 
@@ -17,26 +18,35 @@ public class SplashScreenActivity extends BaseActivity {
 
         setContentView(R.layout.activity_main);
 
-        setTimeout(new Runnable() {
-            @Override
-            public void run() {
-                if (FirebaseService.checkAuthSync()) {
-                    setTimeout(new Runnable() {
-                        @Override
-                        public void run() {
-                            openActivity(TimelineActivity.class);
-                        }
-                    }, 1000);
-                } else {
-                    setTimeout(new Runnable() {
-                        @Override
-                        public void run() {
-                            openActivity(OnBoardingActivity.class);
-                        }
-                    }, 1000);
+        if (LocalStorage.getBool(getString(R.string.local_storage_first_launch), true)) {
+            setTimeout(new Runnable() {
+                @Override
+                public void run() {
+                    openActivity(OnBoardingActivity.class);
                 }
-            }
-        }, 1000);
+            }, 1000);
+        } else {
+            setTimeout(new Runnable() {
+                @Override
+                public void run() {
+                    if (FirebaseService.checkAuthSync()) {
+                        setTimeout(new Runnable() {
+                            @Override
+                            public void run() {
+                                openActivity(TimelineActivity.class);
+                            }
+                        }, 1000);
+                    } else {
+                        setTimeout(new Runnable() {
+                            @Override
+                            public void run() {
+                                openActivity(OnBoardingActivity.class);
+                            }
+                        }, 1000);
+                    }
+                }
+            }, 1000);
+        }
     }
 
     @Override

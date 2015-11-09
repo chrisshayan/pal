@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.fragments.OnBoardingFragment;
+import vietnamworks.com.pal.services.LocalStorage;
 
 /**
  * Created by duynk on 10/26/15.
@@ -56,6 +57,10 @@ public class OnBoardingActivity extends BaseActivity {
             }
         });
         setTitleBarColor(R.color.colorPrimary);
+
+        if (!(LocalStorage.getBool(getString(R.string.local_storage_first_launch), true))) {
+            onSkip(null);
+        }
     }
 
     public void SetPageIndex(int index) {

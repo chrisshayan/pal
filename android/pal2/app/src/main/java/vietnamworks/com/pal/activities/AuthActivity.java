@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
@@ -28,6 +27,7 @@ import vietnamworks.com.pal.fragments.RegisterFragment;
 import vietnamworks.com.pal.fragments.RegisterSuccessFragment;
 import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.services.LocalStorage;
 import vietnamworks.com.pal.services.ParseService;
 
 /**
@@ -289,6 +289,7 @@ public class AuthActivity extends BaseActivity {
                 public void onSuccess(Context ctx, Object obj) {
                     ParseService.RegisterUser(FirebaseService.authData.getUid());
                     openActivity(TimelineActivity.class);
+                    LocalStorage.set(getString(R.string.local_storage_first_launch), false);
                 }
 
                 @Override

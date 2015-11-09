@@ -41,4 +41,8 @@ dependencies {
     compile 'com.parse.bolts:bolts-android:1.+'
     compile 'com.parse:parse-android:1.+'
     compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
+
+    //for local storage service
+    compile 'com.snappydb:snappydb-lib:0.4.0'
+    compile 'com.esotericsoftware.kryo:kryo:2.24.0'
 }
