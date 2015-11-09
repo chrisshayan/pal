@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import vietnamworks.com.pal.common.Utils;
+import vietnamworks.com.pal.entities.BaseEntity;
 import vietnamworks.com.pal.services.FirebaseService;
 
 /**
@@ -57,7 +58,7 @@ public class AdvisorProfiles extends  AbstractContainer<AdvisorProfiles> {
     }
 
     public static void vote(final String advisor, final int vote, final String message) {
-        HashMap<String, Object> vote_detail = new HashMap<>();
+        final HashMap<String, Object> vote_detail = new HashMap<>();
         String user_id = FirebaseService.authData.getUid();
         vote_detail.put("rate", vote);
         vote_detail.put("created_date", Utils.getMillis());
@@ -67,28 +68,18 @@ public class AdvisorProfiles extends  AbstractContainer<AdvisorProfiles> {
 
         FirebaseService.newRef(Arrays.asList("advisor_votes_log", advisor, user_id)).push().setValue(vote_detail);
 
-
-
-        HashMap<String, Object> vote_info = (HashMap<String, Object> )vote_detail.clone();
-        vote_info.remove("rate");
-        FirebaseService.newRef(Arrays.asList("advisor_votes", advisor, user_id)).updateChildren(vote_info);
-
-        FirebaseService.newRef(Arrays.asList("advisor_votes", advisor, user_id, "rate")).runTransaction(new Transaction.Handler() {
+        FirebaseService.newRef(Arrays.asList("advisor_votes", advisor, user_id)).runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-                if (mutableData.getValue() == null) {
-                    mutableData.setValue(vote);
+                HashMap<String, Object> obj = mutableData.getValue(HashMap.class);
+                if (obj == null) {
+                    mutableData.setValue(vote_detail);
                     updateAdvisorRate(advisor, 0, vote);
                 } else {
-                    int last_vote = 0;
-                    Object value = mutableData.getValue();
-                    if (value instanceof Integer) {
-                        last_vote = (Integer) value;
-                    } else if (value instanceof Long) {
-                        last_vote = ((Long) value).intValue();
-                    }
+                    int last_vote = BaseEntity.safeGetInt(obj, "rate", 0);
                     updateAdvisorRate(advisor, last_vote, vote);
-                    mutableData.setValue(vote);
+                    obj.put("rate", vote);
+                    mutableData.setValue(obj);
                 }
                 return Transaction.success(mutableData);
             }
@@ -102,5 +93,13 @@ public class AdvisorProfiles extends  AbstractContainer<AdvisorProfiles> {
 
     public static Query getRecentComments(final String advisor) {
         return FirebaseService.newRef(Arrays.asList("advisor_votes", advisor)).orderByChild("created_date").startAt(0).limitToLast(5);
+    }
+
+    public static Query getAdvisorProfile(String uid) {
+        return FirebaseService.newRef(Arrays.asList("profiles_pub", uid));
+    }
+
+    public static Query getAdvisorRatingByUser(String advisor, String user_id) {
+        return FirebaseService.newRef(Arrays.asList("advisor_votes", advisor, user_id));
     }
 }

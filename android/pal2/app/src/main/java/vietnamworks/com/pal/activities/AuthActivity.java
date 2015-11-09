@@ -209,8 +209,8 @@ public class AuthActivity extends BaseActivity {
                                 HashMap<String, Object> data = new HashMap<String, Object>();
                                 data.put("email", email);
                                 data.put("name", fullname);
-                                data.put("created_date", System.currentTimeMillis());
-                                data.put("last_modified_date", System.currentTimeMillis());
+                                data.put("created_date", Utils.getMillis());
+                                data.put("last_modified_date", Utils.getMillis());
                                 data.put("hit", 1);
                                 currentData.setValue(data);
                             } else {
@@ -218,7 +218,7 @@ public class AuthActivity extends BaseActivity {
                                 long last_hit = ((Long)data.get("hit")).longValue();
                                 data.put("name", fullname);
                                 data.put("hit", last_hit + 1);
-                                data.put("last_modified_date", System.currentTimeMillis());
+                                data.put("last_modified_date", Utils.getMillis());
                                 currentData.setValue(data);
                             }
                             return Transaction.success(currentData);

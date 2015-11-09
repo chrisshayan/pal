@@ -24,6 +24,7 @@
     <string name="go">Go</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
+    <string name="you">You</string>
 
     <!-- authentication screen!-->
     <string name="email_address">Email address</string>
