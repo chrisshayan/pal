@@ -100,7 +100,7 @@ public class LoginFragment extends BaseFragment {
                 @Override
                 public void onError(Context ctx, int code, String message) {
                     HashMap<String, Object> bundle = new HashMap<String, Object>();
-                    bundle.put("message", R.string.login_fail);
+                    bundle.put("message", getString(R.string.login_fail));
                     ((AuthActivity) getActivity()).setState(AuthActivity.STATE_REGISTER_ERROR, bundle);
                 }
             });
