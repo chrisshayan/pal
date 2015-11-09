@@ -133,13 +133,6 @@ public class AuthActivity extends BaseActivity {
                     } else if (last_state == STATE_REGISTER_SUCCESS) {
                         registerSuccessFragment.getView().animate().setDuration(100).alpha(0).start();
                     } else if (last_state == STATE_REGISTER_ERROR) {
-                        if (ext != null) {
-                            if (ext.containsKey("message")) {
-                                registerErrorFragment.setError(ext.get("message").toString());
-                            } else {
-                                registerErrorFragment.setError(R.string.register_fail);
-                            }
-                        }
                         registerErrorFragment.getView().animate().setDuration(100).alpha(0).start();
                     } else if (last_state == STATE_PROCESSING) {
                         authProcessingFragment.getView().animate().setDuration(100).alpha(0).start();
@@ -153,6 +146,13 @@ public class AuthActivity extends BaseActivity {
                     } else if (_state == STATE_REGISTER_SUCCESS) {
                         registerSuccessFragment.getView().animate().setDuration(100).alpha(1).setListener(stateTransitionAnimationListener).start();
                     } else if (_state == STATE_REGISTER_ERROR) {
+                        if (ext != null) {
+                            if (ext.containsKey("message")) {
+                                registerErrorFragment.setError(ext.get("message").toString());
+                            } else {
+                                registerErrorFragment.setError(R.string.register_fail);
+                            }
+                        }
                         registerErrorFragment.getView().animate().setDuration(100).alpha(1).setListener(stateTransitionAnimationListener).start();
                     } else if (_state == STATE_PROCESSING) {
                         hideKeyboard();
