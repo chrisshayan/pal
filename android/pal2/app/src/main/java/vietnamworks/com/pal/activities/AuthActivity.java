@@ -116,6 +116,10 @@ public class AuthActivity extends BaseActivity {
     };
 
     public void setState(final int _state) {
+        setState(_state, null);
+    }
+
+    public void setState(final int _state, final HashMap<String, Object> ext) {
         final int last_state = this.state;
         this.state = _state;
         setTimeout(new Runnable() {
@@ -129,6 +133,13 @@ public class AuthActivity extends BaseActivity {
                     } else if (last_state == STATE_REGISTER_SUCCESS) {
                         registerSuccessFragment.getView().animate().setDuration(100).alpha(0).start();
                     } else if (last_state == STATE_REGISTER_ERROR) {
+                        if (ext != null) {
+                            if (ext.containsKey("message")) {
+                                registerErrorFragment.setError(ext.get("message").toString());
+                            } else {
+                                registerErrorFragment.setError(R.string.register_fail);
+                            }
+                        }
                         registerErrorFragment.getView().animate().setDuration(100).alpha(0).start();
                     } else if (last_state == STATE_PROCESSING) {
                         authProcessingFragment.getView().animate().setDuration(100).alpha(0).start();

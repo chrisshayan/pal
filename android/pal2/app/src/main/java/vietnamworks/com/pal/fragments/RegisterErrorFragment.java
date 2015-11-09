@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
@@ -21,5 +22,13 @@ public class RegisterErrorFragment extends BaseFragment {
         BaseActivity.applyFont(rootView);
 
         return rootView;
+    }
+
+    public void setError(String message) {
+        ((TextView)getView().findViewById(R.id.error_message)).setText(message);
+    }
+
+    public void setError(int message) {
+        ((TextView)getView().findViewById(R.id.error_message)).setText(getString(message));
     }
 }

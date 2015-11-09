@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/register_fail"
-        android:id="@+id/textView2"
+        android:id="@+id/error_message"
         android:gravity="center"
         style="@style/Text.Small.Muted" />
 

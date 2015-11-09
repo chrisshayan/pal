@@ -45,6 +45,7 @@
     <string name="require_full_name">Full name is required</string>
     <string name="processing">Processing</string>
     <string name="title_activity_timeline">TimelineActivity</string>
+    <string name="login_fail">Incorrect password or confirmation code entered. Please try again.</string>
 
     <!--drawer-->
     <string name="posted">Posted</string>

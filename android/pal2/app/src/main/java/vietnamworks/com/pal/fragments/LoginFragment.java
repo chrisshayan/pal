@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.AuthActivity;
 import vietnamworks.com.pal.activities.BaseActivity;
@@ -60,7 +62,7 @@ public class LoginFragment extends BaseFragment {
         txtError = (TextView) rootView.findViewById(R.id.error);
 
         errorView = rootView.findViewById(R.id.error_view);
-        errorView.setVisibility(View.INVISIBLE);
+        errorView.setVisibility(View.GONE);
 
         ((Button) rootView.findViewById(R.id.btn_login)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +87,7 @@ public class LoginFragment extends BaseFragment {
             setError(getString(R.string.invalid_email));
             focusEmail();
         } else {
+            setError(null);
             ((AuthActivity)getActivity()).setState(AuthActivity.STATE_PROCESSING);
             FirebaseService.login(email, password, new AsyncCallback() {
                 @Override
@@ -96,7 +99,9 @@ public class LoginFragment extends BaseFragment {
 
                 @Override
                 public void onError(Context ctx, int code, String message) {
-                    ((AuthActivity)getActivity()).setState(AuthActivity.STATE_REGISTER_ERROR);
+                    HashMap<String, Object> bundle = new HashMap<String, Object>();
+                    bundle.put("message", R.string.login_fail);
+                    ((AuthActivity) getActivity()).setState(AuthActivity.STATE_REGISTER_ERROR, bundle);
                 }
             });
         }
@@ -133,7 +138,7 @@ public class LoginFragment extends BaseFragment {
             txtError.setText(message);
             errorView.setVisibility(View.VISIBLE);
         } else {
-            errorView.setVisibility(View.INVISIBLE);
+            errorView.setVisibility(View.GONE);
         }
     }
 
