@@ -1,7 +1,6 @@
 package vietnamworks.com.pal.activities;
 
 import android.animation.Animator;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -25,10 +24,7 @@ import vietnamworks.com.pal.fragments.LoginFragment;
 import vietnamworks.com.pal.fragments.RegisterErrorFragment;
 import vietnamworks.com.pal.fragments.RegisterFragment;
 import vietnamworks.com.pal.fragments.RegisterSuccessFragment;
-import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.FirebaseService;
-import vietnamworks.com.pal.services.LocalStorage;
-import vietnamworks.com.pal.services.ParseService;
 
 /**
  * Created by duynk on 10/26/15.
@@ -40,11 +36,11 @@ public class AuthActivity extends BaseActivity {
     RegisterErrorFragment registerErrorFragment;
     AuthProcessingFragment authProcessingFragment;
 
-    final static int STATE_LOGIN = 0;
-    final static int STATE_REGISTER = 1;
-    final static int STATE_REGISTER_SUCCESS = 2;
-    final static int STATE_REGISTER_ERROR = 3;
-    final static int STATE_PROCESSING = 4;
+    final public static int STATE_LOGIN = 0;
+    final public static int STATE_REGISTER = 1;
+    final public static int STATE_REGISTER_SUCCESS = 2;
+    final public static int STATE_REGISTER_ERROR = 3;
+    final public static int STATE_PROCESSING = 4;
     int state = -999;
 
     @Override
@@ -255,48 +251,4 @@ public class AuthActivity extends BaseActivity {
         startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
     }
 
-    public void onLogin(View v) {
-        final String email = loginFragment.getEmail().trim();
-        final String password = loginFragment.getPassword().trim();
-        if (email.length() == 0) {
-            toast(R.string.require_email);
-            setTimeout(new Runnable() {
-                @Override
-                public void run() {
-                    registerFragment.focusEmail();
-                }
-            });
-        } else if (password.length() == 0) {
-            toast(R.string.require_password);
-            setTimeout(new Runnable() {
-                @Override
-                public void run() {
-                    registerFragment.focusFullName();
-                }
-            });
-        } else if (!Utils.isValidEmail(email)) {
-            toast(R.string.invalid_email);
-            setTimeout(new Runnable() {
-                @Override
-                public void run() {
-                    registerFragment.focusEmail();
-                }
-            });
-        } else {
-            setState(STATE_PROCESSING);
-            FirebaseService.login(email, password, new AsyncCallback() {
-                @Override
-                public void onSuccess(Context ctx, Object obj) {
-                    ParseService.RegisterUser(FirebaseService.authData.getUid());
-                    openActivity(TimelineActivity.class);
-                    LocalStorage.set(getString(R.string.local_storage_first_launch), false);
-                }
-
-                @Override
-                public void onError(Context ctx, int code, String message) {
-                    setState(STATE_REGISTER_ERROR);
-                }
-            });
-        }
-    }
 }

@@ -18,6 +18,9 @@
     <dimen name="badge_min_width">30sp</dimen>
 
     <dimen name="font_xs">10sp</dimen>
+    <dimen name="font_s">12sp</dimen>
+    <dimen name="font_m">15sp</dimen>
+    <dimen name="font_l">18sp</dimen>
 
     <!-- nav -->
     <dimen name="nav_header_height">200dp</dimen>

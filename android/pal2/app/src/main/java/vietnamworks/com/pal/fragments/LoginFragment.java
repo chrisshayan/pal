@@ -1,6 +1,7 @@
 package vietnamworks.com.pal.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -8,12 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.AuthActivity;
 import vietnamworks.com.pal.activities.BaseActivity;
+import vietnamworks.com.pal.activities.TimelineActivity;
+import vietnamworks.com.pal.common.Utils;
+import vietnamworks.com.pal.services.AsyncCallback;
+import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.services.LocalStorage;
+import vietnamworks.com.pal.services.ParseService;
 
 /**
  * Created by duynk on 10/26/15.
@@ -21,6 +29,8 @@ import vietnamworks.com.pal.activities.BaseActivity;
 public class LoginFragment extends BaseFragment {
     EditText txtPassword;
     EditText txtEmail;
+    TextView txtError;
+    View errorView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +49,7 @@ public class LoginFragment extends BaseFragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((actionId == R.id.action_sign_in || actionId == EditorInfo.IME_NULL)) {
                     if (event == null) {
-                        ((AuthActivity) getActivity()).onLogin(v);
+                        login();
                     }
                     return true;
                 }
@@ -47,7 +57,49 @@ public class LoginFragment extends BaseFragment {
             }
         });
 
+        txtError = (TextView) rootView.findViewById(R.id.error);
+
+        errorView = rootView.findViewById(R.id.error_view);
+        errorView.setVisibility(View.INVISIBLE);
+
+        ((Button) rootView.findViewById(R.id.btn_login)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login();
+            }
+        });
+
         return rootView;
+    }
+
+    public void login() {
+        final String email = getEmail().trim();
+        final String password = getPassword().trim();
+        if (email.length() == 0) {
+            setError(getString(R.string.require_email));
+            focusEmail();
+        } else if (password.length() == 0) {
+            setError(getString(R.string.require_password));
+            focusPassword();
+        } else if (!Utils.isValidEmail(email)) {
+            setError(getString(R.string.invalid_email));
+            focusEmail();
+        } else {
+            ((AuthActivity)getActivity()).setState(AuthActivity.STATE_PROCESSING);
+            FirebaseService.login(email, password, new AsyncCallback() {
+                @Override
+                public void onSuccess(Context ctx, Object obj) {
+                    ParseService.RegisterUser(FirebaseService.authData.getUid());
+                    BaseActivity.sInstance.openActivity (TimelineActivity.class);
+                    LocalStorage.set(getString(R.string.local_storage_first_launch), false);
+                }
+
+                @Override
+                public void onError(Context ctx, int code, String message) {
+                    ((AuthActivity)getActivity()).setState(AuthActivity.STATE_REGISTER_ERROR);
+                }
+            });
+        }
     }
 
     public void onLayoutChanged() {
@@ -74,6 +126,15 @@ public class LoginFragment extends BaseFragment {
 
     public void focusPassword() {
         txtPassword.requestFocus();
+    }
+
+    public void setError(String message) {
+        if (message != null && !message.isEmpty()) {
+            txtError.setText(message);
+            errorView.setVisibility(View.VISIBLE);
+        } else {
+            errorView.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void resetForm() {

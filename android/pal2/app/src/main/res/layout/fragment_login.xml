@@ -51,6 +51,34 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/base_padding"
+        android:paddingBottom="@dimen/base_padding"
+        android:id="@+id/error_view"
+        android:gravity="fill_vertical">
+
+        <ImageView
+            android:layout_width="@dimen/font_s"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView6"
+            android:src="@drawable/ic_alert_error"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/error"
+            style="@style/Text.Small.Danger"
+            android:text="bla ba bla"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/base_padding" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="right">
 
         <Button
@@ -70,9 +98,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            android:id="@+id/button3"
+            android:id="@+id/btn_login"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onLogin"
             style="@style/Text.Small.Success" />
     </LinearLayout>
 
