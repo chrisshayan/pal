@@ -22,6 +22,8 @@
     <dimen name="font_m">16sp</dimen>
     <dimen name="font_l">18sp</dimen>
 
+    <dimen name="player_controller_button_size">30dp</dimen>
+
     <!-- nav -->
     <dimen name="nav_header_height">200dp</dimen>
     <dimen name="nav_avatar_size">60dp</dimen>

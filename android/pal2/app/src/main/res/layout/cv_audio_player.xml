@@ -8,15 +8,17 @@
     android:gravity="center_vertical">
 
     <ImageButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/player_controller_button_size"
+        android:layout_height="@dimen/player_controller_button_size"
         android:id="@+id/btn_play"
-        android:src="@drawable/ic_av_play_circle_outline"
-        android:background="?attr/selectableItemBackgroundBorderless" />
+        android:src="@drawable/ic_player_play"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/progress_bar"
         android:layout_marginLeft="@dimen/base_padding"
@@ -33,10 +35,12 @@
         android:gravity="center" />
 
     <ImageButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/player_controller_button_size"
+        android:layout_height="@dimen/player_controller_button_size"
         android:id="@+id/btn_remove"
-        android:src="@drawable/ic_action_highlight_remove"
+        android:src="@drawable/ic_player_remove"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:layout_marginLeft="@dimen/base_padding" />
+        android:layout_marginLeft="@dimen/base_padding"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null" />
 </LinearLayout>
