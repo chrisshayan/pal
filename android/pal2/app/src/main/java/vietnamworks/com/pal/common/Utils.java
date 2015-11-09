@@ -58,20 +58,20 @@ public class Utils {
         long minutes = (Math.max(now - timestamp, 0)/1000)/60;
 
         if (minutes <= 1) { //less than 1 min
-            return 1 + " min";
+            return 1 + " min ago";
         } else if (minutes < 60) {
-            return minutes + " mins";
+            return minutes + " mins ago";
         } else if (minutes < 2*60) {
             long min = (minutes%60);
             if (min > 2) {
-                return "1 hr " + min +" mins";
+                return "1 hr " + min +" mins ago";
             } else {
-                return "1 hr " + min +" min";
+                return "1 hr " + min +" min ago";
             }
         } else if (minutes < 24*2*60) {
-            return Math.round(minutes / 60f) + " hrs";
+            return Math.round(minutes / 60f) + " hrs ago";
         } else if (minutes < 7*24*60) {
-            return Math.round(minutes/(24*60f)) + " days";
+            return Math.round(minutes/(24*60f)) + " days ago";
         } else {
             return getDateString(timestamp);
         }
