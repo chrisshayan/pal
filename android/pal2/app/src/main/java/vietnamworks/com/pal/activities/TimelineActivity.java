@@ -138,7 +138,7 @@ public class TimelineActivity extends BaseActivity {
                 int deep = getSupportFragmentManager().getBackStackEntryCount();
                 getSupportActionBar().setHomeAsUpIndicator(deep == 0 ? R.drawable.ic_image_dehaze : R.drawable.ic_hardware_keyboard_backspace);
 
-                if (deep == 0  /* && LocalStorage.getBool(getString(R.string.local_storage_show_drawer_guide), false) */) {
+                if (deep == 0  && !LocalStorage.getBool(getString(R.string.local_storage_show_drawer_guide), false)) {
                     drawer_guide.setVisibility(View.VISIBLE);
                     drawer_guide.setAlpha(0);
                     drawer_guide.animate().alpha(AppUiConfig.BASE_OVERLAY_ALPHA).setStartDelay(500).setDuration(500).setListener(new Animator.AnimatorListener() {
@@ -194,7 +194,8 @@ public class TimelineActivity extends BaseActivity {
             }
         });
 
-        if (true) {
+        if (!LocalStorage.getBool(getString(R.string.local_storage_show_fab_guide), false)) {
+            LocalStorage.set(getString(R.string.local_storage_show_fab_guide), true);
             openFragment(new WelcomeFragment(), R.id.fragment_holder);
             setTitle(R.string.title_welcome);
         } else {
