@@ -23,6 +23,7 @@ public class TopicItemView extends RecyclerView.ViewHolder {
     View topBar, holder;
     String itemId, hint;
     int level;
+    public View container;
 
     public interface OnClickEventListener {
         void onClicked(String itemId, String subject, int level, String hint);
@@ -38,6 +39,8 @@ public class TopicItemView extends RecyclerView.ViewHolder {
         total_done = (TextView) itemView.findViewById(R.id.total_done);
 
         BaseActivity.applyFont(itemView, BaseActivity.RobotoL);
+
+        container = itemView.findViewById(R.id.card_item_holder);
     }
 
     public void setData(String itemId, final int _level, final String _content, String hint, final long views, final long done) {

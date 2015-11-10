@@ -54,6 +54,8 @@ public class TimelineItemView extends TimelineItemBaseView {
 
         scoreGroup.setVisibility(View.GONE);
 
+        container = holder;
+
         this.ctx = ctx;
         BaseActivity.applyFont(itemView);
     }

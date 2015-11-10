@@ -1,11 +1,14 @@
 package vietnamworks.com.pal.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -48,7 +51,7 @@ public class TopicsFragment extends BaseFragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.topic_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        mAdapter = new ItemAdapter();
+        mAdapter = new ItemAdapter(getContext());
         dataRef = Topics.getAllTopicsQuery().limitToFirst(pageSize);
 
         return rootView;
@@ -86,11 +89,14 @@ public class TopicsFragment extends BaseFragment {
         }
     };
 
-    public void refresh() {
-        mAdapter.notifyDataSetChanged();
-    }
-
     class ItemAdapter extends RecyclerView.Adapter<TopicItemView> {
+        private Context context;
+        private int lastPosition = -1;
+
+        public ItemAdapter(Context context) {
+            this.context = context;
+        }
+
         @Override
         public int getItemCount() {
             return AppModel.topics.getData().size();
@@ -121,6 +127,18 @@ public class TopicsFragment extends BaseFragment {
                         }, 500);
                     }
                 });
+                setAnimation(view.container, i);
+            }
+        }
+
+        private void setAnimation(View viewToAnimate, int position)
+        {
+            // If the bound view wasn't previously displayed on screen, it's animated
+            if (position > lastPosition)
+            {
+                Animation animation = AnimationUtils.loadAnimation(context, R.anim.list_item_appear_anim);
+                viewToAnimate.startAnimation(animation);
+                lastPosition = position;
             }
         }
     }

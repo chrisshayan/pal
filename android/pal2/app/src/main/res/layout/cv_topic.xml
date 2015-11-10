@@ -10,6 +10,7 @@
     android:layout_marginTop="@dimen/base_padding_2x"
     android:layout_marginBottom="@dimen/base_padding_2x"
     android:baselineAligned="false"
+    android:id="@+id/card_item_holder"
     >
 
     <LinearLayout

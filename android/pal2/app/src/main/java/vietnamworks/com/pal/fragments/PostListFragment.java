@@ -2,6 +2,7 @@ package vietnamworks.com.pal.fragments;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -70,7 +73,7 @@ public class PostListFragment extends BaseFragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.post_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        mAdapter = new PostItemAdapter();
+        mAdapter = new PostItemAdapter(getContext());
 
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
@@ -185,7 +188,6 @@ public class PostListFragment extends BaseFragment {
         recyclerView.setAdapter(mAdapter);
         fab.collapseImmediately();
         overlay.setVisibility(View.GONE);
-
         GaService.trackScreen(R.string.ga_screen_post_list);
     }
 
@@ -209,7 +211,12 @@ public class PostListFragment extends BaseFragment {
                 AppModel.posts.getData().add(0, p);
                 //TODO: no need to reload all list like this. Just reload changed item only
             }
-            mAdapter.notifyDataSetChanged();
+            BaseActivity.timeout(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.notifyDataSetChanged();
+                }
+            }, 1000);
         }
 
         @Override
@@ -242,6 +249,13 @@ public class PostListFragment extends BaseFragment {
     }
 
     class PostItemAdapter extends RecyclerView.Adapter<TimelineItemBaseView> {
+        int lastPosition = -1;
+        Context context;
+
+        public PostItemAdapter(Context context) {
+            this.context = context;
+        }
+
         @Override
         public int getItemCount() {
             return AppModel.posts.getData().size() + 1;
@@ -316,6 +330,19 @@ public class PostListFragment extends BaseFragment {
                     dataRef.addValueEventListener(dataValueEventListener);
                     dataRef.keepSynced(true);
                 }
+            }
+            setAnimation(v.container, i);
+        }
+
+        private void setAnimation(View viewToAnimate, int position)
+        {
+            // If the bound view wasn't previously displayed on screen, it's animated
+            if (position > lastPosition)
+            {
+                Animation animation = AnimationUtils.loadAnimation(context, R.anim.list_item_appear_anim);
+                animation.setDuration(200);
+                viewToAnimate.startAnimation(animation);
+                lastPosition = position;
             }
         }
     }
