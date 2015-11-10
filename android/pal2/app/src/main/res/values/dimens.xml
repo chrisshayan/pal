@@ -27,7 +27,7 @@
     <!-- nav -->
     <dimen name="nav_header_height">200dp</dimen>
     <dimen name="nav_avatar_size">60dp</dimen>
-    <dimen name="nav_menu_item_height">40dp</dimen>
+    <dimen name="nav_menu_item_height">50dp</dimen>
 
     <!-- screen based value -->
     <dimen name="onboarding_pager_view_controller_height">32dp</dimen>

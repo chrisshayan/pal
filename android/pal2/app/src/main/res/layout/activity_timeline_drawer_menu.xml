@@ -21,7 +21,8 @@
             android:id="@+id/imageView4"
             android:layout_margin="@dimen/base_padding"
             android:src="@drawable/ic_action_list"
-            android:alpha="0.75" />
+            android:alpha="0.75"
+            android:contentDescription="@null" />
 
         <TextView
             android:layout_width="0dp"
