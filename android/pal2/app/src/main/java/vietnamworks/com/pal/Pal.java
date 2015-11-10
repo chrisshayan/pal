@@ -4,8 +4,10 @@ import android.app.Application;
 
 import com.crittercism.app.Crittercism;
 
+import vietnamworks.com.pal.configurations.CrittercismSettings;
 import vietnamworks.com.pal.services.FileUploadService;
 import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
 import vietnamworks.com.pal.services.ParseService;
 
@@ -24,8 +26,8 @@ public class Pal extends Application {
         FirebaseService.init();
         FileUploadService.init();
         LocalStorage.init(this);
-
-        Crittercism.initialize(getApplicationContext(), "564080588d4d8c0a00d0817d");
+        GaService.init(this);
+        Crittercism.initialize(getApplicationContext(), CrittercismSettings.KEY);
     }
 
     @Override

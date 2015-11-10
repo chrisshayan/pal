@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'android-native-dependencies'
 
 android {
     compileSdkVersion 23
@@ -29,18 +31,32 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+
+    //android support
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:recyclerview-v7:23.0.1'
     compile 'com.android.support:cardview-v7:23.0.1'
     compile 'com.android.support:palette-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
+
+    //firebase
     compile 'com.firebase:firebase-client-android:2.4.0'
+
+    //upload file
     compile 'com.alexbbb:uploadservice:1.4' //https://github.com/alexbbb/android-upload-service
+
+    //fab
     compile 'com.getbase:floatingactionbutton:1.10.1'
+
+    //picasso image
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    //circle progress
+    compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
+
+    //parse
     compile 'com.parse.bolts:bolts-android:1.+'
     compile 'com.parse:parse-android:1.+'
-    compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
 
     //for local storage service
     compile 'com.snappydb:snappydb-lib:0.4.0'
@@ -48,4 +64,11 @@ dependencies {
 
     //critercism
     compile 'com.crittercism:crittercism-android-agent:+'
+
+    //google analytics
+    compile 'com.google.android.gms:play-services-analytics:8.3.0'
+}
+
+native_dependencies {
+    artifact group: 'com.snappydb', name: 'snappydb-native', version: '0.2+'
 }
