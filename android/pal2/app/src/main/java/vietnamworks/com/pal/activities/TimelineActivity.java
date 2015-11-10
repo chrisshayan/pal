@@ -37,6 +37,7 @@ import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.services.AudioMixerService;
 import vietnamworks.com.pal.services.FileUploadService;
 import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.services.GaService;
 
 public class TimelineActivity extends BaseActivity {
     private PostListFragment allPostsFragment;
@@ -289,6 +290,7 @@ public class TimelineActivity extends BaseActivity {
     }
 
     public void onOpenAllPosts(View v) {
+        GaService.trackAction(R.string.ga_action_open_all_posts);
         hideKeyboard();
         closeDrawer();
         setTimeout(new Runnable() {
@@ -311,6 +313,7 @@ public class TimelineActivity extends BaseActivity {
     }
 
     public void onOpenRecentEvaluatedPost(View v) {
+        GaService.trackAction(R.string.ga_action_open_recent_evaluated_list);
         hideKeyboard();
         closeDrawer();
         setTimeout(new Runnable() {
@@ -331,6 +334,7 @@ public class TimelineActivity extends BaseActivity {
     }
 
     public void onLogout(View v) {
+        GaService.trackAction(R.string.ga_action_logout);
         setTimeout(new Runnable() {
             @Override
             public void run() {
@@ -343,6 +347,7 @@ public class TimelineActivity extends BaseActivity {
     }
 
     public void onOpenSaySomethingComposer(View v) {
+        GaService.trackAction(R.string.ga_action_open_say_something);
         AudioMixerService.stop();
                 ((FloatingActionsMenu) findViewById(R.id.fab)).collapseImmediately();
         setTimeout(new Runnable() {
@@ -354,6 +359,7 @@ public class TimelineActivity extends BaseActivity {
     }
 
     public void onOpenChallengeList(View v) {
+        GaService.trackAction(R.string.ga_action_open_topics);
         AudioMixerService.stop();
         ((FloatingActionsMenu)findViewById(R.id.fab)).collapseImmediately();
         setTimeout(new Runnable() {

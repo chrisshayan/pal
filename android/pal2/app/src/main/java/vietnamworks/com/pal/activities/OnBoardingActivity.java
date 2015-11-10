@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.fragments.OnBoardingFragment;
+import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
 
 /**
@@ -61,6 +62,8 @@ public class OnBoardingActivity extends BaseActivity {
         if (!(LocalStorage.getBool(getString(R.string.local_storage_first_launch), true))) {
             onSkip(null);
         }
+
+        GaService.trackScreen(R.string.ga_screen_onboarding);
     }
 
     public void SetPageIndex(int index) {
@@ -117,6 +120,7 @@ public class OnBoardingActivity extends BaseActivity {
      * button events
      */
     public void onNext(View v) {
+        GaService.trackAction(R.string.ga_action_onboarding_next);
         if (currentPageIndex >= nPages - 1) {
             onSkip(v);
         } else {
@@ -125,6 +129,9 @@ public class OnBoardingActivity extends BaseActivity {
     }
 
     public void onSkip(View v) {
+        if (v != null) {
+            GaService.trackAction(R.string.ga_action_onboarding_skip);
+        }
         openActivity(AuthActivity.class);
     }
 }

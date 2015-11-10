@@ -27,6 +27,7 @@ import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.models.UserProfiles;
 import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.services.GaService;
 
 /**
  * Created by duynk on 11/3/15.
@@ -69,6 +70,7 @@ public class PostDetailFragment extends BaseFragment {
             dataRef = Posts.getPostDetailQuery(itemId);
         }
         dataRef.addValueEventListener(dataValueEventListener);
+        GaService.trackScreen(R.string.ga_screen_post_detail);
     }
 
     @Override

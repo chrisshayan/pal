@@ -29,6 +29,7 @@ import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.services.GaService;
 
 /**
  * Created by duynk on 11/2/15.
@@ -183,6 +184,8 @@ public class PostListFragment extends BaseFragment {
         recyclerView.setAdapter(mAdapter);
         fab.collapseImmediately();
         overlay.setVisibility(View.GONE);
+
+        GaService.trackScreen(R.string.ga_screen_post_list);
     }
 
     @Override

@@ -18,6 +18,7 @@ import vietnamworks.com.pal.custom_views.TopicItemView;
 import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.models.Topics;
+import vietnamworks.com.pal.services.GaService;
 
 /**
  * Created by duynk on 11/4/15.
@@ -59,6 +60,7 @@ public class TopicsFragment extends BaseFragment {
         recyclerView.setAdapter(null);
         dataRef.addValueEventListener(dataValueEventListener);
         recyclerView.setAdapter(mAdapter);
+        GaService.trackScreen(R.string.ga_screen_topics);
     }
 
     @Override

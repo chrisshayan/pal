@@ -28,6 +28,7 @@ import vietnamworks.com.pal.entities.AdvisorProfile;
 import vietnamworks.com.pal.entities.BaseEntity;
 import vietnamworks.com.pal.models.AdvisorProfiles;
 import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.services.GaService;
 
 /**
  * Created by duynk on 11/5/15.
@@ -169,6 +170,7 @@ public class AdvisorPreviewFragment extends BaseFragment {
         }
         advisorProfile.addValueEventListener(advisorProfileListener);
 
+        GaService.trackScreen(R.string.ga_screen_advisor_preview);
     }
 
     @Override

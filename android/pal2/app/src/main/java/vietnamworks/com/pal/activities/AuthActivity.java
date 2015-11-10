@@ -25,6 +25,7 @@ import vietnamworks.com.pal.fragments.RegisterErrorFragment;
 import vietnamworks.com.pal.fragments.RegisterFragment;
 import vietnamworks.com.pal.fragments.RegisterSuccessFragment;
 import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.services.GaService;
 
 /**
  * Created by duynk on 10/26/15.
@@ -170,10 +171,12 @@ public class AuthActivity extends BaseActivity {
     }
 
     public void onExecuteRequestInvite(View v) {
+        GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_request_invite);
         final String email = registerFragment.getEmail().trim();
         final String fullname = registerFragment.getFullName().trim();
         if (email.length() == 0) {
             toast(R.string.require_email);
+            GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_missing_email);
             setTimeout(new Runnable() {
                 @Override
                 public void run() {
@@ -182,6 +185,7 @@ public class AuthActivity extends BaseActivity {
             });
         } else if (fullname.length() == 0) {
             toast(R.string.require_full_name);
+            GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_missing_fullname);
             setTimeout(new Runnable() {
                 @Override
                 public void run() {
@@ -196,6 +200,7 @@ public class AuthActivity extends BaseActivity {
                     registerFragment.focusEmail();
                 }
             });
+            GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_invalid_email_format);
         } else {
             setState(STATE_PROCESSING);
             FirebaseService.newRef().authWithCustomToken(FirebaseSettings.TOKEN, new Firebase.AuthResultHandler() {
@@ -228,8 +233,10 @@ public class AuthActivity extends BaseActivity {
                         public void onComplete(FirebaseError firebaseError, boolean b, DataSnapshot dataSnapshot) {
                             if (dataSnapshot != null) {
                                 setState(STATE_REGISTER_SUCCESS);
+                                GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_register_success);
                             } else {
                                 setState(STATE_REGISTER_ERROR);
+                                GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_register_fail);
                             }
                             registerFragment.resetForm();
                         }
@@ -248,13 +255,16 @@ public class AuthActivity extends BaseActivity {
 
     public void onOpenLogin(View v) {
         setState(STATE_LOGIN);
+        GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_back_to_login);
     }
 
     public  void onCloseRegisterResultDialog(View v) {
         setState(STATE_LOGIN);
+        GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_close_register_result);
     }
 
     public void onShare(View v) {
+        GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_share);
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text));

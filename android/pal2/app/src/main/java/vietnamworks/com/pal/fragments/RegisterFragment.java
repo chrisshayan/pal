@@ -14,6 +14,7 @@ import android.widget.TextView;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.AuthActivity;
 import vietnamworks.com.pal.activities.BaseActivity;
+import vietnamworks.com.pal.services.GaService;
 
 /**
  * Created by duynk on 10/26/15.
@@ -76,5 +77,11 @@ public class RegisterFragment extends BaseFragment {
 
     public void focusFullName() {
         txtFullName.requestFocus();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GaService.trackScreen(R.string.ga_screen_register);
     }
 }

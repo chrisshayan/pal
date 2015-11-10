@@ -7,6 +7,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.activities.BaseActivity;
 
 /**
  * Created by duynk on 11/10/15.
@@ -32,10 +33,37 @@ public class GaService {
         instance.mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
+    public static void trackScreen(int screen) {
+        instance.mTracker.setScreenName(BaseActivity.sInstance.getString(screen));
+        instance.mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
     public static void trackAction(String action_name) {
         instance.mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("Action")
                 .setAction(action_name)
                 .build());
     }
+
+    public static void trackAction(int action_name) {
+        instance.mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction(BaseActivity.sInstance.getString(action_name))
+                .build());
+    }
+
+    public static void trackEvent(String category, String action_name) {
+        instance.mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory(category)
+                .setAction(action_name)
+                .build());
+    }
+
+    public static void trackEvent(int category, int action_name) {
+        instance.mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory(BaseActivity.sInstance.getString(category))
+                .setAction(BaseActivity.sInstance.getString(action_name))
+                .build());
+    }
+
 }

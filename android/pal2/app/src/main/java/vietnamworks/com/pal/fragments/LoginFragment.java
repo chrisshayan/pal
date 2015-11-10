@@ -22,6 +22,7 @@ import vietnamworks.com.pal.activities.TimelineActivity;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.FirebaseService;
+import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
 import vietnamworks.com.pal.services.ParseService;
 
@@ -75,17 +76,21 @@ public class LoginFragment extends BaseFragment {
     }
 
     public void login() {
+        GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_do_login);
         final String email = getEmail().trim();
         final String password = getPassword().trim();
         if (email.length() == 0) {
             setError(getString(R.string.require_email));
+            GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_missing_email);
             focusEmail();
         } else if (password.length() == 0) {
             setError(getString(R.string.require_password));
+            GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_missing_password);
             focusPassword();
         } else if (!Utils.isValidEmail(email)) {
             setError(getString(R.string.invalid_email));
             focusEmail();
+            GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_invalid_email_format);
         } else {
             setError(null);
             ((AuthActivity)getActivity()).setState(AuthActivity.STATE_PROCESSING);
@@ -93,8 +98,9 @@ public class LoginFragment extends BaseFragment {
                 @Override
                 public void onSuccess(Context ctx, Object obj) {
                     ParseService.RegisterUser(FirebaseService.authData.getUid());
-                    BaseActivity.sInstance.openActivity (TimelineActivity.class);
+                    BaseActivity.sInstance.openActivity(TimelineActivity.class);
                     LocalStorage.set(getString(R.string.local_storage_first_launch), false);
+                    GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_login_success);
                 }
 
                 @Override
@@ -102,6 +108,7 @@ public class LoginFragment extends BaseFragment {
                     HashMap<String, Object> bundle = new HashMap<String, Object>();
                     bundle.put("message", getString(R.string.login_fail));
                     ((AuthActivity) getActivity()).setState(AuthActivity.STATE_REGISTER_ERROR, bundle);
+                    GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_login_fail);
                 }
             });
         }
@@ -147,4 +154,8 @@ public class LoginFragment extends BaseFragment {
         txtEmail.setText("");
     }
 
+    @Override
+    public void onResume() {
+        GaService.trackScreen(R.string.ga_screen_login);
+    }
 }

@@ -18,6 +18,7 @@ import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.custom_views.AudioPlayer;
 import vietnamworks.com.pal.services.AudioMixerService;
+import vietnamworks.com.pal.services.GaService;
 
 /**
  * Created by duynk on 10/29/15.
@@ -89,7 +90,7 @@ public class ComposerFragment extends BaseFragment {
                     hasAudio = true;
 
                 } else { //start recording
-
+                    GaService.trackAction(R.string.ga_action_do_record);
                     Utils.newSampleRecord();
 
                     audioPlayer.setVisibility(View.INVISIBLE);
@@ -115,11 +116,13 @@ public class ComposerFragment extends BaseFragment {
                                 updateUI(false);
                             }
                         });
+                        GaService.trackEvent(R.string.ga_cat_recorder, R.string.ga_event_recorder_success);
                     } catch (Exception e) {
                         myAudioRecorder = null;
                         updateUI(false);
                         e.printStackTrace();
                         BaseActivity.toast(R.string.fail_to_record);
+                        GaService.trackEvent(R.string.ga_cat_recorder, R.string.ga_event_recorder_fail);
                     }
                 }
             }
@@ -198,7 +201,7 @@ public class ComposerFragment extends BaseFragment {
             });
         }
         if (btnHint != null) {
-            btnHint.setVisibility(tips != null && !tips.isEmpty()?View.VISIBLE:View.GONE);
+            btnHint.setVisibility(tips != null && !tips.isEmpty() ? View.VISIBLE : View.GONE);
         }
         return this;
     }
@@ -221,5 +224,10 @@ public class ComposerFragment extends BaseFragment {
 
     public String getMessage() {
         return inputMessage.getText().toString();
+    }
+
+    @Override
+    public void onResume() {
+        GaService.trackScreen(R.string.ga_screen_compose);
     }
 }
