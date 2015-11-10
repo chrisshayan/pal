@@ -22,6 +22,7 @@ import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.activities.TimelineActivity;
 import vietnamworks.com.pal.common.Utils;
+import vietnamworks.com.pal.configurations.AppUiConfig;
 import vietnamworks.com.pal.custom_views.TimelineItemBaseView;
 import vietnamworks.com.pal.custom_views.TimelineItemNullView;
 import vietnamworks.com.pal.custom_views.TimelineItemView;
@@ -118,7 +119,7 @@ public class PostListFragment extends BaseFragment {
     private void openOverlay() {
         overlay.setVisibility(View.VISIBLE);
         overlay.setAlpha(0);
-        overlay.animate().alpha(0.75f).setDuration(100).setListener(new Animator.AnimatorListener() {
+        overlay.animate().alpha(AppUiConfig.BASE_OVERLAY_ALPHA).setDuration(100).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 overlay.setVisibility(View.VISIBLE);

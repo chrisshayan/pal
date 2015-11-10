@@ -5,6 +5,7 @@
     <string name="title_composer">Compose</string>
     <string name="title_challenge">Challenges</string>
     <string name="title_advisor_rating">Advisor</string>
+    <string name="title_welcome">Welcome</string>
 
     <string-array name="tutor_header">
         <item>Learn English for Free</item>
@@ -110,4 +111,11 @@
     <string name="advisor_total_vote">%1$s users</string>
     <string name="thank_for_voting">Thanks for your vote</string>
     <string name="no_vote">No data now</string>
+
+    <!-- welcome -->
+    <string name="get_started">Get started</string>
+    <string name="get_started_header">Lorem ipsum dolor sit amet</string>
+    <string name="get_started_desc">Mazim viris facilis cu sed, eos vidisse adolescens an. Eum iudico omnium instructior ne. Ut est integre ancillae erroribus. Te mei causae percipitur</string>
+    <string name="get_started_touch_fab">Add a post here</string>
+    <string name="get_started_pick_option">Pick an option</string>
 </resources>

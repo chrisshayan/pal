@@ -33,6 +33,7 @@ import vietnamworks.com.pal.fragments.ComposerFragment;
 import vietnamworks.com.pal.fragments.PostDetailFragment;
 import vietnamworks.com.pal.fragments.PostListFragment;
 import vietnamworks.com.pal.fragments.TopicsFragment;
+import vietnamworks.com.pal.fragments.WelcomeFragment;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.services.AudioMixerService;
 import vietnamworks.com.pal.services.FileUploadService;
@@ -105,9 +106,14 @@ public class TimelineActivity extends BaseActivity {
                 updateToolbar();
             }
         });
-        onOpenAllPosts(null);
-        setTitle(R.string.title_timeline);
 
+        if (true) {
+            openFragment(new WelcomeFragment(), R.id.fragment_holder);
+            setTitle(R.string.title_welcome);
+        } else {
+            onOpenAllPosts(null);
+            setTitle(R.string.title_timeline);
+        }
         queryTotalUnreadPosts = Posts.getUnreadPostsCounterQuery();
         queryTotalUnreadEvaluatedPosts = Posts.getUnreadEvaluatedPostsCounterQuery();
     }
@@ -154,7 +160,6 @@ public class TimelineActivity extends BaseActivity {
         } else {
             super.onBackPressed();
         }
-
     }
 
     @Override
@@ -349,25 +354,45 @@ public class TimelineActivity extends BaseActivity {
     public void onOpenSaySomethingComposer(View v) {
         GaService.trackAction(R.string.ga_action_open_say_something);
         AudioMixerService.stop();
-                ((FloatingActionsMenu) findViewById(R.id.fab)).collapseImmediately();
         setTimeout(new Runnable() {
             @Override
             public void run() {
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+                if (f instanceof WelcomeFragment) {
+                    if (allPostsFragment == null) {
+                        allPostsFragment = PostListFragment.createAllPosts();
+                        openFragment(allPostsFragment, R.id.fragment_holder);
+                    } else {
+                        openFragment(allPostsFragment, R.id.fragment_holder);
+                    }
+                } else {
+                    ((FloatingActionsMenu)findViewById(R.id.fab)).collapseImmediately();
+                }
                 pushFragment(new ComposerFragment(), R.id.fragment_holder);
             }
-        }, 500);
+        }, 100);
     }
 
     public void onOpenChallengeList(View v) {
         GaService.trackAction(R.string.ga_action_open_topics);
         AudioMixerService.stop();
-        ((FloatingActionsMenu)findViewById(R.id.fab)).collapseImmediately();
         setTimeout(new Runnable() {
             @Override
             public void run() {
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+                if (f instanceof WelcomeFragment) {
+                    if (allPostsFragment == null) {
+                        allPostsFragment = PostListFragment.createAllPosts();
+                        openFragment(allPostsFragment, R.id.fragment_holder);
+                    } else {
+                        openFragment(allPostsFragment, R.id.fragment_holder);
+                    }
+                } else {
+                    ((FloatingActionsMenu)findViewById(R.id.fab)).collapseImmediately();
+                }
                 pushFragment(new TopicsFragment(), R.id.fragment_holder);
             }
-        }, 500);
+        }, 100);
     }
 
     private boolean submitTask(ComposerFragment f) {

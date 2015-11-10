@@ -19,8 +19,8 @@
 
     <dimen name="font_xs">12sp</dimen>
     <dimen name="font_s">14sp</dimen>
-    <dimen name="font_m">16sp</dimen>
-    <dimen name="font_l">18sp</dimen>
+    <dimen name="font_m">18sp</dimen>
+    <dimen name="font_l">22sp</dimen>
 
     <dimen name="player_controller_button_size">30dp</dimen>
 
@@ -45,4 +45,10 @@
 
     <!-- fab -->
     <dimen name="fab_margin">@dimen/base_padding_2x</dimen>
+
+    <!-- tutor -->
+    <dimen name="tutor_fab_margin_right">80dp</dimen>
+    <dimen name="tutor_fab_margin_right_quarter">20dp</dimen>
+    <dimen name="tutor_fab_height">100dp</dimen>
+    <dimen name="tutor_fab_arrow_width">80dp</dimen>
 </resources>

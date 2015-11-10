@@ -228,6 +228,7 @@ public class ComposerFragment extends BaseFragment {
 
     @Override
     public void onResume() {
+        super.onResume();
         GaService.trackScreen(R.string.ga_screen_compose);
     }
 }
