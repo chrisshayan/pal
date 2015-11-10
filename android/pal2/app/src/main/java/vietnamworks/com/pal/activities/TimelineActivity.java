@@ -1,5 +1,6 @@
 package vietnamworks.com.pal.activities;
 
+import android.animation.Animator;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.configurations.AppConfig;
+import vietnamworks.com.pal.configurations.AppUiConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.fragments.AdvisorPreviewFragment;
 import vietnamworks.com.pal.fragments.ComposerFragment;
@@ -39,12 +41,15 @@ import vietnamworks.com.pal.services.AudioMixerService;
 import vietnamworks.com.pal.services.FileUploadService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
+import vietnamworks.com.pal.services.LocalStorage;
 
 public class TimelineActivity extends BaseActivity {
     private PostListFragment allPostsFragment;
     private PostListFragment evaluatedPostsFragment;
     UserProfileNavView navHeaderView;
     Toolbar toolbar;
+    View drawer_guide;
+    DrawerLayout drawer;
 
     Query queryTotalUnreadPosts;
     Query queryTotalUnreadEvaluatedPosts;
@@ -97,12 +102,94 @@ public class TimelineActivity extends BaseActivity {
             }
         });
 
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer_guide = findViewById(R.id.overlay_with_drawer_guide);
+        drawer_guide.setVisibility(View.GONE);
+
+        drawer.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                if (drawer_guide.getVisibility() == View.VISIBLE) {
+                    drawer_guide.setVisibility(View.GONE);
+                    LocalStorage.set(getString(R.string.local_storage_show_drawer_guide), true);
+                }
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+
+
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
                 int deep = getSupportFragmentManager().getBackStackEntryCount();
                 getSupportActionBar().setHomeAsUpIndicator(deep == 0 ? R.drawable.ic_image_dehaze : R.drawable.ic_hardware_keyboard_backspace);
 
+                if (deep == 0  /* && LocalStorage.getBool(getString(R.string.local_storage_show_drawer_guide), false) */) {
+                    drawer_guide.setVisibility(View.VISIBLE);
+                    drawer_guide.setAlpha(0);
+                    drawer_guide.animate().alpha(AppUiConfig.BASE_OVERLAY_ALPHA).setStartDelay(500).setDuration(500).setListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            drawer_guide.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    drawer_guide.animate().alpha(0).setDuration(500).setListener(new Animator.AnimatorListener() {
+                                        @Override
+                                        public void onAnimationStart(Animator animation) {
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            drawer_guide.setVisibility(View.GONE);
+                                        }
+
+                                        @Override
+                                        public void onAnimationCancel(Animator animation) {
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationRepeat(Animator animation) {
+
+                                        }
+                                    });
+
+                                    LocalStorage.set(getString(R.string.local_storage_show_drawer_guide), true);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    }).start();
+                }
                 updateToolbar();
             }
         });
@@ -121,7 +208,7 @@ public class TimelineActivity extends BaseActivity {
     private ValueEventListener onChangedUnreadPostsValue = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            setNumberOfUnreadPostUI((int)dataSnapshot.getChildrenCount());
+            setNumberOfUnreadPostUI((int) dataSnapshot.getChildrenCount());
         }
 
         @Override
@@ -146,13 +233,12 @@ public class TimelineActivity extends BaseActivity {
     public void onLayoutChanged(Rect r, final boolean isSoftKeyShown) {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
         if (f instanceof AdvisorPreviewFragment) {
-            ((AdvisorPreviewFragment)f).onLayoutChanged(isSoftKeyShown);
+            ((AdvisorPreviewFragment) f).onLayoutChanged(isSoftKeyShown);
         }
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -192,7 +278,6 @@ public class TimelineActivity extends BaseActivity {
         } else if (id == android.R.id.home) {
             int deep = getSupportFragmentManager().getBackStackEntryCount();
             if (deep == 0) {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 drawer.openDrawer(navigationView);
             } else {
@@ -245,7 +330,7 @@ public class TimelineActivity extends BaseActivity {
         if (f instanceof ComposerFragment) {
             setTitle(R.string.title_composer);
         } else if (f instanceof PostListFragment) {
-            if (((PostListFragment)f).getFilterType() == PostListFragment.FILTER_ALL) {
+            if (((PostListFragment) f).getFilterType() == PostListFragment.FILTER_ALL) {
                 setTitle(R.string.title_timeline);
             } else {
                 setTitle(R.string.title_evaluated_posts);
@@ -260,7 +345,6 @@ public class TimelineActivity extends BaseActivity {
     }
 
     private void closeDrawer() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
 
@@ -302,7 +386,7 @@ public class TimelineActivity extends BaseActivity {
             @Override
             public void run() {
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
-                if (!(f instanceof  PostListFragment) || ((PostListFragment) f).getFilterType()  != PostListFragment.FILTER_ALL) {
+                if (!(f instanceof PostListFragment) || ((PostListFragment) f).getFilterType() != PostListFragment.FILTER_ALL) {
                     if (allPostsFragment == null) {
                         allPostsFragment = PostListFragment.createAllPosts();
                         openFragment(allPostsFragment, R.id.fragment_holder);
@@ -310,8 +394,8 @@ public class TimelineActivity extends BaseActivity {
                         openFragment(allPostsFragment, R.id.fragment_holder);
                     }
                 }
-                if (f instanceof  PostListFragment) {
-                    ((PostListFragment)f).refresh();
+                if (f instanceof PostListFragment) {
+                    ((PostListFragment) f).refresh();
                 }
             }
         }, 500);
@@ -325,14 +409,14 @@ public class TimelineActivity extends BaseActivity {
             @Override
             public void run() {
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
-                if (!(f instanceof  PostListFragment) || ((PostListFragment) f).getFilterType()  != PostListFragment.FILTER_EVALUATED) {
+                if (!(f instanceof PostListFragment) || ((PostListFragment) f).getFilterType() != PostListFragment.FILTER_EVALUATED) {
                     if (evaluatedPostsFragment == null) {
                         evaluatedPostsFragment = PostListFragment.createEvaluatedList();
                     }
                     openFragment(evaluatedPostsFragment, R.id.fragment_holder);
                 }
-                if (f instanceof  PostListFragment) {
-                    ((PostListFragment)f).refresh();
+                if (f instanceof PostListFragment) {
+                    ((PostListFragment) f).refresh();
                 }
             }
         }, 500);
@@ -366,7 +450,7 @@ public class TimelineActivity extends BaseActivity {
                         openFragment(allPostsFragment, R.id.fragment_holder);
                     }
                 } else {
-                    ((FloatingActionsMenu)findViewById(R.id.fab)).collapseImmediately();
+                    ((FloatingActionsMenu) findViewById(R.id.fab)).collapseImmediately();
                 }
                 pushFragment(new ComposerFragment(), R.id.fragment_holder);
             }
@@ -388,7 +472,7 @@ public class TimelineActivity extends BaseActivity {
                         openFragment(allPostsFragment, R.id.fragment_holder);
                     }
                 } else {
-                    ((FloatingActionsMenu)findViewById(R.id.fab)).collapseImmediately();
+                    ((FloatingActionsMenu) findViewById(R.id.fab)).collapseImmediately();
                 }
                 pushFragment(new TopicsFragment(), R.id.fragment_holder);
             }
@@ -447,7 +531,7 @@ public class TimelineActivity extends BaseActivity {
                     try {
                         JSONObject obj = new JSONObject(serverResponseMessage);
                         Posts.updateAudioLink(uploadId, obj.getString("url"));
-                    }catch (Exception E) {
+                    } catch (Exception E) {
                         Posts.raiseError(uploadId);
                         E.printStackTrace();
                     }

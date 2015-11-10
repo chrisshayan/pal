@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/welcome_panel"
-        android:layout_margin="@dimen/base_padding_4x"
+        android:layout_margin="@dimen/base_padding_2x"
         card_view:cardElevation="2dp">
         <LinearLayout
             android:orientation="vertical"

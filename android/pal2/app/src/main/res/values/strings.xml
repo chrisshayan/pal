@@ -118,4 +118,6 @@
     <string name="get_started_desc">Mazim viris facilis cu sed, eos vidisse adolescens an. Eum iudico omnium instructior ne. Ut est integre ancillae erroribus. Te mei causae percipitur</string>
     <string name="get_started_touch_fab">Add a post here</string>
     <string name="get_started_pick_option">Pick an option</string>
+    <string name="get_started_drawer_button_guide">Touch this button to open menu</string>
+    <string name="get_started_drawer_swipe_guide">Or swipe right to open menu too</string>
 </resources>

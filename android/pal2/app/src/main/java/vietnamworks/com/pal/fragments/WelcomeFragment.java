@@ -21,8 +21,8 @@ import vietnamworks.com.pal.configurations.AppUiConfig;
 public class WelcomeFragment extends BaseFragment {
     boolean preventFabCollapseHintAnim;
 
-    final static int BASE_TRANSLATE = 200;
-    final static int BASE_ANIM_DURATION = 500;
+    final static int BASE_TRANSLATE = 50;
+    final static int BASE_ANIM_DURATION = 300;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
