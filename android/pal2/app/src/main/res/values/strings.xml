@@ -9,14 +9,14 @@
 
     <string-array name="tutor_header">
         <item>Learn English for Free</item>
-        <item>Practice pronunciation with experienced English teachers</item>
-        <item>Track your learning progress</item>
+        <item>Challenge Yourself</item>
+        <item>Improve Your Pronunciation</item>
     </string-array>
 
     <string-array name="tutor_body">
-        <item>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</item>
-        <item>Lorem ipsum dolor sit amet, consectetur adipiscing elit</item>
-        <item>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</item>
+        <item>English is the most commonly used language among foreign language speakers. English is important to advance in your career and we believe it should be FREE.</item>
+        <item>Practice and improve your English daily through challenges. The more you practice the more you will get better at. Keep challenging yourself! </item>
+        <item>Say it and get specific guidance on how it should be pronounced, our teachers will feedback to you how to improve your pronunciation.</item>
     </string-array>
 
     <string name="skip">Skip</string>
