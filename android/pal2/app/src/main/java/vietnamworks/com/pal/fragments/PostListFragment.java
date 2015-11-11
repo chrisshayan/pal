@@ -309,6 +309,18 @@ public class PostListFragment extends BaseFragment {
                             }, 200);
                         }
                     });
+
+                    if (i == 0) {
+                        long now = Utils.getMillis();
+                        long modified = p.getLast_modified_date();
+                        if (Math.abs(now - modified) < 3000) { //just created
+                            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+                            animation.setDuration(500);
+                            v.container.startAnimation(animation);
+                        }
+                    } else {
+                        setAnimation(v.container, i);
+                    }
                 }
             } else {
                 TimelineItemNullView view = (TimelineItemNullView)v;
@@ -330,8 +342,9 @@ public class PostListFragment extends BaseFragment {
                     dataRef.addValueEventListener(dataValueEventListener);
                     dataRef.keepSynced(true);
                 }
+                setAnimation(v.container, i);
             }
-            setAnimation(v.container, i);
+
         }
 
         private void setAnimation(View viewToAnimate, int position)
