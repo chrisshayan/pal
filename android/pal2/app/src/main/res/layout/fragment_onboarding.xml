@@ -43,12 +43,11 @@
                 style="@style/Text.Large.Light" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Medium Text"
                 android:id="@+id/tutor_body"
                 android:padding="@dimen/base_padding"
-                android:layout_margin="@dimen/base_padding"
                 style="@style/Text.Small.Light" />
         </LinearLayout>
     </RelativeLayout>
