@@ -5,7 +5,7 @@ import android.content.Context;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 
-import vietnamworks.com.pal.configurations.ParseSettings;
+import vietnamworks.com.pal.R;
 
 /**
  * Created by duynk on 10/26/15.
@@ -13,7 +13,7 @@ import vietnamworks.com.pal.configurations.ParseSettings;
 public class ParseService {
     public static void init(Context ctx) {
         Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
-        Parse.initialize(ctx, ParseSettings.APP_ID, ParseSettings.APP_KEY);
+        Parse.initialize(ctx, ctx.getString(R.string.parse_app_id), ctx.getString(R.string.parse_app_key));
         ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 

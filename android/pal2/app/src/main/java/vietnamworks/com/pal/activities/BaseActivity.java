@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.common.Utils;
-import vietnamworks.com.pal.services.FirebaseService;
 
 /**
  * Created by duynk on 10/1/15.
@@ -55,7 +54,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseService.setContext(this);
         if (applicationDataPath.length() == 0) {
             applicationDataPath = this.getApplicationInfo().dataDir;
         }
@@ -110,7 +108,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FirebaseService.setContext(null);
     }
 
     public static void toast(int messageId) {

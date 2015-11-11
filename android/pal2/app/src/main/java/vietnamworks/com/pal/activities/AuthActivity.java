@@ -18,7 +18,6 @@ import java.util.HashMap;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.common.Utils;
-import vietnamworks.com.pal.configurations.FirebaseSettings;
 import vietnamworks.com.pal.fragments.AuthProcessingFragment;
 import vietnamworks.com.pal.fragments.LoginFragment;
 import vietnamworks.com.pal.fragments.RegisterErrorFragment;
@@ -203,7 +202,7 @@ public class AuthActivity extends BaseActivity {
             GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_invalid_email_format);
         } else {
             setState(STATE_PROCESSING);
-            FirebaseService.newRef().authWithCustomToken(FirebaseSettings.TOKEN, new Firebase.AuthResultHandler() {
+            FirebaseService.newRef().authWithCustomToken(FirebaseService.getDefaultToken(), new Firebase.AuthResultHandler() {
                 @Override
                 public void onAuthenticated(AuthData authData) {
                     final String email_hash = Utils.hash(email);

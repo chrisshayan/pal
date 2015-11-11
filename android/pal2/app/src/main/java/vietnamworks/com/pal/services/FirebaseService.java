@@ -12,13 +12,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import vietnamworks.com.pal.configurations.FirebaseSettings;
+import vietnamworks.com.pal.R;
 
 /**
  * Created by duynk on 10/1/15.
  */
 public class FirebaseService {
-    public static final String API_URL = FirebaseSettings.APP_URL;
+    private static String apiUrl;
+    private static String defaultToken;
     public static AuthData authData;
     public static Context context = null;
     public static boolean isConnected;
@@ -52,57 +53,21 @@ public class FirebaseService {
         }
     }
 
-    public static void init() {
-        isConnected = false;
-        Firebase.getDefaultConfig().setPersistenceEnabled(true);
-
-        /*
-        Firebase connectedRef = new Firebase(API_URL + "/.info/connected");
-        connectedRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                isConnected = connected;
-                if (sInstance.onConnectStatusChangedListener != null) {
-                    sInstance.onConnectStatusChangedListener.onStatusChanged(connected);
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError error) {
-                System.err.println("Listener was cancelled");
-            }
-        });
-        */
-
-        /*
-        Firebase ref = new Firebase(API_URL);
-        ref.addAuthStateListener(new Firebase.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(AuthData authData) {
-                if (authData != null) {
-                    FirebaseService.authData = authData;
-                } else {
-                    // user is not logged in
-                }
-            }
-        });
-        */
-    }
-
-    public static void setContext(Context ctx) {
-        if (ctx != null) {
-            Firebase.setAndroidContext(ctx);
-        }
+    public static void init(Context ctx) {
         context = ctx;
+        apiUrl = context.getString(R.string.firebase_app_url);
+        defaultToken = context.getString(R.string.firebase_token);
+        isConnected = false;
+        Firebase.setAndroidContext(context);
+        Firebase.getDefaultConfig().setPersistenceEnabled(true);
     }
 
     public static Firebase newRef() {
-        return new Firebase(API_URL);
+        return new Firebase(apiUrl);
     }
 
     public static Firebase newRef(String p) {
-        String url = API_URL;
+        String url = apiUrl;
         if (p.length() > 0) {
             url = url + "/" + p;
         }
@@ -237,5 +202,9 @@ public class FirebaseService {
             sInstance.onUserProfileDataChanged = null;
         }
 
+    }
+
+    public static String getDefaultToken() {
+        return defaultToken;
     }
 }
