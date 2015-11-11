@@ -283,7 +283,7 @@ public class PostListFragment extends BaseFragment {
         @Override
         public void onBindViewHolder(final TimelineItemBaseView v, final int i) {
             if (v instanceof TimelineItemView) {
-                TimelineItemView view = (TimelineItemView)v;
+                final TimelineItemView view = (TimelineItemView)v;
                 Post p = AppModel.posts.getData().get(i);
                 if (p != null) {
                     view.setItemId(p.getId());
@@ -293,7 +293,7 @@ public class PostListFragment extends BaseFragment {
                     } else if (p.getStatus() == Post.STATUS_ADVISOR_EVALUATED) {
                         icon = R.drawable.ic_evaluated;
                     }
-                    view.setValue(icon, p, true);
+
                     view.highlight(!p.isHas_read());
                     view.setClickEventListener(new TimelineItemView.OnClickEventListener() {
                         @Override
@@ -317,10 +317,29 @@ public class PostListFragment extends BaseFragment {
                             Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
                             animation.setDuration(500);
                             v.container.startAnimation(animation);
+                            animation.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    view.startIconAnim();
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+
+                                }
+                            });
+
+                            icon = R.drawable.animation_timeline_uploading;
                         }
                     } else {
                         setAnimation(v.container, i);
                     }
+                    view.setValue(icon, p, true);
                 }
             } else {
                 TimelineItemNullView view = (TimelineItemNullView)v;

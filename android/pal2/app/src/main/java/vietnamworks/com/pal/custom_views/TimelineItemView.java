@@ -1,6 +1,8 @@
 package vietnamworks.com.pal.custom_views;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -134,6 +136,13 @@ public class TimelineItemView extends TimelineItemBaseView {
 
     public void setValue(int icon, Post p) {
         setValue(icon, p, false);
+    }
+
+    public void startIconAnim() {
+        Drawable d = icon.getDrawable();
+        if (d instanceof AnimationDrawable) {
+            ((AnimationDrawable) icon.getDrawable()).start();
+        }
     }
 
     public void setValue(int icon, Post p, boolean preview_mode) {
