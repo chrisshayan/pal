@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,6 +16,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.configurations.AppUiConfig;
+import vietnamworks.com.pal.services.LocalStorage;
 
 /**
  * Created by duynk on 11/10/15.
@@ -33,17 +36,19 @@ public class WelcomeFragment extends BaseFragment {
 
         BaseActivity.applyFont(rootView);
 
-        View welcome_panel = rootView.findViewById(R.id.welcome_panel);
-        welcome_panel.setAlpha(0);
-        welcome_panel.setY(BASE_TRANSLATE);
-        welcome_panel.animate().alpha(1f).y(0).setDuration(BASE_ANIM_DURATION*2).setStartDelay(BASE_ANIM_DURATION).setListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
+        final View welcome_panel = rootView.findViewById(R.id.welcome_panel);
+        welcome_panel.setVisibility(View.INVISIBLE);
 
+        final Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.list_item_appear_anim);
+        animation.setDuration(BASE_ANIM_DURATION);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                welcome_panel.setVisibility(View.VISIBLE);
             }
 
             @Override
-            public void onAnimationEnd(Animator animation) {
+            public void onAnimationEnd(Animation animation) {
                 ((ImageButton) getView().findViewById(R.id.btn_getStarted)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -59,15 +64,17 @@ public class WelcomeFragment extends BaseFragment {
             }
 
             @Override
-            public void onAnimationCancel(Animator animation) {
+            public void onAnimationRepeat(Animation animation) {
 
             }
-
+        });
+        BaseActivity.timeout(new Runnable() {
             @Override
-            public void onAnimationRepeat(Animator animation) {
-
+            public void run() {
+                welcome_panel.startAnimation(animation);
             }
-        }).start();
+        }, 500);
+
 
         preventFabCollapseHintAnim = false;
 
@@ -100,6 +107,7 @@ public class WelcomeFragment extends BaseFragment {
     }
 
     private void getStarted() {
+        LocalStorage.set(getString(R.string.local_storage_show_fab_guide), true);
         View overlay = getView().findViewById(R.id.overlay);
         overlay.setAlpha(0);
         overlay.setVisibility(View.VISIBLE);
