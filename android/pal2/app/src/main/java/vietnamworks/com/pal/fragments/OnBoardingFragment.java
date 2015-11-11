@@ -48,7 +48,7 @@ public class OnBoardingFragment extends BaseFragment {
         ((TextView) rootView.findViewById(R.id.tutor_body)).setText(getResources().getStringArray(R.array.tutor_body)[mPageNumber]);
 
         ImageView img = (ImageView) rootView.findViewById(R.id.img_tutor);
-        int []res = new int[] {R.drawable.ic_ongoing_card, R.drawable.ic_ongoing_card, R.drawable.ic_ongoing_card};
+        int []res = new int[] {R.drawable.ic_ongoing_card_1, R.drawable.ic_ongoing_card_2, R.drawable.ic_ongoing_card_3};
         img.setImageResource(res[mPageNumber % res.length]);
 
         BaseActivity.applyFont(rootView);
