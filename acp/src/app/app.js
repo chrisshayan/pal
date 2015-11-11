@@ -4,7 +4,7 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
 
 .config(function ($stateProvider, $urlRouterProvider, firebaseHelperConfigProvider, parseHelperConfigProvider) {
     firebaseHelperConfigProvider.setURL("https://pal-dev.firebaseio.com");
-    parseHelperConfigProvider.init("htJ5zBADxEo4gMUCHIKiHWSD2Ulfu3Z5cfjCMhOu", "6lpcGDz1f20fxUnynfcyTtEfkDLpOelM9QIrpDfO");
+    parseHelperConfigProvider.init(PARSE_APP, PARSE_JS_KEY);
 
     $stateProvider
 
