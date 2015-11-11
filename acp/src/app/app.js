@@ -96,7 +96,7 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
             $state.go("login");
         }
     });
-    cloudinary.setCloudName('duynk');
+    cloudinary.setCloudName('vnw-owner');
     $rootScope.inspiniaTemplate = 'components/common/notify.html';
     notify.config({
        duration: '5000',

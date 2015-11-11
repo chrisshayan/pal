@@ -32,7 +32,7 @@ angular.module('inspinia').controller('ProfileCtrl', function ($scope, firebaseH
 
     $scope.onChangeAvatar = function() {
         cloudinary.openUploadWidget({
-            upload_preset: 'nyiclrxf',
+            upload_preset: 'pal_avatar',
             multiple: 'false',
             cropping: 'server',
             cropping_aspect_ratio: "1.0",
