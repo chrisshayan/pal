@@ -26,7 +26,10 @@ public class Pal extends Application {
         FileUploadService.init();
         LocalStorage.init(this);
         GaService.init(this);
-        Crittercism.initialize(getApplicationContext(), getString(R.string.crittercism_key));
+
+        if (!BuildConfig.DEBUG) {
+            Crittercism.initialize(getApplicationContext(), getString(R.string.crittercism_key));
+        }
     }
 
     @Override
