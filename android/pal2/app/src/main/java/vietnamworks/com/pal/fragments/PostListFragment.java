@@ -48,7 +48,7 @@ public class PostListFragment extends BaseFragment {
     private PostItemAdapter mAdapter;
     Query dataRef;
     RecyclerView recyclerView;
-    View overlay;
+    View overlay, challenge_view;
     FloatingActionsMenu fab;
 
     int pageSize = 100;
@@ -71,10 +71,18 @@ public class PostListFragment extends BaseFragment {
 
         BaseActivity.applyFont(rootView);
 
+        mAdapter = new PostItemAdapter(getContext());
+
         recyclerView = (RecyclerView) rootView.findViewById(R.id.post_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        mAdapter = new PostItemAdapter(getContext());
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mAdapter.setFirstVisibleItem(((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition());
+            }
+        });
 
         swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
@@ -94,6 +102,8 @@ public class PostListFragment extends BaseFragment {
             }
         });
 
+        challenge_view = ((TimelineActivity)BaseActivity.sInstance).challenge_view;
+        challenge_view.setVisibility(View.GONE);
 
         overlay = rootView.findViewById(R.id.overlay);
         overlay.setOnClickListener(new View.OnClickListener() {
@@ -259,6 +269,8 @@ public class PostListFragment extends BaseFragment {
         int count = 0;
         Context context;
 
+        int lastVisibleItem = -1;
+
         public PostItemAdapter(Context context) {
             this.context = context;
         }
@@ -298,6 +310,10 @@ public class PostListFragment extends BaseFragment {
             return hasChallenge?(position == 1):(position == 0);
         }
 
+        private int feedIndex(int pos) {
+            return hasChallenge?(pos - 1):(pos);
+        }
+
         @Override
         public int getItemViewType(int position) {
             if (hasChallenge) {
@@ -312,7 +328,7 @@ public class PostListFragment extends BaseFragment {
             int type = getItemViewType(i);
             if (type == TYPE_FEED) {
                 final TimelineItemView view = (TimelineItemView)v;
-                Post p = AppModel.posts.getData().get(i);
+                Post p = AppModel.posts.getData().get(feedIndex(i));
                 if (p != null) {
                     view.setItemId(p.getId());
                     int icon = R.drawable.ic_queueing;
@@ -393,10 +409,33 @@ public class PostListFragment extends BaseFragment {
                 //todo load topic
             }
 
+            /*
+            int firstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+            System.out.println("-----------" + firstVisibleItem);
+            boolean _showChallengeShortcut = hasChallenge && (firstVisibleItem > 1);
+            challenge_view.setVisibility(_showChallengeShortcut ? View.VISIBLE : View.GONE);
+            if (showChallengeShortcut != _showChallengeShortcut){
+                showChallengeShortcut = _showChallengeShortcut;
+                if (showChallengeShortcut) {
+                    BaseActivity.sInstance.hideActionBar();
+                } else {
+                    BaseActivity.sInstance.showActionBar();
+                }
+            }
+            */
+        }
+
+        private void setFirstVisibleItem(int firstVisibleItem) {
+            if (lastVisibleItem != firstVisibleItem) {
+                boolean _showChallengeShortcut = hasChallenge && (firstVisibleItem > 0);
+                challenge_view.setVisibility(_showChallengeShortcut ? View.VISIBLE : View.GONE);
+                lastVisibleItem = firstVisibleItem;
+            }
         }
 
         private void setAnimation(View viewToAnimate, int position)
         {
+            /*
             // If the bound view wasn't previously displayed on screen, it's animated
             if (position > lastPosition)
             {
@@ -405,6 +444,7 @@ public class PostListFragment extends BaseFragment {
                 viewToAnimate.startAnimation(animation);
                 lastPosition = position;
             }
+            */
         }
     }
 

@@ -27,6 +27,7 @@
     <string name="cancel">Cancel</string>
     <string name="you">You</string>
 
+
     <!-- authentication screen!-->
     <string name="email_address">Email address</string>
     <string name="your_email_adress">your@email.com</string>
@@ -99,6 +100,7 @@
     <string name="n_view">%1$s views</string>
     <string name="single_submit">%1$s submit</string>
     <string name="n_submit">%1$s submits</string>
+    <string name="accept_challenge">Accept</string>
 
     <!-- place holder text-->
     <string name="placeholder_text_extra_short">Lorem ipsum</string>

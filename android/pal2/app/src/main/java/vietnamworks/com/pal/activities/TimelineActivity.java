@@ -49,6 +49,7 @@ public class TimelineActivity extends BaseActivity {
     UserProfileNavView navHeaderView;
     Toolbar toolbar;
     View drawer_guide;
+    public View challenge_view;
     DrawerLayout drawer;
 
     Query queryTotalUnreadPosts;
@@ -204,6 +205,8 @@ public class TimelineActivity extends BaseActivity {
         }
         queryTotalUnreadPosts = Posts.getUnreadPostsCounterQuery();
         queryTotalUnreadEvaluatedPosts = Posts.getUnreadEvaluatedPostsCounterQuery();
+
+        challenge_view = findViewById(R.id.challenge_view);
     }
 
     private ValueEventListener onChangedUnreadPostsValue = new ValueEventListener() {
