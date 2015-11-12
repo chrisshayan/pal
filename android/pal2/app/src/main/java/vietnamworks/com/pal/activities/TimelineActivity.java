@@ -441,6 +441,28 @@ public class TimelineActivity extends BaseActivity {
 
     }
 
+    public void onOpenWelcomeSaySomethingComposer(View v) {
+        GaService.trackAction(R.string.ga_action_open_say_something);
+        AudioMixerService.stop();
+        setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+                if (f instanceof WelcomeFragment) {
+                    if (allPostsFragment == null) {
+                        allPostsFragment = PostListFragment.createAllPosts();
+                        openFragment(allPostsFragment, R.id.fragment_holder);
+                    } else {
+                        openFragment(allPostsFragment, R.id.fragment_holder);
+                    }
+                } else {
+                    ((FloatingActionsMenu) findViewById(R.id.fab)).collapseImmediately();
+                }
+                pushFragment(new ComposerFragment().setTopic(getString(R.string.introduce_yourself), "", null), R.id.fragment_holder);
+            }
+        }, 100);
+    }
+
     public void onOpenSaySomethingComposer(View v) {
         GaService.trackAction(R.string.ga_action_open_say_something);
         AudioMixerService.stop();

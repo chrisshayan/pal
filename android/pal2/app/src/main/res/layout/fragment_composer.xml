@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:showIn="@layout/app_bar_timeline"
     tools:context="vietnamworks.com.pal.activities.TimelineActivity"
-    android:background="@color/colorPrimaryLight">
+    android:background="@color/colorPrimaryLight"
+    android:paddingLeft="@dimen/base_padding"
+    android:paddingRight="@dimen/base_padding">
 
 
     <LinearLayout
