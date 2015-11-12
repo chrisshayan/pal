@@ -267,7 +267,7 @@ public class PostListFragment extends BaseFragment {
         final int TYPE_FEED = 1;
         final int TYPE_FOOTER = 2;
 
-        boolean hasChallenge = true;
+        boolean hasQuest = true;
         int count = 0;
         Context context;
 
@@ -279,15 +279,15 @@ public class PostListFragment extends BaseFragment {
 
         @Override
         public int getItemCount() {
-            hasChallenge = true;
+            hasQuest = true;
             for (int i = 0; i < 10 && i < AppModel.posts.getData().size(); i ++) {
                 if (AppModel.posts.getData().get(i).getStatus() == Post.STATUS_READY) {
-                    //hasChallenge = false;
+                    hasQuest = false;
                     break;
                 }
             }
-            hasChallenge = hasChallenge && ((TimelineActivity)getActivity()).getCurrentQuest() != null;
-            if (hasChallenge) {
+            hasQuest = hasQuest && ((TimelineActivity)getActivity()).getCurrentQuest() != null;
+            if (hasQuest) {
                 count = AppModel.posts.getData().size() + 2;
             } else {
                 count = AppModel.posts.getData().size() + 1;
@@ -310,16 +310,16 @@ public class PostListFragment extends BaseFragment {
         }
 
         private boolean isFirstFeedRecord(int position) {
-            return hasChallenge?(position == 1):(position == 0);
+            return hasQuest ?(position == 1):(position == 0);
         }
 
         private int feedIndex(int pos) {
-            return hasChallenge?(pos - 1):(pos);
+            return hasQuest ?(pos - 1):(pos);
         }
 
         @Override
         public int getItemViewType(int position) {
-            if (hasChallenge) {
+            if (hasQuest) {
                 return position == 0 ? TYPE_CHALLENGE : ((count > 0 && position < count - 1) ? TYPE_FEED : TYPE_FOOTER);
             } else {
                 return (count > 0 && position < count - 1) ? TYPE_FEED : TYPE_FOOTER;
@@ -417,7 +417,7 @@ public class PostListFragment extends BaseFragment {
 
         private void setFirstVisibleItem(int firstVisibleItem) {
             if (lastVisibleItem != firstVisibleItem) {
-                boolean _showChallengeShortcut = hasChallenge && (firstVisibleItem > 0);
+                boolean _showChallengeShortcut = hasQuest && (firstVisibleItem > 0);
                 mini_quest_view.setVisibility(_showChallengeShortcut ? View.VISIBLE : View.GONE);
                 lastVisibleItem = firstVisibleItem;
             }
