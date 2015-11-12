@@ -12,7 +12,6 @@ function shuffle(o){
 }
 
 var queue = new Queue(user_quest_queue, function(data, progress, resolve, reject) {
-    console.log(data);
     if (data.user_id) {
         if (data.action == "request") {
             var keys = Object.keys(all_topics);
@@ -22,7 +21,6 @@ var queue = new Queue(user_quest_queue, function(data, progress, resolve, reject
                 indice[i] = i;
             }
             indice = shuffle(indice);
-            console.log(indice);
             var tmp = {};
             for (var i = 0; i < 10 && i < indice.length; i++) {
                 var key = keys[i];
