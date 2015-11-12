@@ -49,13 +49,13 @@ public class WelcomeFragment extends BaseFragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                ((ImageButton) getView().findViewById(R.id.btn_getStarted)).setOnClickListener(new View.OnClickListener() {
+                getView().findViewById(R.id.btn_getStarted).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         getStarted();
                     }
                 });
-                ((Button) getView().findViewById(R.id.btn_getStarted_Text)).setOnClickListener(new View.OnClickListener() {
+                getView().findViewById(R.id.btn_getStarted_Text).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         getStarted();

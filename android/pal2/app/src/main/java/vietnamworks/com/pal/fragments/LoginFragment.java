@@ -65,7 +65,7 @@ public class LoginFragment extends BaseFragment {
         errorView = rootView.findViewById(R.id.error_view);
         errorView.setVisibility(View.GONE);
 
-        ((Button) rootView.findViewById(R.id.btn_login)).setOnClickListener(new View.OnClickListener() {
+        rootView.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 login();
