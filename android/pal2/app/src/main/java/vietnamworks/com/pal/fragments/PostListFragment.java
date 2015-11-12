@@ -408,21 +408,6 @@ public class PostListFragment extends BaseFragment {
             } else if (type == TYPE_CHALLENGE) {
                 //todo load topic
             }
-
-            /*
-            int firstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-            System.out.println("-----------" + firstVisibleItem);
-            boolean _showChallengeShortcut = hasChallenge && (firstVisibleItem > 1);
-            challenge_view.setVisibility(_showChallengeShortcut ? View.VISIBLE : View.GONE);
-            if (showChallengeShortcut != _showChallengeShortcut){
-                showChallengeShortcut = _showChallengeShortcut;
-                if (showChallengeShortcut) {
-                    BaseActivity.sInstance.hideActionBar();
-                } else {
-                    BaseActivity.sInstance.showActionBar();
-                }
-            }
-            */
         }
 
         private void setFirstVisibleItem(int firstVisibleItem) {
