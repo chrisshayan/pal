@@ -6,7 +6,6 @@ var Sendgrid  = require('sendgrid')(SENDGRID_API_KEY),
 var ref = new Firebase(FIREBASE_ENDPOINT);
 
 var queue = new Queue(ref, function(data, progress, resolve, reject) {
-    console.log(data);
     if (data.type == "advisor_greeting") {
         if (data.to && data.link) {
             var email = new Sendgrid.Email();
