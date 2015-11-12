@@ -7,8 +7,8 @@
     tools:showIn="@layout/app_bar_timeline"
     tools:context="vietnamworks.com.pal.activities.TimelineActivity"
     android:background="@color/colorPrimaryLight"
-    android:paddingLeft="@dimen/base_padding"
-    android:paddingRight="@dimen/base_padding">
+    android:paddingLeft="@dimen/base_padding_2x"
+    android:paddingRight="@dimen/base_padding_2x">
 
 
     <LinearLayout
@@ -28,14 +28,12 @@
                 android:id="@+id/subject"
                 style="@style/Text.Medium.Muted"
                 android:layout_weight="1"
-                android:layout_marginLeft="@dimen/base_padding_2x"
                 android:layout_marginTop="@dimen/base_padding_4x"
                 android:layout_marginBottom="@dimen/base_padding_4x" />
 
             <RelativeLayout
                 android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/base_padding_2x">
+                android:layout_height="match_parent">
 
                 <ImageButton
                     android:layout_width="match_parent"
@@ -44,8 +42,8 @@
                     android:src="@drawable/ic_action_info_outline"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:scaleType="fitCenter"
-                    android:padding="5dp"
-                    android:contentDescription="@null"/>
+                    android:contentDescription="@null"
+                    android:padding="5dp" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -66,8 +64,8 @@
             android:background="#00000000"
             android:hint="@string/composer_hint"
             android:gravity="top"
-            android:layout_margin="@dimen/base_padding_2x"
-            android:textColorHint="@color/colorTextInputHint" />
+            android:textColorHint="@color/colorTextInputHint"
+            android:layout_marginTop="@dimen/base_padding_2x" />
 
         <LinearLayout
             android:orientation="horizontal"
