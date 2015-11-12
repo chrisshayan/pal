@@ -48,7 +48,7 @@ public class RegisterFragment extends BaseFragment {
         return rootView;
     }
 
-    public void onLayoutChanged() {
+    public void onLayoutChanged(boolean showKB) {
         View view = this.getView();
         Activity act = getActivity();
         if (view != null && act != null) {

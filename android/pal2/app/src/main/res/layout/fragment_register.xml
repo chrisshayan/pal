@@ -6,78 +6,85 @@
     android:elevation="5dp"
     android:background="@color/colorPrimaryLight"
     android:paddingLeft="@dimen/base_padding_4x"
-    android:paddingTop="@dimen/base_padding_4x"
-    android:paddingRight="@dimen/base_padding_4x">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/your_full_name"
-        android:id="@+id/textView2"
-        style="@style/Text.Small.Muted" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:ems="10"
-        android:id="@+id/fullname"
-        android:textColor="@color/colorTextDefault"
-        android:textColorHint="@color/colorTextInputHint"
-        android:imeActionId="@+id/action_register"
-        android:imeActionLabel="@string/go"
-        android:hint="@string/your_full_name" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/base_padding_4x" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/email_address"
-        android:id="@+id/textView"
-        style="@style/Text.Small.Muted" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/email"
-        android:textColor="@color/colorTextDefault"
-        android:textColorHint="@color/colorTextInputHint"
-        android:hint="@string/your_email_adress" />
-
+    android:paddingTop="@dimen/base_padding_8x"
+    android:paddingRight="@dimen/base_padding_4x"
+    android:gravity="center"
+    android:paddingBottom="@dimen/base_padding_4x">
 
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="right">
+        android:orientation="vertical"
+        android:layout_width="@dimen/auth_dialog_width"
+        android:layout_height="match_parent">
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login"
-            android:id="@+id/button2"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onOpenLogin"
-            style="@style/Text.Small" />
+            android:text="@string/your_full_name"
+            android:id="@+id/textView2"
+            style="@style/Text.Small.Muted" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/fullname"
+            android:textColor="@color/colorTextDefault"
+            android:textColorHint="@color/colorTextInputHint"
+            android:imeActionId="@+id/action_register"
+            android:imeActionLabel="@string/go"
+            android:hint="@string/your_full_name" />
 
         <Space
-            android:layout_width="@dimen/base_padding_4x"
-            android:layout_height="match_parent" />
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_padding_4x" />
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/register"
-            android:id="@+id/button3"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:onClick="onExecuteRequestInvite"
-            style="@style/Text.Small.Success" />
+            android:text="@string/email_address"
+            android:id="@+id/textView"
+            style="@style/Text.Small.Muted" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/email"
+            android:textColor="@color/colorTextDefault"
+            android:textColorHint="@color/colorTextInputHint"
+            android:hint="@string/your_email_adress" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+                android:id="@+id/button2"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="onOpenLogin"
+                style="@style/Text.Small" />
+
+            <Space
+                android:layout_width="@dimen/base_padding_4x"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register"
+                android:id="@+id/button3"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="onExecuteRequestInvite"
+                style="@style/Text.Small.Success" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

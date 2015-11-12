@@ -48,8 +48,6 @@ public class AuthActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        applyFont(findViewById(R.id.app_title), Bubblegum);
-
         loginFragment = (LoginFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_login);
         registerFragment = (RegisterFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_register);
         registerSuccessFragment = (RegisterSuccessFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_register_success);
@@ -59,21 +57,20 @@ public class AuthActivity extends BaseActivity {
     }
 
     @Override
-    public void onLayoutChanged(Rect r, final boolean isSoftKeyShown) {
+    public void onLayoutChanged(Rect r, final boolean isKBShown) {
         setTimeout(new Runnable() {
             @Override
             public void run() {
                 View v =  findViewById(R.id.app_title);
-                float offset_y = v.getY();
-                v.animate()
-                        .scaleX(isSoftKeyShown ? 0.5f : 1.0f)
-                        .scaleY(isSoftKeyShown ? 0.5f : 1.0f)
-                        .translationY(isSoftKeyShown ? -offset_y/2 : 0f)
-                        .setDuration(100).start();
+                if (isKBShown) {
+                    v.setVisibility(View.INVISIBLE);
+                } else {
+                    v.setVisibility(View.VISIBLE);
+                }
             }
         });
-        loginFragment.onLayoutChanged();
-        registerFragment.onLayoutChanged();
+        loginFragment.onLayoutChanged(isKBShown);
+        registerFragment.onLayoutChanged(isKBShown);
     }
 
     private void setSetFragmentVisibility() {

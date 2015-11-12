@@ -9,6 +9,7 @@
     <dimen name="base_padding_2x">8dp</dimen>
     <dimen name="base_padding_4x">16dp</dimen>
     <dimen name="base_padding_8x">32dp</dimen>
+    <dimen name="base_padding_16x">64dp</dimen>
 
 
     <dimen name="star_extra_small">12sp</dimen>
