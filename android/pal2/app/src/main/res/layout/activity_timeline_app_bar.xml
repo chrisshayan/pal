@@ -20,13 +20,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/challenge_view"
             android:background="@color/colorPrimary"
-            android:visibility="gone">
+            android:visibility="visible">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorTextLight"
-            android:alpha="0.3"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorTextLight"
+                android:alpha="0.3"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -40,7 +40,9 @@
                     android:id="@+id/quest"
                     android:layout_weight="1"
                     style="@style/Text.Medium.Light"
-                    android:layout_marginLeft="@dimen/base_padding_4x" />
+                    android:layout_marginLeft="@dimen/base_padding_4x"
+                    android:layout_marginBottom="@dimen/base_padding_4x"
+                    android:layout_marginRight="@dimen/base_padding" />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
