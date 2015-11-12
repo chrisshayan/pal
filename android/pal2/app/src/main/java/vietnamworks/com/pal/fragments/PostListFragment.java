@@ -28,6 +28,7 @@ import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.configurations.AppUiConfig;
 import vietnamworks.com.pal.custom_views.TimelineItemBaseView;
 import vietnamworks.com.pal.custom_views.TimelineItemNullView;
+import vietnamworks.com.pal.custom_views.TimelineItemQuest;
 import vietnamworks.com.pal.custom_views.TimelineItemView;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.models.AppModel;
@@ -250,6 +251,12 @@ public class PostListFragment extends BaseFragment {
 
     class PostItemAdapter extends RecyclerView.Adapter<TimelineItemBaseView> {
         int lastPosition = -1;
+        final int TYPE_CHALLENGE = 0;
+        final int TYPE_FEED = 1;
+        final int TYPE_FOOTER = 2;
+
+        boolean hasChallenge = true;
+        int count = 0;
         Context context;
 
         public PostItemAdapter(Context context) {
@@ -258,31 +265,52 @@ public class PostListFragment extends BaseFragment {
 
         @Override
         public int getItemCount() {
-            return AppModel.posts.getData().size() + 1;
+            hasChallenge = true;
+            for (int i = 0; i < 10 && i < AppModel.posts.getData().size(); i ++) {
+                if (AppModel.posts.getData().get(i).getStatus() == Post.STATUS_READY) {
+                    //hasChallenge = false;
+                    break;
+                }
+            }
+            if (hasChallenge) {
+                count = AppModel.posts.getData().size() + 2;
+            } else {
+                count = AppModel.posts.getData().size() + 1;
+            }
+            return count;
         }
 
         @Override
         public TimelineItemBaseView onCreateViewHolder(ViewGroup viewGroup, int type) {
-            int count = getItemCount();
-            if (type == 0) {
+            if (type == TYPE_FEED) {
                 View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cv_timeline_item, viewGroup, false);
                 return new TimelineItemView(v, viewGroup.getContext());
-            } else {
+            } else if (type == TYPE_FOOTER) {
                 View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cv_timeline_end, viewGroup, false);
                 return new TimelineItemNullView(v);
+            } else {
+                View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cv_random_quest, viewGroup, false);
+                return new TimelineItemQuest(v, viewGroup.getContext());
             }
+        }
 
+        private boolean isFirstFeedRecord(int position) {
+            return hasChallenge?(position == 1):(position == 0);
         }
 
         @Override
         public int getItemViewType(int position) {
-            int count = getItemCount();
-            return (count > 0 && position < count - 1)?0:1;
+            if (hasChallenge) {
+                return position == 0 ? TYPE_CHALLENGE : ((count > 0 && position < count - 1) ? TYPE_FEED : TYPE_FOOTER);
+            } else {
+                return (count > 0 && position < count - 1) ? TYPE_FEED : TYPE_FOOTER;
+            }
         }
 
         @Override
         public void onBindViewHolder(final TimelineItemBaseView v, final int i) {
-            if (v instanceof TimelineItemView) {
+            int type = getItemViewType(i);
+            if (type == TYPE_FEED) {
                 final TimelineItemView view = (TimelineItemView)v;
                 Post p = AppModel.posts.getData().get(i);
                 if (p != null) {
@@ -312,7 +340,7 @@ public class PostListFragment extends BaseFragment {
                         }
                     });
 
-                    if (i == 0 && p.getStatus() == Post.STATUS_READY && Math.abs(Utils.getMillis() - p.getLast_modified_date()) < 3000) {
+                    if (isFirstFeedRecord(i) && p.getStatus() == Post.STATUS_READY && Math.abs(Utils.getMillis() - p.getLast_modified_date()) < 3000) {
                         Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
                         animation.setDuration(500);
                         v.container.startAnimation(animation);
@@ -340,7 +368,7 @@ public class PostListFragment extends BaseFragment {
                     }
                     view.setValue(icon, p, true);
                 }
-            } else {
+            } else if (type == TYPE_FOOTER) {
                 TimelineItemNullView view = (TimelineItemNullView)v;
                 long created_date = FirebaseService.getUserProfileLongValue("created_date", 0);
                 if (created_date > 0) {
@@ -361,6 +389,8 @@ public class PostListFragment extends BaseFragment {
                     dataRef.keepSynced(true);
                 }
                 setAnimation(v.container, i);
+            } else if (type == TYPE_CHALLENGE) {
+                //todo load topic
             }
 
         }
