@@ -37,8 +37,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Medium Text"
-                    android:id="@+id/textView21"
+                    android:id="@+id/quest"
                     android:layout_weight="1"
                     style="@style/Text.Medium.Light"
                     android:layout_marginLeft="@dimen/base_padding_4x" />
@@ -48,6 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/accept_challenge"
+                    android:onClick="doQuest"
                     android:id="@+id/button5" />
 
             </LinearLayout>

@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Today Challenge"
+        android:text="@string/challenge_title"
         android:id="@+id/textView19"
         style="@style/Text.Large.Light" />
 
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Introduce yourself"
-        android:id="@+id/textView20"
+        android:id="@+id/quest"
         style="@style/Text.Medium.Light" />
 
     <Button
@@ -28,5 +28,6 @@
         android:layout_height="wrap_content"
         android:text="Accept"
         android:id="@+id/button4"
-        android:layout_gravity="right" />
+        android:layout_gravity="right"
+        android:onClick="doQuest" />
 </LinearLayout>

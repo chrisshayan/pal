@@ -48,7 +48,7 @@ public class PostListFragment extends BaseFragment {
     private PostItemAdapter mAdapter;
     Query dataRef;
     RecyclerView recyclerView;
-    View overlay, challenge_view;
+    View overlay, mini_quest_view;
     FloatingActionsMenu fab;
 
     int pageSize = 100;
@@ -102,8 +102,8 @@ public class PostListFragment extends BaseFragment {
             }
         });
 
-        challenge_view = ((TimelineActivity)BaseActivity.sInstance).challenge_view;
-        challenge_view.setVisibility(View.GONE);
+        mini_quest_view = ((TimelineActivity)BaseActivity.sInstance).getQuestView();
+        mini_quest_view.setVisibility(View.GONE);
 
         overlay = rootView.findViewById(R.id.overlay);
         overlay.setOnClickListener(new View.OnClickListener() {
@@ -256,7 +256,9 @@ public class PostListFragment extends BaseFragment {
     }
 
     public void refresh() {
-        mAdapter.notifyDataSetChanged();
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     class PostItemAdapter extends RecyclerView.Adapter<TimelineItemBaseView> {
@@ -284,6 +286,7 @@ public class PostListFragment extends BaseFragment {
                     break;
                 }
             }
+            hasChallenge = hasChallenge && ((TimelineActivity)getActivity()).getCurrentQuest() != null;
             if (hasChallenge) {
                 count = AppModel.posts.getData().size() + 2;
             } else {
@@ -407,13 +410,15 @@ public class PostListFragment extends BaseFragment {
                 setAnimation(v.container, i);
             } else if (type == TYPE_CHALLENGE) {
                 //todo load topic
+                TimelineItemQuest view = (TimelineItemQuest)v;
+                view.setQuestTitle(((TimelineActivity) getActivity()).getCurrentQuest().getTitle());
             }
         }
 
         private void setFirstVisibleItem(int firstVisibleItem) {
             if (lastVisibleItem != firstVisibleItem) {
                 boolean _showChallengeShortcut = hasChallenge && (firstVisibleItem > 0);
-                challenge_view.setVisibility(_showChallengeShortcut ? View.VISIBLE : View.GONE);
+                mini_quest_view.setVisibility(_showChallengeShortcut ? View.VISIBLE : View.GONE);
                 lastVisibleItem = firstVisibleItem;
             }
         }

@@ -30,6 +30,7 @@ import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.configurations.AppConfig;
 import vietnamworks.com.pal.configurations.AppUiConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
+import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.fragments.AdvisorPreviewFragment;
 import vietnamworks.com.pal.fragments.ComposerFragment;
 import vietnamworks.com.pal.fragments.PostDetailFragment;
@@ -37,6 +38,7 @@ import vietnamworks.com.pal.fragments.PostListFragment;
 import vietnamworks.com.pal.fragments.TopicsFragment;
 import vietnamworks.com.pal.fragments.WelcomeFragment;
 import vietnamworks.com.pal.models.Posts;
+import vietnamworks.com.pal.models.Topics;
 import vietnamworks.com.pal.services.AudioMixerService;
 import vietnamworks.com.pal.services.FileUploadService;
 import vietnamworks.com.pal.services.FirebaseService;
@@ -49,11 +51,15 @@ public class TimelineActivity extends BaseActivity {
     UserProfileNavView navHeaderView;
     Toolbar toolbar;
     View drawer_guide;
-    public View challenge_view;
+    private View quest_view;
     DrawerLayout drawer;
 
     Query queryTotalUnreadPosts;
     Query queryTotalUnreadEvaluatedPosts;
+    Query queryRandomQuest;
+
+    Topic currentQuest;
+    TextView txtQuest;
 
 
     @Override
@@ -205,8 +211,12 @@ public class TimelineActivity extends BaseActivity {
         }
         queryTotalUnreadPosts = Posts.getUnreadPostsCounterQuery();
         queryTotalUnreadEvaluatedPosts = Posts.getUnreadEvaluatedPostsCounterQuery();
+        queryRandomQuest = Topics.getRandomTopicQuery();
 
-        challenge_view = findViewById(R.id.challenge_view);
+        quest_view = findViewById(R.id.challenge_view);
+        txtQuest = (TextView) quest_view.findViewById(R.id.quest);
+
+        Topics.requestRandomTopics();
     }
 
     private ValueEventListener onChangedUnreadPostsValue = new ValueEventListener() {
@@ -225,6 +235,27 @@ public class TimelineActivity extends BaseActivity {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             setNumberOfUnreadEvaluatedPostUI((int) dataSnapshot.getChildrenCount());
+        }
+
+        @Override
+        public void onCancelled(FirebaseError firebaseError) {
+
+        }
+    };
+
+    private ValueEventListener onChangedRandomTask = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            if (dataSnapshot.getChildrenCount() > 0) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    currentQuest = (Topic) new Topic().importData(snapshot.getValue());
+                    txtQuest.setText(currentQuest.getTitle());
+                    if (allPostsFragment != null) {
+                        allPostsFragment.refresh();
+                    }
+                    return;
+                }
+            }
         }
 
         @Override
@@ -306,6 +337,7 @@ public class TimelineActivity extends BaseActivity {
 
         queryTotalUnreadPosts.addValueEventListener(onChangedUnreadPostsValue);
         queryTotalUnreadEvaluatedPosts.addValueEventListener(onChangedUnreadEvaluatedPostsValue);
+        queryRandomQuest.addValueEventListener(onChangedRandomTask);
 
         uploadReceiver.register(this);
     }
@@ -316,6 +348,7 @@ public class TimelineActivity extends BaseActivity {
 
         queryTotalUnreadPosts.removeEventListener(onChangedUnreadPostsValue);
         queryTotalUnreadEvaluatedPosts.removeEventListener(onChangedUnreadEvaluatedPostsValue);
+        queryRandomQuest.removeEventListener(onChangedRandomTask);
 
         uploadReceiver.unregister(this);
     }
@@ -511,6 +544,7 @@ public class TimelineActivity extends BaseActivity {
     }
 
     private boolean submitTask(ComposerFragment f) {
+        Topics.requestRandomTopics();
         f.stopRecoder();
 
         String audio = f.getAudioPath();
@@ -568,4 +602,18 @@ public class TimelineActivity extends BaseActivity {
                     }
                 }
             };
+
+    public void doQuest(View v) {
+        if (currentQuest != null) {
+            pushFragment(new ComposerFragment().setTopic(currentQuest.getTitle(), currentQuest.getId(), currentQuest.getHint()), R.id.fragment_holder);
+        }
+    }
+
+    public Topic getCurrentQuest() {
+        return currentQuest;
+    }
+
+    public View getQuestView() {
+        return quest_view;
+    }
 }

@@ -83,6 +83,7 @@
     <string name="you_wrote">You wrote</string>
     <string name="you_said">You said</string>
     <string name="joined_at">Joined since %1$s</string>
+    <string name="challenge_title">Quest</string>
 
     <!--post detail-->
     <string name="said">said</string>
