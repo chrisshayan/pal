@@ -292,6 +292,8 @@ public class PostListFragment extends BaseFragment {
                         icon = R.drawable.ic_evaluating;
                     } else if (p.getStatus() == Post.STATUS_ADVISOR_EVALUATED) {
                         icon = R.drawable.ic_evaluated;
+                    } else if (p.getStatus() < Post.STATUS_READY) {
+                        icon = R.drawable.timeline_upload_anim_01;
                     }
 
                     view.highlight(!p.isHas_read());
@@ -310,32 +312,29 @@ public class PostListFragment extends BaseFragment {
                         }
                     });
 
-                    if (i == 0) {
-                        long now = Utils.getMillis();
-                        long modified = p.getLast_modified_date();
-                        if (Math.abs(now - modified) < 3000) { //just created
-                            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-                            animation.setDuration(500);
-                            v.container.startAnimation(animation);
-                            animation.setAnimationListener(new Animation.AnimationListener() {
-                                @Override
-                                public void onAnimationStart(Animation animation) {
+                    if (i == 0 && p.getStatus() == Post.STATUS_READY && Math.abs(Utils.getMillis() - p.getLast_modified_date()) < 3000) {
+                        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+                        animation.setDuration(500);
+                        v.container.startAnimation(animation);
+                        animation.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
 
-                                }
+                            }
 
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    view.startIconAnim();
-                                }
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                view.startIconAnim();
+                            }
 
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
 
-                                }
-                            });
+                            }
+                        });
 
-                            icon = R.drawable.animation_timeline_uploading;
-                        }
+                        icon = R.drawable.animation_timeline_uploading;
+
                     } else {
                         setAnimation(v.container, i);
                     }
