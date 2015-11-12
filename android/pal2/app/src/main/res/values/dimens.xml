@@ -52,4 +52,8 @@
     <dimen name="tutor_fab_margin_right_quarter">20dp</dimen>
     <dimen name="tutor_fab_height">100dp</dimen>
     <dimen name="tutor_fab_arrow_width">80dp</dimen>
+
+    <!-- login page -->
+    <dimen name="login_form_margin_bottom_size">60dp</dimen>
+    <dimen name="login_form_logo_size">500dp</dimen>
 </resources>

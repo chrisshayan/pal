@@ -1,0 +1,5 @@
+<resources>
+    <!-- login page -->
+    <dimen name="login_form_margin_bottom_size">40dp</dimen>
+    <dimen name="login_form_logo_size">400dp</dimen>
+</resources>

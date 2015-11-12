@@ -7,7 +7,7 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="400dp"
+        android:layout_height="@dimen/login_form_logo_size"
         android:id="@+id/app_title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -22,7 +22,7 @@
         android:layout_centerHorizontal="true"
         tools:layout="@layout/fragment_login"
         android:layout_above="@+id/bottom_bar"
-        android:layout_marginBottom="@dimen/base_padding_16x" />
+        android:layout_marginBottom="@dimen/login_form_margin_bottom_size" />
 
     <fragment
         android:layout_width="fill_parent"
@@ -31,7 +31,7 @@
         android:id="@+id/fragment_register"
         android:layout_centerHorizontal="true"
         tools:layout="@layout/fragment_login"
-        android:layout_marginBottom="@dimen/base_padding_16x"
+        android:layout_marginBottom="@dimen/login_form_margin_bottom_size"
         android:layout_above="@+id/bottom_bar" />
 
     <fragment
@@ -42,7 +42,7 @@
         android:layout_centerHorizontal="true"
         tools:layout="@layout/fragment_login"
         android:layout_above="@+id/bottom_bar"
-        android:layout_marginBottom="@dimen/base_padding_16x" />
+        android:layout_marginBottom="@dimen/login_form_margin_bottom_size" />
 
     <fragment
         android:layout_width="fill_parent"
@@ -52,7 +52,7 @@
         android:layout_centerHorizontal="true"
         tools:layout="@layout/fragment_login"
         android:layout_above="@+id/bottom_bar"
-        android:layout_marginBottom="@dimen/base_padding_16x" />
+        android:layout_marginBottom="@dimen/login_form_margin_bottom_size" />
 
     <fragment
         android:layout_width="fill_parent"
@@ -61,7 +61,7 @@
         android:id="@+id/fragment_auth_processing"
         tools:layout="@layout/fragment_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/base_padding_16x"
+        android:layout_marginBottom="@dimen/login_form_margin_bottom_size"
         android:layout_above="@+id/bottom_bar" />
 
     <FrameLayout
