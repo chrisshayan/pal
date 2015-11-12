@@ -1,5 +1,6 @@
 package vietnamworks.com.pal.fragments;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -19,6 +20,7 @@ import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.custom_views.AudioPlayer;
 import vietnamworks.com.pal.services.AudioMixerService;
 import vietnamworks.com.pal.services.GaService;
+import vietnamworks.com.pal.services.LocalStorage;
 
 /**
  * Created by duynk on 10/29/15.
@@ -137,7 +139,7 @@ public class ComposerFragment extends BaseFragment {
         ((BaseActivity) getActivity()).showKeyboard();
 
         btnHint = (ImageButton) rootView.findViewById(R.id.btnHint);
-        btnHint.setVisibility(tips != null && !tips.isEmpty()?View.VISIBLE:View.GONE);
+        btnHint.setVisibility(tips != null && !tips.isEmpty() ? View.VISIBLE : View.GONE);
         btnHint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +156,39 @@ public class ComposerFragment extends BaseFragment {
                         .show();
             }
         });
+
+        if (!LocalStorage.getBool(getString(R.string.local_storage_show_composer_guide), false)) {
+            final View overlay = rootView.findViewById(R.id.overlay);
+            overlay.setVisibility(View.GONE);
+            overlay.setAlpha(0);
+            overlay.animate().alpha(1f).setListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    overlay.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    overlay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            LocalStorage.set(getString(R.string.local_storage_show_composer_guide), true);
+                            overlay.animate().alpha(0).start();
+                        }
+                    });
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            }).start();
+        }
 
         return rootView;
     }

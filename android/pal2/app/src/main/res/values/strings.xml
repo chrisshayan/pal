@@ -76,6 +76,7 @@
     <string name="tips">Tips</string>
     <string name="fail_to_record">Fail to use your microphone. Try to text</string>
     <string name="introduce_yourself">Introduce yourself</string>
+    <string name="hint_send">Touch here to submit your post</string>
 
     <!--post list-->
     <string name="you_wrote">You wrote</string>

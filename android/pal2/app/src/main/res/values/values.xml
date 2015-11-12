@@ -2,4 +2,5 @@
     <string name="local_storage_first_launch">first launch</string>
     <string name="local_storage_show_drawer_guide">shown drawer guide</string>
     <string name="local_storage_show_fab_guide">shown fab guide</string>
+    <string name="local_storage_show_composer_guide">shown composer guide</string>
 </resources>
