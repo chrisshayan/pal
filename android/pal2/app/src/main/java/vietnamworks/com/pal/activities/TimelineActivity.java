@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.alexbbb.uploadservice.AbstractUploadServiceReceiver;
@@ -207,8 +206,8 @@ public class TimelineActivity extends BaseActivity {
         quest_view = findViewById(R.id.challenge_view);
         quest_view.setVisibility(View.GONE);
         txtQuest = (TextView) quest_view.findViewById(R.id.quest);
-        Button btnAcceptChallenge = (Button) quest_view.findViewById(R.id.accept_challenge);
-        btnAcceptChallenge.setOnClickListener(new View.OnClickListener() {
+
+        quest_view.findViewById(R.id.accept_challenge).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 quest_view.setVisibility(View.GONE);

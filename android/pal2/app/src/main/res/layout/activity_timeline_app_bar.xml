@@ -31,7 +31,8 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="0dp"
@@ -39,19 +40,20 @@
                     android:text="@string/placeholder_text_long"
                     android:id="@+id/quest"
                     android:layout_weight="1"
+                    style="@style/Text.Small.Light"
                     android:layout_margin="@dimen/base_padding_2x" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
-                    <Button
+                    <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/accept_challenge"
                         android:id="@+id/accept_challenge"
-                        style="?android:attr/buttonStyleSmall"
-                        android:visibility="visible" />
+                        android:src="@drawable/ic_action_launch"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:contentDescription="@null" />
                 </RelativeLayout>
 
             </LinearLayout>
