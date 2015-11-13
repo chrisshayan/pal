@@ -54,5 +54,5 @@
     <dimen name="tutor_fab_arrow_width">80dp</dimen>
 
     <!-- login page -->
-    <dimen name="login_form_margin_bottom_size">40dp</dimen>
+    <dimen name="login_form_margin_bottom_size">100dp</dimen>
 </resources>
