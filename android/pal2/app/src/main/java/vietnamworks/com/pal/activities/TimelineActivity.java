@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alexbbb.uploadservice.AbstractUploadServiceReceiver;
@@ -168,6 +169,7 @@ public class TimelineActivity extends BaseActivity {
                                         @Override
                                         public void onAnimationEnd(Animator animation) {
                                             drawer_guide.setVisibility(View.GONE);
+                                            ((ViewGroup)drawer_guide.getParent()).removeView(drawer_guide);
                                         }
 
                                         @Override
