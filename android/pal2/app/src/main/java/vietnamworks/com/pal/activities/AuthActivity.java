@@ -63,14 +63,14 @@ public class AuthActivity extends BaseActivity {
             public void run() {
                 View v =  findViewById(R.id.app_title);
                 if (isKBShown) {
-                    v.setVisibility(View.INVISIBLE);
+                    v.setVisibility(View.GONE);
                 } else {
                     v.setVisibility(View.VISIBLE);
                 }
             }
         });
-        loginFragment.onLayoutChanged(isKBShown);
-        registerFragment.onLayoutChanged(isKBShown);
+        //loginFragment.onLayoutChanged(isKBShown);
+        //registerFragment.onLayoutChanged(isKBShown);
     }
 
     private void setSetFragmentVisibility() {
@@ -78,11 +78,11 @@ public class AuthActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    loginFragment.getView().setVisibility(state == STATE_LOGIN ? View.VISIBLE : View.INVISIBLE);
-                    registerFragment.getView().setVisibility(state == STATE_REGISTER ? View.VISIBLE : View.INVISIBLE);
-                    registerSuccessFragment.getView().setVisibility(state == STATE_REGISTER_SUCCESS ? View.VISIBLE : View.INVISIBLE);
-                    registerErrorFragment.getView().setVisibility(state == STATE_REGISTER_ERROR ? View.VISIBLE : View.INVISIBLE);
-                    authProcessingFragment.getView().setVisibility(state == STATE_PROCESSING ? View.VISIBLE : View.INVISIBLE);
+                    loginFragment.getView().setVisibility(state == STATE_LOGIN ? View.VISIBLE : View.GONE);
+                    registerFragment.getView().setVisibility(state == STATE_REGISTER ? View.VISIBLE : View.GONE);
+                    registerSuccessFragment.getView().setVisibility(state == STATE_REGISTER_SUCCESS ? View.VISIBLE : View.GONE);
+                    registerErrorFragment.getView().setVisibility(state == STATE_REGISTER_ERROR ? View.VISIBLE : View.GONE);
+                    authProcessingFragment.getView().setVisibility(state == STATE_PROCESSING ? View.VISIBLE : View.GONE);
                 } catch (Exception E) {
 
                 }
