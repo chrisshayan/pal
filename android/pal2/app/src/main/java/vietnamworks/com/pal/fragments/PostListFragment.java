@@ -44,6 +44,7 @@ public class PostListFragment extends BaseFragment {
     public final static int FILTER_EVALUATED = 1;
     int filterType = FILTER_ALL;
 
+    boolean isReady = false;
 
     private PostItemAdapter mAdapter;
     Query dataRef;
@@ -183,6 +184,7 @@ public class PostListFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        isReady = false;
         recyclerView.setAdapter(null);
         Activity _act = this.getActivity();
         if (_act != null) {
@@ -203,7 +205,7 @@ public class PostListFragment extends BaseFragment {
     }
 
     @Override
-    public void onDetach() {
+    public void onPause() {
         super.onDetach();
         if (dataRef != null) {
             dataRef.removeEventListener(dataValueEventListener);
@@ -225,6 +227,7 @@ public class PostListFragment extends BaseFragment {
             BaseActivity.timeout(new Runnable() {
                 @Override
                 public void run() {
+                    isReady = true;
                     mAdapter.notifyDataSetChanged();
                 }
             }, 1000);
@@ -279,20 +282,22 @@ public class PostListFragment extends BaseFragment {
 
         @Override
         public int getItemCount() {
-            hasQuest = true;
-            for (int i = 0; i < 10 && i < AppModel.posts.getData().size(); i ++) {
-                if (AppModel.posts.getData().get(i).getStatus() == Post.STATUS_READY) {
-                    hasQuest = false;
-                    break;
+            hasQuest = isReady && filterType == FILTER_ALL;
+            if (hasQuest) {
+                for (int i = 0; i < 10 && i < AppModel.posts.getData().size(); i++) {
+                    if (AppModel.posts.getData().get(i).getStatus() == Post.STATUS_READY) {
+                        hasQuest = false;
+                        break;
+                    }
                 }
+                hasQuest = hasQuest && ((TimelineActivity) getActivity()).getCurrentQuest() != null;
             }
-            hasQuest = hasQuest && ((TimelineActivity)getActivity()).getCurrentQuest() != null;
             if (hasQuest) {
                 count = AppModel.posts.getData().size() + 2;
             } else {
                 count = AppModel.posts.getData().size() + 1;
             }
-            return count;
+            return isReady?count:0;
         }
 
         @Override
@@ -416,7 +421,7 @@ public class PostListFragment extends BaseFragment {
         }
 
         private void setFirstVisibleItem(int firstVisibleItem) {
-            if (lastVisibleItem != firstVisibleItem) {
+            if (isReady && lastVisibleItem != firstVisibleItem) {
                 boolean _showChallengeShortcut = hasQuest && (firstVisibleItem > 0);
                 mini_quest_view.setVisibility(_showChallengeShortcut ? View.VISIBLE : View.GONE);
                 lastVisibleItem = firstVisibleItem;

@@ -202,12 +202,12 @@ public class TimelineActivity extends BaseActivity {
         });
 
         quest_view = findViewById(R.id.challenge_view);
+        quest_view.setVisibility(View.GONE);
         txtQuest = (TextView) quest_view.findViewById(R.id.quest);
 
         if (!LocalStorage.getBool(getString(R.string.local_storage_show_fab_guide), false)) {
             openFragment(new WelcomeFragment(), R.id.fragment_holder);
             setTitle(R.string.title_welcome);
-            quest_view.setVisibility(View.GONE);
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         } else {
             onOpenAllPosts(null);
