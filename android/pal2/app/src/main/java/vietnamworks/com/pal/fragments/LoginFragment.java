@@ -1,15 +1,12 @@
 package vietnamworks.com.pal.fragments;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -111,26 +108,6 @@ public class LoginFragment extends BaseFragment {
                     GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_login_fail);
                 }
             });
-        }
-    }
-
-    private float originalLayoutY = Integer.MIN_VALUE;
-    public void onLayoutChanged(boolean showVirtualKB) {
-        View view = this.getView();
-        Activity act = getActivity();
-
-        if (view != null && act != null) {
-            if (originalLayoutY == Integer.MIN_VALUE) {
-                originalLayoutY = view.getY();
-            }
-
-            if (!showVirtualKB) {
-                view.animate().y(originalLayoutY).setDuration(100).start();
-            } else {
-                Rect r = new Rect();
-                act.getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
-                view.animate().y((r.height() - view.getHeight()) >> 1).setDuration(100).start();
-            }
         }
     }
 
