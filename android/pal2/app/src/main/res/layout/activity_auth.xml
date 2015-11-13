@@ -65,24 +65,4 @@
 
     </RelativeLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bottom_bar"
-        android:layout_gravity="bottom">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryLight">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:id="@+id/imageView2"
-                android:src="@drawable/ic_vietnamworks"
-                android:contentDescription="@null" />
-        </LinearLayout>
-    </FrameLayout>
 </LinearLayout>
