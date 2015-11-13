@@ -548,7 +548,7 @@ public class TimelineActivity extends BaseActivity {
 
     private boolean submitTask(ComposerFragment f) {
         Topics.requestRandomTopics();
-        f.stopRecoder();
+        f.stopRecorder();
 
         String audio = f.getAudioPath();
         String subject = f.getSubject();

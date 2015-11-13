@@ -204,6 +204,7 @@ public class ComposerFragment extends BaseFragment {
                 }
             }).start();
         } else {
+            rootView.findViewById(R.id.overlay).setVisibility(View.GONE);
             inputMessage.requestFocus();
             ((BaseActivity) getActivity()).showKeyboard();
         }
@@ -211,7 +212,7 @@ public class ComposerFragment extends BaseFragment {
         return rootView;
     }
 
-    public void stopRecoder() {
+    public void stopRecorder() {
         if (myAudioRecorder != null) { //recording, stop now
             myAudioRecorder.stop();
             myAudioRecorder.reset();
