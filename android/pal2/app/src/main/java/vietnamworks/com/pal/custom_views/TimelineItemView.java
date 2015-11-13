@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.common.PicassoCircleTransform;
@@ -28,8 +26,8 @@ public class TimelineItemView extends TimelineItemBaseView {
     ImageView icon;
     TextView txtSubject, txtSub1, txtSub2, txtText;
     AudioPlayer player;
-    ViewGroup textGroup, audioGroup, scoreGroup;
-    ArrayList<ImageView> stars = new ArrayList<>();
+    ViewGroup textGroup, audioGroup;
+    TextView scoreText;
     View holder;
 
     Context ctx;
@@ -44,17 +42,11 @@ public class TimelineItemView extends TimelineItemBaseView {
         player = (AudioPlayer) itemView.findViewById(R.id.player);
         textGroup = (ViewGroup) itemView.findViewById(R.id.text_group);
         audioGroup = (ViewGroup) itemView.findViewById(R.id.audio_group);
-        scoreGroup = (ViewGroup) itemView.findViewById(R.id.star);
-
-        stars.add((ImageView) itemView.findViewById(R.id.star1));
-        stars.add((ImageView) itemView.findViewById(R.id.star2));
-        stars.add((ImageView) itemView.findViewById(R.id.star3));
-        stars.add((ImageView) itemView.findViewById(R.id.star4));
-        stars.add((ImageView) itemView.findViewById(R.id.star5));
+        scoreText = (TextView) itemView.findViewById(R.id.star);
 
         holder = itemView.findViewById(R.id.holder);
 
-        scoreGroup.setVisibility(View.GONE);
+        scoreText.setVisibility(View.GONE);
 
         container = holder;
 
@@ -158,17 +150,13 @@ public class TimelineItemView extends TimelineItemBaseView {
 
         int score = p.getScore();
         if (score <= 0) {
-            scoreGroup.setVisibility(View.GONE);
+            scoreText.setVisibility(View.GONE);
             txtSub2.setVisibility(View.VISIBLE);
         } else {
-            scoreGroup.setVisibility(View.VISIBLE);
+            scoreText.setVisibility(View.VISIBLE);
             txtSub2.setVisibility(View.GONE);
-            for (int i = 0; i < score; i++) {
-                stars.get(i).setAlpha(1.0f);
-            }
-            for (int i = score; i < stars.size(); i++) {
-                stars.get(i).setAlpha(0.25f);
-            }
+
+            scoreText.setText(BaseActivity.sInstance.getResources().getStringArray(R.array.post_rate)[Math.max(Math.min(score, 4), 0)]);
         }
 
         setValue(title, Utils.getDuration(p.getLast_modified_date()), p.statusString(), p.getText(), p.getAudio(), preview_mode);
@@ -191,17 +179,12 @@ public class TimelineItemView extends TimelineItemBaseView {
 
         int score = p.getScore();
         if (score <= 0) {
-            scoreGroup.setVisibility(View.GONE);
+            scoreText.setVisibility(View.GONE);
             txtSub2.setVisibility(View.VISIBLE);
         } else {
-            scoreGroup.setVisibility(View.VISIBLE);
+            scoreText.setVisibility(View.VISIBLE);
             txtSub2.setVisibility(View.GONE);
-            for (int i = 0; i < score; i++) {
-                stars.get(i).setAlpha(1.0f);
-            }
-            for (int i = score; i < stars.size(); i++) {
-                stars.get(i).setAlpha(0.25f);
-            }
+            scoreText.setText(BaseActivity.sInstance.getResources().getStringArray(R.array.post_rate)[Math.max(Math.min(score, 4), 0)]);
         }
         setValue(title, Utils.getDuration(p.getLast_modified_date()), p.statusString(), p.getText(), p.getAudio(), preview_mode);
     }

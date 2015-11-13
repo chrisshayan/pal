@@ -27,6 +27,15 @@
     <string name="cancel">Cancel</string>
     <string name="you">You</string>
 
+    <!-- post rate -->
+    <string-array name="post_rate">
+        <item>Bad</item>
+        <item>So so</item>
+        <item>OK</item>
+        <item>Good</item>
+        <item>Perfect</item>
+    </string-array>
+
 
     <!-- authentication screen!-->
     <string name="email_address">Email address</string>

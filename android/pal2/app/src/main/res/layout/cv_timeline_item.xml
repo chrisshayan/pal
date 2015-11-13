@@ -79,6 +79,14 @@
                         style="@style/Text.ExtraSmall.Muted"
                         />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:id="@+id/star"
+                        style="@style/Text.Badge" />
+
+                    <!--
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="wrap_content"
@@ -125,6 +133,8 @@
                             android:src="@drawable/ic_action_grade"
                             android:scaleType="fitCenter" />
                     </LinearLayout>
+
+                    -->
                 </LinearLayout>
             </RelativeLayout>
 
