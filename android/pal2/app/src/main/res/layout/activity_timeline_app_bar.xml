@@ -36,21 +36,24 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:text="@string/placeholder_text_long"
                     android:id="@+id/quest"
                     android:layout_weight="1"
-                    style="@style/Text.Small.Light"
-                    android:layout_marginLeft="@dimen/base_padding_4x"
-                    android:layout_marginBottom="@dimen/base_padding_4x"
-                    android:layout_marginRight="@dimen/base_padding"
-                    android:text="@string/placeholder_text_short" />
+                    android:layout_margin="@dimen/base_padding_2x" />
 
-                <Button
-                    style="?android:attr/buttonStyleSmall"
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/accept_challenge"
-                    android:onClick="doQuest"
-                    android:id="@+id/button5" />
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/accept_challenge"
+                        android:onClick="doQuest"
+                        android:id="@+id/button5"
+                        style="?android:attr/buttonStyleSmall"
+                        android:visibility="visible" />
+                </RelativeLayout>
 
             </LinearLayout>
         </LinearLayout>
