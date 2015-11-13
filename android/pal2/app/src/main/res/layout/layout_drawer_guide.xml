@@ -6,7 +6,6 @@
     android:layout_height="match_parent" android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="vietnamworks.com.pal.activities.TimelineActivity"
-    android:onClick="onCloseDrawerTutor"
     android:id="@+id/overlay_with_drawer_guide"
     >
 
