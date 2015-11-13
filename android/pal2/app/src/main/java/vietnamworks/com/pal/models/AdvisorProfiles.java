@@ -78,8 +78,7 @@ public class AdvisorProfiles extends  AbstractContainer<AdvisorProfiles> {
                 } else {
                     int last_vote = BaseEntity.safeGetInt(obj, "rate", 0);
                     updateAdvisorRate(advisor, last_vote, vote);
-                    obj.put("rate", vote);
-                    mutableData.setValue(obj);
+                    mutableData.setValue(vote_detail);
                 }
                 return Transaction.success(mutableData);
             }
