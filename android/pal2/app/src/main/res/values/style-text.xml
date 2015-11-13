@@ -10,7 +10,7 @@
     </style>
     <style name="Text.Small" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/colorTextDefault</item>
-        <item name="android:textSize">@dimen/font_m</item>
+        <item name="android:textSize">@dimen/font_s</item>
     </style>
     <style name="Text.ExtraSmall" parent="@android:style/TextAppearance.Small">
         <item name="android:textSize">@dimen/font_xs</item>
