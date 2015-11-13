@@ -96,7 +96,10 @@
                 custom:donut_finished_stroke_width="2dp"
                 custom:donut_text_color="@color/colorTextLight"
                 custom:donut_text_size="@dimen/font_xs"
-                android:layout_marginTop="@dimen/base_padding" />
+                android:layout_marginTop="@dimen/base_padding"
+                custom:donut_finished_color="@color/colorTextSuccess"
+                custom:donut_unfinished_color="@color/colorDividerDarkAlpha"
+                />
         </LinearLayout>
 
         <LinearLayout
