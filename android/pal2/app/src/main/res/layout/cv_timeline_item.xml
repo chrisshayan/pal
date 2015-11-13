@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/placeholder_text_extra_short"
                 android:id="@+id/subject"
-                style="@style/Text.Small"
+                style="@style/Text.Medium"
                 android:layout_marginBottom="@dimen/base_padding_2x"
                 android:layout_marginTop="@dimen/base_padding_2x" />
 
