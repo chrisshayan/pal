@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +29,8 @@ public class TimelineItemView extends TimelineItemBaseView {
     AudioPlayer player;
     ViewGroup textGroup, audioGroup;
     TextView scoreText;
-    View holder;
+    View holder, cta;
+    Button cta1;
 
     Context ctx;
 
@@ -44,6 +46,10 @@ public class TimelineItemView extends TimelineItemBaseView {
         audioGroup = (ViewGroup) itemView.findViewById(R.id.audio_group);
         scoreText = (TextView) itemView.findViewById(R.id.star);
 
+        cta = itemView.findViewById(R.id.cta);
+        cta1 = (Button) cta.findViewById(R.id.cta1);
+        cta.setVisibility(View.GONE);
+
         holder = itemView.findViewById(R.id.holder);
 
         scoreText.setVisibility(View.GONE);
@@ -55,14 +61,14 @@ public class TimelineItemView extends TimelineItemBaseView {
     }
 
     public interface OnClickEventListener {
-        void onClicked(String itemId);
+        void onClick(String itemId);
     }
 
     public void setClickEventListener(final OnClickEventListener l) {
         holder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                l.onClicked(itemId);
+                l.onClick(itemId);
             }
         });
     }
@@ -71,7 +77,7 @@ public class TimelineItemView extends TimelineItemBaseView {
         icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                l.onClicked(itemId);
+                l.onClick(itemId);
             }
         });
     }
@@ -204,4 +210,17 @@ public class TimelineItemView extends TimelineItemBaseView {
     public void setSubject(String subject) {
         txtSubject.setText(subject);
     }
+
+    public void setCTA(String text, final OnClickEventListener l) {
+        cta.setVisibility(View.VISIBLE);
+        cta1.setText(text);
+        cta1.setVisibility(View.VISIBLE);
+        cta1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                l.onClick(itemId);
+            }
+        });
+    }
 }
+

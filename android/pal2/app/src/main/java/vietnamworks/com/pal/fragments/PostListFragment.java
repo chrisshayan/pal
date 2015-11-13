@@ -352,7 +352,7 @@ public class PostListFragment extends BaseFragment {
                     view.highlight(!p.isHas_read());
                     view.setClickEventListener(new TimelineItemView.OnClickEventListener() {
                         @Override
-                        public void onClicked(final String itemId) {
+                        public void onClick(final String itemId) {
                             Posts.markAsRead(itemId);
                             BaseActivity.sInstance.setTimeout(new Runnable() {
                                 @Override

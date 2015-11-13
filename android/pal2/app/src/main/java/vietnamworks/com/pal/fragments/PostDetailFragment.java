@@ -139,9 +139,9 @@ public class PostDetailFragment extends BaseFragment {
                     );
                     view.setItemId(conversation.get("uid").toString());
 
-                    view.setClickEventListener(new TimelineItemView.OnClickEventListener() {
+                    view.setCTA(getString(R.string.vote_for_advisor), new TimelineItemView.OnClickEventListener() {
                         @Override
-                        public void onClicked(String itemId) {
+                        public void onClick(String itemId) {
                             BaseActivity.sInstance.pushFragment(AdvisorPreviewFragment.create(itemId), R.id.fragment_holder);
                         }
                     });
