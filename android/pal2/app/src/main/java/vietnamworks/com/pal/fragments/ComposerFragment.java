@@ -38,6 +38,8 @@ public class ComposerFragment extends BaseFragment {
     private TextView txtHint;
     private ImageButton btnHint;
 
+    int tutorStep = 0;
+
     public String getAudioPath() {
         if (hasAudio) {
             return Utils.getSampleRecordPath();
@@ -135,9 +137,6 @@ public class ComposerFragment extends BaseFragment {
         setTopic(this.postTitle, this.topicRef, this.tips);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-        inputMessage.requestFocus();
-        ((BaseActivity) getActivity()).showKeyboard();
-
         btnHint = (ImageButton) rootView.findViewById(R.id.btnHint);
         btnHint.setVisibility(tips != null && !tips.isEmpty() ? View.VISIBLE : View.GONE);
         btnHint.setOnClickListener(new View.OnClickListener() {
@@ -159,12 +158,18 @@ public class ComposerFragment extends BaseFragment {
 
         if (!LocalStorage.getBool(getString(R.string.local_storage_show_composer_guide), false)) {
             final View overlay = rootView.findViewById(R.id.overlay);
+            final View tutor1 = overlay.findViewById(R.id.tutor_1);
+            final View tutor2 = overlay.findViewById(R.id.tutor_2);
+            final View tutor3 = overlay.findViewById(R.id.tutor_3);
             overlay.setVisibility(View.GONE);
             overlay.setAlpha(0);
             overlay.animate().alpha(1f).setListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animation) {
                     overlay.setVisibility(View.VISIBLE);
+                    tutor1.setVisibility(View.VISIBLE);
+                    tutor2.setVisibility(View.GONE);
+                    tutor3.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -173,7 +178,17 @@ public class ComposerFragment extends BaseFragment {
                         @Override
                         public void onClick(View v) {
                             LocalStorage.set(getString(R.string.local_storage_show_composer_guide), true);
-                            overlay.animate().alpha(0).start();
+                            tutorStep++;
+                            if (tutorStep == 1) {
+                                tutor1.setVisibility(View.GONE);
+                                tutor2.setVisibility(View.VISIBLE);
+                            } else if (tutorStep == 2) {
+                                tutor2.setVisibility(View.GONE);
+                                tutor3.setVisibility(View.VISIBLE);
+                            } else {
+                                tutor3.setVisibility(View.GONE);
+                                overlay.setVisibility(View.GONE);
+                            }
                         }
                     });
                 }
@@ -188,6 +203,9 @@ public class ComposerFragment extends BaseFragment {
 
                 }
             }).start();
+        } else {
+            inputMessage.requestFocus();
+            ((BaseActivity) getActivity()).showKeyboard();
         }
 
         return rootView;

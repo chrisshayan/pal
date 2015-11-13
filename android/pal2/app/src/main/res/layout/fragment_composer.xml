@@ -122,7 +122,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/overlay"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <View
             android:layout_width="match_parent"
@@ -135,102 +135,130 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:id="@+id/imageButton"
-                android:src="@drawable/ic_av_mic"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:scaleType="fitCenter"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:contentDescription="@null"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-            <ImageView
-                android:layout_width="@dimen/tutor_fab_arrow_width"
-                android:layout_height="60dp"
-                android:id="@+id/imageView12"
-                android:src="@drawable/ic_tutor_arrow"
-                android:layout_alignTop="@+id/imageButton"
-                android:layout_toLeftOf="@+id/imageButton"
-                android:layout_toStartOf="@+id/imageButton"
-                android:contentDescription="@null" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/guide_user_recorder_1"
-                android:id="@+id/textView16"
-                android:layout_alignTop="@+id/imageView12"
-                android:layout_toLeftOf="@+id/imageView12"
-                android:layout_toStartOf="@+id/imageView12"
-                style="@style/Text.Medium"
-                android:gravity="center" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/tutor_fab_height"
-                android:id="@+id/imageView13"
-                android:src="@drawable/ic_tutor_arrow_4"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:contentDescription="@null" />
-
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="@string/hint_send"
-                android:id="@+id/textView17"
-                android:layout_below="@+id/imageView13"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                style="@style/Text.Medium"
-                android:gravity="right" />
-
-            <TextView
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/composer_hint"
-                android:id="@+id/textView18"
-                style="@style/Text.Medium"
-                android:layout_above="@+id/imageView14"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:id="@+id/tutor_2"
+                android:layout_marginLeft="@dimen/base_padding"
+                android:visibility="gone">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:id="@+id/imageView14"
-                android:src="@drawable/step_01"
-                android:contentDescription="@null"
-                android:layout_below="@+id/imageView13"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/imageButton"
+                    android:src="@drawable/ic_av_mic"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="fitCenter"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:contentDescription="@null"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:id="@+id/imageView15"
-                android:src="@drawable/step_02"
-                android:contentDescription="@null"
-                android:layout_above="@+id/textView16"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                <ImageView
+                    android:layout_width="@dimen/tutor_fab_arrow_width"
+                    android:layout_height="60dp"
+                    android:id="@+id/imageView12"
+                    android:src="@drawable/ic_tutor_arrow"
+                    android:layout_alignTop="@+id/imageButton"
+                    android:layout_toLeftOf="@+id/imageButton"
+                    android:layout_toStartOf="@+id/imageButton"
+                    android:contentDescription="@null" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:id="@+id/imageView16"
-                android:src="@drawable/step_03"
-                android:contentDescription="@null"
-                android:layout_below="@+id/textView17"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/guide_user_recorder_1"
+                    android:id="@+id/textView16"
+                    android:layout_alignTop="@+id/imageView12"
+                    android:layout_toLeftOf="@+id/imageView12"
+                    android:layout_toStartOf="@+id/imageView12"
+                    style="@style/Text.Medium"
+                    android:gravity="center" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/imageView15"
+                    android:src="@drawable/step_02"
+                    android:contentDescription="@null"
+                    android:layout_above="@+id/textView16"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="@dimen/base_padding" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tutor_3"
+                android:layout_marginRight="@dimen/base_padding"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/tutor_fab_height"
+                    android:id="@+id/imageView13"
+                    android:src="@drawable/ic_tutor_arrow_4"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hint_send"
+                    android:id="@+id/textView17"
+                    android:layout_below="@+id/imageView13"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    style="@style/Text.Medium"
+                    android:gravity="right" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/imageView16"
+                    android:src="@drawable/step_03"
+                    android:contentDescription="@null"
+                    android:layout_above="@+id/textView17"
+                    android:layout_toLeftOf="@+id/imageView13"
+                    android:layout_toStartOf="@+id/imageView13" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tutor_1"
+                android:layout_marginTop="70dp"
+                android:layout_marginLeft="@dimen/base_padding">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/imageView14"
+                    android:src="@drawable/step_01"
+                    android:contentDescription="@null"
+                    android:layout_alignBottom="@+id/tutor_1"
+                    android:layout_toRightOf="@+id/tutor_1"
+                    android:layout_toEndOf="@+id/tutor_1"
+                    android:layout_marginLeft="@dimen/base_padding_2x" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/composer_hint"
+                    android:id="@+id/textView18"
+                    style="@style/Text.Medium"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imageView14"
+                    android:layout_toEndOf="@+id/imageView14"
+                    android:layout_marginLeft="@dimen/base_padding" />
+            </RelativeLayout>
+
         </RelativeLayout>
 
     </FrameLayout>
