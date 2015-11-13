@@ -209,6 +209,7 @@ public class PostListFragment extends BaseFragment {
         super.onDetach();
         if (dataRef != null) {
             dataRef.removeEventListener(dataValueEventListener);
+            mini_quest_view.setVisibility(View.GONE);
         }
     }
 

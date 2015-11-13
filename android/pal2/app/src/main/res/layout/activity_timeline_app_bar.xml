@@ -49,8 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/accept_challenge"
-                        android:onClick="doQuest"
-                        android:id="@+id/button5"
+                        android:id="@+id/accept_challenge"
                         style="?android:attr/buttonStyleSmall"
                         android:visibility="visible" />
                 </RelativeLayout>

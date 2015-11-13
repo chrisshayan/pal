@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
+import vietnamworks.com.pal.activities.TimelineActivity;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.custom_views.AudioPlayer;
 import vietnamworks.com.pal.services.AudioMixerService;
@@ -208,6 +209,8 @@ public class ComposerFragment extends BaseFragment {
             inputMessage.requestFocus();
             ((BaseActivity) getActivity()).showKeyboard();
         }
+
+        ((TimelineActivity)getActivity()).getQuestView().setVisibility(View.GONE);
 
         return rootView;
     }

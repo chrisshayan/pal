@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.alexbbb.uploadservice.AbstractUploadServiceReceiver;
@@ -169,7 +170,7 @@ public class TimelineActivity extends BaseActivity {
                                         @Override
                                         public void onAnimationEnd(Animator animation) {
                                             drawer_guide.setVisibility(View.GONE);
-                                            ((ViewGroup)drawer_guide.getParent()).removeView(drawer_guide);
+                                            ((ViewGroup) drawer_guide.getParent()).removeView(drawer_guide);
                                         }
 
                                         @Override
@@ -206,6 +207,14 @@ public class TimelineActivity extends BaseActivity {
         quest_view = findViewById(R.id.challenge_view);
         quest_view.setVisibility(View.GONE);
         txtQuest = (TextView) quest_view.findViewById(R.id.quest);
+        Button btnAcceptChallenge = (Button) quest_view.findViewById(R.id.accept_challenge);
+        btnAcceptChallenge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quest_view.setVisibility(View.GONE);
+                doQuest(v);
+            }
+        });
 
         if (!LocalStorage.getBool(getString(R.string.local_storage_show_fab_guide), false)) {
             openFragment(new WelcomeFragment(), R.id.fragment_holder);
