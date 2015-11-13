@@ -58,19 +58,17 @@ public class AuthActivity extends BaseActivity {
 
     @Override
     public void onLayoutChanged(final Rect r, final boolean isKBShown) {
-        /*
         setTimeout(new Runnable() {
             @Override
             public void run() {
                 View v =  findViewById(R.id.app_title);
                 if (isKBShown) {
-                    v.animate().scaleX(1f).scaleY(1f).start();
+                    v.animate().scaleX(0f).scaleY(0f).start();
                 } else {
                     v.animate().scaleX(1f).scaleY(1f).start();
                 }
             }
         });
-        */
     }
 
     private void setSetFragmentVisibility() {
