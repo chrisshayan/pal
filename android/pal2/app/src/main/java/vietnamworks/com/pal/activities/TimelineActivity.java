@@ -168,8 +168,12 @@ public class TimelineActivity extends BaseActivity {
 
                                         @Override
                                         public void onAnimationEnd(Animator animation) {
-                                            drawer_guide.setVisibility(View.GONE);
-                                            ((ViewGroup) drawer_guide.getParent()).removeView(drawer_guide);
+                                            try {
+                                                drawer_guide.setVisibility(View.GONE);
+                                                ((ViewGroup) drawer_guide.getParent()).removeView(drawer_guide);
+                                            }catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
                                         }
 
                                         @Override
