@@ -404,7 +404,7 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                             var level = 0;
                             var level_name = "";
                             var level_completion = 0;
-                            var next_level_point;
+                            var next_level_point = 0;
                             var scale = $rootScope.config.user_level_scales;
                             for (var k in scale) {
                                 if (scale[k].min_points <= pts) {
@@ -425,7 +425,7 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                     });
                 }
 
-                
+
 
 
                 parseHelper.push($scope.data.created_by, "You've got new feedback from advisor");
