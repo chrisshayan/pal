@@ -369,7 +369,7 @@ public class PostListFragment extends BaseFragment {
 
                     if (isFirstFeedRecord(i) && p.getStatus() == Post.STATUS_READY && Math.abs(Utils.getMillis() - p.getLast_modified_date()) < 3000) {
                         Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-                        animation.setDuration(500);
+                        animation.setDuration(200);
                         v.container.startAnimation(animation);
                         animation.setAnimationListener(new Animation.AnimationListener() {
                             @Override
@@ -379,7 +379,9 @@ public class PostListFragment extends BaseFragment {
 
                             @Override
                             public void onAnimationEnd(Animation animation) {
-                                view.startIconAnim();
+                                if (Utils.isLollipopOrBelow()) {
+                                    view.startIconAnim();
+                                }
                             }
 
                             @Override
@@ -388,7 +390,11 @@ public class PostListFragment extends BaseFragment {
                             }
                         });
 
-                        icon = R.drawable.animation_timeline_uploading;
+                        if (Utils.isLollipopOrBelow()) {
+                            icon = R.drawable.animation_timeline_uploading;
+                        } else {
+                            icon = R.drawable.ic_queueing;
+                        }
 
                     } else {
                         setAnimation(v.container, i);
