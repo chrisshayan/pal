@@ -1,10 +1,13 @@
 package vietnamworks.com.pal.entities;
 
+import android.content.Context;
+
 import com.firebase.client.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.common.Utils;
 
 /**
@@ -24,19 +27,7 @@ public class Post extends BaseEntity {
     public final static int STATUS_CLOSED_BY_USER           = STATUS_ADVISOR_CONVERSATION + 1;  //9
     public final static int STATUS_CLOSED_AND_REDO          = STATUS_CLOSED_BY_USER + 1;        //10
 
-    public static String[] STATUS_TEXT = {
-            "None",
-            "Pending",
-            "Error",
-            "Uploading", //sync
-            "Wait for advisor", //ready
-            "Processing",
-            "Evaluated",
-            "In conversation",
-            "Waiting", //wait for response from advisor
-            "Closed",
-            "Closed"
-    };
+    public static String[] STATUS_TEXT ;
 
     //core
     String title = "";
@@ -55,6 +46,21 @@ public class Post extends BaseEntity {
     //for re-post
     String prev = "";
     String next = "";
+
+    public static void init(Context ctx) {
+        STATUS_TEXT = new String[STATUS_CLOSED_AND_REDO + 1];
+        STATUS_TEXT[STATUS_NONE] = ctx.getString(R.string.post_status_none);
+        STATUS_TEXT[STATUS_USER_PENDING] = ctx.getString(R.string.post_status_pending);
+        STATUS_TEXT[STATUS_USER_ERROR] = ctx.getString(R.string.post_status_error);
+        STATUS_TEXT[STATUS_SYNC] = ctx.getString(R.string.post_status_sync);
+        STATUS_TEXT[STATUS_READY] = ctx.getString(R.string.post_status_ready);
+        STATUS_TEXT[STATUS_ADVISOR_PROCESSING] = ctx.getString(R.string.post_status_processing);
+        STATUS_TEXT[STATUS_ADVISOR_EVALUATED] = ctx.getString(R.string.post_status_evaluated);
+        STATUS_TEXT[STATUS_USER_CONVERSATION] = ctx.getString(R.string.post_status_user_conversation);
+        STATUS_TEXT[STATUS_ADVISOR_CONVERSATION] = ctx.getString(R.string.post_status_advisor_conversation);
+        STATUS_TEXT[STATUS_CLOSED_BY_USER] = ctx.getString(R.string.post_status_user_closed);
+        STATUS_TEXT[STATUS_CLOSED_AND_REDO] = ctx.getString(R.string.post_status_user_closed_and_redo);
+    }
 
     public Post() {}
 

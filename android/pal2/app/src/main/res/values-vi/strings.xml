@@ -83,4 +83,21 @@
     <string name="tutor_header_1">Learn English for Free</string>
     <string name="tutor_header_2">Challenge Yourself</string>
     <string name="tutor_header_3">Improve Your Pronunciation</string>
+    <string name="create_post_fail_audio">Fail to upload audio</string>
+    <string name="post_rate_1">Bad</string>
+    <string name="post_rate_2">So so</string>
+    <string name="post_rate_3">OK</string>
+    <string name="post_rate_4">Good</string>
+    <string name="post_rate_5">Perfect</string>
+    <string name="post_status_advisor_conversation">Waiting</string>
+    <string name="post_status_error">Error</string>
+    <string name="post_status_evaluated">Evaluated</string>
+    <string name="post_status_none">Unknown</string>
+    <string name="post_status_pending">Sync</string>
+    <string name="post_status_processing">Processing</string>
+    <string name="post_status_ready">Wait for advisor</string>
+    <string name="post_status_sync">Sync</string>
+    <string name="post_status_user_closed">Closed</string>
+    <string name="post_status_user_closed_and_redo">Closed</string>
+    <string name="post_status_user_conversation">Conversation</string>
 </resources>

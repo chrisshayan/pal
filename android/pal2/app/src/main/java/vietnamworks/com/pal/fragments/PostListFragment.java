@@ -345,6 +345,8 @@ public class PostListFragment extends BaseFragment {
                         icon = R.drawable.ic_evaluating;
                     } else if (p.getStatus() == Post.STATUS_ADVISOR_EVALUATED) {
                         icon = R.drawable.ic_evaluated;
+                    } else if (p.getStatus() == Post.STATUS_USER_ERROR) {
+                        icon = R.drawable.ic_error;
                     } else if (p.getStatus() < Post.STATUS_READY) {
                         icon = R.drawable.timeline_upload_anim_01;
                     }
