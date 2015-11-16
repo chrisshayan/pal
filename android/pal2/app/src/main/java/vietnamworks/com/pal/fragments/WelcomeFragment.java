@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
@@ -55,12 +53,14 @@ public class WelcomeFragment extends BaseFragment {
                         getStarted();
                     }
                 });
+                /*
                 getView().findViewById(R.id.btn_getStarted_Text).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         getStarted();
                     }
                 });
+                */
             }
 
             @Override

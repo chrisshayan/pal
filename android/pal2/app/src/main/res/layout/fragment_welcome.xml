@@ -5,8 +5,76 @@
     android:layout_width="match_parent"
     android:background="@color/colorPrimaryLight">
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcome_panel"
+        android:layout_margin="@dimen/base_padding_2x"
+        card_view:cardElevation="2dp">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#9cddf9">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView2"
+                    android:src="@drawable/ic_welcome_icon"
+                    android:scaleType="centerInside" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView5"
+                    style="@style/Text.Large"
+                    android:text="@string/get_started_header"
+                    android:textColor="@color/colorTextPrimary"
+                    android:paddingLeft="@dimen/base_padding_2x"
+                    android:paddingRight="@dimen/base_padding_2x"
+                    android:paddingTop="@dimen/base_padding_4x"
+                    android:paddingBottom="@dimen/base_padding_4x"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/get_started_desc"
+                    android:id="@+id/textView8"
+                    style="@style/Text.Medium"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/base_padding_4x"
+                    android:paddingRight="@dimen/base_padding_4x" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/get_started"
+                    android:id="@+id/btn_getStarted"
+                    android:layout_marginTop="@dimen/base_padding_8x"
+                    android:background="@drawable/btn_get_started"
+                    style="@style/Text.Medium.Light"
+                    android:paddingLeft="@dimen/base_padding_4x"
+                    android:paddingRight="@dimen/base_padding_4x"
+                    android:layout_marginBottom="@dimen/base_padding_8x"
+                    android:paddingTop="@dimen/base_padding_2x"
+                    android:paddingBottom="@dimen/base_padding_2x" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <!--
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,7 +151,7 @@
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
-
+    -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
