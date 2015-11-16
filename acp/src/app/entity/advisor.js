@@ -9,7 +9,12 @@ function Advisor (obj) {
         city: "",
         address: "",
         school: "",
-        points: ""
+        points: "",
+        rate1: 0,
+        rate2: 0,
+        rate3: 0,
+        rate4: 0,
+        rate5: 0
     }, obj);
 }
 Advisor.prototype = Object.create(BaseEntity.prototype);
