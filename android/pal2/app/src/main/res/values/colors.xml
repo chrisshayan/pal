@@ -19,6 +19,8 @@
     <color name="colorTextSuccess">@color/colorSuccess</color>
     <color name="colorTextPrimary">@color/colorPrimary</color>
     <color name="colorTextDanger">@color/colorDanger</color>
+    <color name="colorTextTitle">#37474f</color>
+    <color name="colorTextMutedTitle">#78909c</color>
 
     <color name="colorDivider">#FFFFFF</color>
     <color name="colorDividerDark">#000000</color>

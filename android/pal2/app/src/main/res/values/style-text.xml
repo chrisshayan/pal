@@ -32,6 +32,12 @@
     <style name="Text.Large.Danger" parent="@style/Text.Large">
         <item name="android:textColor">@color/colorTextDanger</item>
     </style>
+    <style name="Text.Large.Title" parent="@style/Text.Large">
+        <item name="android:textColor">@color/colorTextTitle</item>
+    </style>
+    <style name="Text.Large.MutedTitle" parent="@style/Text.Large">
+        <item name="android:textColor">@color/colorTextMutedTitle</item>
+    </style>
 
     <style name="Text.Medium.Light" parent="@style/Text.Medium">
         <item name="android:textColor">@color/colorTextLight</item>
@@ -47,6 +53,12 @@
     </style>
     <style name="Text.Medium.Danger" parent="@style/Text.Medium">
         <item name="android:textColor">@color/colorTextDanger</item>
+    </style>
+    <style name="Text.Medium.Title" parent="@style/Text.Medium">
+        <item name="android:textColor">@color/colorTextTitle</item>
+    </style>
+    <style name="Text.Medium.MutedTitle" parent="@style/Text.Medium">
+        <item name="android:textColor">@color/colorTextMutedTitle</item>
     </style>
 
     <style name="Text.Small.Light" parent="@style/Text.Small">
@@ -64,6 +76,12 @@
     <style name="Text.Small.Danger" parent="@style/Text.Small">
         <item name="android:textColor">@color/colorTextDanger</item>
     </style>
+    <style name="Text.Small.Title" parent="@style/Text.Small">
+        <item name="android:textColor">@color/colorTextTitle</item>
+    </style>
+    <style name="Text.Small.MutedTitle" parent="@style/Text.Small">
+        <item name="android:textColor">@color/colorTextMutedTitle</item>
+    </style>
 
     <style name="Text.ExtraSmall.Light" parent="@style/Text.ExtraSmall">
         <item name="android:textColor">@color/colorTextLight</item>
@@ -79,6 +97,12 @@
     </style>
     <style name="Text.ExtraSmall.Danger" parent="@style/Text.ExtraSmall">
         <item name="android:textColor">@color/colorTextDanger</item>
+    </style>
+    <style name="Text.ExtraSmall.Title" parent="@style/Text.ExtraSmall">
+        <item name="android:textColor">@color/colorTextTitle</item>
+    </style>
+    <style name="Text.ExtraSmall.MutedTitle" parent="@style/Text.ExtraSmall">
+        <item name="android:textColor">@color/colorTextMutedTitle</item>
     </style>
 
 
