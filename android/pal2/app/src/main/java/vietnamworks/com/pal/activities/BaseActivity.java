@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -187,11 +186,23 @@ public class BaseActivity extends AppCompatActivity {
                         View child = vg.getChildAt(i);
                         applyFont(child, font);
                     }
-                } else if (v instanceof Button) {
-                    ((Button)v).setTypeface(RobotoB);
                 }
                 else if (v instanceof TextView) {
-                    ((TextView)v).setTypeface(font);
+                    TextView t = (TextView)v;
+                    if (t.getTypeface() != null) {
+                        int style = t.getTypeface().getStyle();
+                        if (style == Typeface.BOLD) {
+                            ((TextView) v).setTypeface(RobotoB);
+                        } else if (style == Typeface.BOLD_ITALIC) {
+                            ((TextView) v).setTypeface(RobotoBI);
+                        } else if (style == Typeface.ITALIC) {
+                            ((TextView) v).setTypeface(RobotoI);
+                        } else {
+                            ((TextView) v).setTypeface(font);
+                        }
+                    } else {
+                        ((TextView) v).setTypeface(font);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
