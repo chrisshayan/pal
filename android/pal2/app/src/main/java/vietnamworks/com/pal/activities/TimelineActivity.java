@@ -587,7 +587,7 @@ public class TimelineActivity extends BaseActivity {
                 public void onSuccess(Context ctx, Object res) {
                     Map m = (Map)res;
                     toast(R.string.create_post_successful);
-                    Posts.updateAudioLink(post_id, m.get("url").toString());
+                    Posts.updateAudioLink(post_id, m.get("secure_url").toString());
                 }
 
                 @Override
