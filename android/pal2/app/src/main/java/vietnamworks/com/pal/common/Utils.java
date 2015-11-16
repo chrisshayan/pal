@@ -140,7 +140,7 @@ public class Utils {
     }
 
     public static String getAudioServerFileName(String user_id, String post_id) {
-        return "user_" + user_id + "_" + post_id + "_" + System.currentTimeMillis() + AppConfig.RecorderFileExt;
+        return "user_" + user_id + "_" + post_id + "_" + System.currentTimeMillis();// + AppConfig.RecorderFileExt;
     }
 
     public static String padRight(String s, int n) {

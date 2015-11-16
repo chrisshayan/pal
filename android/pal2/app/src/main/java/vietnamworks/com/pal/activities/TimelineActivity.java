@@ -1,6 +1,7 @@
 package vietnamworks.com.pal.activities;
 
 import android.animation.Animator;
+import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -25,10 +26,10 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.common.Utils;
-import vietnamworks.com.pal.configurations.AppConfig;
 import vietnamworks.com.pal.configurations.AppUiConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.entities.Topic;
@@ -40,8 +41,9 @@ import vietnamworks.com.pal.fragments.TopicsFragment;
 import vietnamworks.com.pal.fragments.WelcomeFragment;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.models.Topics;
+import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.AudioMixerService;
-import vietnamworks.com.pal.services.FileUploadService;
+import vietnamworks.com.pal.services.CloudinaryService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
@@ -576,17 +578,34 @@ public class TimelineActivity extends BaseActivity {
 
         if (audio == null) { //text
             Posts.addText(subject, topic, message);
+            toast(R.string.create_post_successful);
         } else {
-            String post_id = Posts.addAudioAsync(subject, topic, message);
-            String server_file_path = Utils.getAudioServerFileName(FirebaseService.authData.getUid(), post_id);
+            final String post_id = Posts.addAudioAsync(subject, topic, message);
+            final String server_file_path = Utils.getAudioServerFileName(FirebaseService.authData.getUid(), post_id);
+            CloudinaryService.upload(audio, server_file_path, new AsyncCallback() {
+                @Override
+                public void onSuccess(Context ctx, Object res) {
+                    Map m = (Map)res;
+                    toast(R.string.create_post_successful);
+                    Posts.updateAudioLink(post_id, m.get("url").toString());
+                }
+
+                @Override
+                public void onError(Context ctx, int error_code, String message) {
+                    toast(R.string.create_post_fail_audio);
+                    Posts.raiseError(post_id);
+                }
+            });
+            /*
             FileUploadService.upload(
                     this,
                     post_id,
                     AppConfig.AudioUploadURL,
                     audio,
                     server_file_path);
+                    */
         }
-        toast(R.string.create_post_successful);
+        //toast(R.string.create_post_successful);
         return true;
     }
 

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.crittercism.app.Crittercism;
 
+import vietnamworks.com.pal.services.CloudinaryService;
 import vietnamworks.com.pal.services.FileUploadService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
@@ -26,6 +27,7 @@ public class Pal extends Application {
         FileUploadService.init();
         LocalStorage.init(this);
         GaService.init(this);
+        CloudinaryService.init(this);
 
         if (!BuildConfig.DEBUG) {
             Crittercism.initialize(getApplicationContext(), getString(R.string.crittercism_key));
