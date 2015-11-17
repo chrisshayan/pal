@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Pal</string>
-    <string name="title_timeline">Your activity</string>
+    <string name="title_timeline">Your activities</string>
     <string name="title_evaluated_posts">Evaluated posted</string>
     <string name="title_composer">Compose</string>
     <string name="title_challenge">Challenges</string>
@@ -35,7 +35,7 @@
 
     <!-- post rate -->
     <string name="post_rate_1">Bad</string>
-    <string name="post_rate_2">So so</string>
+    <string name="post_rate_2">Limited</string>
     <string name="post_rate_3">OK</string>
     <string name="post_rate_4">Good</string>
     <string name="post_rate_5">Perfect</string>
@@ -55,20 +55,20 @@
     <string name="password_placeholder" translatable="false">********</string>
     <string name="your_full_name">Your full name</string>
     <string name="login">Login</string>
-    <string name="register">Request an invite</string>
-    <string name="close">Close</string>
+    <string name="register">Register</string>
+    <string name="close">Back</string>
     <string name="share">Share</string>
     <string name="register_thank">Thank for your interest.\nYour request has been queued.</string>
     <string name="send_to">Send to</string>
     <string name="share_text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</string>
     <string name="register_fail">Fail to connect server. Please try again later!</string>
-    <string name="require_email">Email is required</string>
-    <string name="require_password">Password is required</string>
-    <string name="invalid_email">Invalid email format</string>
-    <string name="require_full_name">Full name is required</string>
+    <string name="require_email">Please enter your email.</string>
+    <string name="require_password">Please enter your password.</string>
+    <string name="invalid_email">The email is invalid.</string>
+    <string name="require_full_name">Please enter your full name.</string>
     <string name="processing">Processing</string>
     <string name="title_activity_timeline" translatable="false">TimelineActivity</string>
-    <string name="login_fail">Incorrect password or confirmation code entered. Please try again.</string>
+    <string name="login_fail">Incorrect login credentials</string>
 
     <!--drawer-->
     <string name="posted">Posted</string>
@@ -90,12 +90,12 @@
     <!--composer-->
     <string name="composer_hint">Enter your idea here</string>
     <string name="create_post_successful">Your post has been saved</string>
-    <string name="create_post_fail_audio">Fail to upload audio</string>
-    <string name="empty_message">Nothing to post</string>
-    <string name="guide_user_recorder_1">Touch microphone icon to start recording</string>
-    <string name="guide_user_recorder_2">Touch stop icon to stop recording</string>
+    <string name="create_post_fail_audio">Fail to upload the audio recording</string>
+    <string name="empty_message">Write or say to complete your challenge</string>
+    <string name="guide_user_recorder_1">Touch Microphone icon to start recording</string>
+    <string name="guide_user_recorder_2">Touch Stop icon to finish recording</string>
     <string name="tips">Tips</string>
-    <string name="fail_to_record">Fail to use your microphone. Try to text</string>
+    <string name="fail_to_record">Fail to access the microphone</string>
     <string name="introduce_yourself">Introduce yourself</string>
     <string name="hint_send">Touch here to submit your post</string>
 
@@ -139,16 +139,16 @@
     <string name="advisor_total_vote_single">%1$s user</string>
     <string name="advisor_total_vote">%1$s users</string>
     <string name="thank_for_voting">Thanks for your vote</string>
-    <string name="no_vote">No data now</string>
+    <string name="no_vote">No data found</string>
 
     <!-- welcome -->
     <string name="get_started">Get started</string>
-    <string name="get_started_header">Lorem ipsum dolor sit amet</string>
-    <string name="get_started_desc">Mazim viris facilis cu sed, eos vidisse adolescens an. Eum iudico omnium instructior ne. Ut est integre ancillae erroribus. Te mei causae percipitur</string>
-    <string name="get_started_touch_fab">Add a post here</string>
+    <string name="get_started_header">Practise English with PAL</string>
+    <string name="get_started_desc">Let\'s improve your English skills by daily challenges. Receive feedback from experienced English teachers to obtain higher levels. Are you ready to go?</string>
+    <string name="get_started_touch_fab">Take a challenge</string>
     <string name="get_started_pick_option">Pick an option</string>
-    <string name="get_started_drawer_button_guide">Touch this button to open menu</string>
-    <string name="get_started_drawer_swipe_guide">Or swipe right to open menu too</string>
+    <string name="get_started_drawer_button_guide">Touch this icon to open Menu</string>
+    <string name="get_started_drawer_swipe_guide">Or swipe to the right to open Menu</string>
 
     <!-- post status-->
     <string name="post_status_none">Unknown</string>
