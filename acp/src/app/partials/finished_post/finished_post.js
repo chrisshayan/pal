@@ -23,10 +23,6 @@ angular.module('inspinia')
                 }, 100);
             }, function() {});
 
-            $scope.isSpeakingTask = function() {
-                return $scope.data.type == PostType.Speaking;
-            }
-
             $scope.onOpenTask = function(id) {
                 $scope.isShowDetail = !$scope.isShowDetail;
                 if ($scope.isShowDetail) {

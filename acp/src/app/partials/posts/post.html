@@ -1,6 +1,6 @@
 <li ng-style="{'cursor':'text'}">
     <h4 style="display:block" ng-click="onOpenTask()">
-        {{data.title}}<br/>
+        {{data.title || (user_display_name + " said")}}<br/><br/>
         <small><i class="fa fa-fw fa-user"></i>{{user_display_name}}</small><br/>
         <small><i class="fa fa-fw fa-clock-o"></i>{{formatDateTime(data.last_modified_date)}}</small>
         <span ng-if="!data.audio" class="badge badge-info pull-right">Writing</span>
