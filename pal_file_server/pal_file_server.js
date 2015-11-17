@@ -3,6 +3,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     busboy = require('connect-busboy'),
     cloudinary = require('cloudinary'),
+    fs = require('fs'),
     app = express();
 require("./config");
 
@@ -26,9 +27,10 @@ app.post('/post_rtc', function(req, res) {
     var type = body.type;
 
     //save to temp
+    var public_id = filename.split('.').shift();
     contents = contents.split(',').pop();
     var fileBuffer = new Buffer(contents, "base64");
-    var temp_filename = "./temp/_" + Date.Now() + filename;
+    var temp_filename = "./temp/_" + Date.now() + "_" + filename;
     fs.writeFile(temp_filename, fileBuffer, function(err) {
         if (err) {
             res.status(500).send(err);
@@ -37,7 +39,7 @@ app.post('/post_rtc', function(req, res) {
                 fs.unlink(temp_filename);
                 res.status(200).send(result);
             }, {
-                public_id: filename,
+                public_id: public_id,
                 resource_type: "video",
                 folder: "pal_recorder",
                 chunk_size: 6000000
