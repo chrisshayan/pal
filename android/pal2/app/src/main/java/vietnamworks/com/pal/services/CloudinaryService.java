@@ -35,7 +35,7 @@ public class CloudinaryService {
                     File file = new File(input);
                     FileInputStream fileInputStream = new FileInputStream(file);
                     //cloudinary.uploader().upload(fileInputStream, ObjectUtils.asMap("public_id", public_name));
-                    Map m = cloudinary.uploader().uploadLarge(fileInputStream, ObjectUtils.asMap("public_id", public_name, "resource_type", "video", "chunk_size", 6000000));
+                    Map m = cloudinary.uploader().uploadLarge(fileInputStream, ObjectUtils.asMap("folder", "pal_recorder", "public_id", public_name, "resource_type", "video", "chunk_size", 6000000));
                     callback.onSuccess(context, m);
                 } catch (Exception e) {
                     callback.onError(context, 0, "");
