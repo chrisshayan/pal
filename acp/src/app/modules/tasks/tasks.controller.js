@@ -459,13 +459,12 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                             contents: dataURL
                         }
                         $http.post(window.RTC_SERVER, audio).then(function(data) {
-                            console.log(data.data.url);
-                            if (!data.data.url) {
+                            if (!data.data.secure_url) {
                                 $rootScope.notifyError("Fail to upload audio. Invalid response");
                                 $scope.isSubmitting = false;
                                 return;
                             }
-                            submit(data.data.url);
+                            submit(data.data.secure_url);
                         }, function() {
                             $rootScope.notifyError("Fail to upload audio");
                             $scope.isSubmitting = false;
