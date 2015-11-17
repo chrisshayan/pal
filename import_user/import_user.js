@@ -38,7 +38,14 @@ var createAccount = function(email, name, callback) {
                             ref.removeUser({email: email, password: password}, function(){});
                             callback(error);
                         } else {
-                            callback(null, email);
+                            ref.child("mail_queue").child("tasks").push().set({
+                                type: "user_invitation",
+                                to: email,
+                                password: password,
+                                link: "http://www.google.com"
+                            }, function() {
+                                callback(null, email);
+                            });
                         }
                     });
                 }

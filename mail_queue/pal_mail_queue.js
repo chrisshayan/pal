@@ -26,6 +26,27 @@ var queue = new Queue(ref, function(data, progress, resolve, reject) {
         } else {
             reject("invalid params");
         }
+    } else if (data.type == "user_invitation") {
+        if (data.to && data.link && data.password) {
+            var email = new Sendgrid.Email();
+            email.addTo(data.to);
+            email.subject = "Welcome to Pal";
+            email.from = SENDER_EMAIL;
+            email.html = data.to;
+            email.addFilter('templates', 'enable', 1);
+            email.addFilter('templates', 'template_id', '8ef30a12-8938-450a-8741-5c121e2a1507');
+            email.addSubstitution('_LINK_', data.link);
+            email.addSubstitution('_PASSWORD_', data.password);
+            Sendgrid.send(email, function(err, json) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        } else {
+            reject("invalid params");
+        }
     } else {
         reject("type if not supported");
     }
