@@ -34,7 +34,7 @@ var queue = new Queue(ref, function(data, progress, resolve, reject) {
             email.from = SENDER_EMAIL;
             email.html = data.to;
             email.addFilter('templates', 'enable', 1);
-            email.addFilter('templates', 'template_id', '8ef30a12-8938-450a-8741-5c121e2a1507');
+            email.addFilter('templates', 'template_id', 'a4388074-0ea1-4602-8ecc-d23342c8cf38');
             email.addSubstitution('_LINK_', data.link);
             email.addSubstitution('_PASSWORD_', data.password);
             Sendgrid.send(email, function(err, json) {
