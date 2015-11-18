@@ -158,7 +158,7 @@ public class PostDetailFragment extends BaseFragment {
                                 }
                                 String display_name = BaseEntity.safeGetString(data, "display_name");
                                 if (display_name != null && !display_name.isEmpty()) {
-                                    view.setSubject(display_name + " " + getString(R.string.said));
+                                    view.setSubject(display_name + " " + getString(R.string.answer));
                                 }
                             }
                         }

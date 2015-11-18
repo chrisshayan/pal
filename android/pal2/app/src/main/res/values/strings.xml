@@ -115,6 +115,7 @@
 
     <!--post detail-->
     <string name="said">said</string>
+    <string name="answer">answers</string>
     <string name="advisor_said">Advisor said</string>
 
     <!-- topics view-->
