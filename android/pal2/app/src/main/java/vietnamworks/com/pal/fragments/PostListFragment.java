@@ -98,6 +98,7 @@ public class PostListFragment extends BaseFragment {
                         fab.setVisibility(View.VISIBLE);
                         swipeContainer.setRefreshing(false);
                         closeOverlay();
+                        FirebaseService.goOnline();
                     }
                 }, 1000);
             }
