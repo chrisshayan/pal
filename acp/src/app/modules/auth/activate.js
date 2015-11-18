@@ -91,6 +91,8 @@ angular.module('inspinia').controller('ActivateCtrl', function ($scope, $rootSco
 	$scope.openModal = function() {
         var modalInstance = $uibModal.open({
             animation: true,
+			keyboard: false,
+			backdrop: 'static',
             templateUrl: 'activate_modal.html',
             controller: 'ActivateModalCtrl',
             size: 'lg',
