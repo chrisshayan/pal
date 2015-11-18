@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 
 import com.alexbbb.uploadservice.AbstractUploadServiceReceiver;
 import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
@@ -65,8 +63,6 @@ public class TimelineActivity extends BaseActivity {
 
     Topic currentQuest;
     TextView txtQuest;
-
-    Snackbar snackBar;
 
 
     @Override
@@ -330,7 +326,7 @@ public class TimelineActivity extends BaseActivity {
                         //onBackPressed();
                         setTitle(R.string.title_timeline);
                         openFragmentAndClean(allPostsFragment, R.id.fragment_holder);
-                        Firebase.goOnline();
+                        FirebaseService.goOnline();
                     }
                 } else {
                     ((ComposerFragment)f).onClickedSend();
@@ -372,9 +368,9 @@ public class TimelineActivity extends BaseActivity {
             @Override
             public void onChanged(int now, int last) {
                 if (now == FirebaseService.STATUS_OFFLINE) {
-                    showSnackBar(getString(R.string.you_are_offline));
+                    //TODO: handle offline event
                 } else {
-                    hideSnackBar();
+                    //TODO: handle online event
                 }
             }
         });
@@ -390,7 +386,6 @@ public class TimelineActivity extends BaseActivity {
 
         uploadReceiver.unregister(this);
         FirebaseService.setOnConnectionChanged(null);
-        hideSnackBar();
     }
 
     private void updateToolbar() {
@@ -423,28 +418,6 @@ public class TimelineActivity extends BaseActivity {
         } else if (f instanceof AdvisorPreviewFragment) {
             setTitle(R.string.title_advisor_rating);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    public void showSnackBar(String message) {
-        if (snackBar == null) {
-            snackBar = Snackbar.make(findViewById(R.id.fragment_holder), message, Snackbar.LENGTH_INDEFINITE);
-            snackBar.show();
-            Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
-            if (f != null && (f == allPostsFragment || f == evaluatedPostsFragment)) {
-                ( (PostListFragment)f).showFab(false);
-            }
-        }
-    }
-
-    public void hideSnackBar() {
-        if (snackBar != null) {
-            snackBar.dismiss();
-            Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
-            if (f == allPostsFragment || f == evaluatedPostsFragment ) {
-                ( (PostListFragment)f).showFab(true);
-            }
-            snackBar = null;
         }
     }
 

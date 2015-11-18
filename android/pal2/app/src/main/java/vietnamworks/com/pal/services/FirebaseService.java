@@ -252,4 +252,8 @@ public class FirebaseService {
     public static int getConnectedStatus() {
         return connectedStatus;
     }
+
+    public static void goOnline() {
+        Firebase.goOnline();
+    }
 }
