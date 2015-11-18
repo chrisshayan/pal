@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ProgressBar;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -56,6 +57,8 @@ public class PostListFragment extends BaseFragment {
     int dataSize = pageSize;
 
     private SwipeRefreshLayout swipeContainer;
+
+    ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,7 +119,7 @@ public class PostListFragment extends BaseFragment {
             }
         });
         fab = (FloatingActionsMenu) rootView.findViewById(R.id.fab);
-
+        fab.setVisibility(View.GONE);
         fab.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
             public void onMenuExpanded() {
@@ -128,6 +131,9 @@ public class PostListFragment extends BaseFragment {
                 closeOverlay();
             }
         });
+
+        progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
 
         return rootView;
     }
@@ -231,10 +237,12 @@ public class PostListFragment extends BaseFragment {
             BaseActivity.timeout(new Runnable() {
                 @Override
                 public void run() {
+                    fab.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
                     isReady = true;
                     mAdapter.notifyDataSetChanged();
                 }
-            }, 500);
+            }, 1000);
         }
 
         @Override
@@ -242,6 +250,8 @@ public class PostListFragment extends BaseFragment {
             BaseActivity.timeout(new Runnable() {
                 @Override
                 public void run() {
+                    fab.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
                     isReady = true;
                     mAdapter.notifyDataSetChanged();
                 }
