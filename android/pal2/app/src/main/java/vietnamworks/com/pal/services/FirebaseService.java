@@ -18,6 +18,11 @@ import vietnamworks.com.pal.R;
  * Created by duynk on 10/1/15.
  */
 public class FirebaseService {
+    public final static int STATUS_UNKNOWN = 0;
+    public final static int STATUS_ONLINE = 1;
+    public final static int STATUS_OFFLINE = 2;
+    static int connectedStatus = STATUS_UNKNOWN;
+
     private static String apiUrl;
     private static String defaultToken;
     public static AuthData authData;
@@ -36,7 +41,14 @@ public class FirebaseService {
     }
     private UserProfileListener onUserProfileDataChanged;
 
+    public interface ConnectionListener {
+        void onChanged(int now, int last);
+    }
+    private ConnectionListener onConnectionChanged;
+
+
     Firebase profileRef;
+    Firebase connectStatusQuery;
     HashMap<String, Object> userProfile;
 
     public FirebaseService() {
@@ -60,6 +72,28 @@ public class FirebaseService {
         isConnected = false;
         Firebase.setAndroidContext(context);
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
+
+        sInstance.connectStatusQuery = newRef(".info/connected");
+        sInstance.connectStatusQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean connected = dataSnapshot.getValue(Boolean.class);
+                int lastStatus = connectedStatus;
+                if (connected) {
+                    connectedStatus = STATUS_ONLINE;
+                } else {
+                    connectedStatus = STATUS_OFFLINE;
+                }
+                if (lastStatus != connectedStatus && sInstance.onConnectionChanged != null) {
+                    sInstance.onConnectionChanged.onChanged(connectedStatus, lastStatus);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     public static Firebase newRef() {
@@ -206,5 +240,16 @@ public class FirebaseService {
 
     public static String getDefaultToken() {
         return defaultToken;
+    }
+
+    public static void setOnConnectionChanged(ConnectionListener onConnectionChanged) {
+        sInstance.onConnectionChanged = onConnectionChanged;
+        if (onConnectionChanged!= null) {
+            onConnectionChanged.onChanged(connectedStatus, STATUS_UNKNOWN);
+        }
+    }
+
+    public static int getConnectedStatus() {
+        return connectedStatus;
     }
 }

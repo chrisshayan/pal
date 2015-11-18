@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
@@ -115,6 +116,8 @@ public class PostListFragment extends BaseFragment {
             }
         });
         fab = (FloatingActionsMenu) rootView.findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
+        showFab(true);
 
         fab.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
@@ -238,6 +241,13 @@ public class PostListFragment extends BaseFragment {
 
         @Override
         public void onCancelled(FirebaseError firebaseError) {
+            BaseActivity.timeout(new Runnable() {
+                @Override
+                public void run() {
+                    isReady = true;
+                    mAdapter.notifyDataSetChanged();
+                }
+            }, 1000);
         }
     };
 
@@ -454,4 +464,18 @@ public class PostListFragment extends BaseFragment {
         }
     }
 
+    public void showFab(boolean show) {
+        if (show) {
+            if (FirebaseService.getConnectedStatus() == FirebaseService.STATUS_ONLINE) {
+                fab.setVisibility(View.VISIBLE);
+            }
+        } else {
+            fab.collapseImmediately();
+            fab.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void goOnline() {
+        Firebase.goOnline();
+    }
 }

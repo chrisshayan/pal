@@ -14,6 +14,7 @@
     <string name="time_n_h_ago">%1$s hrs ago</string>
     <string name="time_n_d_ago">%1$s days ago</string>
 
+    <string name="you_are_offline">You are offline</string>
 
     <string name="tutor_header_1">Learn English for Free</string>
     <string name="tutor_header_2">Challenge Yourself</string>
