@@ -40,6 +40,7 @@ public class ComposerFragment extends BaseFragment {
     private ImageButton btnHint;
 
     int tutorStep = 0;
+    boolean isInTutorial = false;
 
     public String getAudioPath() {
         if (hasAudio) {
@@ -158,6 +159,7 @@ public class ComposerFragment extends BaseFragment {
         });
 
         if (!LocalStorage.getBool(getString(R.string.local_storage_show_composer_guide), false)) {
+            isInTutorial = true;
             final View overlay = rootView.findViewById(R.id.overlay);
             final View tutor1 = overlay.findViewById(R.id.tutor_1);
             final View tutor2 = overlay.findViewById(R.id.tutor_2);
@@ -189,6 +191,7 @@ public class ComposerFragment extends BaseFragment {
                             } else {
                                 tutor3.setVisibility(View.GONE);
                                 overlay.setVisibility(View.GONE);
+                                isInTutorial = false;
                             }
                         }
                     });
@@ -287,5 +290,20 @@ public class ComposerFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         GaService.trackScreen(R.string.ga_screen_compose);
+    }
+
+    public boolean isInTutorial() {
+        return isInTutorial;
+    }
+
+    public void onClickedSend() {
+        if (isInTutorial && tutorStep == 2) {
+            final View overlay = getView().findViewById(R.id.overlay);
+            final View tutor3 = overlay.findViewById(R.id.tutor_3);
+
+            tutor3.setVisibility(View.GONE);
+            overlay.setVisibility(View.GONE);
+            isInTutorial = false;
+        }
     }
 }

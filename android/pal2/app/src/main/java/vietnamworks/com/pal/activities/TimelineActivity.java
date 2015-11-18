@@ -321,10 +321,15 @@ public class TimelineActivity extends BaseActivity {
         if (id == R.id.action_send) {
             Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
             if (f instanceof ComposerFragment) {
-                if (submitTask((ComposerFragment) f)) {
-                    hideKeyboard();
-                    //onBackPressed();
-                    openFragmentAndClean(allPostsFragment, R.id.fragment_holder);
+                if (! ((ComposerFragment)f).isInTutorial()) {
+                    if (submitTask((ComposerFragment) f)) {
+                        hideKeyboard();
+                        //onBackPressed();
+                        setTitle(R.string.title_timeline);
+                        openFragmentAndClean(allPostsFragment, R.id.fragment_holder);
+                    }
+                } else {
+                    ((ComposerFragment)f).onClickedSend();
                 }
             }
 

@@ -192,8 +192,10 @@ public class PostListFragment extends BaseFragment {
             int mode = filterType;
             if (mode == FILTER_ALL) {
                 dataRef = Posts.getAllPostsQuery().limitToFirst(dataSize);
+                BaseActivity.sInstance.setTitle(R.string.title_timeline);
             } else if (mode == FILTER_EVALUATED) {
                 dataRef = Posts.getEvaluatedPostsQuery().limitToFirst(dataSize);
+                BaseActivity.sInstance.setTitle(R.string.title_evaluated_posts);
             }
             dataRef.addValueEventListener(dataValueEventListener);
             dataRef.keepSynced(true);
