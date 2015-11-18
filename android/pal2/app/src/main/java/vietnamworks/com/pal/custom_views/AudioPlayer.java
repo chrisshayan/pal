@@ -51,7 +51,7 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AudioPlayer, 0, 0);
         try {
-            removable = ta.getBoolean(R.styleable.AudioPlayer_removable, false);
+            removable = ta.getBoolean(R.styleable.AudioPlayer_removable, true);
         } finally {
             ta.recycle();
         }
@@ -62,7 +62,7 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
         super(context, attrs, defStyle);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AudioPlayer, 0, 0);
         try {
-            removable = ta.getBoolean(R.styleable.AudioPlayer_removable, false);
+            removable = ta.getBoolean(R.styleable.AudioPlayer_removable, true);
         } finally {
             ta.recycle();
         }
