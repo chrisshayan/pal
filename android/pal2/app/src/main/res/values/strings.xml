@@ -107,6 +107,7 @@
     <string name="fail_to_record">Fail to access the microphone</string>
     <string name="introduce_yourself">Introduce yourself</string>
     <string name="hint_send">Touch here to submit your post</string>
+    <string name="post_audio_no_internet">Fail to connect server. Please try again later!</string>
 
     <!--post list-->
     <string name="you_wrote">You wrote</string>

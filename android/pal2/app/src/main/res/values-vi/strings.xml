@@ -107,4 +107,6 @@
     <string name="time_n_h_ago">%1$s giờ trước</string>
     <string name="time_n_min_ago">%1$s phút trước</string>
     <string name="time_1_h_n_min_ago">1 giờ %1$s phút trước</string>
+    <string name="post_audio_no_internet">Không thể kết nối máy chủ, vui lòng kiểm tra kết nối internet</string>
+    <string name="you_are_offline">Vui lòng kiểm tra kết nối internet</string>
 </resources>

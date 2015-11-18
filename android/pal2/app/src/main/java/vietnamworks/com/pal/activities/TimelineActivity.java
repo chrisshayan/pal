@@ -582,6 +582,11 @@ public class TimelineActivity extends BaseActivity {
         Topics.requestRandomTopics();
         f.stopRecorder();
 
+        if (!FirebaseService.isConnected()) {
+            toast(R.string.post_audio_no_internet);
+            return false;
+        }
+
         String audio = f.getAudioPath();
         String subject = f.getSubject();
         String topic = f.getTopic();

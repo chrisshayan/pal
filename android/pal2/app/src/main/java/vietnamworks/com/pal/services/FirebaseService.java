@@ -253,6 +253,10 @@ public class FirebaseService {
         return connectedStatus;
     }
 
+    public static boolean isConnected() {
+        return connectedStatus == STATUS_ONLINE;
+    }
+
     public static void goOnline() {
         Firebase.goOnline();
     }
