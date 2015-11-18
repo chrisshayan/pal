@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -39,6 +40,7 @@ public class PostDetailFragment extends BaseFragment {
     Query dataRef;
     RecyclerView recyclerView;
     Post post;
+    ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class PostDetailFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mAdapter = new PostItemAdapter();
         recyclerView.setAdapter(mAdapter);
+
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
 
         return rootView;
     }
@@ -179,6 +183,7 @@ public class PostDetailFragment extends BaseFragment {
         public void onDataChange(DataSnapshot dataSnapshot) {
             post = new Post(dataSnapshot);
             mAdapter.notifyDataSetChanged();
+            progressBar.setVisibility(View.GONE);
             BaseActivity.sInstance.setTimeout(new Runnable() {
                 @Override
                 public void run() {

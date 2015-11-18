@@ -242,7 +242,7 @@ public class PostListFragment extends BaseFragment {
                     isReady = true;
                     mAdapter.notifyDataSetChanged();
                 }
-            }, 1000);
+            }, 200);
         }
 
         @Override
@@ -255,7 +255,7 @@ public class PostListFragment extends BaseFragment {
                     isReady = true;
                     mAdapter.notifyDataSetChanged();
                 }
-            }, 1000);
+            }, 200);
         }
     };
 
