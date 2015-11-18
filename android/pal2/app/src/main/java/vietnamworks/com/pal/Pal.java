@@ -24,6 +24,7 @@ public class Pal extends Application {
     public void onCreate() {
         super.onCreate();
         ParseService.init(this);
+        ParseService.clearAllNotification();
         FirebaseService.init(this);
         FileUploadService.init();
         LocalStorage.init(this);

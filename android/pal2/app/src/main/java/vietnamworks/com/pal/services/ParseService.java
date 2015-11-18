@@ -1,5 +1,6 @@
 package vietnamworks.com.pal.services;
 
+import android.app.NotificationManager;
 import android.content.Context;
 
 import com.parse.Parse;
@@ -11,15 +12,24 @@ import vietnamworks.com.pal.R;
  * Created by duynk on 10/26/15.
  */
 public class ParseService {
+    static Context context;
     public static void init(Context ctx) {
+        context = ctx;
         Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
         Parse.initialize(ctx, ctx.getString(R.string.parse_app_id), ctx.getString(R.string.parse_app_key));
         ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 
-    public static void RegisterUser(String user_id) {
+    public static void registerUser(String user_id) {
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
         installation.put("user_id", user_id);
         installation.saveInBackground();
+    }
+
+    public static void clearAllNotification() {
+        NotificationManager nMgr = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (nMgr != null) {
+            nMgr.cancelAll();
+        }
     }
 }
