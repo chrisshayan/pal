@@ -14,6 +14,7 @@ import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
 
+import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.configurations.AppConfig;
 
@@ -58,20 +59,20 @@ public class Utils {
         long minutes = (Math.max(now - timestamp, 0)/1000)/60;
 
         if (minutes <= 1) { //less than 1 min
-            return 1 + " min ago";
+            return String.format(BaseActivity.sInstance.getString(R.string.time_1_min_ago), minutes);
         } else if (minutes < 60) {
-            return minutes + " mins ago";
+            return String.format(BaseActivity.sInstance.getString(R.string.time_n_min_ago), minutes);
         } else if (minutes < 2*60) {
             long min = (minutes%60);
             if (min > 2) {
-                return "1 hr " + min +" mins ago";
+                return String.format(BaseActivity.sInstance.getString(R.string.time_1_h_n_min_ago), min);
             } else {
-                return "1 hr " + min +" min ago";
+                return String.format(BaseActivity.sInstance.getString(R.string.time_1_h_1_min_ago), min);
             }
         } else if (minutes < 24*2*60) {
-            return Math.round(minutes / 60f) + " hrs ago";
+            return String.format(BaseActivity.sInstance.getString(R.string.time_n_h_ago), Math.round(minutes / 60f));
         } else if (minutes < 7*24*60) {
-            return Math.round(minutes/(24*60f)) + " days ago";
+            return String.format(BaseActivity.sInstance.getString(R.string.time_n_d_ago), Math.round(minutes/(24*60f)));
         } else {
             return getDateString(timestamp);
         }

@@ -100,4 +100,10 @@
     <string name="post_status_user_closed">Closed</string>
     <string name="post_status_user_closed_and_redo">Closed</string>
     <string name="post_status_user_conversation">Conversation</string>
+    <string name="time_1_h_1_min_ago">1 giờ %1$s phút trước</string>
+    <string name="time_1_min_ago">%1$s phút trước</string>
+    <string name="time_n_d_ago">%1$s ngày trước</string>
+    <string name="time_n_h_ago">%1$s giờ trước</string>
+    <string name="time_n_min_ago">%1$s phút trước</string>
+    <string name="time_1_h_n_min_ago">1 giờ %1$s phút trước</string>
 </resources>
