@@ -1,7 +1,7 @@
 require("./config");
 var Firebase = require('firebase');
-var posts = new Firebase(FIREBASE_ENDPOINT + "/posts");
-var users_posts = new Firebase(FIREBASE_ENDPOINT + "/users_posts");
+var ref = new Firebase(FIREBASE_ENDPOINT);
+var posts, users_posts;
 
 PostStatus = {
     None: 0,
@@ -17,23 +17,32 @@ PostStatus = {
     ClosedByRedo: 10
 }
 
-posts.on('child_added',   onChanged);
 
-posts.on('child_changed', onChanged);
-
-posts.on('child_removed', function(snapshot) {
-    try {
-        var val = snapshot.val();
-        var key = snapshot.key();
-        users_posts.child(val.created_by).child("all").child(key).remove();
-        users_posts.child(val.created_by).child("evaluated").child(key).remove();
-        users_posts.child(val.created_by).child("unread").child(key).remove();
-        users_posts.child(val.created_by).child("evaluated_unread").child(key).remove();
-    } catch (e) {
-        Console.log(e);
+ref.authWithCustomToken(FIREBASE_TOKEN, function(error, authData) {
+    if (error) {
+        console.log("Authentication Failed!", error);
+        process.exit(0);
+        return;
     }
-});
+    console.log("Authentication Success. Start Listening ...");
+    var posts = ref.child("posts");
+    var users_posts = ref.child("users_posts");
 
+    posts.on('child_added',   onChanged);
+    posts.on('child_changed', onChanged);
+    posts.on('child_removed', function(snapshot) {
+        try {
+            var val = snapshot.val();
+            var key = snapshot.key();
+            users_posts.child(val.created_by).child("all").child(key).remove();
+            users_posts.child(val.created_by).child("evaluated").child(key).remove();
+            users_posts.child(val.created_by).child("unread").child(key).remove();
+            users_posts.child(val.created_by).child("evaluated_unread").child(key).remove();
+        } catch (e) {
+            Console.log(e);
+        }
+    });
+});
 
 function onChanged(snapshot) {
     try {
@@ -75,5 +84,3 @@ function onChanged(snapshot) {
         Console.log(e);
     }
 }
-
-
