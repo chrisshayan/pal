@@ -25,8 +25,8 @@ ref.authWithCustomToken(FIREBASE_TOKEN, function(error, authData) {
         return;
     }
     console.log("Authentication Success. Start Listening ...");
-    var posts = ref.child("posts");
-    var users_posts = ref.child("users_posts");
+    posts = ref.child("posts");
+    users_posts = ref.child("users_posts");
 
     posts.on('child_added',   onChanged);
     posts.on('child_changed', onChanged);
@@ -81,6 +81,6 @@ function onChanged(snapshot) {
             users_posts.child(val.created_by).child("evaluated_unread").child(key).remove();
         }
     } catch (e) {
-        Console.log(e);
+        console.log(e);
     }
 }
