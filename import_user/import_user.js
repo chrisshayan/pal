@@ -92,10 +92,10 @@ if (program.csv && typeof(program.csv) == "string") {
             console.log("Authentication Failed!", error);
             process.exit(0);
         } else {
-            ref.child("config").child("download_url").on("value", function(snap) {
+            ref.child("config").child("download_url").once("value", function(snap) {
                 android_url = snap.val().android;
-            })
-            main();
+                main();
+            });
         }
     });
 }
