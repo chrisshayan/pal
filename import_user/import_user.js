@@ -13,6 +13,8 @@ program
     .option('--task [import]', 'task name')
     .parse(process.argv);
 
+var android_url = "";
+
 var createAccount = function(email, name, callback) {
     var password = crypto.createHash('md5').update((Date.now() + "" + Math.random())).digest("hex").substring(0, 8);
     ref.createUser({
@@ -42,7 +44,7 @@ var createAccount = function(email, name, callback) {
                                 type: "user_invitation",
                                 to: email,
                                 password: password,
-                                link: "http://www.google.com"
+                                link: android_url
                             }, function() {
                                 callback(null, email);
                             });
@@ -90,6 +92,9 @@ if (program.csv && typeof(program.csv) == "string") {
             console.log("Authentication Failed!", error);
             process.exit(0);
         } else {
+            ref.child("config").child("download_url").on("value", function(snap) {
+                android_url = snap.val().android;
+            })
             main();
         }
     });
