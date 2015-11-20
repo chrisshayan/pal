@@ -243,9 +243,6 @@
                     android:id="@+id/imageView14"
                     android:src="@drawable/step_01"
                     android:contentDescription="@null"
-                    android:layout_alignBottom="@+id/tutor_1"
-                    android:layout_toRightOf="@+id/tutor_1"
-                    android:layout_toEndOf="@+id/tutor_1"
                     android:layout_marginLeft="@dimen/base_padding_2x" />
 
                 <TextView
