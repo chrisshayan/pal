@@ -374,15 +374,17 @@ public class PostListFragment extends BaseFragment {
                     view.setClickEventListener(new TimelineItemView.OnClickEventListener() {
                         @Override
                         public void onClick(final String itemId) {
-                            Posts.markAsRead(itemId);
-                            BaseActivity.sInstance.setTimeout(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Bundle b = new Bundle();
-                                    b.putString("id", itemId);
-                                    BaseActivity.sInstance.openFragment(PostDetailFragment.create(b), R.id.fragment_holder, true);
-                                }
-                            }, 200);
+                            if (itemId != null) { //else something was wrong
+                                Posts.markAsRead(itemId);
+                                BaseActivity.sInstance.setTimeout(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Bundle b = new Bundle();
+                                        b.putString("id", itemId);
+                                        BaseActivity.sInstance.openFragment(PostDetailFragment.create(b), R.id.fragment_holder, true);
+                                    }
+                                }, 200);
+                            }
                         }
                     });
 

@@ -29,6 +29,7 @@ import vietnamworks.com.pal.models.UserProfiles;
 import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
+import vietnamworks.com.pal.services.LocalStorage;
 
 /**
  * Created by duynk on 11/3/15.
@@ -71,6 +72,9 @@ public class PostDetailFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         if (dataRef == null) {
+            if (itemId == null) {
+                itemId = LocalStorage.getString("tmp_detail_fragment_id", "-1");
+            }
             dataRef = Posts.getPostDetailQuery(itemId);
         }
         dataRef.addValueEventListener(dataValueEventListener);
@@ -89,6 +93,7 @@ public class PostDetailFragment extends BaseFragment {
     public static PostDetailFragment create(Bundle b) {
         PostDetailFragment obj = new PostDetailFragment();
         obj.itemId = b.getString("id");
+        LocalStorage.set("tmp_detail_fragment_id", obj.itemId);
         return obj;
     }
 
