@@ -49,6 +49,7 @@ public class FirebaseService {
 
     Firebase profileRef;
     Firebase connectStatusQuery;
+    Firebase root;
     HashMap<String, Object> userProfile;
 
     public FirebaseService() {
@@ -72,6 +73,9 @@ public class FirebaseService {
         isConnected = false;
         Firebase.setAndroidContext(context);
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
+
+        sInstance.root = newRef();
+        sInstance.root.keepSynced(true);
 
         sInstance.connectStatusQuery = newRef(".info/connected");
         sInstance.connectStatusQuery.addValueEventListener(new ValueEventListener() {
@@ -101,22 +105,16 @@ public class FirebaseService {
     }
 
     public static Firebase newRef(String p) {
-        String url = apiUrl;
-        if (p.length() > 0) {
-            url = url + "/" + p;
-        }
-        return new Firebase(url);
+        String[] parts = p.split("/");
+        return newRef(Arrays.asList(parts));
     }
 
     public static Firebase newRef(List<String> path) {
-        StringBuilder str = new StringBuilder();
+        Firebase p = sInstance.root;
         for(int i = 0; i < path.size(); i++) {
-            str.append(path.get(i));
-            if (i < path.size() - 1) {
-                str.append("/");
-            }
+            p = p.child(path.get(i));
         }
-        return newRef(str.toString());
+        return p;
     }
 
     private ValueEventListener publicProfileListener = new ValueEventListener() {

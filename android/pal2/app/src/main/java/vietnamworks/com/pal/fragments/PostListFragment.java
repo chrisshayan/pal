@@ -205,7 +205,6 @@ public class PostListFragment extends BaseFragment {
                 BaseActivity.sInstance.setTitle(R.string.title_evaluated_posts);
             }
             dataRef.addValueEventListener(dataValueEventListener);
-            dataRef.keepSynced(true);
         }
         recyclerView.setAdapter(mAdapter);
         fab.collapseImmediately();
@@ -439,7 +438,6 @@ public class PostListFragment extends BaseFragment {
                         dataRef = Posts.getEvaluatedPostsQuery().limitToFirst(dataSize);
                     }
                     dataRef.addValueEventListener(dataValueEventListener);
-                    dataRef.keepSynced(true);
                 }
                 setAnimation(v.container, i);
             } else if (type == TYPE_CHALLENGE) {
