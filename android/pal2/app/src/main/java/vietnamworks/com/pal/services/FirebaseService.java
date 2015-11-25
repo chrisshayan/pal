@@ -98,6 +98,7 @@ public class FirebaseService {
 
             }
         });
+        checkAuthSync();
     }
 
     public static Firebase newRef() {
