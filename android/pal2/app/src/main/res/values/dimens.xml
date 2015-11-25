@@ -55,4 +55,5 @@
 
     <!-- login page -->
     <dimen name="login_form_margin_bottom_size">100dp</dimen>
+    <dimen name="login_form_height">250dp</dimen>
 </resources>

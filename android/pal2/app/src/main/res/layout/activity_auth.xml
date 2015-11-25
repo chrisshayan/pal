@@ -30,7 +30,7 @@
 
         <fragment
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/login_form_height"
             android:name="vietnamworks.com.pal.fragments.LoginFragment"
             android:id="@+id/fragment_login"
             android:layout_centerHorizontal="true"
@@ -38,7 +38,7 @@
 
         <fragment
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/login_form_height"
             android:name="vietnamworks.com.pal.fragments.RegisterFragment"
             android:id="@+id/fragment_register"
             android:layout_centerHorizontal="true"
@@ -46,7 +46,7 @@
 
         <fragment
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/login_form_height"
             android:name="vietnamworks.com.pal.fragments.RegisterSuccessFragment"
             android:id="@+id/fragment_register_success"
             android:layout_centerHorizontal="true"
@@ -54,7 +54,7 @@
 
         <fragment
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/login_form_height"
             android:name="vietnamworks.com.pal.fragments.RegisterErrorFragment"
             android:id="@+id/fragment_register_error"
             android:layout_centerHorizontal="true"
@@ -62,7 +62,7 @@
 
         <fragment
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/login_form_height"
             android:name="vietnamworks.com.pal.fragments.AuthProcessingFragment"
             android:id="@+id/fragment_auth_processing"
             tools:layout="@layout/fragment_login"
