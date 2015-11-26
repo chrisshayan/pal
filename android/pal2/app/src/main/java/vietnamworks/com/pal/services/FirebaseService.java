@@ -102,7 +102,11 @@ public class FirebaseService {
     }
 
     public static Firebase newRef() {
-        return new Firebase(apiUrl);
+        if (sInstance.root == null) {
+            return new Firebase(apiUrl);
+        } else {
+            return sInstance.root;
+        }
     }
 
     public static Firebase newRef(String p) {
