@@ -39,7 +39,7 @@ public class UserProfiles extends AbstractContainer<UserProfiles> {
     }
 
     public static void increaseNumOfPost() {
-        FirebaseService.newRef(Arrays.asList("profiles_pub", FirebaseService.authData.getUid(), "total_posts")).runTransaction(new Transaction.Handler() {
+        FirebaseService.newRef(Arrays.asList("profiles_pub", FirebaseService.getUid(), "total_posts")).runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
                 if(mutableData.getValue() == null) {

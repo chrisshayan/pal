@@ -71,7 +71,7 @@ public class AdvisorPreviewFragment extends BaseFragment {
                             HashMap<String, Object> data = snapshot.getValue(HashMap.class);
 
                             String display_name = BaseEntity.safeGetString(data, "display_name");
-                            if (snapshot.getKey().equalsIgnoreCase(FirebaseService.authData.getUid())) {
+                            if (snapshot.getKey().equalsIgnoreCase(FirebaseService.getUid())) {
                                 display_name = getString(R.string.you);
                             }
 
@@ -229,7 +229,7 @@ public class AdvisorPreviewFragment extends BaseFragment {
         });
 
         if (userRating == null) {
-            userRating = AdvisorProfiles.getAdvisorRatingByUser(getArguments().getString("id"), FirebaseService.authData.getUid());
+            userRating = AdvisorProfiles.getAdvisorRatingByUser(getArguments().getString("id"), FirebaseService.getUid());
         }
         userRating.addListenerForSingleValueEvent(userRatingListener);
 

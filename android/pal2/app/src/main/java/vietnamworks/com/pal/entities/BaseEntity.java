@@ -58,13 +58,13 @@ public class BaseEntity {
     }
 
     public void create() {
-        created_by = FirebaseService.authData.getUid();
+        created_by = FirebaseService.getUid();
         created_date = Utils.getMillis();
         modify();
     }
 
     public void modify() {
-        last_modified_by = FirebaseService.authData.getUid();
+        last_modified_by = FirebaseService.getUid();
         last_modified_date = Utils.getMillis();
     }
 

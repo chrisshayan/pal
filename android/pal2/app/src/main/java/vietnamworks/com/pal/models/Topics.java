@@ -25,11 +25,11 @@ public class Topics extends AbstractContainer<Topic> {
         this.setData(data);
     }
     public static Query getAllTopicsQuery() {
-        return FirebaseService.newRef(Arrays.asList("user_quests", FirebaseService.authData.getUid())).orderByChild("index");
+        return FirebaseService.newRef(Arrays.asList("user_quests", FirebaseService.getUid())).orderByChild("index");
     }
 
     public static Query getRandomTopicQuery() {
-        return FirebaseService.newRef(Arrays.asList("user_quests", FirebaseService.authData.getUid())).orderByChild("index").limitToFirst(1);
+        return FirebaseService.newRef(Arrays.asList("user_quests", FirebaseService.getUid())).orderByChild("index").limitToFirst(1);
     }
 
     public static void addView(String postId) {
@@ -72,7 +72,7 @@ public class Topics extends AbstractContainer<Topic> {
 
     public static void requestRandomTopics() {
         HashMap<String, Object>obj = new HashMap<>();
-        obj.put("user_id", FirebaseService.authData.getUid());
+        obj.put("user_id", FirebaseService.getUid());
         obj.put("action", "request");
         FirebaseService.newRef(Arrays.asList("quest_queue", "tasks")).push().setValue(obj, new Firebase.CompletionListener() {
             @Override

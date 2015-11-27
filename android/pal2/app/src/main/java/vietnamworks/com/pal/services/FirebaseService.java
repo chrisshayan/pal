@@ -2,6 +2,7 @@ package vietnamworks.com.pal.services;
 
 import android.content.Context;
 
+import com.crittercism.app.Crittercism;
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -262,5 +263,14 @@ public class FirebaseService {
 
     public static void goOnline() {
         Firebase.goOnline();
+    }
+
+    public static String getUid() {
+        if (authData != null) {
+            return authData.getUid();
+        } else {
+            Crittercism.logHandledException(new Exception("authData is null"));
+            return null;
+        }
     }
 }

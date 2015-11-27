@@ -59,7 +59,7 @@ public class AdvisorProfiles extends  AbstractContainer<AdvisorProfiles> {
 
     public static void vote(final String advisor, final int vote, final String message) {
         final HashMap<String, Object> vote_detail = new HashMap<>();
-        String user_id = FirebaseService.authData.getUid();
+        String user_id = FirebaseService.getUid();
         vote_detail.put("rate", vote);
         vote_detail.put("created_date", Utils.getMillis());
         vote_detail.put("message", message);

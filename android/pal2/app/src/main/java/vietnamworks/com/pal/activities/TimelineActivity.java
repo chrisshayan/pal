@@ -602,7 +602,7 @@ public class TimelineActivity extends BaseActivity {
             toast(R.string.create_post_successful);
         } else {
             final String post_id = Posts.addAudioAsync(subject, topic, message);
-            final String server_file_path = Utils.getAudioServerFileName(FirebaseService.authData.getUid(), post_id);
+            final String server_file_path = Utils.getAudioServerFileName(FirebaseService.getUid(), post_id);
             CloudinaryService.upload(audio, server_file_path, new AsyncCallback() {
                 @Override
                 public void onSuccess(Context ctx, Object res) {
