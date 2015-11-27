@@ -210,7 +210,6 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                 var data = post.get();
                 firebaseHelper.getFireBaseInstance(["posts", data.$id]).update({
                     status: PostStatus.Ready,
-                    index_user_status: PostHelper.buildIndex(data.created_by, PostStatus.Ready),
                     index_advisior_status: PostHelper.buildIndex(data.advisor_id, PostStatus.Ready)
                 }, function(error) {
                     if (error) {

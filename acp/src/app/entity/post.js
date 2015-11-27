@@ -43,13 +43,10 @@ function Post (obj) {
         has_read: true,
         next: "",
         prev: "",
-        satisfy_score: 0,
         score: 0,
         status: PostStatus.None,
 
         //indexing
-        index_user_status: "",
-        index_user_type: "",
         index_advisior_status: ""
     }, obj);
 }

@@ -1,0 +1,245 @@
+path / {
+    read() = isSignedIn();
+    write() = isSignedIn();
+}
+
+path /config {
+    write() = false;
+}
+
+path /schools is School;
+path /cities is City;
+path /nations is Nation;
+
+type School {
+    created_by: String,
+    created_date: Number,
+    last_modified_by: String,
+    last_modified_date: Number,
+
+    address: String,
+    city: String,
+    name: String
+}   
+
+type City {
+    created_by: String,
+    created_date: Number,
+    last_modified_by: String,
+    last_modified_date: Number,
+
+    en: String,
+    nation: String,
+    vi: String
+}
+
+type Nation {
+    en: String,
+    vi: String
+}
+
+//=======================================================
+//user profile
+//=======================================================
+path /profiles/$userid is PrivateProfle {
+    write() = isAdmin();
+    read() = isAdmin();
+    index() = ["role"];
+}
+
+type PrivateProfle {
+    first_password: String | Null,
+    role: String,
+    confirmed: Boolean | Null, //advisor confirm account
+    pub_profile_last_update: Number | Null //keep track when public profile is updated
+}
+
+path /profiles_pub/$userid is PublicProfile {
+    write() = isAdminOrOwner($userid);
+    read() = isSignedIn();
+}
+
+type PublicProfile {
+    created_by: String | Null,
+    created_date: Number | Null,
+    last_modified_by: String | Null,
+    last_modified_date: Number | Null,
+
+    avatar: String | Null,
+    display_name: String | Null,
+    email: String,
+
+    first_name: String | Null,
+    last_name: String | Null,
+    city: String | Null,
+    address: String | Null,
+    school: String | Null,
+
+    //for student
+    exp: Number | Null,
+    level: String | Null,
+    level_completion: Number | Null,
+    level_name: String | Null,
+    score_1: Number | Null,
+    score_2: Number | Null,
+    score_3: Number | Null,
+    score_4: Number | Null,
+    score_5: Number | Null,
+    total_posts: Number | Null
+
+    //for advisor
+    points: Number | Null,
+    rate1: String | Null,
+    rate2: String | Null,
+    rate3: String | Null,
+    rate4: String | Null,
+    rate5: String | Null
+}
+
+//=======================================================
+//user vote for advisor
+//=======================================================
+
+path /advisor_votes/$advisor_id/$user_id is Rating {
+    write() = isCurrentUser($user_id);
+}
+
+path /advisor_votes_log/$advisor_id/$user_id is Rating[] {
+    write() = isCurrentUser($user_id);
+}
+
+type Rating {
+    avatar: String,
+    created_date: String,
+    display_name: String,
+    message: String,
+    rate: Number
+}
+
+//=======================================================
+//advisor vote for user post
+//=======================================================
+path /log_advisor_points/$advisor_id/$post_id is AdminPointEarnedLog {
+    write() = isCurrentUser($advisor_id);
+}
+
+type AdminPointEarnedLog {
+    action: String,
+    created_date: Number,
+    meta: Object | Null,
+    points: Number
+}
+
+//=======================================================
+//user posts 
+//=======================================================
+path /posts is Post[] {
+    index() = ["status", "created_by", "index_advisior_status"];
+}
+path /users_posts/$userid/all is Post[];
+path /users_posts/$userid/evaluated is Post[];
+path /users_posts/$userid/evaluated_unread/$post_id is Boolean;
+path /users_posts/$userid/unread is Boolean;
+
+type Post {
+    created_by: String,
+    created_date: Number, 
+    last_modified_by: String,
+    last_modified_date: String,
+
+    advisor_id: String, //advisor id who pick this task
+    index_advisior_status: String, //index for quick filter advisor & task status
+
+    //post detail
+    audio: String | Null,
+    text: String | Null,
+    title: String | Null,
+    ref_topic: String | Null,
+    status: Number | Null,
+    score: Number | Null, //score that user evalute this post
+    conversation: Conversation[],
+    
+    //post trail
+    next: String | Null,
+    prev: String | Null,
+   
+    //for user
+    has_read: Boolean, 
+    user_last_request: Number | Null
+}
+
+type Conversation {
+    audio: String | Null,
+    created_date: Null,
+    text: String | Null,
+    uid: String
+}
+
+
+//=======================================================
+//topics 
+//=======================================================
+path /topics is Topic[] {
+    write() = isAdmin();
+}
+
+type Topic {
+    created_by: String | Null,
+    created_date: Number | Null,
+    last_modified_by: String | Null,
+    last_modified_date: Number | Null,
+
+    hint: String | Null,
+    level: Number,
+    status: Number,
+    submits: Number | Null,
+    title: String,
+    type: Number | Null, //not use anymore
+    views: Number | Null
+}
+
+//=======================================================
+//register 
+//=======================================================
+path /register is RegisterData[] {
+    write() = true;
+    read() = isAdmin();
+}
+
+type RegisterData {
+    created_date: String,
+    email: String,
+    hit: Number | Null,
+    last_modified_date: Number | Null,
+    name: String
+}
+
+//=======================================================
+//user quest 
+//=======================================================
+path /user_quests/$userid is Topic[];
+
+//=======================================================
+//queue
+//=======================================================
+path /post_queue is Object {
+    index() = ["tasks/_state"];
+}
+path /quest_queue is Object {
+    index() = ["tasks/_state"];
+}
+path /mail_queue is Object {
+    index() = ["tasks/_state"];
+}
+
+//=======================================================
+//utils 
+//=======================================================
+isNew(ref) = prior(ref) == null;
+isCurrentUser(userid) = auth != null && auth.uid == userid;
+isSignedIn() = auth != null;
+isAdmin() = auth != null && (root.child('profiles').child(auth.uid).child('role').val() == 'admin');
+isAdminOrOwner(userid) = auth != null && (auth.uid == userid || root.child('profiles').child(auth.uid).child('role').val() == 'admin');
+
+
+

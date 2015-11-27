@@ -1,6 +1,6 @@
 {
-  "firebase": "pal-dev",
-  "public": "dist",
+  "firebase": "pal-develop",
+  "public": "acp/dist",
   "ignore": [
     "firebase.json",
     "**/.*",
