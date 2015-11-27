@@ -86,7 +86,7 @@
             </intent-filter>
         </receiver>
 
-        <meta-data android:name="com.parse.push.notification_icon" android:resource="@mipmap/ic_launcher"/>
+        <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_pn"/>
         <!-- end parse service -->
     </application>
 
