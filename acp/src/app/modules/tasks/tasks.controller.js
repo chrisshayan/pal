@@ -56,7 +56,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                 .orderByChild("index_advisior_status")
                 .startAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1))
                 .endAt(PostHelper.buildIndex(firebaseHelper.getUID(), PostStatus.AdvisorProcessing + 1))
-                .limitToFirst($scope.totalDoneTaskLoaded));
+                .limitToLast($scope.totalDoneTaskLoaded));
 
         $scope.completedPosts.$loaded().then(function(list) {
             $scope.hasMoreDoneTask = $scope.totalDoneTaskLoaded == list.length;

@@ -76,7 +76,7 @@
                                 <div class="sk-double-bounce1"></div>
                                 <div class="sk-double-bounce2"></div>
                             </div>
-                            <custom-finished-post ng-repeat = "p in completedPosts" ref="p"></custom-finished-post>
+                            <custom-finished-post ng-repeat = "p in completedPosts.slice().reverse()" ref="p"></custom-finished-post>
                         </ul>
                         <a ng-show="hasMoreDoneTask" class="btn btn-block btn-outline noselect" href="" ng-click="onLoadMoreDoneTask()">
                             See more items
