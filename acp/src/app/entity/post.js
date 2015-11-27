@@ -35,7 +35,6 @@ function Post (obj) {
 
         //data
         title: "",
-        type: PostType.Speaking,
         audio: "",
         text: "",
         ref_topic: "",

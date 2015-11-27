@@ -170,4 +170,7 @@ public class BaseEntity {
         }
         return this;
     }
+
+    public HashMap exportData() {return null;}
+
 }

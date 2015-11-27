@@ -20,7 +20,7 @@ type School {
     address: String,
     city: String,
     name: String
-}   
+}
 
 type City {
     created_by: String,
@@ -131,7 +131,7 @@ type AdminPointEarnedLog {
 }
 
 //=======================================================
-//user posts 
+//user posts
 //=======================================================
 path /posts is Post[] {
     index() = ["status", "created_by", "index_advisior_status"];
@@ -143,12 +143,12 @@ path /users_posts/$userid/unread is Boolean;
 
 type Post {
     created_by: String,
-    created_date: Number, 
-    last_modified_by: String,
-    last_modified_date: String,
+    created_date: Number,
+    last_modified_by: String | Null,
+    last_modified_date: Number | Null,
 
-    advisor_id: String, //advisor id who pick this task
-    index_advisior_status: String, //index for quick filter advisor & task status
+    advisor_id: String | Null, //advisor id who pick this task
+    index_advisior_status: String | Null, //index for quick filter advisor & task status
 
     //post detail
     audio: String | Null,
@@ -158,26 +158,26 @@ type Post {
     status: Number | Null,
     score: Number | Null, //score that user evalute this post
     conversation: Conversation[],
-    
+
     //post trail
     next: String | Null,
     prev: String | Null,
-   
+
     //for user
-    has_read: Boolean, 
+    has_read: Boolean | Null,
     user_last_request: Number | Null
 }
 
 type Conversation {
     audio: String | Null,
-    created_date: Null,
+    created_date: Number | Null,
     text: String | Null,
     uid: String
 }
 
 
 //=======================================================
-//topics 
+//topics
 //=======================================================
 path /topics is Topic[] {
     write() = isAdmin();
@@ -199,7 +199,7 @@ type Topic {
 }
 
 //=======================================================
-//register 
+//register
 //=======================================================
 path /register is RegisterData[] {
     write() = true;
@@ -215,7 +215,7 @@ type RegisterData {
 }
 
 //=======================================================
-//user quest 
+//user quest
 //=======================================================
 path /user_quests/$userid is Topic[];
 
@@ -233,13 +233,10 @@ path /mail_queue is Object {
 }
 
 //=======================================================
-//utils 
+//utils
 //=======================================================
 isNew(ref) = prior(ref) == null;
 isCurrentUser(userid) = auth != null && auth.uid == userid;
 isSignedIn() = auth != null;
 isAdmin() = auth != null && (root.child('profiles').child(auth.uid).child('role').val() == 'admin');
 isAdminOrOwner(userid) = auth != null && (auth.uid == userid || root.child('profiles').child(auth.uid).child('role').val() == 'admin');
-
-
-

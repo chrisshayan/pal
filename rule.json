@@ -266,7 +266,7 @@
     },
     "posts": {
       "$key2": {
-        ".validate": "newData.hasChildren(['created_by', 'created_date', 'last_modified_by', 'last_modified_date', 'advisor_id', 'index_advisior_status', 'has_read'])",
+        ".validate": "newData.hasChildren(['created_by', 'created_date'])",
         "created_by": {
           ".validate": "newData.isString()"
         },
@@ -274,16 +274,16 @@
           ".validate": "newData.isNumber()"
         },
         "last_modified_by": {
-          ".validate": "newData.isString()"
+          ".validate": "newData.isString() || newData.val() == null"
         },
         "last_modified_date": {
-          ".validate": "newData.isString()"
+          ".validate": "newData.isNumber() || newData.val() == null"
         },
         "advisor_id": {
-          ".validate": "newData.isString()"
+          ".validate": "newData.isString() || newData.val() == null"
         },
         "index_advisior_status": {
-          ".validate": "newData.isString()"
+          ".validate": "newData.isString() || newData.val() == null"
         },
         "audio": {
           ".validate": "newData.isString() || newData.val() == null"
@@ -310,7 +310,7 @@
               ".validate": "newData.isString() || newData.val() == null"
             },
             "created_date": {
-              ".validate": "newData.val() == null"
+              ".validate": "newData.isNumber() || newData.val() == null"
             },
             "text": {
               ".validate": "newData.isString() || newData.val() == null"
@@ -330,7 +330,7 @@
           ".validate": "newData.isString() || newData.val() == null"
         },
         "has_read": {
-          ".validate": "newData.isBoolean()"
+          ".validate": "newData.isBoolean() || newData.val() == null"
         },
         "user_last_request": {
           ".validate": "newData.isNumber() || newData.val() == null"
@@ -349,7 +349,7 @@
       "$userid": {
         "all": {
           "$key2": {
-            ".validate": "newData.hasChildren(['created_by', 'created_date', 'last_modified_by', 'last_modified_date', 'advisor_id', 'index_advisior_status', 'has_read'])",
+            ".validate": "newData.hasChildren(['created_by', 'created_date'])",
             "created_by": {
               ".validate": "newData.isString()"
             },
@@ -357,16 +357,16 @@
               ".validate": "newData.isNumber()"
             },
             "last_modified_by": {
-              ".validate": "newData.isString()"
+              ".validate": "newData.isString() || newData.val() == null"
             },
             "last_modified_date": {
-              ".validate": "newData.isString()"
+              ".validate": "newData.isNumber() || newData.val() == null"
             },
             "advisor_id": {
-              ".validate": "newData.isString()"
+              ".validate": "newData.isString() || newData.val() == null"
             },
             "index_advisior_status": {
-              ".validate": "newData.isString()"
+              ".validate": "newData.isString() || newData.val() == null"
             },
             "audio": {
               ".validate": "newData.isString() || newData.val() == null"
@@ -393,7 +393,7 @@
                   ".validate": "newData.isString() || newData.val() == null"
                 },
                 "created_date": {
-                  ".validate": "newData.val() == null"
+                  ".validate": "newData.isNumber() || newData.val() == null"
                 },
                 "text": {
                   ".validate": "newData.isString() || newData.val() == null"
@@ -413,7 +413,7 @@
               ".validate": "newData.isString() || newData.val() == null"
             },
             "has_read": {
-              ".validate": "newData.isBoolean()"
+              ".validate": "newData.isBoolean() || newData.val() == null"
             },
             "user_last_request": {
               ".validate": "newData.isNumber() || newData.val() == null"
@@ -425,7 +425,7 @@
         },
         "evaluated": {
           "$key2": {
-            ".validate": "newData.hasChildren(['created_by', 'created_date', 'last_modified_by', 'last_modified_date', 'advisor_id', 'index_advisior_status', 'has_read'])",
+            ".validate": "newData.hasChildren(['created_by', 'created_date'])",
             "created_by": {
               ".validate": "newData.isString()"
             },
@@ -433,16 +433,16 @@
               ".validate": "newData.isNumber()"
             },
             "last_modified_by": {
-              ".validate": "newData.isString()"
+              ".validate": "newData.isString() || newData.val() == null"
             },
             "last_modified_date": {
-              ".validate": "newData.isString()"
+              ".validate": "newData.isNumber() || newData.val() == null"
             },
             "advisor_id": {
-              ".validate": "newData.isString()"
+              ".validate": "newData.isString() || newData.val() == null"
             },
             "index_advisior_status": {
-              ".validate": "newData.isString()"
+              ".validate": "newData.isString() || newData.val() == null"
             },
             "audio": {
               ".validate": "newData.isString() || newData.val() == null"
@@ -469,7 +469,7 @@
                   ".validate": "newData.isString() || newData.val() == null"
                 },
                 "created_date": {
-                  ".validate": "newData.val() == null"
+                  ".validate": "newData.isNumber() || newData.val() == null"
                 },
                 "text": {
                   ".validate": "newData.isString() || newData.val() == null"
@@ -489,7 +489,7 @@
               ".validate": "newData.isString() || newData.val() == null"
             },
             "has_read": {
-              ".validate": "newData.isBoolean()"
+              ".validate": "newData.isBoolean() || newData.val() == null"
             },
             "user_last_request": {
               ".validate": "newData.isNumber() || newData.val() == null"

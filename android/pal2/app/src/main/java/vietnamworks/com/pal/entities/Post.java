@@ -212,4 +212,31 @@ public class Post extends BaseEntity {
     public void setConversation(Object conversation) {
         this.conversation = conversation;
     }
+
+    public HashMap exportData() {
+        HashMap<String, Object> o = new HashMap<>();
+        o.put("created_by", this.getCreated_by());
+        o.put("created_date", this.getCreated_date());
+        o.put("last_modified_by", this.getLast_modified_by());
+        o.put("last_modified_date", this.getLast_modified_date());
+
+        o.put("advisor_id", this.getAdvisor_id());
+        //o.put("index_advisior_status", this.get());
+
+        o.put("audio", this.getAudio());
+        o.put("text", this.getText());
+        o.put("title", this.getTitle());
+        o.put("ref_topic", this.getRef_topic());
+        o.put("status", this.getStatus());
+        o.put("score", this.getScore());
+        o.put("conversation", this.getConversation());
+
+        o.put("next", this.getNext());
+        o.put("prev", this.getPrev());
+
+        o.put("has_read", this.isHas_read());
+        o.put("user_last_request", this.getUser_last_request());
+
+        return o;
+    }
 }

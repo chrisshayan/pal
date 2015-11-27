@@ -5,6 +5,7 @@ import com.firebase.client.Query;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.services.FirebaseService;
@@ -24,7 +25,9 @@ public class Posts extends AbstractContainer<Post> {
         Firebase ref = FirebaseService.newRef("posts").push();
         p.setUser_last_request(System.currentTimeMillis());
         p.setStatus(p.getStatus()); //update status index
-        ref.setValue(p);
+
+        HashMap data = p.exportData();
+        ref.setValue(data);
         //ref.setPriority(-System.currentTimeMillis());
 
         if (p.getRef_topic() != null && !p.getRef_topic().isEmpty()) {

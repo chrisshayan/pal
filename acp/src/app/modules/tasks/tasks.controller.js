@@ -350,6 +350,7 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                         })
                         .doModify(uid)
                         .get();
+                    console.log(recent);
                     return recent;
                 } else {
                     $rootScope.notifyError("This task was tranferred to another advisor before");
