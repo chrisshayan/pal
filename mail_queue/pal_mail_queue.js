@@ -28,9 +28,13 @@ ref.authWithCustomToken(FIREBASE_TOKEN, function(error, authData) {
                 email.addSubstitution('_LINK_', data.link);
                 Sendgrid.send(email, function(err, json) {
                     if (err) {
-                        reject(err);
+                        setTimeout(function() {
+                            reject(err);
+                        }, 10000);
                     } else {
-                        resolve();
+                        setTimeout(function() {
+                            resolve();
+                        }, 10000);
                     }
                 });
             } else {
@@ -49,9 +53,13 @@ ref.authWithCustomToken(FIREBASE_TOKEN, function(error, authData) {
                 email.addSubstitution('_PASSWORD_', data.password);
                 Sendgrid.send(email, function(err, json) {
                     if (err) {
-                        reject(err);
+                        setTimeout(function() {
+                            reject(err);
+                        }, 10000);
                     } else {
-                        resolve();
+                        setTimeout(function() {
+                            resolve();
+                        }, 10000);
                     }
                 });
             } else {
