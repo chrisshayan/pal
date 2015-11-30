@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import java.util.HashMap;
+
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.activities.TimelineActivity;
@@ -82,6 +84,10 @@ public class ChangePasswordFragment extends BaseFragment {
                     FirebaseService.newRef().changePassword(FirebaseService.getUserProfileStringValue("email"), current_password, new_password, new Firebase.ResultHandler() {
                         @Override
                         public void onSuccess() {
+                            HashMap<String, Object> mail = new HashMap<String, Object>();
+                            mail.put("to", FirebaseService.getUserProfileStringValue("email"));
+                            mail.put("type", "password_changed");
+                            FirebaseService.newRef("mail_queue").child("tasks").push().setValue(mail);
                             BaseActivity.toast(R.string.password_has_changed);
                             ((TimelineActivity) getActivity()).lockBackKey(false);
                             ((TimelineActivity) getActivity()).onBackPressed();
