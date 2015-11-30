@@ -12,7 +12,8 @@
     <ImageView android:layout_width="@dimen/nav_avatar_size" android:layout_height="@dimen/nav_avatar_size"
         android:id="@+id/avatar"
         android:src="@drawable/ic_action_account_box"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"
+        android:onClick="onOpenUserProfile" />
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:text="Demi Silverstone"

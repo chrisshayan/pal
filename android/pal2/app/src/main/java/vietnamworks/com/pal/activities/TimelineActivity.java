@@ -527,6 +527,11 @@ public class TimelineActivity extends BaseActivity {
 
     }
 
+    public void onOpenUserProfile(View v) {
+
+    }
+
+
     public void onOpenWelcomeSaySomethingComposer(View v) {
         GaService.trackAction(R.string.ga_action_open_say_something);
         AudioMixerService.stop();
