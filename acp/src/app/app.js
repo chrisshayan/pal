@@ -55,6 +55,10 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         url: "/profiles",
         templateUrl: "app/modules/profiles/profiles.html",
     })
+    .state('index.settings', {
+        url: "/settings",
+        templateUrl: "app/modules/settings/settings.html",
+    })
 
     .state('database', {
         abstract: true,
