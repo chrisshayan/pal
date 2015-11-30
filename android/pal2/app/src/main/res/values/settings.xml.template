@@ -7,7 +7,6 @@
     <item name="parse_app_key" type="string" translatable="false"></item>
 
     <item name="firebase_app_url" type="string" translatable="false"></item>
-    <item name="firebase_token" type="string" translatable="false"></item>
 
     <item name="cloudinary_cloud_name" type="string" translatable="false"></item>
     <string name="cloudinary_api_key" translatable="false"></string>

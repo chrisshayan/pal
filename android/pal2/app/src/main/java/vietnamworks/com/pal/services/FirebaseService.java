@@ -25,7 +25,6 @@ public class FirebaseService {
     static int connectedStatus = STATUS_UNKNOWN;
 
     private static String apiUrl;
-    private static String defaultToken;
     public static AuthData authData;
     public static Context context = null;
     public static boolean isConnected;
@@ -70,7 +69,6 @@ public class FirebaseService {
     public static void init(Context ctx) {
         context = ctx;
         apiUrl = context.getString(R.string.firebase_app_url);
-        defaultToken = context.getString(R.string.firebase_token);
         isConnected = false;
         Firebase.setAndroidContext(context);
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
@@ -254,10 +252,6 @@ public class FirebaseService {
             sInstance.onUserProfileDataChanged = null;
         }
 
-    }
-
-    public static String getDefaultToken() {
-        return defaultToken;
     }
 
     public static void setOnConnectionChanged(ConnectionListener onConnectionChanged) {
