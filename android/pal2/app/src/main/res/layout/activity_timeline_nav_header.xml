@@ -13,17 +13,17 @@
         android:id="@+id/avatar"
         android:src="@drawable/ic_action_account_box"
         android:scaleType="fitCenter"
-        android:onClick="onOpenUserProfile" />
+        android:contentDescription="@null" />
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="Demi Silverstone"
+        android:text="@string/placeholder_text_short"
         android:gravity="center"
         android:padding="@dimen/base_padding_half"
         style="@style/Text.Medium.Light"
         android:id="@+id/username" />
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="Beginner" android:id="@+id/user_level"
+        android:text="@string/placeholder_text_extra_short" android:id="@+id/user_level"
         android:gravity="center"
         android:paddingBottom="@dimen/base_padding_2x"
         style="@style/Text.Small.Light" />

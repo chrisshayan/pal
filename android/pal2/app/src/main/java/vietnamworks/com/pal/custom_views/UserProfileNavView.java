@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
+import vietnamworks.com.pal.activities.TimelineActivity;
 import vietnamworks.com.pal.common.PicassoCircleTransform;
 
 /**
@@ -62,6 +64,13 @@ public class UserProfileNavView extends LinearLayout {
             txtUserLevel = (TextView) findViewById(R.id.user_level);
             txtUserName = (TextView) findViewById(R.id.username);
             imgAvatar = (ImageView) findViewById(R.id.avatar);
+
+            imgAvatar.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((TimelineActivity)BaseActivity.sInstance).onOpenUserProfile(v);
+                }
+            });
 
             hasInit = true;
             updateStat(total_posts, avg_point, exp_percent);
