@@ -1,6 +1,6 @@
 {
   "rules": {
-    ".read": "auth != null",
+    ".read": "true",
     ".write": "auth != null",
     "config": {
       ".read": "true",
@@ -213,6 +213,7 @@
           "$other": {
             ".validate": "false"
           },
+          ".read": "auth != null",
           ".write": "auth != null && auth.uid == $user_id"
         }
       }
@@ -241,6 +242,7 @@
               ".validate": "false"
             }
           },
+          ".read": "auth != null",
           ".write": "auth != null && auth.uid == $user_id"
         }
       }
@@ -264,6 +266,7 @@
           "$other": {
             ".validate": "false"
           },
+          ".read": "auth != null",
           ".write": "auth != null && auth.uid == $advisor_id"
         }
       }
@@ -343,6 +346,7 @@
           ".validate": "false"
         }
       },
+      ".read": "auth != null",
       ".indexOn": [
         "status",
         "created_by",
@@ -425,7 +429,8 @@
             "$other": {
               ".validate": "false"
             }
-          }
+          },
+          ".read": "auth != null"
         },
         "evaluated": {
           "$key2": {
@@ -501,15 +506,18 @@
             "$other": {
               ".validate": "false"
             }
-          }
+          },
+          ".read": "auth != null"
         },
         "evaluated_unread": {
           "$post_id": {
-            ".validate": "newData.isBoolean()"
+            ".validate": "newData.isBoolean()",
+            ".read": "auth != null"
           }
         },
         "unread": {
-          ".validate": "newData.isBoolean()"
+          ".validate": "newData.isBoolean()",
+          ".read": "auth != null"
         }
       }
     },
@@ -553,6 +561,7 @@
           ".validate": "false"
         }
       },
+      ".read": "auth != null",
       ".write": "auth != null && newData.parent().child('profiles').child(auth.uid).child('role').val() == 'admin'"
     },
     "register": {
@@ -620,23 +629,27 @@
           "$other": {
             ".validate": "false"
           }
-        }
+        },
+        ".read": "auth != null"
       }
     },
     "post_queue": {
       ".validate": "newData.hasChildren()",
+      ".read": "auth != null",
       ".indexOn": [
         "tasks/_state"
       ]
     },
     "quest_queue": {
       ".validate": "newData.hasChildren()",
+      ".read": "auth != null",
       ".indexOn": [
         "tasks/_state"
       ]
     },
     "mail_queue": {
       ".validate": "newData.hasChildren()",
+      ".read": "auth != null",
       ".indexOn": [
         "tasks/_state"
       ]

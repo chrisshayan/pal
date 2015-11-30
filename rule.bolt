@@ -1,5 +1,5 @@
 path / {
-    read() = isSignedIn();
+    read() = true;
     write() = isSignedIn();
 }
 
@@ -103,10 +103,12 @@ type PublicProfile {
 
 path /advisor_votes/$advisor_id/$user_id is Rating {
     write() = isCurrentUser($user_id);
+    read() = isSignedIn();
 }
 
 path /advisor_votes_log/$advisor_id/$user_id is Rating[] {
     write() = isCurrentUser($user_id);
+    read() = isSignedIn();
 }
 
 type Rating {
@@ -122,6 +124,7 @@ type Rating {
 //=======================================================
 path /log_advisor_points/$advisor_id/$post_id is AdminPointEarnedLog {
     write() = isCurrentUser($advisor_id);
+    read() = isSignedIn();
 }
 
 type AdminPointEarnedLog {
@@ -135,12 +138,21 @@ type AdminPointEarnedLog {
 //user posts
 //=======================================================
 path /posts is Post[] {
+    read() = isSignedIn();
     index() = ["status", "created_by", "index_advisior_status"];
 }
-path /users_posts/$userid/all is Post[];
-path /users_posts/$userid/evaluated is Post[];
-path /users_posts/$userid/evaluated_unread/$post_id is Boolean;
-path /users_posts/$userid/unread is Boolean;
+path /users_posts/$userid/all is Post[] {
+    read() = isSignedIn();
+}
+path /users_posts/$userid/evaluated is Post[] {
+    read() = isSignedIn();
+}
+path /users_posts/$userid/evaluated_unread/$post_id is Boolean {
+    read() = isSignedIn();
+}
+path /users_posts/$userid/unread is Boolean {
+    read() = isSignedIn();
+}
 
 type Post {
     created_by: String,
@@ -182,6 +194,7 @@ type Conversation {
 //=======================================================
 path /topics is Topic[] {
     write() = isAdmin();
+    read() = isSignedIn();
 }
 
 type Topic {
@@ -218,18 +231,23 @@ type RegisterData {
 //=======================================================
 //user quest
 //=======================================================
-path /user_quests/$userid is Topic[];
+path /user_quests/$userid is Topic[] {
+    read() = isSignedIn();
+}
 
 //=======================================================
 //queue
 //=======================================================
 path /post_queue is Object {
+    read() = isSignedIn();
     index() = ["tasks/_state"];
 }
 path /quest_queue is Object {
+    read() = isSignedIn();
     index() = ["tasks/_state"];
 }
 path /mail_queue is Object {
+    read() = isSignedIn();
     index() = ["tasks/_state"];
 }
 
