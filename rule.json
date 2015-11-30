@@ -2,6 +2,10 @@
   "rules": {
     ".read": "auth != null",
     ".write": "auth != null",
+    "config": {
+      ".read": "true",
+      ".write": "auth != null && newData.parent().child('profiles').child(auth.uid).child('role').val() == 'admin'"
+    },
     "schools": {
       ".validate": "newData.hasChildren(['created_by', 'created_date', 'last_modified_by', 'last_modified_date', 'address', 'city', 'name'])",
       "created_by": {
