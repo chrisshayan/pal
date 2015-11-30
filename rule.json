@@ -636,23 +636,32 @@
     "post_queue": {
       ".validate": "newData.hasChildren()",
       ".read": "auth != null",
-      ".indexOn": [
-        "tasks/_state"
-      ]
+      "tasks": {
+        ".validate": "newData.hasChildren()",
+        ".indexOn": [
+          "_state"
+        ]
+      }
     },
     "quest_queue": {
       ".validate": "newData.hasChildren()",
       ".read": "auth != null",
-      ".indexOn": [
-        "tasks/_state"
-      ]
+      "tasks": {
+        ".validate": "newData.hasChildren()",
+        ".indexOn": [
+          "_state"
+        ]
+      }
     },
     "mail_queue": {
       ".validate": "newData.hasChildren()",
       ".read": "auth != null",
-      ".indexOn": [
-        "tasks/_state"
-      ]
+      "tasks": {
+        ".validate": "newData.hasChildren()",
+        ".indexOn": [
+          "_state"
+        ]
+      }
     }
   }
 }

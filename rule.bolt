@@ -240,15 +240,23 @@ path /user_quests/$userid is Topic[] {
 //=======================================================
 path /post_queue is Object {
     read() = isSignedIn();
-    index() = ["tasks/_state"];
 }
+path /post_queue/tasks is Object {
+    index() = ["_state"];
+}
+
 path /quest_queue is Object {
     read() = isSignedIn();
-    index() = ["tasks/_state"];
 }
+path /quest_queue/tasks is Object {
+    index() = ["_state"];
+}
+
 path /mail_queue is Object {
     read() = isSignedIn();
-    index() = ["tasks/_state"];
+}
+path /mail_queue/tasks is Object {
+    index() = ["_state"];
 }
 
 //=======================================================

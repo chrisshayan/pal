@@ -13,7 +13,7 @@ ref.authWithCustomToken(FIREBASE_TOKEN, function(error, authData) {
         return;
     }
     console.log("Authentication Success. Start Listening ...");
-    
+
     mail_queue = ref.child("mail_queue")
     queue = new Queue(mail_queue, function(data, progress, resolve, reject) {
         if (data.type == "advisor_greeting") {
@@ -51,6 +51,29 @@ ref.authWithCustomToken(FIREBASE_TOKEN, function(error, authData) {
                 email.addFilter('templates', 'template_id', 'a4388074-0ea1-4602-8ecc-d23342c8cf38');
                 email.addSubstitution('_LINK_', data.link);
                 email.addSubstitution('_PASSWORD_', data.password);
+                Sendgrid.send(email, function(err, json) {
+                    if (err) {
+                        setTimeout(function() {
+                            reject(err);
+                        }, 10000);
+                    } else {
+                        setTimeout(function() {
+                            resolve();
+                        }, 10000);
+                    }
+                });
+            } else {
+                reject("invalid params");
+            }
+        } else if (data.type == "password_changed") {
+            if (data.to) {
+                var email = new Sendgrid.Email();
+                email.addTo(data.to);
+                email.subject = "You’ve just changed your password on your PAL account";
+                email.from = SENDER_EMAIL;
+                email.html = data.to;
+                email.addFilter('templates', 'enable', 1);
+                email.addFilter('templates', 'template_id', '32458bf2-5111-47d6-824f-e5f1ef4b3347');
                 Sendgrid.send(email, function(err, json) {
                     if (err) {
                         setTimeout(function() {
