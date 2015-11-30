@@ -57,7 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/base_padding"
             android:src="@drawable/ic_action_action_done_all"
-            android:adjustViewBounds="false" />
+            android:adjustViewBounds="false"
+            android:contentDescription="@null" />
 
         <TextView
             android:layout_width="0dp"
@@ -98,7 +99,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/base_padding"
-            android:src="@drawable/ic_action_action_perm_identity"/>
+            android:src="@drawable/ic_action_action_perm_identity"
+            android:contentDescription="@null" />
 
         <TextView
             android:layout_width="0dp"
@@ -118,13 +120,14 @@
         android:background="?attr/selectableItemBackground"
         android:id="@+id/nav_menu_item_change_password"
         android:layout_marginTop="@dimen/base_padding_2x"
-        android:onClick="onLogout">
+        android:onClick="onOpenChangePasswordForm">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/base_padding"
-            android:src="@drawable/ic_action_action_lock_outline" />
+            android:src="@drawable/ic_action_action_lock_outline"
+            android:contentDescription="@null" />
 
         <TextView
             android:layout_width="0dp"
@@ -150,7 +153,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/base_padding"
-            android:src="@drawable/ic_action_action_settings_power" />
+            android:src="@drawable/ic_action_action_settings_power"
+            android:contentDescription="@null" />
 
         <TextView
             android:layout_width="0dp"

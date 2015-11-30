@@ -34,6 +34,7 @@ import vietnamworks.com.pal.configurations.AppUiConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.fragments.AdvisorPreviewFragment;
+import vietnamworks.com.pal.fragments.ChangePasswordFragment;
 import vietnamworks.com.pal.fragments.ComposerFragment;
 import vietnamworks.com.pal.fragments.PostDetailFragment;
 import vietnamworks.com.pal.fragments.PostListFragment;
@@ -512,6 +513,19 @@ public class TimelineActivity extends BaseActivity {
 
     }
 
+    public void onOpenChangePasswordForm(View v) {
+        GaService.trackAction(R.string.ga_action_change_password);
+        setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                FirebaseService.logout();
+                pushFragment(new ChangePasswordFragment(), R.id.fragment_holder, true);
+                closeDrawer();
+            }
+        }, 500);
+
+    }
+
     public void onOpenWelcomeSaySomethingComposer(View v) {
         GaService.trackAction(R.string.ga_action_open_say_something);
         AudioMixerService.stop();
@@ -665,6 +679,8 @@ public class TimelineActivity extends BaseActivity {
             pushFragment(new ComposerFragment().setTopic(currentQuest.getTitle(), currentQuest.getId(), currentQuest.getHint()), R.id.fragment_holder);
         }
     }
+
+    public void doNothing(View v) {}
 
     public Topic getCurrentQuest() {
         return currentQuest;

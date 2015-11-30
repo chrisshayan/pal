@@ -39,5 +39,6 @@
     <string name="ga_action_open_topics" translatable="false">Open topics</string>
     <string name="ga_action_open_say_something" translatable="false">Open say something</string>
     <string name="ga_action_do_record" translatable="false">Do record</string>
+    <string name="ga_action_change_password" translatable="false">Change password</string>
 
 </resources>
