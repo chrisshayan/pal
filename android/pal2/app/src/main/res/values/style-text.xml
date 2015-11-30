@@ -105,6 +105,10 @@
         <item name="android:textColor">@color/colorTextMutedTitle</item>
     </style>
 
+    <style name="Text.ActionMenuItem" parent="@style/Text.Small">
+        <item name="android:textColor">@color/colorActionItem</item>
+    </style>
+
 
 
     <style name="Text.Badge" parent="@style/Text.ExtraSmall.Light">

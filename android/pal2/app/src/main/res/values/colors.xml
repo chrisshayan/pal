@@ -11,6 +11,7 @@
     <color name="colorAccent">#4caf50</color>
     <color name="colorPrimaryLight">#FFFFFF</color>
     <color name="colorPrimarySemiBlack">#B2000000</color>
+    <color name="colorPrimarySemiBlack2">#33000000</color>
 
     <color name="colorTextDefault">#212121</color>
     <color name="colorTextMuted">#757575</color>
@@ -21,6 +22,7 @@
     <color name="colorTextDanger">@color/colorDanger</color>
     <color name="colorTextTitle">#37474f</color>
     <color name="colorTextMutedTitle">#78909c</color>
+    <color name="colorActionItem">#BF323232</color>
 
     <color name="colorDivider">#FFFFFF</color>
     <color name="colorDividerDark">#000000</color>

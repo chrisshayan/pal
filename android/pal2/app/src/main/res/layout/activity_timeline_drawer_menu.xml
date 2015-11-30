@@ -20,9 +20,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageView4"
             android:layout_margin="@dimen/base_padding"
-            android:src="@drawable/ic_action_list"
-            android:alpha="0.75"
-            android:contentDescription="@null" />
+            android:src="@drawable/ic_action_action_list"
+            android:contentDescription="@null"
+            style="@style/Text.ActionMenuItem" />
 
         <TextView
             android:layout_width="0dp"
@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:gravity="fill_vertical"
             android:layout_marginLeft="@dimen/base_padding_4x"
-            style="@style/Text.Small" />
+            style="@style/Text.ActionMenuItem" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,9 +56,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/base_padding"
-            android:src="@drawable/ic_action_done_all"
-            android:adjustViewBounds="false"
-            android:alpha="0.75" />
+            android:src="@drawable/ic_action_action_done_all"
+            android:adjustViewBounds="false" />
 
         <TextView
             android:layout_width="0dp"
@@ -68,7 +67,7 @@
             android:layout_weight="1"
             android:gravity="fill_vertical"
             android:layout_marginLeft="@dimen/base_padding_4x"
-            style="@style/Text.Small" />
+            style="@style/Text.ActionMenuItem" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -91,6 +90,58 @@
         android:layout_height="@dimen/nav_menu_item_height"
         android:gravity="center_vertical"
         android:background="?attr/selectableItemBackground"
+        android:id="@+id/nav_menu_item_profiles"
+        android:layout_marginTop="@dimen/base_padding_2x"
+        android:onClick="onLogout">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/base_padding"
+            android:src="@drawable/ic_action_action_perm_identity"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="@string/update_profile"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/base_padding_4x"
+            style="@style/Text.ActionMenuItem" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_menu_item_height"
+        android:gravity="center_vertical"
+        android:background="?attr/selectableItemBackground"
+        android:id="@+id/nav_menu_item_change_password"
+        android:layout_marginTop="@dimen/base_padding_2x"
+        android:onClick="onLogout">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/base_padding"
+            android:src="@drawable/ic_action_action_lock_outline" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="@string/change_password"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/base_padding_4x"
+            style="@style/Text.ActionMenuItem" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_menu_item_height"
+        android:gravity="center_vertical"
+        android:background="?attr/selectableItemBackground"
         android:id="@+id/nav_menu_item_logout"
         android:layout_marginTop="@dimen/base_padding_2x"
         android:onClick="onLogout">
@@ -99,8 +150,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/base_padding"
-            android:src="@drawable/ic_action_settings_power"
-            android:alpha="0.75" />
+            android:src="@drawable/ic_action_action_settings_power" />
 
         <TextView
             android:layout_width="0dp"
@@ -110,6 +160,6 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/base_padding_4x"
-            style="@style/Text.Small" />
+            style="@style/Text.ActionMenuItem" />
     </LinearLayout>
 </LinearLayout>

@@ -40,6 +40,7 @@
     <string name="go">Go</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
     <string name="you">You</string>
 
     <!-- post rate -->
@@ -84,6 +85,10 @@
     <string name="forget_password">Forgot your password</string>
     <string name="no_internet">Fail to connect server. Please try again later!</string>
 
+    <string name="current_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_password">Confirm new password</string>
+
     <!--drawer-->
     <string name="posted">Posted</string>
     <string name="avg_point">Avg. points</string>
@@ -91,6 +96,8 @@
     <string name="all_posts">All posts</string>
     <string name="recent_evaluated_post">Recent evaluated posts</string>
     <string name="logout">Logout</string>
+    <string name="change_password">Change password</string>
+    <string name="update_profile">Update profile</string>
 
     <string name="action_settings">Settings</string>
 
