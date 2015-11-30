@@ -60,7 +60,7 @@ public class LoginFragment extends BaseFragment {
         txtError = (TextView) rootView.findViewById(R.id.error);
 
         errorView = rootView.findViewById(R.id.error_view);
-        errorView.setVisibility(View.GONE);
+        errorView.setVisibility(View.INVISIBLE);
 
         rootView.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +69,43 @@ public class LoginFragment extends BaseFragment {
             }
         });
 
+        rootView.findViewById(R.id.btn_forget_password).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                forget_password();
+            }
+        });
+
         return rootView;
+    }
+
+    public void forget_password() {
+        GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_do_forget_password);
+        final String email = getEmail().trim();
+        if (email.length() == 0) {
+            setError(getString(R.string.require_email));
+            GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_missing_email);
+            focusEmail();
+        } else {
+            setError(null);
+            ((AuthActivity)getActivity()).setState(AuthActivity.STATE_PROCESSING);
+            FirebaseService.resetPassword(email, new AsyncCallback() {
+                @Override
+                public void onSuccess(Context ctx, Object obj) {
+                    HashMap<String, Object> bundle = new HashMap<String, Object>();
+                    bundle.put("message", getString(R.string.reset_password_success));
+                    bundle.put("allowShare", false);
+                    ((AuthActivity) getActivity()).setState(AuthActivity.STATE_SUCCESS, bundle);
+                }
+
+                @Override
+                public void onError(Context ctx, int error_code, String message) {
+                    HashMap<String, Object> bundle = new HashMap<String, Object>();
+                    bundle.put("message", getString(R.string.reset_password_success));
+                    ((AuthActivity) getActivity()).setState(AuthActivity.STATE_ERROR, bundle);
+                }
+            });
+        }
     }
 
     public void login() {
@@ -104,7 +140,7 @@ public class LoginFragment extends BaseFragment {
                 public void onError(Context ctx, int code, String message) {
                     HashMap<String, Object> bundle = new HashMap<String, Object>();
                     bundle.put("message", getString(R.string.login_fail));
-                    ((AuthActivity) getActivity()).setState(AuthActivity.STATE_REGISTER_ERROR, bundle);
+                    ((AuthActivity) getActivity()).setState(AuthActivity.STATE_ERROR, bundle);
                     GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_login_fail);
                 }
             });
@@ -132,7 +168,7 @@ public class LoginFragment extends BaseFragment {
             txtError.setText(message);
             errorView.setVisibility(View.VISIBLE);
         } else {
-            errorView.setVisibility(View.GONE);
+            errorView.setVisibility(View.INVISIBLE);
         }
     }
 

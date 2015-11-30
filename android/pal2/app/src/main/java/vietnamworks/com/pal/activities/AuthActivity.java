@@ -39,8 +39,8 @@ public class AuthActivity extends BaseActivity {
 
     final public static int STATE_LOGIN = 0;
     final public static int STATE_REGISTER = 1;
-    final public static int STATE_REGISTER_SUCCESS = 2;
-    final public static int STATE_REGISTER_ERROR = 3;
+    final public static int STATE_SUCCESS = 2;
+    final public static int STATE_ERROR = 3;
     final public static int STATE_PROCESSING = 4;
     int state = -999;
 
@@ -81,8 +81,8 @@ public class AuthActivity extends BaseActivity {
                 try {
                     loginFragment.getView().setVisibility(state == STATE_LOGIN ? View.VISIBLE : View.GONE);
                     registerFragment.getView().setVisibility(state == STATE_REGISTER ? View.VISIBLE : View.GONE);
-                    registerSuccessFragment.getView().setVisibility(state == STATE_REGISTER_SUCCESS ? View.VISIBLE : View.GONE);
-                    registerErrorFragment.getView().setVisibility(state == STATE_REGISTER_ERROR ? View.VISIBLE : View.GONE);
+                    registerSuccessFragment.getView().setVisibility(state == STATE_SUCCESS ? View.VISIBLE : View.GONE);
+                    registerErrorFragment.getView().setVisibility(state == STATE_ERROR ? View.VISIBLE : View.GONE);
                     authProcessingFragment.getView().setVisibility(state == STATE_PROCESSING ? View.VISIBLE : View.GONE);
                 } catch (Exception E) {
 
@@ -128,9 +128,9 @@ public class AuthActivity extends BaseActivity {
                         loginFragment.getView().animate().alpha(0).setDuration(100).start();
                     } else if (last_state == STATE_REGISTER) {
                         registerFragment.getView().animate().alpha(0).setDuration(100).start();
-                    } else if (last_state == STATE_REGISTER_SUCCESS) {
+                    } else if (last_state == STATE_SUCCESS) {
                         registerSuccessFragment.getView().animate().setDuration(100).alpha(0).start();
-                    } else if (last_state == STATE_REGISTER_ERROR) {
+                    } else if (last_state == STATE_ERROR) {
                         registerErrorFragment.getView().animate().setDuration(100).alpha(0).start();
                     } else if (last_state == STATE_PROCESSING) {
                         authProcessingFragment.getView().animate().setDuration(100).alpha(0).start();
@@ -141,9 +141,21 @@ public class AuthActivity extends BaseActivity {
                         loginFragment.getView().animate().setDuration(100).alpha(1).setListener(stateTransitionAnimationListener).start();
                     } else if (_state == STATE_REGISTER) {
                         registerFragment.getView().animate().setDuration(100).alpha(1).setListener(stateTransitionAnimationListener).start();
-                    } else if (_state == STATE_REGISTER_SUCCESS) {
+                    } else if (_state == STATE_SUCCESS) {
+                        if (ext != null) {
+                            if (ext.containsKey("message")) {
+                                registerSuccessFragment.setMessage(ext.get("message").toString());
+                            } else {
+                                registerSuccessFragment.setMessage(R.string.register_thank);
+                            }
+                            if (ext.containsKey("allowShare")) {
+                                registerSuccessFragment.setButtonShareVisible( (boolean)ext.get("allowShare"));
+                            } else {
+                                registerSuccessFragment.setButtonShareVisible(true);
+                            }
+                        }
                         registerSuccessFragment.getView().animate().setDuration(100).alpha(1).setListener(stateTransitionAnimationListener).start();
-                    } else if (_state == STATE_REGISTER_ERROR) {
+                    } else if (_state == STATE_ERROR) {
                         if (ext != null) {
                             if (ext.containsKey("message")) {
                                 registerErrorFragment.setError(ext.get("message").toString());
@@ -229,10 +241,10 @@ public class AuthActivity extends BaseActivity {
                         @Override
                         public void onComplete(FirebaseError firebaseError, boolean b, DataSnapshot dataSnapshot) {
                             if (dataSnapshot != null) {
-                                setState(STATE_REGISTER_SUCCESS);
+                                setState(STATE_SUCCESS);
                                 GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_register_success);
                             } else {
-                                setState(STATE_REGISTER_ERROR);
+                                setState(STATE_ERROR);
                                 GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_register_fail);
                             }
                             registerFragment.resetForm();
@@ -242,7 +254,7 @@ public class AuthActivity extends BaseActivity {
 
                 @Override
                 public void onAuthenticationError(FirebaseError firebaseError) {
-                    setState(STATE_REGISTER_ERROR);
+                    setState(STATE_ERROR);
                     registerFragment.resetForm();
                 }
             });

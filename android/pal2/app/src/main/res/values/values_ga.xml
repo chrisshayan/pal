@@ -21,6 +21,7 @@
 
 
     <string name="ga_cat_login" translatable="false">login</string>
+    <string name="ga_event_do_forget_password" translatable="false">forget_password</string>
     <string name="ga_event_do_login" translatable="false">Do login</string>
     <string name="ga_event_missing_password" translatable="false">Missing password</string>
     <string name="ga_event_login_success" translatable="false">Success</string>

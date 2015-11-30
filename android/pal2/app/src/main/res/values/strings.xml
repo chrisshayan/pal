@@ -63,7 +63,7 @@
     <string name="password">Password</string>
     <string name="password_placeholder" translatable="false">********</string>
     <string name="your_full_name">Your full name</string>
-    <string name="login">Login</string>
+    <string name="login">Sign in</string>
     <string name="register">Register</string>
     <string name="close">Back</string>
     <string name="share">Share</string>
@@ -78,6 +78,8 @@
     <string name="processing">Processing</string>
     <string name="title_activity_timeline" translatable="false">TimelineActivity</string>
     <string name="login_fail">Incorrect login credentials</string>
+    <string name="reset_password_success">Your password has been reset. Please check your email to get new password.</string>
+    <string name="forget_password">Forgot your password</string>
 
     <!--drawer-->
     <string name="posted">Posted</string>

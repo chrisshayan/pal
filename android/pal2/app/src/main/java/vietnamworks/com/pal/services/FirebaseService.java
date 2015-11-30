@@ -206,7 +206,7 @@ public class FirebaseService {
             public void onAuthenticated(AuthData authData) {
                 FirebaseService.authData = authData;
                 if (callback != null) {
-                    callback.onSuccess(FirebaseService.context,  null);
+                    callback.onSuccess(FirebaseService.context, null);
                 }
                 sInstance.listenToProfile();
             }
@@ -216,6 +216,20 @@ public class FirebaseService {
                 if (callback != null) {
                     callback.onError(FirebaseService.context, firebaseError.getCode(), firebaseError.getMessage());
                 }
+            }
+        });
+    }
+
+    public static void resetPassword(String email, final AsyncCallback callback) {
+        newRef().resetPassword(email, new Firebase.ResultHandler() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess(FirebaseService.context, null);
+            }
+
+            @Override
+            public void onError(FirebaseError firebaseError) {
+                callback.onError(FirebaseService.context, firebaseError.getCode(), firebaseError.getMessage());
             }
         });
     }

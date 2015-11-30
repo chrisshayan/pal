@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
@@ -22,5 +23,18 @@ public class RegisterSuccessFragment extends BaseFragment {
         BaseActivity.applyFont(rootView);
 
         return rootView;
+    }
+
+
+    public void setMessage(String message) {
+        ((TextView)getView().findViewById(R.id.message)).setText(message);
+    }
+
+    public void setMessage(int message) {
+        ((TextView)getView().findViewById(R.id.message)).setText(getString(message));
+    }
+
+    public void setButtonShareVisible(boolean visible) {
+        getView().findViewById(R.id.btn_share).setVisibility(visible?View.VISIBLE:View.INVISIBLE);
     }
 }

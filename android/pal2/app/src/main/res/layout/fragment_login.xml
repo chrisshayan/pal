@@ -54,6 +54,18 @@
             android:imeActionId="@+id/action_sign_in"
             android:imeActionLabel="@string/login" />
 
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/login_button_height"
+            android:text="@string/forget_password"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/btn_forget_password"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="@dimen/font_xs"
+            android:layout_gravity="right"
+            android:alpha="0.7" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -61,7 +73,8 @@
             android:paddingTop="@dimen/base_padding"
             android:paddingBottom="@dimen/base_padding"
             android:id="@+id/error_view"
-            android:gravity="fill_vertical">
+            android:gravity="fill_vertical"
+            android:visibility="invisible">
 
             <ImageView
                 android:layout_width="@dimen/font_s"
@@ -91,10 +104,10 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/login_button_height"
                 android:text="@string/register"
                 android:id="@+id/button2"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="?attr/selectableItemBackground"
                 android:onClick="onOpenRequestInvite"
                 style="@style/Text.Small" />
 
@@ -104,11 +117,11 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/login_button_height"
                 android:text="@string/login"
                 android:id="@+id/btn_login"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                style="@style/Text.Small.Success" />
+                android:background="@drawable/btn_login_bg"
+                android:textColor="@color/colorTextLight" />
         </LinearLayout>
     </LinearLayout>
 

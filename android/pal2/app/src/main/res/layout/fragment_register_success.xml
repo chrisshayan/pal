@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/register_thank"
-            android:id="@+id/textView2"
+            android:id="@+id/message"
             android:gravity="center"
             style="@style/Text.Small.Muted" />
 
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/share"
-                android:id="@+id/button2"
+                android:id="@+id/btn_share"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onShare"
                 style="@style/Text.Small" />
