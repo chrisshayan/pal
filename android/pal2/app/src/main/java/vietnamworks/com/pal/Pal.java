@@ -9,6 +9,7 @@ import vietnamworks.com.pal.services.CloudinaryService;
 import vietnamworks.com.pal.services.FileUploadService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
+import vietnamworks.com.pal.services.HttpService;
 import vietnamworks.com.pal.services.LocalStorage;
 import vietnamworks.com.pal.services.ParseService;
 
@@ -31,6 +32,7 @@ public class Pal extends Application {
         GaService.init(this);
         CloudinaryService.init(this);
         Post.init(this);
+        HttpService.init(this);
 
         if (!BuildConfig.DEBUG) {
             Crittercism.initialize(getApplicationContext(), getString(R.string.crittercism_key));

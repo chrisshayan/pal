@@ -67,10 +67,12 @@
     <string name="register">Register</string>
     <string name="close">Back</string>
     <string name="share">Share</string>
+    <string name="register_success">Thank for your interest.\nPlease check your email for credential.</string>
     <string name="register_thank">Thank for your interest.\nYour request has been queued.</string>
     <string name="send_to">Send to</string>
     <string name="share_text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</string>
     <string name="register_fail">Fail to connect server. Please try again later!</string>
+    <string name="register_dup_email">Email is already existed</string>
     <string name="require_email">Please enter your email.</string>
     <string name="require_password">Please enter your password.</string>
     <string name="invalid_email">The email is invalid.</string>
@@ -80,6 +82,7 @@
     <string name="login_fail">Incorrect login credentials</string>
     <string name="reset_password_success">Your password has been reset. Please check your email to get new password.</string>
     <string name="forget_password">Forgot your password</string>
+    <string name="no_internet">Fail to connect server. Please try again later!</string>
 
     <!--drawer-->
     <string name="posted">Posted</string>

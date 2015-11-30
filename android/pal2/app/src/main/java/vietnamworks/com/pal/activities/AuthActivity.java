@@ -1,20 +1,15 @@
 package vietnamworks.com.pal.activities;
 
 import android.animation.Animator;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.firebase.client.AuthData;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.MutableData;
-import com.firebase.client.Transaction;
+import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 import vietnamworks.com.pal.R;
@@ -24,8 +19,10 @@ import vietnamworks.com.pal.fragments.LoginFragment;
 import vietnamworks.com.pal.fragments.RegisterErrorFragment;
 import vietnamworks.com.pal.fragments.RegisterFragment;
 import vietnamworks.com.pal.fragments.RegisterSuccessFragment;
+import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
+import vietnamworks.com.pal.services.HttpService;
 
 /**
  * Created by duynk on 10/26/15.
@@ -183,22 +180,22 @@ public class AuthActivity extends BaseActivity {
         GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_request_invite);
         final String email = registerFragment.getEmail().trim();
         final String fullname = registerFragment.getFullName().trim();
-        if (email.length() == 0) {
-            toast(R.string.require_email);
-            GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_missing_email);
-            setTimeout(new Runnable() {
-                @Override
-                public void run() {
-                    registerFragment.focusEmail();
-                }
-            });
-        } else if (fullname.length() == 0) {
+        if (fullname.length() == 0) {
             toast(R.string.require_full_name);
             GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_missing_fullname);
             setTimeout(new Runnable() {
                 @Override
                 public void run() {
                     registerFragment.focusFullName();
+                }
+            });
+        } else if (email.length() == 0) {
+            toast(R.string.require_email);
+            GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_missing_email);
+            setTimeout(new Runnable() {
+                @Override
+                public void run() {
+                    registerFragment.focusEmail();
                 }
             });
         } else if (!Utils.isValidEmail(email)) {
@@ -210,52 +207,54 @@ public class AuthActivity extends BaseActivity {
                 }
             });
             GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_invalid_email_format);
+        } else if (!FirebaseService.isConnected()) {
+            toast(R.string.no_internet);
         } else {
             setState(STATE_PROCESSING);
-            FirebaseService.newRef().authWithCustomToken(FirebaseService.getDefaultToken(), new Firebase.AuthResultHandler() {
-                @Override
-                public void onAuthenticated(AuthData authData) {
-                    final String email_hash = Utils.hash(email);
-                    FirebaseService.newRef(Arrays.asList("register", email_hash)).runTransaction(new Transaction.Handler() {
-                        @Override
-                        public Transaction.Result doTransaction(MutableData currentData) {
-                            if (currentData.getValue() == null) {
-                                HashMap<String, Object> data = new HashMap<String, Object>();
-                                data.put("email", email);
-                                data.put("name", fullname);
-                                data.put("created_date", Utils.getMillis());
-                                data.put("last_modified_date", Utils.getMillis());
-                                data.put("hit", 1);
-                                currentData.setValue(data);
-                            } else {
-                                HashMap<String, Object> data = currentData.getValue(HashMap.class);
-                                long last_hit = ((Long)data.get("hit")).longValue();
-                                data.put("name", fullname);
-                                data.put("hit", last_hit + 1);
-                                data.put("last_modified_date", Utils.getMillis());
-                                currentData.setValue(data);
-                            }
-                            return Transaction.success(currentData);
-                        }
+            HashMap<String, String> data = new HashMap<>();
+            data.put("email", email);
+            data.put("fullname", fullname);
 
-                        @Override
-                        public void onComplete(FirebaseError firebaseError, boolean b, DataSnapshot dataSnapshot) {
-                            if (dataSnapshot != null) {
-                                setState(STATE_SUCCESS);
-                                GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_register_success);
-                            } else {
-                                setState(STATE_ERROR);
-                                GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_register_fail);
-                            }
+            HttpService.Post(getBaseContext(), "register", data, new AsyncCallback() {
+                @Override
+                public void onSuccess(Context ctx, Object obj) {
+                    JSONObject json = (JSONObject) obj;
+                    try {
+                        int result = json.getInt("result");
+                        if (result == 0) {//saved
+                            HashMap<String, Object> bundle = new HashMap<String, Object>();
+                            bundle.put("message", getString(R.string.register_thank));
+                            setState(STATE_SUCCESS, bundle);
+                            registerFragment.resetForm();
+                        } else {
+                            HashMap<String, Object> bundle = new HashMap<String, Object>();
+                            bundle.put("message", getString(R.string.register_success));
+                            setState(STATE_SUCCESS, bundle);
                             registerFragment.resetForm();
                         }
-                    });
+                        GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_register_success);
+                    } catch (Exception E) {
+                        HashMap<String, Object> bundle = new HashMap<String, Object>();
+                        bundle.put("message", getString(R.string.register_fail));
+                        setState(STATE_ERROR, bundle);
+                        registerFragment.resetForm();
+                    }
                 }
 
                 @Override
-                public void onAuthenticationError(FirebaseError firebaseError) {
-                    setState(STATE_ERROR);
-                    registerFragment.resetForm();
+                public void onError(Context ctx, int error_code, String message) {
+                    GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_register_fail);
+                    if (error_code == 409) { //dup
+                        HashMap<String, Object> bundle = new HashMap<String, Object>();
+                        bundle.put("message", getString(R.string.register_dup_email));
+                        setState(STATE_ERROR, bundle);
+                        registerFragment.resetForm();
+                    } else {
+                        HashMap<String, Object> bundle = new HashMap<String, Object>();
+                        bundle.put("message", getString(R.string.register_fail));
+                        setState(STATE_ERROR, bundle);
+                        registerFragment.resetForm();
+                    }
                 }
             });
         }
