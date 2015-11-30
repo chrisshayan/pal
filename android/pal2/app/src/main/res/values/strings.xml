@@ -88,6 +88,10 @@
     <string name="current_password">Current password</string>
     <string name="new_password">New password</string>
     <string name="confirm_password">Confirm new password</string>
+    <string name="require_new_password">Please enter your new password.</string>
+    <string name="require_confirm_password">Please enter your confirm password.</string>
+    <string name="password_not_matched">New password does not match the confirm password</string>
+    <string name="password_has_changed">Your password has been updated</string>
 
     <!--drawer-->
     <string name="posted">Posted</string>

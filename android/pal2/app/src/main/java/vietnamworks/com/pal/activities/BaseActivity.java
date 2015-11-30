@@ -39,6 +39,8 @@ public class BaseActivity extends AppCompatActivity {
     public static Typeface RobotoI;
     public static Typeface RobotoLI;
 
+    private boolean lockedBackkey;
+
     static Toast toast;
 
     private boolean isKeyboardShown;
@@ -357,6 +359,14 @@ public class BaseActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             sInstance.getWindow().setStatusBarColor(sInstance.getResources().getColor(color, sInstance.getTheme()));
         }
+    }
+
+    public boolean isBackKeyLocked() {
+        return lockedBackkey;
+    }
+
+    public void lockBackKey(boolean lockedBackkey) {
+        this.lockedBackkey = lockedBackkey;
     }
 
     public static BaseActivity sInstance;

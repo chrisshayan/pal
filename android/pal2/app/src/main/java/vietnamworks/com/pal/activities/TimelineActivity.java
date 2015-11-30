@@ -296,7 +296,9 @@ public class TimelineActivity extends BaseActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
+            if (!isBackKeyLocked()) {
+                getSupportFragmentManager().popBackStack();
+            }
         } else {
             super.onBackPressed();
         }
@@ -518,7 +520,6 @@ public class TimelineActivity extends BaseActivity {
         setTimeout(new Runnable() {
             @Override
             public void run() {
-                FirebaseService.logout();
                 pushFragment(new ChangePasswordFragment(), R.id.fragment_holder, true);
                 closeDrawer();
             }
