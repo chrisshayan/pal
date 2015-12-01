@@ -25,7 +25,7 @@ import vietnamworks.com.pal.custom_views.TimelineItemView;
 import vietnamworks.com.pal.entities.BaseEntity;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.models.Posts;
-import vietnamworks.com.pal.models.UserProfiles;
+import vietnamworks.com.pal.models.CurrentUserProfile;
 import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
@@ -155,7 +155,7 @@ public class PostDetailFragment extends BaseFragment {
                         }
                     });
 
-                    UserProfiles.getUserProfile(conversation.get("uid").toString(), getContext(), new AsyncCallback() {
+                    CurrentUserProfile.getUserProfile(conversation.get("uid").toString(), getContext(), new AsyncCallback() {
                         @Override
                         public void onSuccess(Context ctx, Object obj) {
                             DataSnapshot dataSnapshot = (DataSnapshot) obj;

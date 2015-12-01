@@ -17,10 +17,10 @@ import vietnamworks.com.pal.services.FirebaseService;
 /**
  * Created by duynk on 11/3/15.
  */
-public class UserProfiles extends AbstractContainer<UserProfiles> {
-    protected UserProfiles(){
+public class CurrentUserProfile extends AbstractContainer<CurrentUserProfile> {
+    protected CurrentUserProfile(){
         super();
-        ArrayList<UserProfiles> data = new ArrayList<>();
+        ArrayList<CurrentUserProfile> data = new ArrayList<>();
         this.setData(data);
     }
 
@@ -55,5 +55,9 @@ public class UserProfiles extends AbstractContainer<UserProfiles> {
 
             }
         });
+    }
+
+    public static void updateAvatar(String avatar) {
+        FirebaseService.newRef(Arrays.asList("profiles_pub", FirebaseService.getUid(), "avatar")).setValue(avatar);
     }
 }

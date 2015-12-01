@@ -1,5 +1,9 @@
 package vietnamworks.com.pal.common;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -197,6 +201,53 @@ public class Utils {
             return (Math.round(count/1000)/100f) + "m";
         } else {
             return (Math.round(count/10000)/1000f) + "b";
+        }
+    }
+
+    public static Bitmap getFixOrientationBitmap(String path, int maxWidth, int maxHeight) {
+        Bitmap bm;
+        BitmapFactory.Options btmapOptions = new BitmapFactory.Options();
+        bm = BitmapFactory.decodeFile(path, btmapOptions);
+        try {
+            ExifInterface exif = new ExifInterface(path);
+            int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            int angle = 0;
+            if (rotation == ExifInterface.ORIENTATION_ROTATE_90) {
+                angle = 0;
+            } else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {
+                angle = 180;
+            } else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {
+                angle = 270;
+            }
+            Matrix matrix = new Matrix();
+            if (rotation != 0f) {
+                matrix.preRotate(angle);
+            }
+            bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+        } catch (Exception e) {
+        }
+        bm = resize(bm, maxWidth, maxHeight);
+        return bm;
+    }
+
+    public static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
         }
     }
 }

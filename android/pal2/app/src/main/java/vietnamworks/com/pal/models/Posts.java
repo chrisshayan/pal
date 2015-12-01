@@ -33,7 +33,7 @@ public class Posts extends AbstractContainer<Post> {
         if (p.getRef_topic() != null && !p.getRef_topic().isEmpty()) {
             Topics.addSubmit(p.getRef_topic());
         }
-        UserProfiles.increaseNumOfPost();
+        CurrentUserProfile.increaseNumOfPost();
 
         return ref.getKey();
     }

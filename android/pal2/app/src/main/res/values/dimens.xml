@@ -58,4 +58,8 @@
     <!-- login page -->
     <dimen name="login_form_margin_bottom_size">50dp</dimen>
     <dimen name="login_form_height">300dp</dimen>
+
+    <!--profile-->
+    <dimen name="profile_avatar_size">100dp</dimen>
+    <dimen name="profile_top_panel_height">230dp</dimen>
 </resources>

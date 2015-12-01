@@ -1,9 +1,15 @@
 package vietnamworks.com.pal.activities;
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +31,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +58,10 @@ import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
 
 public class TimelineActivity extends BaseActivity {
+
+    public final static int REQUEST_CAMERA = 7000;
+    public final static int SELECT_FILE = 7001;
+
     private PostListFragment allPostsFragment;
     private PostListFragment evaluatedPostsFragment;
     UserProfileNavView navHeaderView;
@@ -703,4 +714,50 @@ public class TimelineActivity extends BaseActivity {
     public View getQuestView() {
         return quest_view;
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_CAMERA) {
+                File f = new File(Environment.getExternalStorageDirectory().toString());
+                for (File temp : f.listFiles()) {
+                    if (temp.getName().equals(getString(R.string.avatar_picker_take_photo_temp_file))) {
+                        f = temp;
+                        break;
+                    }
+                }
+                try {
+                    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+                    if (fragment instanceof ProfileFragment) {
+                        ((ProfileFragment)fragment).onSelectedAvatar(Utils.getFixOrientationBitmap(f.getAbsolutePath(), 256, 256));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (requestCode == SELECT_FILE) {
+                Uri selectedImageUri = data.getData();
+                String tempPath = getRealPathFromURI(selectedImageUri);
+
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+                if (fragment instanceof ProfileFragment) {
+                    ((ProfileFragment)fragment).onSelectedAvatar(Utils.getFixOrientationBitmap(tempPath, 256, 256));
+                }
+            }
+        }
+    }
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor.moveToFirst()){;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
+    }
+
 }

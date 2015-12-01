@@ -1,10 +1,13 @@
 package vietnamworks.com.pal.services;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.HashMap;
@@ -36,6 +39,26 @@ public class CloudinaryService {
                     FileInputStream fileInputStream = new FileInputStream(file);
                     //cloudinary.uploader().upload(fileInputStream, ObjectUtils.asMap("public_id", public_name));
                     Map m = cloudinary.uploader().uploadLarge(fileInputStream, ObjectUtils.asMap("folder", "pal_recorder", "public_id", public_name, "resource_type", "video", "chunk_size", 6000000));
+                    callback.onSuccess(context, m);
+                } catch (Exception e) {
+                    callback.onError(context, 0, "");
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    public static void uploadAvatar(final Bitmap bitmap, final AsyncCallback callback) {
+        Thread thread = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bos);
+                    byte[] bitmapdata = bos.toByteArray();
+                    ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+                    Map m = cloudinary.uploader().upload(bs, ObjectUtils.asMap("folder", "avatar"));
                     callback.onSuccess(context, m);
                 } catch (Exception e) {
                     callback.onError(context, 0, "");

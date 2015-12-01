@@ -45,6 +45,7 @@
     <string name="you">You</string>
     <string name="edit">Edit</string>
     <string name="change">Change</string>
+    <string name="uploading">Uploading</string>
 
     <!-- post rate -->
     <string name="post_rate_1">Bad</string>
@@ -205,4 +206,12 @@
     <string name="profile_exp_point">Exp. point</string>
     <string name="profile_level">Level</string>
     <string name="profile_level_percent">Level completed percent</string>
+
+    <!-- avatar picker -->
+    <string name="avatar_picker_title">Add avatar</string>
+    <string name="avatar_picker_take_photo">Take photo</string>
+    <string name="avatar_picker_take_photo_temp_file" translatable="false">pal_avatar_temp.jpg</string>
+    <string name="avatar_picker_library">Choose from Library</string>
+    <string name="avatar_picker_select_file">Select file</string>
+    <string name="avatar_picker_upload_fail">Fail to upload your avatar</string>
 </resources>
