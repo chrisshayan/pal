@@ -95,14 +95,12 @@ public class TimelineItemView extends TimelineItemBaseView {
     public void highlight(boolean val) {
         if (val) {
             txtSubject.setTypeface(BaseActivity.RobotoB);
-            txtSub1.setTypeface(BaseActivity.RobotoL);
-            txtSub2.setTypeface(BaseActivity.RobotoL);
-            txtText.setTypeface(BaseActivity.RobotoL);
+            txtSub1.setTypeface(BaseActivity.RobotoR);
+            txtSub2.setTypeface(BaseActivity.RobotoR);
         } else {
             txtSubject.setTypeface(BaseActivity.RobotoR);
             txtSub1.setTypeface(BaseActivity.RobotoL);
             txtSub2.setTypeface(BaseActivity.RobotoL);
-            txtText.setTypeface(BaseActivity.RobotoL);
         }
     }
 
@@ -118,6 +116,7 @@ public class TimelineItemView extends TimelineItemBaseView {
         txtSub1.setText(sub1 == null ? "" : sub1);
         txtSub2.setText(sub2 == null ? "" : sub2);
         if (text != null && text.length() > 0) {
+            text = text.substring(0, 1).toUpperCase() + text.substring(1);
             txtText.setText(text);
             textGroup.setVisibility(View.VISIBLE);
         } else {

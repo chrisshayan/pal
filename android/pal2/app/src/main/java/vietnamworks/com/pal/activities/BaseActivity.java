@@ -2,6 +2,7 @@ package vietnamworks.com.pal.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -11,6 +12,10 @@ import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextPaint;
+import android.text.style.MetricAffectingSpan;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -340,10 +345,53 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public class CustomTypefaceSpan extends MetricAffectingSpan
+    {
+        private final Typeface typeface;
+
+        public CustomTypefaceSpan(final Typeface typeface)
+        {
+            this.typeface = typeface;
+        }
+
+        @Override
+        public void updateDrawState(final TextPaint drawState)
+        {
+            apply(drawState);
+        }
+
+        @Override
+        public void updateMeasureState(final TextPaint paint)
+        {
+            apply(paint);
+        }
+
+        private void apply(final Paint paint)
+        {
+            final Typeface oldTypeface = paint.getTypeface();
+            final int oldStyle = oldTypeface != null ? oldTypeface.getStyle() : 0;
+            final int fakeStyle = oldStyle & ~typeface.getStyle();
+
+            if ((fakeStyle & Typeface.BOLD) != 0)
+            {
+                paint.setFakeBoldText(true);
+            }
+
+            if ((fakeStyle & Typeface.ITALIC) != 0)
+            {
+                paint.setTextSkewX(-0.25f);
+            }
+
+            paint.setTypeface(typeface);
+        }
+    }
+
     public void setTitle(int title) {
         ActionBar b =  getSupportActionBar();
         if (b != null) {
-            b.setTitle(title);
+            SpannableString s = new SpannableString(getString(title));
+            s.setSpan(new CustomTypefaceSpan(RobotoR), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            b.setTitle(s);
         }
     }
 

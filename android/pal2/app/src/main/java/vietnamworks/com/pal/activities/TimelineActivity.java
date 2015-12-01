@@ -92,6 +92,7 @@ public class TimelineActivity extends BaseActivity {
         navHeaderView = UserProfileNavView.create(this, 0, 0, 0);
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.addHeaderView(navHeaderView);
+        applyFont(navigationView);
 
         setNumberOfUnreadPostUI(0);
         setNumberOfUnreadEvaluatedPostUI(0);
@@ -223,6 +224,7 @@ public class TimelineActivity extends BaseActivity {
         });
 
         quest_view = findViewById(R.id.challenge_view);
+        applyFont(quest_view);
         quest_view.setVisibility(View.GONE);
         txtQuest = (TextView) quest_view.findViewById(R.id.quest);
 
