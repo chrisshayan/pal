@@ -42,7 +42,7 @@ public class UserProfiles extends AbstractContainer<UserProfiles> {
         FirebaseService.newRef(Arrays.asList("profiles_pub", FirebaseService.getUid(), "total_posts")).runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-                if(mutableData.getValue() == null) {
+                if (mutableData.getValue() == null) {
                     mutableData.setValue(1);
                 } else {
                     mutableData.setValue((Long) mutableData.getValue() + 1);

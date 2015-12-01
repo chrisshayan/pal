@@ -197,6 +197,10 @@ public class FirebaseService {
         return default_value;
     }
 
+    public static HashMap<String, Object> getPublicProfile() {
+        return sInstance.userProfile;
+    }
+
 
     public static void login(String email, String password, final AsyncCallback callback) {
         newRef().authWithPassword(email, password, new Firebase.AuthResultHandler() {
