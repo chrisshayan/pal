@@ -61,5 +61,5 @@
 
     <!--profile-->
     <dimen name="profile_avatar_size">100dp</dimen>
-    <dimen name="profile_top_panel_height">230dp</dimen>
+    <dimen name="profile_top_panel_height">220dp</dimen>
 </resources>

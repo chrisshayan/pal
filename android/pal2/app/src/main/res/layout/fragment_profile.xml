@@ -45,25 +45,34 @@
                     android:paddingLeft="@dimen/base_padding_2x" />
             </LinearLayout>
 
-            <ImageView android:layout_width="@dimen/profile_avatar_size" android:layout_height="@dimen/profile_avatar_size"
-                android:id="@+id/avatar"
-                android:src="@drawable/ic_action_account_box"
-                android:scaleType="fitCenter"
-                android:contentDescription="@null" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
 
-            <Button
-                style="@style/Text.Small.Light"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/login_button_height"
-                android:text="@string/change"
-                android:background="@drawable/btn_semi_grey"
-                android:drawableLeft="@drawable/ic_image_photo_camera"
-                android:id="@+id/btn_upload_avatar"
-                android:layout_marginTop="@dimen/base_padding_4x"
-                android:paddingRight="@dimen/base_padding_2x"
-                android:layout_marginBottom="@dimen/base_padding_4x" />
+                <ImageView android:layout_width="@dimen/profile_avatar_size" android:layout_height="@dimen/profile_avatar_size"
+                    android:id="@+id/avatar"
+                    android:src="@drawable/ic_action_account_box"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@null" />
+
+                <Button
+                    style="@style/Text.Small.Light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/login_button_height"
+                    android:text="@string/change"
+                    android:background="@drawable/btn_semi_grey"
+                    android:drawableLeft="@drawable/ic_image_photo_camera"
+                    android:id="@+id/btn_upload_avatar"
+                    android:layout_marginTop="@dimen/base_padding_4x"
+                    android:paddingRight="@dimen/base_padding_2x"
+                    android:layout_marginBottom="@dimen/base_padding_4x" />
+            </LinearLayout>
 
         </LinearLayout>
+
     </FrameLayout>
 
     <ScrollView
