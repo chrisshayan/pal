@@ -6,6 +6,7 @@
     <string name="title_challenge">Challenges</string>
     <string name="title_advisor_rating">Advisor</string>
     <string name="title_welcome">Welcome</string>
+    <string name="title_profile">Profile</string>
 
     <string name="time_1_min_ago">%1$s min ago</string>
     <string name="time_n_min_ago">%1$s mins ago</string>
@@ -42,6 +43,8 @@
     <string name="cancel">Cancel</string>
     <string name="update">Update</string>
     <string name="you">You</string>
+    <string name="edit">Edit</string>
+    <string name="change">Change</string>
 
     <!-- post rate -->
     <string name="post_rate_1">Bad</string>
@@ -189,4 +192,17 @@
     <string name="post_status_advisor_conversation">Waiting</string>
     <string name="post_status_user_closed">Closed</string>
     <string name="post_status_user_closed_and_redo">Closed</string>
+
+
+    <!-- profile -->
+    <string name="profile_basic_info">Basic</string>
+    <string name="profile_first_name">First name</string>
+    <string name="profile_last_name">Last name</string>
+    <string name="profile_display_name">Display name</string>
+    <string name="profile_job_title">Job title</string>
+
+    <string name="profile_progress_info">Progress</string>
+    <string name="profile_exp_point">Exp. point</string>
+    <string name="profile_level">Level</string>
+    <string name="profile_level_percent">Level completed percent</string>
 </resources>

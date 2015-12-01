@@ -38,6 +38,7 @@ import vietnamworks.com.pal.fragments.ChangePasswordFragment;
 import vietnamworks.com.pal.fragments.ComposerFragment;
 import vietnamworks.com.pal.fragments.PostDetailFragment;
 import vietnamworks.com.pal.fragments.PostListFragment;
+import vietnamworks.com.pal.fragments.ProfileFragment;
 import vietnamworks.com.pal.fragments.TopicsFragment;
 import vietnamworks.com.pal.fragments.WelcomeFragment;
 import vietnamworks.com.pal.models.Posts;
@@ -528,7 +529,14 @@ public class TimelineActivity extends BaseActivity {
     }
 
     public void onOpenUserProfile(View v) {
-
+        GaService.trackAction(R.string.ga_action_change_password);
+        setTimeout(new Runnable() {
+            @Override
+            public void run() {
+                openFragment(new ProfileFragment(), R.id.fragment_holder, true);
+                closeDrawer();
+            }
+        }, 500);
     }
 
 
