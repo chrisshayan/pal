@@ -133,7 +133,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tutor_2"
-                android:layout_marginLeft="@dimen/base_padding"
                 android:visibility="gone">
 
                 <ImageButton
@@ -147,30 +146,17 @@
                     android:paddingRight="15dp"
                     android:contentDescription="@null"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignStart="@+id/imageView15" />
 
                 <ImageView
                     android:layout_width="@dimen/tutor_fab_arrow_width"
                     android:layout_height="60dp"
                     android:id="@+id/imageView12"
                     android:src="@drawable/ic_tutor_arrow"
-                    android:layout_alignTop="@+id/imageButton"
-                    android:layout_toLeftOf="@+id/imageButton"
-                    android:layout_toStartOf="@+id/imageButton"
-                    android:contentDescription="@null" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/guide_user_recorder_1"
-                    android:id="@+id/textView16"
-                    android:layout_alignTop="@+id/imageView12"
-                    android:layout_toLeftOf="@+id/imageView12"
-                    android:layout_toStartOf="@+id/imageView12"
-                    style="@style/Text.Medium"
-                    android:gravity="center" />
+                    android:contentDescription="@null"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/imageButton"
+                    android:layout_toEndOf="@+id/imageButton" />
 
                 <ImageView
                     android:layout_width="30dp"
@@ -178,10 +164,24 @@
                     android:id="@+id/imageView15"
                     android:src="@drawable/step_02"
                     android:contentDescription="@null"
-                    android:layout_above="@+id/textView16"
+                    android:layout_marginLeft="140dp"
+                    android:layout_marginStart="140dp"
+                    android:layout_above="@+id/imageView12"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginLeft="@dimen/base_padding" />
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/guide_user_recorder_1"
+                    android:id="@+id/textView16"
+                    style="@style/Text.Medium"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/imageView12"
+                    android:layout_toEndOf="@+id/imageView12" />
+
             </RelativeLayout>
 
             <RelativeLayout
