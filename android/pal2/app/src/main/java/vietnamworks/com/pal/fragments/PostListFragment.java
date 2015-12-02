@@ -3,8 +3,10 @@ package vietnamworks.com.pal.fragments;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,10 +34,12 @@ import vietnamworks.com.pal.custom_views.TimelineItemNullView;
 import vietnamworks.com.pal.custom_views.TimelineItemQuest;
 import vietnamworks.com.pal.custom_views.TimelineItemView;
 import vietnamworks.com.pal.entities.Post;
+import vietnamworks.com.pal.entities.UserProfile;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
+import vietnamworks.com.pal.services.LocalStorage;
 
 /**
  * Created by duynk on 11/2/15.
@@ -134,6 +138,33 @@ public class PostListFragment extends BaseFragment {
 
         progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
+
+
+        //show dialog remind user to fulfill profile
+        int last_remind_session = LocalStorage.getInt("total_sessions", 0);
+        int current_session = FirebaseService.getUserProfileIntValue("total_sessions", 0);
+        if ((last_remind_session == 0 && current_session - last_remind_session >= 5) || (current_session - last_remind_session >= 20)) {
+            UserProfile p = UserProfile.getCurrentUserProfile();
+            LocalStorage.set("total_sessions", current_session);
+            if (p.getFirstName().isEmpty() || p.getLastName().isEmpty() || p.getAvatar().isEmpty()) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(getString(R.string.profile_update_encourage_message))
+                        .setTitle(R.string.profile_update_encourage_title)
+                        .setCancelable(false)
+                        .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                ((TimelineActivity) PostListFragment.this.getActivity()).pushFragment(new UpdateProfileFragment(), R.id.fragment_holder);
+                            }
+                        })
+                        .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        }
 
         return rootView;
     }

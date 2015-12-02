@@ -40,6 +40,7 @@
     <string name="done">Start</string>
     <string name="next">Next</string>
     <string name="go">Go</string>
+    <string name="ok">OK</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="update">Update</string>
@@ -207,6 +208,8 @@
     <string name="profile_exp_point">Exp. point</string>
     <string name="profile_level">Level</string>
     <string name="profile_level_percent">Level completed percent</string>
+    <string name="profile_update_encourage_title">Thank you</string>
+    <string name="profile_update_encourage_message">Thank for your interesting in our product. Please fulfill your profile that help us serve you better</string>
 
     <!-- avatar picker -->
     <string name="avatar_picker_title">Add avatar</string>

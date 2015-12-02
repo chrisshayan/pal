@@ -169,6 +169,9 @@
         "total_posts": {
           ".validate": "newData.isNumber() || newData.val() == null"
         },
+        "total_sessions": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
         "points": {
           ".validate": "newData.isNumber() || newData.val() == null"
         },

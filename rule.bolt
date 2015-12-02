@@ -88,7 +88,8 @@ type PublicProfile {
     score_3: Number | Null,
     score_4: Number | Null,
     score_5: Number | Null,
-    total_posts: Number | Null
+    total_posts: Number | Null,
+    total_sessions: Number | Null,
 
     //for advisor
     points: Number | Null,

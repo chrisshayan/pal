@@ -50,6 +50,7 @@ import vietnamworks.com.pal.fragments.ProfileFragment;
 import vietnamworks.com.pal.fragments.TopicsFragment;
 import vietnamworks.com.pal.fragments.UpdateProfileFragment;
 import vietnamworks.com.pal.fragments.WelcomeFragment;
+import vietnamworks.com.pal.models.CurrentUserProfile;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.models.Topics;
 import vietnamworks.com.pal.services.AsyncCallback;
@@ -397,6 +398,7 @@ public class TimelineActivity extends BaseActivity {
                 }
             }
         });
+        CurrentUserProfile.increaseSessionCounter();
     }
 
     @Override

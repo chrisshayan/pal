@@ -40,6 +40,8 @@ public class UserProfile extends BaseEntity {
 
     int totalPosts;
 
+    int totalSessions;
+
     public String getAvatar() {
         return avatar;
     }
@@ -192,6 +194,14 @@ public class UserProfile extends BaseEntity {
         this.jobTitle = jobTitle;
     }
 
+    public int getTotalSessions() {
+        return totalSessions;
+    }
+
+    public void setTotalSessions(int totalSessions) {
+        this.totalSessions = totalSessions;
+    }
+
     @Override
     public UserProfile importData(HashMap<String, Object> obj) {
         super.importData(obj);
@@ -218,6 +228,8 @@ public class UserProfile extends BaseEntity {
         levelName = safeGetString(obj, "level_name", "Beginner");
 
         totalPosts = safeGetInt(obj, "total_posts", 0);
+
+        totalSessions = safeGetInt(obj, "total_sessions", 0);
 
         return this;
     }

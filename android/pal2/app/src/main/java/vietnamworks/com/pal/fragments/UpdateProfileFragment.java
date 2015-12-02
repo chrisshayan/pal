@@ -76,7 +76,7 @@ public class UpdateProfileFragment extends BaseFragment {
 
     @Override
     public void onPause() {
-        CurrentUserProfile.UpdateBasicProfile(firstName.getText().toString(), lastName.getText().toString(), displayName.getText().toString(), jobTitle.getText().toString());
+        CurrentUserProfile.updateBasicProfile(firstName.getText().toString(), lastName.getText().toString(), displayName.getText().toString(), jobTitle.getText().toString());
         super.onPause();
     }
 

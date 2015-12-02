@@ -63,7 +63,7 @@ public class CurrentUserProfile extends AbstractContainer<CurrentUserProfile> {
         FirebaseService.newRef(Arrays.asList("profiles_pub", FirebaseService.getUid(), "avatar")).setValue(avatar);
     }
 
-    public static void UpdateBasicProfile(String fistName, String lastName, String displayName, String job) {
+    public static void updateBasicProfile(String fistName, String lastName, String displayName, String job) {
         HashMap<String, Object> data = new HashMap<>();
         if (fistName != null && !fistName.isEmpty()) {
             data.put("first_name", fistName);
@@ -87,5 +87,11 @@ public class CurrentUserProfile extends AbstractContainer<CurrentUserProfile> {
                 }
             }
         });
+    }
+
+    public static void increaseSessionCounter() {
+        int totalSessions = FirebaseService.getUserProfileIntValue("total_sessions", 0);
+        totalSessions++;
+        FirebaseService.newRef(Arrays.asList("profiles_pub", FirebaseService.getUid(), "total_sessions")).setValue(totalSessions);
     }
 }
