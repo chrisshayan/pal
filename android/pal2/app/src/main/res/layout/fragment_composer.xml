@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:showIn="@layout/app_bar_timeline"
     tools:context="vietnamworks.com.pal.activities.TimelineActivity"
-    android:background="@color/colorPrimaryLight">
+    android:background="@color/colorPrimaryLight"
+    android:onClick="doNothing">
 
 
     <LinearLayout
@@ -116,7 +117,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/overlay"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <View
             android:layout_width="match_parent"
@@ -146,7 +147,8 @@
                     android:paddingRight="15dp"
                     android:contentDescription="@null"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignStart="@+id/imageView15" />
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
                 <ImageView
                     android:layout_width="@dimen/tutor_fab_arrow_width"
@@ -177,10 +179,11 @@
                     android:text="@string/guide_user_recorder_1"
                     android:id="@+id/textView16"
                     style="@style/Text.Medium"
-                    android:gravity="center"
                     android:layout_alignParentBottom="true"
                     android:layout_toRightOf="@+id/imageView12"
-                    android:layout_toEndOf="@+id/imageView12" />
+                    android:layout_toEndOf="@+id/imageView12"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/base_padding" />
 
             </RelativeLayout>
 
@@ -228,7 +231,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tutor_1"
                 android:layout_marginTop="70dp"
-                android:layout_marginLeft="@dimen/base_padding">
+                android:layout_marginLeft="@dimen/base_padding"
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="30dp"
