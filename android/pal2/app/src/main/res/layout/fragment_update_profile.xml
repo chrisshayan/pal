@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
@@ -14,7 +14,8 @@
         android:layout_marginLeft="@dimen/base_padding_2x"
         android:layout_marginRight="@dimen/base_padding_2x"
         android:layout_marginTop="@dimen/base_padding_2x"
-        android:baselineAligned="false">
+        android:baselineAligned="false"
+        android:id="@+id/view2">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -140,4 +141,17 @@
             </LinearLayout>
         </ScrollView>
     </android.support.v7.widget.CardView>
-</LinearLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        fab:fab_colorNormal="@color/colorFabPrimary"
+        fab:fab_icon="@drawable/ic_content_save"
+        android:layout_marginRight="@dimen/base_padding_2x"
+        android:layout_marginBottom="@dimen/base_padding_2x" />
+</RelativeLayout>

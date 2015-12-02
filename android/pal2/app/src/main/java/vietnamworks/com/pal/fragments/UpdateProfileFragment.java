@@ -61,6 +61,13 @@ public class UpdateProfileFragment extends BaseFragment {
             }
         });
 
+        rootView.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((TimelineActivity)getActivity()).onBackPressed();
+            }
+        });
+
         ((TimelineActivity)getActivity()).setTitle(R.string.title_update_profile);
         ((TimelineActivity)getActivity()).showActionBar();
 
