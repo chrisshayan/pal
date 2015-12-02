@@ -51,7 +51,17 @@ public class AuthActivity extends BaseActivity {
         registerSuccessFragment = (RegisterSuccessFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_register_success);
         registerErrorFragment = (RegisterErrorFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_register_error);
         authProcessingFragment = (AuthProcessingFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_auth_processing);
-        setState(STATE_LOGIN);
+
+        state = STATE_LOGIN;
+        try {
+            loginFragment.getView().setVisibility(state == STATE_LOGIN ? View.VISIBLE : View.GONE);
+            registerFragment.getView().setVisibility(state == STATE_REGISTER ? View.VISIBLE : View.GONE);
+            registerSuccessFragment.getView().setVisibility(state == STATE_SUCCESS ? View.VISIBLE : View.GONE);
+            registerErrorFragment.getView().setVisibility(state == STATE_ERROR ? View.VISIBLE : View.GONE);
+            authProcessingFragment.getView().setVisibility(state == STATE_PROCESSING ? View.VISIBLE : View.GONE);
+        } catch (Exception E) {
+
+        }
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
