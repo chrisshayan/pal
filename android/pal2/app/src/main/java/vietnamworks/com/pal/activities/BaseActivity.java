@@ -64,12 +64,12 @@ public class BaseActivity extends AppCompatActivity {
         }
         density = this.getResources().getDisplayMetrics().density;
 
-        RobotoL = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
-        RobotoLI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-LightItalic.ttf");
-        RobotoR = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
-        RobotoB = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Bold.ttf");
-        RobotoBI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-BoldItalic.ttf");
-        RobotoI = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Italic.ttf");
+        RobotoL = Typeface.createFromAsset(getAssets(),"fonts/RobotoSlab-Light.ttf");
+        RobotoLI = Typeface.createFromAsset(getAssets(),"fonts/RobotoSlab-Light.ttf");
+        RobotoR = Typeface.createFromAsset(getAssets(),"fonts/RobotoSlab-Regular.ttf");
+        RobotoB = Typeface.createFromAsset(getAssets(),"fonts/RobotoSlab-Bold.ttf");
+        RobotoBI = Typeface.createFromAsset(getAssets(),"fonts/RobotoSlab-Bold.ttf");
+        RobotoI = Typeface.createFromAsset(getAssets(),"fonts/RobotoSlab-Regular.ttf");
 
         isKeyboardShown = false;
         final View activityRootView = getWindow().getDecorView().findViewById(android.R.id.content);

@@ -26,7 +26,7 @@
 
     <color name="colorDivider">#FFFFFF</color>
     <color name="colorDividerDark">#000000</color>
-    <color name="colorDividerDarkAlpha">#33000000</color>
+    <color name="colorDividerDarkAlpha">#30000000</color>
 
     <color name="rate_5_stars">@color/colorSuccess</color>
     <color name="rate_4_stars">#2ecc71</color>
