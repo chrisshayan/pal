@@ -267,6 +267,22 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void showActionBar(String title, boolean displayHomeAsUpButton) {
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.show();
+        }
+        setTitle(title, displayHomeAsUpButton);
+    }
+
+    public void showActionBar(int title, boolean displayHomeAsUpButton) {
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.show();
+        }
+        setTitle(title, displayHomeAsUpButton);
+    }
+
     public void showActionBar() {
         ActionBar bar = getSupportActionBar();
         if (bar != null) {

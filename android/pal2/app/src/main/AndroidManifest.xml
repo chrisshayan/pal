@@ -45,7 +45,6 @@
         <activity
             android:name=".activities.TimelineActivity"
             android:label="@string/title_activity_timeline"
-            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
 

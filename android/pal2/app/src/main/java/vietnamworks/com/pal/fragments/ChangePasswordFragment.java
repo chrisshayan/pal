@@ -127,4 +127,17 @@ public class ChangePasswordFragment extends BaseFragment {
             txt.setText(error);
         }
     }
+
+    public void onLayoutChanged(final boolean isKeyboardShown) {
+        BaseActivity.timeout(new Runnable() {
+            @Override
+            public void run() {
+                if (isKeyboardShown) {
+                    ((TimelineActivity)getActivity()).hideActionBar();
+                } else {
+                    ((TimelineActivity)getActivity()).showActionBar();
+                }
+            }
+        });
+    }
 }

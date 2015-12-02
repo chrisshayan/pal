@@ -221,6 +221,8 @@ public class TimelineActivity extends BaseActivity {
                         }
                     }).start();
                 }
+
+                hideKeyboard();
                 updateToolbar();
             }
         });
@@ -304,6 +306,8 @@ public class TimelineActivity extends BaseActivity {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
         if (f instanceof AdvisorPreviewFragment) {
             ((AdvisorPreviewFragment) f).onLayoutChanged(isSoftKeyShown);
+        } else if (f instanceof ChangePasswordFragment) {
+            ((ChangePasswordFragment) f).onLayoutChanged(isSoftKeyShown);
         }
     }
 
@@ -419,21 +423,21 @@ public class TimelineActivity extends BaseActivity {
         }
 
         if (f instanceof ComposerFragment) {
-            setTitle(R.string.title_composer, true);;
+            showActionBar(R.string.title_composer, true);;
         } else if (f instanceof PostListFragment) {
             if (((PostListFragment) f).getFilterType() == PostListFragment.FILTER_ALL) {
-                setTitle(R.string.title_timeline, true);
+                showActionBar(R.string.title_timeline, true);
             } else {
-                setTitle(R.string.title_evaluated_posts, true);
+                showActionBar(R.string.title_evaluated_posts, true);
             }
         } else if (f instanceof PostDetailFragment) {
-            setTitle("", true);
+            showActionBar("", true);
         } else if (f instanceof TopicsFragment) {
-            setTitle(R.string.title_challenge, true);
+            showActionBar(R.string.title_challenge, true);
         } else if (f instanceof AdvisorPreviewFragment) {
-            setTitle(R.string.title_advisor_rating, true);
+            showActionBar(R.string.title_advisor_rating, true);
         } else if (f instanceof UpdateProfileFragment) {
-            setTitle(R.string.title_update_profile, true);
+            showActionBar(R.string.title_update_profile, true);
         }
 
         if (f instanceof BaseFragment) {((BaseFragment)f).onResumeFromBackStack();}
