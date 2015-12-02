@@ -76,6 +76,8 @@ type PublicProfile {
     address: String | Null,
     school: String | Null,
 
+    job_title: String | Null,
+
     //for student
     exp: Number | Null,
     level: String | Null,

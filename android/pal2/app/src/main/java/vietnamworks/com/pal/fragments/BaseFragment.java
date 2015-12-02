@@ -20,4 +20,6 @@ public class BaseFragment extends Fragment {
         }
         return null;
     }
+
+    public void onResumeFromBackStack() {}
 }

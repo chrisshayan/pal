@@ -136,6 +136,9 @@
         "school": {
           ".validate": "newData.isString() || newData.val() == null"
         },
+        "job_title": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
         "exp": {
           ".validate": "newData.isNumber() || newData.val() == null"
         },

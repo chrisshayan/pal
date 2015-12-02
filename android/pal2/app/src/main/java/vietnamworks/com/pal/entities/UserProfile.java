@@ -17,6 +17,7 @@ public class UserProfile extends BaseEntity {
     String city;
     String address;
     String school;
+    String jobTitle;
 
     int exp;
     String level;
@@ -183,6 +184,14 @@ public class UserProfile extends BaseEntity {
         this.score5 = score5;
     }
 
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
     @Override
     public UserProfile importData(HashMap<String, Object> obj) {
         super.importData(obj);
@@ -193,14 +202,15 @@ public class UserProfile extends BaseEntity {
         score4 = safeGetInt(obj, "score_4", 0);
         score5 = safeGetInt(obj, "score_5", 0);
 
-        avatar = safeGetString(obj, "avatar");
-        displayName = safeGetString(obj, "display_name");
-        email = safeGetString(obj, "email");
-        firstName = safeGetString(obj, "first_name");
-        lastName = safeGetString(obj, "last_name");
+        avatar = safeGetString(obj, "avatar", "");
+        displayName = safeGetString(obj, "display_name", "");
+        email = safeGetString(obj, "email", "");
+        firstName = safeGetString(obj, "first_name", "");
+        lastName = safeGetString(obj, "last_name", "");
         city = safeGetString(obj, "city");
-        address = safeGetString(obj, "address");
+        address = safeGetString(obj, "address", "");
         school = safeGetString(obj, "school");
+        jobTitle = safeGetString(obj, "job_title", "");
 
         exp = safeGetInt(obj, "exp", 0);
         level = safeGetString(obj, "level");

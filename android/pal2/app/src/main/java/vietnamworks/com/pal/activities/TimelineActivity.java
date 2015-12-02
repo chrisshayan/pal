@@ -41,12 +41,14 @@ import vietnamworks.com.pal.configurations.AppUiConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.entities.Topic;
 import vietnamworks.com.pal.fragments.AdvisorPreviewFragment;
+import vietnamworks.com.pal.fragments.BaseFragment;
 import vietnamworks.com.pal.fragments.ChangePasswordFragment;
 import vietnamworks.com.pal.fragments.ComposerFragment;
 import vietnamworks.com.pal.fragments.PostDetailFragment;
 import vietnamworks.com.pal.fragments.PostListFragment;
 import vietnamworks.com.pal.fragments.ProfileFragment;
 import vietnamworks.com.pal.fragments.TopicsFragment;
+import vietnamworks.com.pal.fragments.UpdateProfileFragment;
 import vietnamworks.com.pal.fragments.WelcomeFragment;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.models.Topics;
@@ -187,7 +189,7 @@ public class TimelineActivity extends BaseActivity {
                                             try {
                                                 drawer_guide.setVisibility(View.GONE);
                                                 ((ViewGroup) drawer_guide.getParent()).removeView(drawer_guide);
-                                            }catch (Exception e) {
+                                            } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
                                         }
@@ -407,7 +409,7 @@ public class TimelineActivity extends BaseActivity {
 
     private void updateToolbar() {
         Menu menu = toolbar.getMenu();
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+        Fragment f = (Fragment)getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             int id = item.getItemId();
@@ -417,25 +419,25 @@ public class TimelineActivity extends BaseActivity {
         }
 
         if (f instanceof ComposerFragment) {
-            setTitle(R.string.title_composer);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setTitle(R.string.title_composer, true);;
         } else if (f instanceof PostListFragment) {
             if (((PostListFragment) f).getFilterType() == PostListFragment.FILTER_ALL) {
-                setTitle(R.string.title_timeline);
+                setTitle(R.string.title_timeline, true);
             } else {
-                setTitle(R.string.title_evaluated_posts);
+                setTitle(R.string.title_evaluated_posts, true);
             }
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } else if (f instanceof PostDetailFragment) {
-            setTitle("");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setTitle("", true);
         } else if (f instanceof TopicsFragment) {
-            setTitle(R.string.title_challenge);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setTitle(R.string.title_challenge, true);
         } else if (f instanceof AdvisorPreviewFragment) {
-            setTitle(R.string.title_advisor_rating);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setTitle(R.string.title_advisor_rating, true);
+        } else if (f instanceof UpdateProfileFragment) {
+            setTitle(R.string.title_update_profile, true);
         }
+
+        if (f instanceof BaseFragment) {((BaseFragment)f).onResumeFromBackStack();}
+
     }
 
     private void closeDrawer() {
@@ -546,7 +548,7 @@ public class TimelineActivity extends BaseActivity {
         setTimeout(new Runnable() {
             @Override
             public void run() {
-                openFragment(new ProfileFragment(), R.id.fragment_holder, true);
+                pushFragment(new ProfileFragment(), R.id.fragment_holder);
                 closeDrawer();
             }
         }, 500);

@@ -8,6 +8,7 @@
     <string name="ga_screen_post_detail" translatable="false">Post detail</string>
     <string name="ga_screen_topics" translatable="false">Topics</string>
     <string name="ga_screen_profile" translatable="false">Profile</string>
+    <string name="ga_screen_update_basic_profile" translatable="false">Update basic profile</string>
 
     <string name="ga_cat_register" translatable="false">Register</string>
     <string name="ga_event_request_invite" translatable="false">Request an invite</string>

@@ -386,12 +386,29 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void setTitle(int title, boolean displayHomeAsUpButton) {
+        setTitle(title);
+        displayHomeAsUpButton(displayHomeAsUpButton);
+    }
+
+    public void setTitle(String title, boolean displayHomeAsUpButton) {
+        setTitle(title);
+        displayHomeAsUpButton(displayHomeAsUpButton);
+    }
+
     public void setTitle(int title) {
         ActionBar b =  getSupportActionBar();
         if (b != null) {
             SpannableString s = new SpannableString(getString(title));
             s.setSpan(new CustomTypefaceSpan(RobotoR), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             b.setTitle(s);
+        }
+    }
+
+    public void displayHomeAsUpButton(boolean v) {
+        ActionBar b =  getSupportActionBar();
+        if (b != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 

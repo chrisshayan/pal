@@ -7,6 +7,7 @@
     <string name="title_advisor_rating">Advisor</string>
     <string name="title_welcome">Welcome</string>
     <string name="title_profile">Profile</string>
+    <string name="title_update_profile">Edit profile</string>
 
     <string name="time_1_min_ago">%1$s min ago</string>
     <string name="time_n_min_ago">%1$s mins ago</string>
@@ -63,7 +64,7 @@
 
 
     <!-- authentication screen!-->
-    <string name="email_address">Email address</string>
+    <string name="email_address">Email</string>
     <string name="your_email_adress" translatable="false">your@email.com</string>
     <string name="password">Password</string>
     <string name="password_placeholder" translatable="false">********</string>

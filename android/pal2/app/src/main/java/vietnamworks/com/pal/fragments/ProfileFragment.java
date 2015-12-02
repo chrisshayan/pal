@@ -52,6 +52,13 @@ public class ProfileFragment extends BaseFragment {
             }
         });
 
+        ((Button)rootView.findViewById(R.id.btn_edit_basic_profile)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((TimelineActivity) getActivity()).pushFragment(new UpdateProfileFragment(), R.id.fragment_holder);
+            }
+        });
+
         uploadAvatar = ((Button)rootView.findViewById(R.id.btn_upload_avatar));
         uploadAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +75,12 @@ public class ProfileFragment extends BaseFragment {
         super.onResume();
         BaseActivity.sInstance.hideActionBar();
         GaService.trackScreen(R.string.ga_screen_profile);
+        loadData();
+    }
+
+    @Override
+    public void onResumeFromBackStack() {
+        BaseActivity.sInstance.hideActionBar();
         loadData();
     }
 
@@ -156,6 +169,7 @@ public class ProfileFragment extends BaseFragment {
                     ((TextView) v.findViewById(R.id.lastname)).setText(u.getLastName());
                     ((TextView) v.findViewById(R.id.display_name)).setText(u.getDisplayName());
                     ((TextView) v.findViewById(R.id.email)).setText(u.getEmail());
+                    ((TextView) v.findViewById(R.id.job_title)).setText(u.getJobTitle());
 
                     ((TextView) v.findViewById(R.id.posts)).setText(String.format("%d", u.getTotalPosts()));
                     ((TextView) v.findViewById(R.id.avg_pts)).setText(String.format("%.2f", u.getScore()));
