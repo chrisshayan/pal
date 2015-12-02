@@ -218,4 +218,7 @@
     <string name="avatar_picker_library">Choose from Library</string>
     <string name="avatar_picker_select_file">Select file</string>
     <string name="avatar_picker_upload_fail">Fail to upload your avatar</string>
+
+    <string name="avatar_picker_fail_to_access_camera">Fail to access your camera</string>
+    <string name="avatar_picker_fail_to_access_photo">Fail to access your photo galary</string>
 </resources>

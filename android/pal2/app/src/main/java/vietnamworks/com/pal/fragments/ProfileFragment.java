@@ -99,18 +99,26 @@ public class ProfileFragment extends BaseFragment {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 if (items[item].equals(getString(R.string.avatar_picker_take_photo))) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), getString(R.string.avatar_picker_take_photo_temp_file));
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    getActivity().startActivityForResult(intent, TimelineActivity.REQUEST_CAMERA);
+                    try {
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        File f = new File(android.os.Environment.getExternalStorageDirectory(), getString(R.string.avatar_picker_take_photo_temp_file));
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                        getActivity().startActivityForResult(intent, TimelineActivity.REQUEST_CAMERA);
+                    } catch (Exception E) {
+                        BaseActivity.toast(R.string.avatar_picker_fail_to_access_camera);
+                    }
                 } else if (items[item].equals(getString(R.string.avatar_picker_library))) {
-                    Intent intent = new Intent(
-                            Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("image/*");
-                    getActivity().startActivityForResult(
-                            Intent.createChooser(intent, getString(R.string.avatar_picker_select_file)),
-                            TimelineActivity.SELECT_FILE);
+                    try {
+                        Intent intent = new Intent(
+                                Intent.ACTION_PICK,
+                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intent.setType("image/*");
+                        getActivity().startActivityForResult(
+                                Intent.createChooser(intent, getString(R.string.avatar_picker_select_file)),
+                                TimelineActivity.SELECT_FILE);
+                    } catch (Exception E) {
+                        BaseActivity.toast(R.string.avatar_picker_fail_to_access_photo);
+                    }
                 } else if (items[item].equals(getString(R.string.cancel))) {
                     dialog.dismiss();
                 }
