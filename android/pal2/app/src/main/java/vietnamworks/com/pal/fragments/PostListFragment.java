@@ -447,6 +447,7 @@ public class PostListFragment extends BaseFragment {
                         } else {
                             icon = R.drawable.ic_queueing;
                         }
+                        view.setValue(icon, p, true);
 
                     } else {
                         setAnimation(v.container, i);
