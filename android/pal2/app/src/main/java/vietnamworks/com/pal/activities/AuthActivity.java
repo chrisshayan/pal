@@ -63,9 +63,9 @@ public class AuthActivity extends BaseActivity {
             public void run() {
                 View v =  findViewById(R.id.app_title);
                 if (isKBShown) {
-                    v.animate().scaleX(0f).scaleY(0f).start();
+                    v.setVisibility(View.GONE);
                 } else {
-                    v.animate().scaleX(1f).scaleY(1f).start();
+                    v.setVisibility(View.VISIBLE);
                 }
             }
         });

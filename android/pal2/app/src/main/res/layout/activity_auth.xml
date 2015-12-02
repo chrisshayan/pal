@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="4"
         android:id="@+id/app_title">
 
         <ImageView
@@ -25,48 +25,54 @@
     <RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/login_form_margin_bottom_size">
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:gravity="center">
 
-        <fragment
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/login_form_height"
-            android:name="vietnamworks.com.pal.fragments.LoginFragment"
-            android:id="@+id/fragment_login"
-            android:layout_centerHorizontal="true"
-            tools:layout="@layout/fragment_login" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <fragment
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/login_form_height"
-            android:name="vietnamworks.com.pal.fragments.RegisterFragment"
-            android:id="@+id/fragment_register"
-            android:layout_centerHorizontal="true"
-            tools:layout="@layout/fragment_login" />
+            <fragment
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/login_form_height"
+                android:name="vietnamworks.com.pal.fragments.LoginFragment"
+                android:id="@+id/fragment_login"
+                android:layout_centerHorizontal="true"
+                tools:layout="@layout/fragment_login" />
 
-        <fragment
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/login_form_height"
-            android:name="vietnamworks.com.pal.fragments.RegisterSuccessFragment"
-            android:id="@+id/fragment_register_success"
-            android:layout_centerHorizontal="true"
-            tools:layout="@layout/fragment_login" />
+            <fragment
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/login_form_height"
+                android:name="vietnamworks.com.pal.fragments.RegisterFragment"
+                android:id="@+id/fragment_register"
+                android:layout_centerHorizontal="true"
+                tools:layout="@layout/fragment_login" />
 
-        <fragment
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/login_form_height"
-            android:name="vietnamworks.com.pal.fragments.RegisterErrorFragment"
-            android:id="@+id/fragment_register_error"
-            android:layout_centerHorizontal="true"
-            tools:layout="@layout/fragment_login" />
+            <fragment
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/login_form_height"
+                android:name="vietnamworks.com.pal.fragments.RegisterSuccessFragment"
+                android:id="@+id/fragment_register_success"
+                android:layout_centerHorizontal="true"
+                tools:layout="@layout/fragment_login" />
 
-        <fragment
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/login_form_height"
-            android:name="vietnamworks.com.pal.fragments.AuthProcessingFragment"
-            android:id="@+id/fragment_auth_processing"
-            tools:layout="@layout/fragment_login"
-            android:layout_centerHorizontal="true" />
+            <fragment
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/login_form_height"
+                android:name="vietnamworks.com.pal.fragments.RegisterErrorFragment"
+                android:id="@+id/fragment_register_error"
+                android:layout_centerHorizontal="true"
+                tools:layout="@layout/fragment_login" />
+
+            <fragment
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/login_form_height"
+                android:name="vietnamworks.com.pal.fragments.AuthProcessingFragment"
+                android:id="@+id/fragment_auth_processing"
+                tools:layout="@layout/fragment_login"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
 
     </RelativeLayout>
 
