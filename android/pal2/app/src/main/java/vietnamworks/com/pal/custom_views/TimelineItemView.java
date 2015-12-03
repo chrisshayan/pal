@@ -192,7 +192,7 @@ public class TimelineItemView extends TimelineItemBaseView {
         } else {
             scoreText.setVisibility(View.VISIBLE);
             txtSub2.setVisibility(View.GONE);
-            scoreText.setText(BaseActivity.sInstance.getResources().getStringArray(R.array.post_rate)[Math.max(Math.min(score, 4), 0)]);
+            scoreText.setText(BaseActivity.sInstance.getResources().getStringArray(R.array.post_rate)[Math.max(Math.min(score, 5), 1) - 1]);
         }
         setValue(title, Utils.getDuration(p.getLast_modified_date()), p.statusString(), p.getText(), p.getAudio(), preview_mode);
     }
