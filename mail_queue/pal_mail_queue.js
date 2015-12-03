@@ -24,7 +24,7 @@ ref.authWithCustomToken(FIREBASE_TOKEN, function(error, authData) {
                 email.from = SENDER_EMAIL;
                 email.html = data.to;
                 email.addFilter('templates', 'enable', 1);
-                email.addFilter('templates', 'template_id', '8ef30a12-8938-450a-8741-5c121e2a1507');
+                email.addFilter('templates', 'template_id', TEMPLATE_AVISOR_GREETING);
                 email.addSubstitution('_LINK_', data.link);
                 Sendgrid.send(email, function(err, json) {
                     if (err) {
@@ -48,7 +48,7 @@ ref.authWithCustomToken(FIREBASE_TOKEN, function(error, authData) {
                 email.from = SENDER_EMAIL;
                 email.html = data.to;
                 email.addFilter('templates', 'enable', 1);
-                email.addFilter('templates', 'template_id', 'a4388074-0ea1-4602-8ecc-d23342c8cf38');
+                email.addFilter('templates', 'template_id', TEMPLATE_USER_INVITE);
                 email.addSubstitution('_LINK_', data.link);
                 email.addSubstitution('_PASSWORD_', data.password);
                 Sendgrid.send(email, function(err, json) {
@@ -73,7 +73,7 @@ ref.authWithCustomToken(FIREBASE_TOKEN, function(error, authData) {
                 email.from = SENDER_EMAIL;
                 email.html = data.to;
                 email.addFilter('templates', 'enable', 1);
-                email.addFilter('templates', 'template_id', '32458bf2-5111-47d6-824f-e5f1ef4b3347');
+                email.addFilter('templates', 'template_id', TEMPLATE_CHANGE_PASSWORD);
                 Sendgrid.send(email, function(err, json) {
                     if (err) {
                         setTimeout(function() {
