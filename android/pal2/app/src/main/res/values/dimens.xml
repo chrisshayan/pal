@@ -20,8 +20,8 @@
 
     <dimen name="font_xs">12sp</dimen>
     <dimen name="font_s">14sp</dimen>
-    <dimen name="font_m">18sp</dimen>
-    <dimen name="font_l">24sp</dimen>
+    <dimen name="font_m">17sp</dimen>
+    <dimen name="font_l">22sp</dimen>
 
     <dimen name="login_button_height">30sp</dimen>
 

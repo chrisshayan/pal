@@ -56,7 +56,8 @@ public class RegisterSuccessFragment extends BaseFragment {
 
     public void setButtonShareVisible(boolean visible) {
         if (btnShare != null) {
-            btnShare.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+            //btnShare.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+            btnShare.setVisibility(View.INVISIBLE);
         }
     }
 }
