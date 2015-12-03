@@ -74,7 +74,7 @@
     <string name="register">Register</string>
     <string name="close">Back</string>
     <string name="share">Share</string>
-    <string name="register_success">Thank for your interest.\nPlease check your email for credential.</string>
+    <string name="register_success">Thank for your interest.\nConfirmation email is sent to you arleady. Please check your mail box.</string>
     <string name="register_thank">Thank for your interest.\nYour request has been queued.</string>
     <string name="send_to">Send to</string>
     <string name="share_text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</string>
@@ -207,16 +207,16 @@
     <string name="profile_progress_info">Progress</string>
     <string name="profile_exp_point">Exp. point</string>
     <string name="profile_level">Level</string>
-    <string name="profile_level_percent">Level completed percent</string>
+    <string name="profile_level_percent">Level progress</string>
     <string name="profile_update_encourage_title">Thank you</string>
-    <string name="profile_update_encourage_message">Thank for your interesting in our product. Please fulfill your profile that help us serve you better</string>
+    <string name="profile_update_encourage_message">Thank for your interest in our product. Please fulfill your profile that helps you have a better opportunity of learning English.</string>
 
     <!-- avatar picker -->
     <string name="avatar_picker_title">Add avatar</string>
     <string name="avatar_picker_take_photo">Take photo</string>
     <string name="avatar_picker_take_photo_temp_file" translatable="false">pal_avatar_temp.jpg</string>
     <string name="avatar_picker_library">Choose from Library</string>
-    <string name="avatar_picker_select_file">Select file</string>
+    <string name="avatar_picker_select_file">Select photo</string>
     <string name="avatar_picker_upload_fail">Fail to upload your avatar</string>
 
     <string name="avatar_picker_fail_to_access_camera">Fail to access your camera</string>
