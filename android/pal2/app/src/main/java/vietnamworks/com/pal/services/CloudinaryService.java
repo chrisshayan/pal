@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.common.Utils;
 
 /**
  * Created by duynk on 11/16/15.
@@ -26,7 +27,7 @@ public class CloudinaryService {
         context = ctx;
         config.put("cloud_name", ctx.getString(R.string.cloudinary_cloud_name));
         config.put("api_key", ctx.getString(R.string.cloudinary_api_key));
-        config.put("api_secret", ctx.getString(R.string.cloudinary_api_secret));
+        config.put("api_secret", Utils.r13(ctx.getString(R.string.cloudinary_api_secret)));
         cloudinary = new Cloudinary(config);
     }
 

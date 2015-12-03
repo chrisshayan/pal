@@ -7,6 +7,7 @@ import com.parse.Parse;
 import com.parse.ParseInstallation;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.common.Utils;
 
 /**
  * Created by duynk on 10/26/15.
@@ -16,7 +17,7 @@ public class ParseService {
     public static void init(Context ctx) {
         context = ctx;
         Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
-        Parse.initialize(ctx, ctx.getString(R.string.parse_app_id), ctx.getString(R.string.parse_app_key));
+        Parse.initialize(ctx, Utils.r13(ctx.getString(R.string.parse_app_id)), Utils.r13(ctx.getString(R.string.parse_app_key)));
         ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 
