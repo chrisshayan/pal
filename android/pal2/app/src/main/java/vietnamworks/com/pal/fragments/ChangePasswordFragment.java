@@ -67,7 +67,7 @@ public class ChangePasswordFragment extends BaseFragment {
                     setError(R.string.require_confirm_password);
                     view_confirm_password.requestFocus();
                 } else if (!new_password.equals(confirm_password)) {
-                    setError(R.string.require_new_password);
+                    setError(R.string.password_not_matched);
                     view_new_password.setText("");
                     view_confirm_password.setText("");
                     view_new_password.requestFocus();
