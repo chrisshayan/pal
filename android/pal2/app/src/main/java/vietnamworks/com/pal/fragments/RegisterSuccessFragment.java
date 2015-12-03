@@ -22,6 +22,9 @@ public class RegisterSuccessFragment extends BaseFragment {
 
         BaseActivity.applyFont(rootView);
 
+        //TODO: no need share button for now.
+        setButtonShareVisible(false);
+
         return rootView;
     }
 
