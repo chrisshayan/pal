@@ -45,25 +45,43 @@ public class AuthActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
-
-        loginFragment = (LoginFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_login);
-        registerFragment = (RegisterFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_register);
-        registerSuccessFragment = (RegisterSuccessFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_register_success);
-        registerErrorFragment = (RegisterErrorFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_register_error);
-        authProcessingFragment = (AuthProcessingFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_auth_processing);
-
-        state = STATE_LOGIN;
-        try {
-            loginFragment.getView().setVisibility(state == STATE_LOGIN ? View.VISIBLE : View.GONE);
-            registerFragment.getView().setVisibility(state == STATE_REGISTER ? View.VISIBLE : View.GONE);
-            registerSuccessFragment.getView().setVisibility(state == STATE_SUCCESS ? View.VISIBLE : View.GONE);
-            registerErrorFragment.getView().setVisibility(state == STATE_ERROR ? View.VISIBLE : View.GONE);
-            authProcessingFragment.getView().setVisibility(state == STATE_PROCESSING ? View.VISIBLE : View.GONE);
-        } catch (Exception E) {
-
-        }
-
+        setState(STATE_LOGIN);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+    }
+
+    private LoginFragment getLoginFragment() {
+        if (loginFragment == null) {
+            loginFragment = new LoginFragment();
+        }
+        return loginFragment;
+    }
+
+    private RegisterFragment getRegisterFragment() {
+        if (registerFragment == null) {
+            registerFragment = new RegisterFragment();
+        }
+        return registerFragment;
+    }
+
+    private RegisterErrorFragment getRegisterErrorFragment() {
+        if (registerErrorFragment == null) {
+            registerErrorFragment = new RegisterErrorFragment();
+        }
+        return registerErrorFragment;
+    }
+
+    private RegisterSuccessFragment getRegisterSuccessFragment() {
+        if (registerSuccessFragment == null) {
+            registerSuccessFragment = new RegisterSuccessFragment();
+        }
+        return registerSuccessFragment;
+    }
+
+    private AuthProcessingFragment getAuthProcessingFragment() {
+        if (authProcessingFragment == null) {
+            authProcessingFragment = new AuthProcessingFragment();
+        }
+        return authProcessingFragment;
     }
 
     @Override
@@ -81,23 +99,6 @@ public class AuthActivity extends BaseActivity {
         });
     }
 
-    private void setSetFragmentVisibility() {
-        setTimeout(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    loginFragment.getView().setVisibility(state == STATE_LOGIN ? View.VISIBLE : View.GONE);
-                    registerFragment.getView().setVisibility(state == STATE_REGISTER ? View.VISIBLE : View.GONE);
-                    registerSuccessFragment.getView().setVisibility(state == STATE_SUCCESS ? View.VISIBLE : View.GONE);
-                    registerErrorFragment.getView().setVisibility(state == STATE_ERROR ? View.VISIBLE : View.GONE);
-                    authProcessingFragment.getView().setVisibility(state == STATE_PROCESSING ? View.VISIBLE : View.GONE);
-                } catch (Exception E) {
-
-                }
-            }
-        });
-    }
-
     private Animator.AnimatorListener stateTransitionAnimationListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animation) {
@@ -106,7 +107,6 @@ public class AuthActivity extends BaseActivity {
 
         @Override
         public void onAnimationEnd(Animator animation) {
-            setSetFragmentVisibility();
         }
 
         @Override
@@ -131,25 +131,13 @@ public class AuthActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    if (last_state == STATE_LOGIN) {
-                        loginFragment.getView().animate().alpha(0).setDuration(100).start();
-                    } else if (last_state == STATE_REGISTER) {
-                        registerFragment.getView().animate().alpha(0).setDuration(100).start();
-                    } else if (last_state == STATE_SUCCESS) {
-                        registerSuccessFragment.getView().animate().setDuration(100).alpha(0).start();
-                    } else if (last_state == STATE_ERROR) {
-                        registerErrorFragment.getView().animate().setDuration(100).alpha(0).start();
-                    } else if (last_state == STATE_PROCESSING) {
-                        authProcessingFragment.getView().animate().setDuration(100).alpha(0).start();
-                    } else {
-                        setSetFragmentVisibility();
-                    }
                     if (_state == STATE_LOGIN) {
-                        loginFragment.getView().animate().setDuration(100).alpha(1).setListener(stateTransitionAnimationListener).start();
+                        openFragmentAndClean(getLoginFragment(), R.id.fragment_holder);
                     } else if (_state == STATE_REGISTER) {
-                        registerFragment.getView().animate().setDuration(100).alpha(1).setListener(stateTransitionAnimationListener).start();
+                        openFragmentAndClean(getRegisterFragment(), R.id.fragment_holder);
                     } else if (_state == STATE_SUCCESS) {
                         if (ext != null) {
+                            openFragment(getRegisterSuccessFragment(), R.id.fragment_holder);
                             if (ext.containsKey("message")) {
                                 registerSuccessFragment.setMessage(ext.get("message").toString());
                             } else {
@@ -161,8 +149,8 @@ public class AuthActivity extends BaseActivity {
                                 registerSuccessFragment.setButtonShareVisible(true);
                             }
                         }
-                        registerSuccessFragment.getView().animate().setDuration(100).alpha(1).setListener(stateTransitionAnimationListener).start();
                     } else if (_state == STATE_ERROR) {
+                        pushFragment(getRegisterErrorFragment(), R.id.fragment_holder);
                         if (ext != null) {
                             if (ext.containsKey("message")) {
                                 registerErrorFragment.setError(ext.get("message").toString());
@@ -170,10 +158,9 @@ public class AuthActivity extends BaseActivity {
                                 registerErrorFragment.setError(R.string.register_fail);
                             }
                         }
-                        registerErrorFragment.getView().animate().setDuration(100).alpha(1).setListener(stateTransitionAnimationListener).start();
                     } else if (_state == STATE_PROCESSING) {
+                        pushFragment(getAuthProcessingFragment(), R.id.fragment_holder);
                         hideKeyboard();
-                        authProcessingFragment.getView().animate().setDuration(100).alpha(1).setListener(stateTransitionAnimationListener).start();
                     }
                 } catch (Exception E) {
                     E.printStackTrace();
@@ -289,5 +276,7 @@ public class AuthActivity extends BaseActivity {
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
     }
+
+    public void doNothing(View v) {}
 
 }

@@ -9,7 +9,8 @@
     android:paddingTop="@dimen/base_padding_8x"
     android:paddingRight="@dimen/base_padding_4x"
     android:gravity="center"
-    android:paddingBottom="@dimen/base_padding_4x">
+    android:paddingBottom="@dimen/base_padding_4x"
+    android:onClick="doNothing">
 
 
     <LinearLayout

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import vietnamworks.com.pal.R;
@@ -13,6 +14,11 @@ import vietnamworks.com.pal.activities.BaseActivity;
  * Created by duynk on 10/26/15.
  */
 public class RegisterSuccessFragment extends BaseFragment {
+    Button btnShare;
+    TextView txtMessage;
+
+    String message;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -21,6 +27,10 @@ public class RegisterSuccessFragment extends BaseFragment {
                 .inflate(R.layout.fragment_register_success, container, false);
 
         BaseActivity.applyFont(rootView);
+        btnShare = (Button)rootView.findViewById(R.id.btn_share);
+        txtMessage = (TextView)rootView.findViewById(R.id.message);
+
+        setMessage(this.message);
 
         //TODO: no need share button for now.
         setButtonShareVisible(false);
@@ -30,14 +40,23 @@ public class RegisterSuccessFragment extends BaseFragment {
 
 
     public void setMessage(String message) {
-        ((TextView)getView().findViewById(R.id.message)).setText(message);
+        if (message != null) {
+            if (txtMessage != null) {
+                txtMessage.setText(message);
+                this.message = null;
+            } else {
+                this.message = message;
+            }
+        }
     }
 
     public void setMessage(int message) {
-        ((TextView)getView().findViewById(R.id.message)).setText(getString(message));
+        txtMessage.setText(getString(message));
     }
 
     public void setButtonShareVisible(boolean visible) {
-        getView().findViewById(R.id.btn_share).setVisibility(visible?View.VISIBLE:View.INVISIBLE);
+        if (btnShare != null) {
+            btnShare.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 }

@@ -13,6 +13,8 @@ import vietnamworks.com.pal.activities.BaseActivity;
  * Created by duynk on 10/27/15.
  */
 public class RegisterErrorFragment extends BaseFragment {
+    TextView txtMessage;
+    String message;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -20,15 +22,23 @@ public class RegisterErrorFragment extends BaseFragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_register_error, container, false);
         BaseActivity.applyFont(rootView);
-
+        txtMessage = (TextView)rootView.findViewById(R.id.message);
+        setError(this.message);
         return rootView;
     }
 
     public void setError(String message) {
-        ((TextView)getView().findViewById(R.id.error_message)).setText(message);
+        if (message != null) {
+            if (txtMessage != null) {
+                txtMessage.setText(message);
+                this.message = null;
+            } else {
+                this.message = message;
+            }
+        }
     }
 
     public void setError(int message) {
-        ((TextView)getView().findViewById(R.id.error_message)).setText(getString(message));
+        txtMessage.setText(getString(message));
     }
 }
