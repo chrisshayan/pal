@@ -2,6 +2,7 @@ package vietnamworks.com.pal.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -16,6 +17,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.style.MetricAffectingSpan;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -25,8 +27,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.common.Utils;
+import vietnamworks.com.pal.services.AsyncCallback;
 
 /**
  * Created by duynk on 10/1/15.
@@ -122,7 +128,7 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void run() {
                 int base_padding = 0;
-                if (Utils.isLollipopOrBelow()) {
+                if (Utils.isLollipopOrLater()) {
                     base_padding = (int) (40 * density);
                 }
                 if (toast != null) {
@@ -448,6 +454,54 @@ public class BaseActivity extends AppCompatActivity {
 
     public void lockBackKey(boolean lockedBackkey) {
         this.lockedBackkey = lockedBackkey;
+    }
+
+    AsyncCallback permissionCallback;
+    public void askForPermission(String[] permission, AsyncCallback callback) {
+        List<String> permissions = new ArrayList<String>();
+        if (Utils.isMarshMallowOrLater()) {
+            for (String p:permission) {
+                if (checkSelfPermission(p) != PackageManager.PERMISSION_GRANTED) {
+                    permissions.add(android.Manifest.permission.CAMERA);
+                }
+            }
+            if (permissions.size() > 0) {
+                requestPermissions(permissions.toArray(new String[permissions.size()]), 3333);
+                permissionCallback = callback;
+            } else {
+                callback.onSuccess(this, null);
+            }
+        } else {
+            callback.onSuccess(this, null);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch ( requestCode ) {
+            case 3333: {
+                boolean allAccepted = false;
+                for( int i = 0; i < permissions.length; i++ ) {
+                    if( grantResults[i] == PackageManager.PERMISSION_GRANTED ) {
+                        Log.d("Permissions", "Permission Granted: " + permissions[i]);
+                    } else if( grantResults[i] == PackageManager.PERMISSION_DENIED ) {
+                        Log.d( "Permissions", "Permission Denied: " + permissions[i] );
+                        allAccepted = false;
+                    }
+                }
+                if (permissionCallback != null) {
+                    if (allAccepted) {
+                        permissionCallback.onSuccess(this, null);
+                    } else {
+                        permissionCallback.onError(this, -1, null);
+                    }
+                }
+            }
+            break;
+            default: {
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        }
     }
 
     public static BaseActivity sInstance;

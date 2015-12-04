@@ -30,8 +30,12 @@ public class Utils {
     public static int apiVersion = Build.VERSION.SDK_INT;
     public final static String DEFAULT_DATETIME_FORMAT = "EEE, d MMM yyyy, HH:mm";
 
-    public static boolean isLollipopOrBelow() {
+    public static boolean isLollipopOrLater() {
         return apiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP;
+    }
+
+    public static boolean isMarshMallowOrLater() {
+        return apiVersion >= Build.VERSION_CODES.M;
     }
 
     public static String nowString() {

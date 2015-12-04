@@ -431,7 +431,7 @@ public class PostListFragment extends BaseFragment {
 
                             @Override
                             public void onAnimationEnd(Animation animation) {
-                                if (Utils.isLollipopOrBelow()) {
+                                if (Utils.isLollipopOrLater()) {
                                     view.startIconAnim();
                                 }
                             }
@@ -442,7 +442,7 @@ public class PostListFragment extends BaseFragment {
                             }
                         });
 
-                        if (Utils.isLollipopOrBelow()) {
+                        if (Utils.isLollipopOrLater()) {
                             icon = R.drawable.animation_timeline_uploading;
                         } else {
                             icon = R.drawable.ic_queueing;

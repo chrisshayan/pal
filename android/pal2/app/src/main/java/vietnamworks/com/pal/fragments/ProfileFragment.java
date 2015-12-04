@@ -1,5 +1,6 @@
 package vietnamworks.com.pal.fragments;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -100,10 +101,20 @@ public class ProfileFragment extends BaseFragment {
             public void onClick(DialogInterface dialog, int item) {
                 if (items[item].equals(getString(R.string.avatar_picker_take_photo))) {
                     try {
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        File f = new File(android.os.Environment.getExternalStorageDirectory(), getString(R.string.avatar_picker_take_photo_temp_file));
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                        getActivity().startActivityForResult(intent, TimelineActivity.REQUEST_CAMERA);
+                        BaseActivity.sInstance.askForPermission(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, new AsyncCallback() {
+                            @Override
+                            public void onSuccess(Context ctx, Object obj) {
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                File f = new File(android.os.Environment.getExternalStorageDirectory(), getString(R.string.avatar_picker_take_photo_temp_file));
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                                getActivity().startActivityForResult(intent, TimelineActivity.REQUEST_CAMERA);
+                            }
+
+                            @Override
+                            public void onError(Context ctx, int error_code, String message) {
+                                BaseActivity.toast(R.string.avatar_picker_fail_to_access_camera);
+                            }
+                        });
                     } catch (Exception E) {
                         BaseActivity.toast(R.string.avatar_picker_fail_to_access_camera);
                     }
