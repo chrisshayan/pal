@@ -87,8 +87,8 @@ public class TimelineActivity extends BaseActivity {
         setContentView(R.layout.activity_timeline);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        displayHomeAsUpButton(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_image_dehaze);
 
         //drawer -- header
