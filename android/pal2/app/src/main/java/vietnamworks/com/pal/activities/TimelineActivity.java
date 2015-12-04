@@ -254,6 +254,12 @@ public class TimelineActivity extends BaseActivity {
 
         Topics.requestRandomTopics();
 
+        //show version:
+        try {
+            TextView versionView = ((TextView) findViewById(R.id.version));
+            String version = "Version " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " - build " + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+            versionView.setText(version);
+        } catch (Exception E) {}
     }
 
     public void removeDrawerGuide() {
