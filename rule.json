@@ -99,7 +99,7 @@
     },
     "profiles_pub": {
       "$userid": {
-        ".validate": "newData.hasChildren(['email'])",
+        ".validate": "newData.hasChildren()",
         "created_by": {
           ".validate": "newData.isString() || newData.val() == null"
         },
@@ -119,7 +119,7 @@
           ".validate": "newData.isString() || newData.val() == null"
         },
         "email": {
-          ".validate": "newData.isString()"
+          ".validate": "newData.isString() || newData.val() == null"
         },
         "first_name": {
           ".validate": "newData.isString() || newData.val() == null"

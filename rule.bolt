@@ -74,7 +74,7 @@ type PublicProfile {
 
     avatar: String | Null,
     display_name: String | Null,
-    email: String,
+    email: String | Null,
 
     first_name: String | Null,
     last_name: String | Null,
