@@ -56,9 +56,15 @@ type PrivateProfle {
 }
 
 path /profiles_pub/$userid is PublicProfile {
-    write() = isAdminOrOwner($userid);
+    write() = isSignedIn();
     read() = isSignedIn();
 }
+
+path /profiles_pub/$userid/rate1 {write() = isSignedIn();}
+path /profiles_pub/$userid/rate2 {write() = isSignedIn();}
+path /profiles_pub/$userid/rate3 {write() = isSignedIn();}
+path /profiles_pub/$userid/rate4 {write() = isSignedIn();}
+path /profiles_pub/$userid/rate5 {write() = isSignedIn();}
 
 type PublicProfile {
     created_by: String | Null,
@@ -93,11 +99,11 @@ type PublicProfile {
 
     //for advisor
     points: Number | Null,
-    rate1: String | Null,
-    rate2: String | Null,
-    rate3: String | Null,
-    rate4: String | Null,
-    rate5: String | Null
+    rate1: Number | Null,
+    rate2: Number | Null,
+    rate3: Number | Null,
+    rate4: Number | Null,
+    rate5: Number | Null
 }
 
 //=======================================================
@@ -105,21 +111,21 @@ type PublicProfile {
 //=======================================================
 
 path /advisor_votes/$advisor_id/$user_id is Rating {
-    write() = isCurrentUser($user_id);
+    write() = isSignedIn();
     read() = isSignedIn();
 }
 
 path /advisor_votes_log/$advisor_id/$user_id is Rating[] {
-    write() = isCurrentUser($user_id);
+    write() = isSignedIn();
     read() = isSignedIn();
 }
 
 type Rating {
-    avatar: String,
-    created_date: String,
-    display_name: String,
-    message: String,
-    rate: Number
+    avatar: String | Null,
+    created_date: Number | Null,
+    display_name: String | Null,
+    message: String | Null,
+    rate: Number | Null
 }
 
 //=======================================================
@@ -270,3 +276,4 @@ isCurrentUser(userid) = auth != null && auth.uid == userid;
 isSignedIn() = auth != null;
 isAdmin() = auth != null && (root.child('profiles').child(auth.uid).child('role').val() == 'admin');
 isAdminOrOwner(userid) = auth != null && (auth.uid == userid || root.child('profiles').child(auth.uid).child('role').val() == 'admin');
+isAdvisorOrOwner(userid) = auth != null && (auth.uid == userid || root.child('profiles').child(auth.uid).child('role').val() == 'admin' || root.child('profiles').child(auth.uid).child('role').val() == 'advisor');

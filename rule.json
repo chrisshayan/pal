@@ -176,51 +176,56 @@
           ".validate": "newData.isNumber() || newData.val() == null"
         },
         "rate1": {
-          ".validate": "newData.isString() || newData.val() == null"
+          ".validate": "newData.isNumber() || newData.val() == null",
+          ".write": "auth != null"
         },
         "rate2": {
-          ".validate": "newData.isString() || newData.val() == null"
+          ".validate": "newData.isNumber() || newData.val() == null",
+          ".write": "auth != null"
         },
         "rate3": {
-          ".validate": "newData.isString() || newData.val() == null"
+          ".validate": "newData.isNumber() || newData.val() == null",
+          ".write": "auth != null"
         },
         "rate4": {
-          ".validate": "newData.isString() || newData.val() == null"
+          ".validate": "newData.isNumber() || newData.val() == null",
+          ".write": "auth != null"
         },
         "rate5": {
-          ".validate": "newData.isString() || newData.val() == null"
+          ".validate": "newData.isNumber() || newData.val() == null",
+          ".write": "auth != null"
         },
         "$other": {
           ".validate": "false"
         },
         ".read": "auth != null",
-        ".write": "auth != null && (auth.uid == $userid || newData.parent().parent().child('profiles').child(auth.uid).child('role').val() == 'admin')"
+        ".write": "auth != null"
       }
     },
     "advisor_votes": {
       "$advisor_id": {
         "$user_id": {
-          ".validate": "newData.hasChildren(['avatar', 'created_date', 'display_name', 'message', 'rate'])",
+          ".validate": "newData.hasChildren()",
           "avatar": {
-            ".validate": "newData.isString()"
+            ".validate": "newData.isString() || newData.val() == null"
           },
           "created_date": {
-            ".validate": "newData.isString()"
+            ".validate": "newData.isNumber() || newData.val() == null"
           },
           "display_name": {
-            ".validate": "newData.isString()"
+            ".validate": "newData.isString() || newData.val() == null"
           },
           "message": {
-            ".validate": "newData.isString()"
+            ".validate": "newData.isString() || newData.val() == null"
           },
           "rate": {
-            ".validate": "newData.isNumber()"
+            ".validate": "newData.isNumber() || newData.val() == null"
           },
           "$other": {
             ".validate": "false"
           },
           ".read": "auth != null",
-          ".write": "auth != null && auth.uid == $user_id"
+          ".write": "auth != null"
         }
       }
     },
@@ -228,28 +233,28 @@
       "$advisor_id": {
         "$user_id": {
           "$key1": {
-            ".validate": "newData.hasChildren(['avatar', 'created_date', 'display_name', 'message', 'rate'])",
+            ".validate": "newData.hasChildren()",
             "avatar": {
-              ".validate": "newData.isString()"
+              ".validate": "newData.isString() || newData.val() == null"
             },
             "created_date": {
-              ".validate": "newData.isString()"
+              ".validate": "newData.isNumber() || newData.val() == null"
             },
             "display_name": {
-              ".validate": "newData.isString()"
+              ".validate": "newData.isString() || newData.val() == null"
             },
             "message": {
-              ".validate": "newData.isString()"
+              ".validate": "newData.isString() || newData.val() == null"
             },
             "rate": {
-              ".validate": "newData.isNumber()"
+              ".validate": "newData.isNumber() || newData.val() == null"
             },
             "$other": {
               ".validate": "false"
             }
           },
           ".read": "auth != null",
-          ".write": "auth != null && auth.uid == $user_id"
+          ".write": "auth != null"
         }
       }
     },
