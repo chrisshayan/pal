@@ -79,12 +79,13 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/login_button_height"
                 android:text="@string/register"
                 android:id="@+id/button3"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/btn_login_bg"
                 android:onClick="onExecuteRequestInvite"
-                style="@style/Text.Small.Success" />
+                style="@style/Text.Small.Success"
+                android:textColor="@color/colorTextLight" />
         </LinearLayout>
     </LinearLayout>
 

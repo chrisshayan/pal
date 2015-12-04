@@ -40,12 +40,10 @@ public class RegisterSuccessFragment extends BaseFragment {
 
 
     public void setMessage(String message) {
+        this.message = message;
         if (message != null) {
             if (txtMessage != null) {
                 txtMessage.setText(message);
-                this.message = null;
-            } else {
-                this.message = message;
             }
         }
     }

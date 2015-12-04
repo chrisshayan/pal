@@ -22,18 +22,16 @@ public class RegisterErrorFragment extends BaseFragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_register_error, container, false);
         BaseActivity.applyFont(rootView);
-        txtMessage = (TextView)rootView.findViewById(R.id.message);
+        txtMessage = (TextView)rootView.findViewById(R.id.error_message);
         setError(this.message);
         return rootView;
     }
 
     public void setError(String message) {
+        this.message = message;
         if (message != null) {
             if (txtMessage != null) {
                 txtMessage.setText(message);
-                this.message = null;
-            } else {
-                this.message = message;
             }
         }
     }
