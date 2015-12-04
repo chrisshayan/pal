@@ -188,8 +188,7 @@ public class TimelineActivity extends BaseActivity {
                                         @Override
                                         public void onAnimationEnd(Animator animation) {
                                             try {
-                                                drawer_guide.setVisibility(View.GONE);
-                                                ((ViewGroup) drawer_guide.getParent()).removeView(drawer_guide);
+                                                removeDrawerGuide();
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
@@ -244,7 +243,7 @@ public class TimelineActivity extends BaseActivity {
         if (!LocalStorage.getBool(getString(R.string.local_storage_show_fab_guide), false)) {
             openFragment(new WelcomeFragment(), R.id.fragment_holder);
             setTitle(R.string.title_welcome);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            displayHomeAsUpButton(false);
         } else {
             onOpenAllPosts(null);
             setTitle(R.string.title_timeline);
@@ -255,6 +254,16 @@ public class TimelineActivity extends BaseActivity {
 
         Topics.requestRandomTopics();
 
+    }
+
+    public void removeDrawerGuide() {
+        try {
+            if (drawer_guide != null && drawer_guide.getParent() != null) {
+                ((ViewGroup) drawer_guide.getParent()).removeView(drawer_guide);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private ValueEventListener onChangedUnreadPostsValue = new ValueEventListener() {
@@ -363,6 +372,7 @@ public class TimelineActivity extends BaseActivity {
             if (deep == 0) {
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 drawer.openDrawer(navigationView);
+                removeDrawerGuide();
             } else {
                 getSupportFragmentManager().popBackStackImmediate();
                 hideKeyboard();
@@ -448,6 +458,7 @@ public class TimelineActivity extends BaseActivity {
 
     private void closeDrawer() {
         drawer.closeDrawer(GravityCompat.START);
+        removeDrawerGuide();
     }
 
     private void setNumberOfUnreadPostUI(final int val) {
