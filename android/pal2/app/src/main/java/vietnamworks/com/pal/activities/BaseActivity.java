@@ -480,7 +480,7 @@ public class BaseActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch ( requestCode ) {
             case 3333: {
-                boolean allAccepted = false;
+                boolean allAccepted = true;
                 for( int i = 0; i < permissions.length; i++ ) {
                     if( grantResults[i] == PackageManager.PERMISSION_GRANTED ) {
                         Log.d("Permissions", "Permission Granted: " + permissions[i]);
