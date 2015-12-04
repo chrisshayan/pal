@@ -71,7 +71,7 @@ ref.authWithCustomToken(FIREBASE_TOKEN, function(error, authData) {
                 email.addTo(data.to);
                 email.subject = "You’ve just changed your password on your PAL account";
                 email.from = SENDER_EMAIL;
-                email.html = data.to;
+                email.html = "";
                 email.addFilter('templates', 'enable', 1);
                 email.addFilter('templates', 'template_id', TEMPLATE_CHANGE_PASSWORD);
                 Sendgrid.send(email, function(err, json) {
