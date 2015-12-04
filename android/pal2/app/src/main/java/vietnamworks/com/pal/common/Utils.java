@@ -8,6 +8,8 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import com.crittercism.app.Crittercism;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -36,6 +38,10 @@ public class Utils {
 
     public static boolean isMarshMallowOrLater() {
         return apiVersion >= Build.VERSION_CODES.M;
+    }
+
+    public static boolean isVersionOrLater(int version) {
+        return apiVersion >= version;
     }
 
     public static String nowString() {
@@ -229,13 +235,14 @@ public class Utils {
             }
             bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
         } catch (Exception e) {
+            Crittercism.logHandledException(e);
         }
         bm = resize(bm, maxWidth, maxHeight);
         return bm;
     }
 
     public static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
-        if (maxHeight > 0 && maxWidth > 0) {
+        if (image != null && maxHeight > 0 && maxWidth > 0) {
             int width = image.getWidth();
             int height = image.getHeight();
             float ratioBitmap = (float) width / (float) height;

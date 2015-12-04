@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -20,12 +21,14 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Map;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.activities.TimelineActivity;
 import vietnamworks.com.pal.common.PicassoCircleTransform;
+import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.entities.UserProfile;
 import vietnamworks.com.pal.models.CurrentUserProfile;
 import vietnamworks.com.pal.services.AsyncCallback;
@@ -101,7 +104,14 @@ public class ProfileFragment extends BaseFragment {
             public void onClick(DialogInterface dialog, int item) {
                 if (items[item].equals(getString(R.string.avatar_picker_take_photo))) {
                     try {
-                        BaseActivity.sInstance.askForPermission(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, new AsyncCallback() {
+                        ArrayList<String> p = new ArrayList<String>();
+                        p.add(Manifest.permission.CAMERA);
+                        p.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        if (Utils.isVersionOrLater(Build.VERSION_CODES.JELLY_BEAN)) {
+                            p.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+                        }
+
+                        BaseActivity.sInstance.askForPermission(p.toArray(new String[p.size()]), new AsyncCallback() {
                             @Override
                             public void onSuccess(Context ctx, Object obj) {
                                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -116,18 +126,33 @@ public class ProfileFragment extends BaseFragment {
                             }
                         });
                     } catch (Exception E) {
+                        E.printStackTrace();
                         BaseActivity.toast(R.string.avatar_picker_fail_to_access_camera);
                     }
                 } else if (items[item].equals(getString(R.string.avatar_picker_library))) {
                     try {
-                        Intent intent = new Intent(
-                                Intent.ACTION_PICK,
-                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        intent.setType("image/*");
-                        getActivity().startActivityForResult(
-                                Intent.createChooser(intent, getString(R.string.avatar_picker_select_file)),
-                                TimelineActivity.SELECT_FILE);
+                        ArrayList<String> p = new ArrayList<String>();
+                        if (Utils.isVersionOrLater(Build.VERSION_CODES.JELLY_BEAN)) {
+                            p.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+                        }
+                        BaseActivity.sInstance.askForPermission(p.toArray(new String[p.size()]), new AsyncCallback() {
+                            @Override
+                            public void onSuccess(Context ctx, Object obj) {
+                                Intent intent = new Intent(
+                                        Intent.ACTION_PICK,
+                                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                intent.setType("image/*");
+                                getActivity().startActivityForResult(
+                                        Intent.createChooser(intent, getString(R.string.avatar_picker_select_file)),
+                                        TimelineActivity.SELECT_FILE);
+                            }
+                            @Override
+                            public void onError(Context ctx, int error_code, String message) {
+                                BaseActivity.toast(R.string.avatar_picker_fail_to_access_photo);
+                            }
+                        });
                     } catch (Exception E) {
+                        E.printStackTrace();
                         BaseActivity.toast(R.string.avatar_picker_fail_to_access_photo);
                     }
                 } else if (items[item].equals(getString(R.string.cancel))) {
@@ -139,38 +164,42 @@ public class ProfileFragment extends BaseFragment {
     }
 
     public void onSelectedAvatar(Bitmap b) {
-        final TimelineActivity activity = (TimelineActivity)getActivity();
-        final View view = getView();
+        if (b != null) {
+            final TimelineActivity activity = (TimelineActivity) getActivity();
+            final View view = getView();
 
-        if (activity != null && view != null) {
-            uploadAvatar.setEnabled(false);
+            if (activity != null && view != null) {
+                uploadAvatar.setEnabled(false);
 
-            CloudinaryService.uploadAvatar(b, new AsyncCallback() {
-                @Override
-                public void onSuccess(Context ctx, Object res) {
-                    Map m = (Map) res;
-                    final String url = m.get("secure_url").toString();
-                    CurrentUserProfile.updateAvatar(url);
-                    BaseActivity.timeout(new Runnable() {
-                        @Override
-                        public void run() {
-                            uploadAvatar.setEnabled(true);
-                            Picasso.with(getContext()).load(url).transform(new PicassoCircleTransform()).into(((ImageView) view.findViewById(R.id.avatar)));
-                        }
-                    });
-                }
+                CloudinaryService.uploadAvatar(b, new AsyncCallback() {
+                    @Override
+                    public void onSuccess(Context ctx, Object res) {
+                        Map m = (Map) res;
+                        final String url = m.get("secure_url").toString();
+                        CurrentUserProfile.updateAvatar(url);
+                        BaseActivity.timeout(new Runnable() {
+                            @Override
+                            public void run() {
+                                uploadAvatar.setEnabled(true);
+                                Picasso.with(getContext()).load(url).transform(new PicassoCircleTransform()).into(((ImageView) view.findViewById(R.id.avatar)));
+                            }
+                        });
+                    }
 
-                @Override
-                public void onError(Context ctx, int error_code, String message) {
-                    BaseActivity.timeout(new Runnable() {
-                        @Override
-                        public void run() {
-                            uploadAvatar.setEnabled(true);
-                        }
-                    });
-                    BaseActivity.toast(R.string.avatar_picker_upload_fail);
-                }
-            });
+                    @Override
+                    public void onError(Context ctx, int error_code, String message) {
+                        BaseActivity.timeout(new Runnable() {
+                            @Override
+                            public void run() {
+                                uploadAvatar.setEnabled(true);
+                            }
+                        });
+                        BaseActivity.toast(R.string.avatar_picker_upload_fail);
+                    }
+                });
+            }
+        } else {
+            BaseActivity.toast(R.string.avatar_picker_decode_fail);
         }
     }
 

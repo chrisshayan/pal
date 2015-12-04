@@ -462,7 +462,7 @@ public class BaseActivity extends AppCompatActivity {
         if (Utils.isMarshMallowOrLater()) {
             for (String p:permission) {
                 if (checkSelfPermission(p) != PackageManager.PERMISSION_GRANTED) {
-                    permissions.add(android.Manifest.permission.CAMERA);
+                    permissions.add(p);
                 }
             }
             if (permissions.size() > 0) {
