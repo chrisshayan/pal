@@ -104,6 +104,7 @@ public class AudioPlayer extends LinearLayout implements AudioMixerService.Audio
                 @Override
                 public void onClick(View v) {
                     if (callback != null) {
+                        AudioMixerService.stop(AudioPlayer.this);
                         callback.onRemoveAudio();
                     }
                 }
