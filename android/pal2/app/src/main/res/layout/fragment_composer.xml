@@ -117,7 +117,8 @@
                 android:text="@string/send"
                 android:background="?attr/selectableItemBackground"
                 android:id="@+id/btn_done"
-                android:layout_marginRight="@dimen/base_padding_2x" />
+                android:layout_marginRight="@dimen/base_padding_2x"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -127,7 +128,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/overlay"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <View
             android:layout_width="match_parent"
@@ -248,7 +249,8 @@
                     android:onClick="onClickedInGuideComponent"
                     android:layout_alignParentBottom="true"
                     android:layout_alignRight="@+id/imageView13"
-                    android:layout_alignEnd="@+id/imageView13" />
+                    android:layout_alignEnd="@+id/imageView13"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
