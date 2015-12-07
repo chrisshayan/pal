@@ -21,9 +21,10 @@ public class ParseService {
         ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 
-    public static void registerUser(String user_id) {
+    public static void registerUser(String user_id, String email) {
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
         installation.put("user_id", user_id);
+        installation.put("user_email", email);
         installation.saveInBackground();
     }
 
