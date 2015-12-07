@@ -68,7 +68,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
         $scope.role = firebaseHelper.getRole();
         $scope.hasFullfillProfile = firebaseHelper.getRole() == 'admin' ||
             (
-                pubProfile.first_name && pubProfile.last_name && pubProfile.avatar && pubProfile.exp
+                pubProfile.first_name && pubProfile.last_name && pubProfile.avatar && pubProfile.teaching_exp
             );
 
         $scope.newPosts = firebaseHelper.syncArray(

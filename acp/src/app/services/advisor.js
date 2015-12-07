@@ -12,6 +12,7 @@ angular.module('inspinia').service('AdvisorService', function ($rootScope, fireb
     this.updateAdvisor = function(advisor, onComplete) {
         var advisor_id = advisor.get("$id");
         if (advisor_id) {
+            console.log(advisor.getProperty());
             firebaseHelper.getFireBaseInstance(["profiles_pub", advisor.get("$id")]).update(advisor.getProperty(), function(error) {
                 if (error) {
                     if (onComplete) {onComplete(error);}

@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label>Year of Experience Teaching English (*)</label>
-                    <select class="form-control" ng-readonly="isProcessing" ng-model="data.exp">
+                    <select class="form-control" ng-readonly="isProcessing" ng-model="data.teaching_exp">
                         <option value="1">Less then 2 years</option>
                         <option value="2">2-5 years</option>
                         <option value="5">5-10 years</option>
@@ -71,7 +71,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-disabled="isProcessing || !data.first_name || !data.last_name || !data.exp || !data.avatar" ng-click="onDone()">OK</button>
+            <button class="btn btn-primary" type="button" ng-disabled="isProcessing || !data.first_name || !data.last_name || !data.teaching_exp || !data.avatar" ng-click="onDone()">OK</button>
             <button class="btn btn-warning" type="button" ng-disabled="isProcessing" ng-click="cancel()">Skip</button>
         </div>
     </script>

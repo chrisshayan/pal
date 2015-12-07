@@ -5,7 +5,7 @@ function Advisor (obj) {
         display_name: "",
         first_name: "",
         last_name: "",
-        exp: 0,
+        teaching_exp: 0,
         city: "",
         address: "",
         school: "",
