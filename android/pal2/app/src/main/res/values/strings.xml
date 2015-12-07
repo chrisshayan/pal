@@ -133,6 +133,7 @@
     <string name="post_audio_no_internet">Fail to connect server. Please try again later!</string>
     <string name="recorder_speak_now">Speak now</string>
     <string name="recorder_timer">Timeleft: %1$s sec</string>
+    <string name="send_upper">SEND</string>
 
     <!--post list-->
     <string name="you_wrote">You wrote</string>
