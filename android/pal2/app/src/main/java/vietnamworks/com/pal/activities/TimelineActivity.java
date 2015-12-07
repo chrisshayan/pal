@@ -355,25 +355,7 @@ public class TimelineActivity extends BaseActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_send) {
-            Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
-            if (f instanceof ComposerFragment) {
-                if (! ((ComposerFragment)f).isInTutorial()) {
-                    if (submitTask((ComposerFragment) f)) {
-                        hideKeyboard();
-                        //onBackPressed();
-                        setTitle(R.string.title_timeline);
-                        openFragmentAndClean(allPostsFragment, R.id.fragment_holder);
-                        FirebaseService.goOnline();
-                    }
-                } else {
-                    ((ComposerFragment)f).onClickedSend();
-                }
-            }
-
-            return true;
-        } else if (id == android.R.id.home) {
+        if (id == android.R.id.home) {
             int deep = getSupportFragmentManager().getBackStackEntryCount();
             if (deep == 0) {
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -432,13 +414,12 @@ public class TimelineActivity extends BaseActivity {
     private void updateToolbar() {
         Menu menu = toolbar.getMenu();
         Fragment f = (Fragment)getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+        /*
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             int id = item.getItemId();
-            if (id == R.id.action_send) {
-                item.setVisible(f != null && f instanceof ComposerFragment);
-            }
         }
+        */
 
         if (f instanceof ComposerFragment) {
             showActionBar(R.string.title_composer, true);;
@@ -785,6 +766,12 @@ public class TimelineActivity extends BaseActivity {
         }
         cursor.close();
         return res;
+    }
+
+    public void resetToMainTimeline() {
+        hideKeyboard();
+        setTitle(R.string.title_timeline);
+        openFragmentAndClean(allPostsFragment, R.id.fragment_holder);
     }
 
 }

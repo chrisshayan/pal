@@ -92,7 +92,7 @@ public class OnBoardingActivity extends BaseActivity {
             img.setLayoutParams(lp);
         }
 
-        ((TextView) findViewById(R.id.btn_next)).setText(getString(index >= nPages -1?R.string.done:R.string.next));
+        ((TextView) findViewById(R.id.btn_next)).setText(getString(index >= nPages -1?R.string.start :R.string.next));
     }
 
     private class TutorScreenSlidePagerAdapter extends FragmentStatePagerAdapter {

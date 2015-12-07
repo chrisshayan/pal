@@ -37,7 +37,8 @@
     </string-array>
 
     <string name="skip">Skip</string>
-    <string name="done">Start</string>
+    <string name="start">Start</string>
+    <string name="done">Done</string>
     <string name="next">Next</string>
     <string name="go">Go</string>
     <string name="ok">OK</string>
@@ -124,12 +125,14 @@
     <string name="create_post_fail_audio">Fail to upload the audio recording</string>
     <string name="empty_message">Write or say to complete your challenge</string>
     <string name="guide_user_recorder_1">Touch Microphone icon to start recording</string>
-    <string name="guide_user_recorder_2">Touch Stop icon to finish recording</string>
+    <string name="guide_user_recorder_2">Touch Microphone icon to finish recording</string>
     <string name="tips">Tips</string>
     <string name="fail_to_record">Fail to access the microphone</string>
     <string name="introduce_yourself">Introduce yourself</string>
     <string name="hint_send">Touch here to submit your post</string>
     <string name="post_audio_no_internet">Fail to connect server. Please try again later!</string>
+    <string name="recorder_speak_now">Speak now</string>
+    <string name="recorder_timer">Timeleft: %1$s sec</string>
 
     <!--post list-->
     <string name="you_wrote">You wrote</string>

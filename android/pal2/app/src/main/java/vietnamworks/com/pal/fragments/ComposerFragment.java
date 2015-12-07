@@ -12,17 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.activities.TimelineActivity;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.custom_views.AudioPlayer;
+import vietnamworks.com.pal.models.Posts;
+import vietnamworks.com.pal.models.Topics;
 import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.AudioMixerService;
+import vietnamworks.com.pal.services.CloudinaryService;
+import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
 
@@ -41,6 +50,8 @@ public class ComposerFragment extends BaseFragment {
     private EditText inputMessage;
     private TextView txtHint;
     private ImageButton btnHint;
+    private TextView txtRecorderTimer;
+    private View viewRecorderLayout;
 
     int tutorStep = 0;
     boolean isInTutorial = false;
@@ -79,6 +90,9 @@ public class ComposerFragment extends BaseFragment {
             }
         });
 
+        viewRecorderLayout = rootView.findViewById(R.id.recorder_layout);
+        viewRecorderLayout.setVisibility(View.GONE);
+
         btnRecorder = (ImageButton)rootView.findViewById(R.id.recorder);
         btnRecorder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,48 +108,50 @@ public class ComposerFragment extends BaseFragment {
                                 myAudioRecorder.reset();
                                 myAudioRecorder.release();
                                 myAudioRecorder = null;
-                            } catch (Exception E) {}
+                            } catch (Exception E) {
+                            }
                             updateUI(false);
                             audioPlayer.setAudioSource(Utils.getSampleRecordPath(), true);
                             audioPlayer.setVisibility(View.VISIBLE);
                             txtHint.setVisibility(View.INVISIBLE);
                             hasAudio = true;
+                        }
+                        viewRecorderLayout.setVisibility(View.VISIBLE);
+                        GaService.trackAction(R.string.ga_action_do_record);
+                        Utils.newSampleRecord();
 
-                        } else { //start recording
-                            GaService.trackAction(R.string.ga_action_do_record);
-                            Utils.newSampleRecord();
+                        audioPlayer.setVisibility(View.INVISIBLE);
+                        txtHint.setVisibility(View.VISIBLE);
 
-                            audioPlayer.setVisibility(View.INVISIBLE);
-                            txtHint.setVisibility(View.VISIBLE);
+                        audioPlayer.setAudioSource(null);
 
-                            audioPlayer.setAudioSource(null);
+                        myAudioRecorder = new MediaRecorder();
+                        try {
+                            myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                            myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                            myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+                            myAudioRecorder.setOutputFile(Utils.getSampleRecordPath());
 
-                            myAudioRecorder = new MediaRecorder();
-                            try {
-                                myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                                myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-                                myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-                                myAudioRecorder.setOutputFile(Utils.getSampleRecordPath());
+                            myAudioRecorder.prepare();
+                            myAudioRecorder.start();
+                            onStartRecorderTimer();
+                            BaseActivity.sInstance.hideKeyboard();
+                            updateUI(true);
 
-                                myAudioRecorder.prepare();
-                                myAudioRecorder.start();
-                                updateUI(true);
-
-                                myAudioRecorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
-                                    @Override
-                                    public void onError(MediaRecorder mr, int what, int extra) {
-                                        myAudioRecorder = null;
-                                        updateUI(false);
-                                    }
-                                });
-                                GaService.trackEvent(R.string.ga_cat_recorder, R.string.ga_event_recorder_success);
-                            } catch (Exception e) {
-                                myAudioRecorder = null;
-                                updateUI(false);
-                                e.printStackTrace();
-                                BaseActivity.toast(R.string.fail_to_record);
-                                GaService.trackEvent(R.string.ga_cat_recorder, R.string.ga_event_recorder_fail);
-                            }
+                            myAudioRecorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
+                                @Override
+                                public void onError(MediaRecorder mr, int what, int extra) {
+                                    myAudioRecorder = null;
+                                    updateUI(false);
+                                }
+                            });
+                            GaService.trackEvent(R.string.ga_cat_recorder, R.string.ga_event_recorder_success);
+                        } catch (Exception e) {
+                            myAudioRecorder = null;
+                            updateUI(false);
+                            e.printStackTrace();
+                            BaseActivity.toast(R.string.fail_to_record);
+                            GaService.trackEvent(R.string.ga_cat_recorder, R.string.ga_event_recorder_fail);
                         }
                     }
 
@@ -149,6 +165,15 @@ public class ComposerFragment extends BaseFragment {
                 });
             }
         });
+
+        ImageButton btnStopRecorder = (ImageButton)rootView.findViewById(R.id.btn_stop_recorder);
+        btnStopRecorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopRecorder();
+            }
+        });
+
 
         txtSubject = (TextView)rootView.findViewById(R.id.subject);
         inputMessage = (EditText)rootView.findViewById(R.id.message);
@@ -229,7 +254,62 @@ public class ComposerFragment extends BaseFragment {
             ((BaseActivity) getActivity()).showKeyboard();
         }
 
-        ((TimelineActivity)getActivity()).getQuestView().setVisibility(View.GONE);
+        txtRecorderTimer = (TextView)rootView.findViewById(R.id.recorder_timeleft);
+
+        Button btnDone = (Button)rootView.findViewById(R.id.btn_done);
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isInTutorial()) {
+                    onClickedSend();
+                    return;
+                }
+                Topics.requestRandomTopics();
+                stopRecorder();
+                if (!FirebaseService.isConnected()) {
+                    BaseActivity.toast(R.string.post_audio_no_internet);
+                    return;
+                }
+
+                String audio = getAudioPath();
+                String subject = getSubject();
+                String topic = getTopic();
+                String message = getMessage().trim();
+
+                if (audio == null && message.length() == 0) {
+                    BaseActivity.toast(R.string.empty_message);
+                    return;
+                }
+
+                if (audio == null) { //text
+                    Posts.addText(subject, topic, message);
+                    BaseActivity.toast(R.string.create_post_successful);
+                } else {
+                    final String post_id = Posts.addAudioAsync(subject, topic, message);
+                    final String server_file_path = Utils.getAudioServerFileName(FirebaseService.getUid(), post_id);
+                    CloudinaryService.upload(audio, server_file_path, new AsyncCallback() {
+                        @Override
+                        public void onSuccess(Context ctx, Object res) {
+                            Map m = (Map) res;
+                            BaseActivity.toast(R.string.create_post_successful);
+                            Posts.updateAudioLink(post_id, m.get("secure_url").toString());
+                        }
+
+                        @Override
+                        public void onError(Context ctx, int error_code, String message) {
+                            BaseActivity.toast(R.string.create_post_fail_audio);
+                            Posts.raiseError(post_id);
+                        }
+                    });
+                }
+
+                FirebaseService.goOnline();
+                ((TimelineActivity)getActivity()).resetToMainTimeline();
+            }
+        });
+
+
+        ((TimelineActivity) getActivity()).getQuestView().setVisibility(View.GONE);
 
         return rootView;
     }
@@ -244,17 +324,18 @@ public class ComposerFragment extends BaseFragment {
             audioPlayer.setAudioSource(Utils.getSampleRecordPath(), true);
             audioPlayer.setVisibility(View.VISIBLE);
             hasAudio = true;
-
             txtHint.setVisibility(View.INVISIBLE);
         }
+        viewRecorderLayout.setVisibility(View.GONE);
+        onStopRecorderTimer();
     }
 
     private void updateUI(boolean isplaying) {
         if (isplaying) {
-            btnRecorder.setImageResource(R.drawable.ic_av_stop_circle_outline_danger);
-            txtHint.setText(getString(R.string.guide_user_recorder_2));
+            //btnRecorder.setImageResource(R.drawable.ic_av_stop_circle_outline_danger);
+            txtHint.setText("");
         } else {
-            btnRecorder.setImageResource(R.drawable.ic_av_mic);
+            //btnRecorder.setImageResource(R.drawable.ic_av_mic);
             txtHint.setText(getString(R.string.guide_user_recorder_1));
         }
     }
@@ -322,4 +403,51 @@ public class ComposerFragment extends BaseFragment {
             isInTutorial = false;
         }
     }
+
+    //recorder timer
+    Timer mTimer = new Timer();
+    int timerCounter;
+    void onStartRecorderTimer() {
+        onStopRecorderTimer();
+        timerCounter = 90;
+        BaseActivity.timeout(new Runnable() {
+            @Override
+            public void run() {
+                txtRecorderTimer.setText(String.format(getString(R.string.recorder_timer), timerCounter));
+            }
+        });
+
+        mTimer = new Timer();
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                BaseActivity.sInstance.setTimeout(new Runnable() {
+                    @Override
+                    public void run() {
+                        timerCounter--;
+                        if (timerCounter <= 0) {
+                            timerCounter = 0;
+                            stopRecorder();
+                        }
+                        txtRecorderTimer.setText(String.format(getString(R.string.recorder_timer), timerCounter));
+                    }
+                });
+            }
+        }, 1000, 1000);
+    }
+
+    void onStopRecorderTimer() {
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer.purge();
+            mTimer = null;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        stopRecorder();
+        super.onDestroy();
+    }
+
 }

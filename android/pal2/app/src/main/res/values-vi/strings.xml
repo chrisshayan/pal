@@ -13,7 +13,7 @@
     <string name="close">Quay lại</string>
     <string name="composer_hint">Nhập nội dung ở đây</string>
     <string name="create_post_successful">Đã gửi bài luyện đến giáo viên</string>
-    <string name="done">Bắt đầu</string>
+    <string name="start">Bắt đầu</string>
     <string name="email_address">Địa chỉ email</string>
     <string name="empty_message">Gõ nội dung hoặc thu âm để hoàn thành bài luyện</string>
     <string name="fail_to_record">Không thể truy xuất microphone</string>
@@ -26,7 +26,7 @@
     <string name="get_started_touch_fab">Chọn bài luyện</string>
     <string name="go">Bắt đầu</string>
     <string name="guide_user_recorder_1">Chạm microphone để thu âm</string>
-    <string name="guide_user_recorder_2">Chạm nút để dừng thu âm</string>
+    <string name="guide_user_recorder_2">Chạm nút microphone dừng thu âm</string>
     <string name="hint_send">Chạm để hoàn thành bài luyện</string>
     <string name="introduce_yourself">Giới thiệu bản thân</string>
     <string name="invalid_email">Định dạng email không hợp lệ.</string>
@@ -149,4 +149,6 @@
     <string name="update_profile">Cập nhật hồ sơ</string>
     <string name="uploading">Đang gửi</string>
     <string name="avatar_picker_decode_fail">Không thể truy xuất ảnh</string>
+    <string name="recorder_speak_now">Đang ghi âm</string>
+    <string name="recorder_timer">Còn lại %1$s giây</string>
 </resources>
