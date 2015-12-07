@@ -2,7 +2,6 @@ package vietnamworks.com.pal.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Rect;
@@ -33,7 +32,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.common.Utils;
@@ -53,9 +51,7 @@ import vietnamworks.com.pal.fragments.WelcomeFragment;
 import vietnamworks.com.pal.models.CurrentUserProfile;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.models.Topics;
-import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.AudioMixerService;
-import vietnamworks.com.pal.services.CloudinaryService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
@@ -624,59 +620,7 @@ public class TimelineActivity extends BaseActivity {
             }
         }, 100);
     }
-
-    private boolean submitTask(ComposerFragment f) {
-        Topics.requestRandomTopics();
-        f.stopRecorder();
-
-        if (!FirebaseService.isConnected()) {
-            toast(R.string.post_audio_no_internet);
-            return false;
-        }
-
-        String audio = f.getAudioPath();
-        String subject = f.getSubject();
-        String topic = f.getTopic();
-        String message = f.getMessage().trim();
-
-        if (audio == null && message.length() == 0) {
-            toast(R.string.empty_message);
-            return false;
-        }
-
-        if (audio == null) { //text
-            Posts.addText(subject, topic, message);
-            toast(R.string.create_post_successful);
-        } else {
-            final String post_id = Posts.addAudioAsync(subject, topic, message);
-            final String server_file_path = Utils.getAudioServerFileName(FirebaseService.getUid(), post_id);
-            CloudinaryService.upload(audio, server_file_path, new AsyncCallback() {
-                @Override
-                public void onSuccess(Context ctx, Object res) {
-                    Map m = (Map)res;
-                    toast(R.string.create_post_successful);
-                    Posts.updateAudioLink(post_id, m.get("secure_url").toString());
-                }
-
-                @Override
-                public void onError(Context ctx, int error_code, String message) {
-                    toast(R.string.create_post_fail_audio);
-                    Posts.raiseError(post_id);
-                }
-            });
-            /*
-            FileUploadService.upload(
-                    this,
-                    post_id,
-                    AppConfig.AudioUploadURL,
-                    audio,
-                    server_file_path);
-                    */
-        }
-        //toast(R.string.create_post_successful);
-        return true;
-    }
-
+    
     private final AbstractUploadServiceReceiver uploadReceiver =
             new AbstractUploadServiceReceiver() {
                 @Override
