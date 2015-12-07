@@ -401,7 +401,7 @@ public class PostListFragment extends BaseFragment {
                         icon = R.drawable.timeline_upload_anim_01;
                     }
 
-                    view.highlight(!p.isHas_read());
+                    view.highlight(!p.isHas_read() && p.getStatus() >= Post.STATUS_READY);
                     view.setClickEventListener(new TimelineItemView.OnClickEventListener() {
                         @Override
                         public void onClick(final String itemId) {
