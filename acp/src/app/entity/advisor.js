@@ -9,7 +9,7 @@ function Advisor (obj) {
         city: "",
         address: "",
         school: "",
-        points: "",
+        points: 0,
         rate1: 0,
         rate2: 0,
         rate3: 0,
