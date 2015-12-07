@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -28,7 +30,7 @@ import vietnamworks.com.pal.services.ParseService;
  */
 public class LoginFragment extends BaseFragment {
     EditText txtPassword;
-    EditText txtEmail;
+    AutoCompleteTextView txtEmail;
     TextView txtError;
     View errorView;
 
@@ -41,9 +43,14 @@ public class LoginFragment extends BaseFragment {
 
         BaseActivity.applyFont(rootView);
 
-        txtEmail = (EditText)rootView.findViewById(R.id.email);
-        txtPassword = (EditText)rootView.findViewById(R.id.password);
+        txtEmail = (AutoCompleteTextView)rootView.findViewById(R.id.email);
 
+        String emailList = LocalStorage.getString("email_history", "");
+        String emailArray[] = emailList.split(",");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_1, emailArray);
+        txtEmail.setAdapter(adapter);
+
+        txtPassword = (EditText)rootView.findViewById(R.id.password);
         txtPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -112,6 +119,7 @@ public class LoginFragment extends BaseFragment {
         GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_do_login);
         final String email = getEmail().trim();
         final String password = getPassword().trim();
+
         if (email.length() == 0) {
             setError(getString(R.string.require_email));
             GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_missing_email);
@@ -134,6 +142,12 @@ public class LoginFragment extends BaseFragment {
                     BaseActivity.sInstance.openActivity(TimelineActivity.class);
                     LocalStorage.set(getString(R.string.local_storage_first_launch), false);
                     GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_login_success);
+                    //save email
+                    String emailList = LocalStorage.getString("email_history", "");
+                    if (!emailList.contains(email)) {
+                        emailList = emailList + "," + email;
+                        LocalStorage.set("email_history", emailList);
+                    }
                 }
 
                 @Override

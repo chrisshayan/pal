@@ -24,10 +24,10 @@
             android:id="@+id/textView"
             style="@style/Text.ExtraSmall.Muted" />
 
-        <EditText
+        <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress|textAutoComplete"
+            android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/email"
             android:hint="@string/your_email_adress"
