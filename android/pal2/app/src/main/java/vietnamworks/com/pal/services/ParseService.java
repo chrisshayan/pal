@@ -28,6 +28,13 @@ public class ParseService {
         installation.saveInBackground();
     }
 
+    public static void unRegisterUser() {
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put("user_id", "");
+        installation.put("user_email", "");
+        installation.saveInBackground();
+    }
+
     public static void clearAllNotification() {
         NotificationManager nMgr = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         if (nMgr != null) {

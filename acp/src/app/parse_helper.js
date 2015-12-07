@@ -17,7 +17,7 @@ angular.module('parseHelper', [])
 
 .service('parseHelper', function(parseHelperConfig, $http) {
     var self = this;
-    this.push = function(to_user, message) {
+    this.push = function(to_user, message, extra) {
         // $http({
         //     method: 'POST',
         //     url: 'https://api.parse.com/1/push',
@@ -37,13 +37,19 @@ angular.module('parseHelper', [])
         // }).then(function successCallback(response) {
         // }, function errorCallback(response) {
         // });
+        var data = {
+            alert: message
+        }
+        if (extra) {
+            for (var k in extra) {
+                data[k] = extra[k];
+            }
+        }
         Parse.Push.send({
             where: {
                 user_id: to_user
             },
-            data: {
-                alert: message
-            }
+            data: data,
         }, {
             success: function() {
             },

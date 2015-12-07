@@ -55,6 +55,7 @@ import vietnamworks.com.pal.services.AudioMixerService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
+import vietnamworks.com.pal.services.ParseService;
 
 public class TimelineActivity extends BaseActivity {
 
@@ -76,6 +77,7 @@ public class TimelineActivity extends BaseActivity {
     Topic currentQuest;
     TextView txtQuest;
 
+    public static String resumeFromPushWithPostId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -366,6 +368,20 @@ public class TimelineActivity extends BaseActivity {
             }
         });
         CurrentUserProfile.increaseSessionCounter();
+
+        if (resumeFromPushWithPostId != null) {
+            final String postID = resumeFromPushWithPostId;
+            resumeFromPushWithPostId = null;
+            Posts.markAsRead(postID);
+            BaseActivity.sInstance.setTimeout(new Runnable() {
+                @Override
+                public void run() {
+                    Bundle b = new Bundle();
+                    b.putString("id", postID);
+                    BaseActivity.sInstance.openFragment(PostDetailFragment.create(b), R.id.fragment_holder, true);
+                }
+            }, 1500);
+        }
     }
 
     @Override
@@ -496,6 +512,7 @@ public class TimelineActivity extends BaseActivity {
             @Override
             public void run() {
                 FirebaseService.logout();
+                ParseService.unRegisterUser();
                 openActivity(AuthActivity.class);
                 closeDrawer();
             }

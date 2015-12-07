@@ -425,10 +425,9 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                     });
                 }
 
-
-
-
-                parseHelper.push($scope.data.created_by, "You've got new feedback from advisor");
+                parseHelper.push($scope.data.created_by, "You've got new feedback from advisor", {
+                    post_id: $scope.data.$id
+                });
             }
             $scope.isSubmitting = false;
             $scope.$apply();
