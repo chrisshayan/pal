@@ -222,18 +222,7 @@ public class ComposerFragment extends BaseFragment {
                         @Override
                         public void onClick(View v) {
                             LocalStorage.set(getString(R.string.local_storage_show_composer_guide), true);
-                            tutorStep++;
-                            if (tutorStep == 1) {
-                                tutor1.setVisibility(View.GONE);
-                                tutor2.setVisibility(View.VISIBLE);
-                            } else if (tutorStep == 2) {
-                                tutor2.setVisibility(View.GONE);
-                                tutor3.setVisibility(View.VISIBLE);
-                            } else {
-                                tutor3.setVisibility(View.GONE);
-                                overlay.setVisibility(View.GONE);
-                                isInTutorial = false;
-                            }
+                            onClickedInGuideComponent(null);
                         }
                     });
                 }
@@ -260,10 +249,6 @@ public class ComposerFragment extends BaseFragment {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isInTutorial()) {
-                    onClickedSend();
-                    return;
-                }
                 Topics.requestRandomTopics();
                 stopRecorder();
                 if (!FirebaseService.isConnected()) {
@@ -393,11 +378,19 @@ public class ComposerFragment extends BaseFragment {
         return isInTutorial;
     }
 
-    public void onClickedSend() {
-        if (isInTutorial && tutorStep == 2) {
-            final View overlay = getView().findViewById(R.id.overlay);
-            final View tutor3 = overlay.findViewById(R.id.tutor_3);
-
+    public void onClickedInGuideComponent(View v) {
+        final View overlay = getView().findViewById(R.id.overlay);
+        final View tutor1 = overlay.findViewById(R.id.tutor_1);
+        final View tutor2 = overlay.findViewById(R.id.tutor_2);
+        final View tutor3 = overlay.findViewById(R.id.tutor_3);
+        tutorStep++;
+        if (tutorStep == 1) {
+            tutor1.setVisibility(View.GONE);
+            tutor2.setVisibility(View.VISIBLE);
+        } else if (tutorStep == 2) {
+            tutor2.setVisibility(View.GONE);
+            tutor3.setVisibility(View.VISIBLE);
+        } else {
             tutor3.setVisibility(View.GONE);
             overlay.setVisibility(View.GONE);
             isInTutorial = false;

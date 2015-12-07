@@ -127,7 +127,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/overlay"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <View
             android:layout_width="match_parent"
@@ -208,22 +208,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/tutor_fab_height"
                     android:id="@+id/imageView13"
-                    android:src="@drawable/ic_tutor_arrow_4"
-                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_tutor_arrow_2"
+                    android:contentDescription="@null"
+                    android:layout_above="@+id/button4"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:contentDescription="@null" />
+                    android:layout_alignParentEnd="true" />
 
                 <TextView
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:text="@string/hint_send"
                     android:id="@+id/textView17"
-                    android:layout_below="@+id/imageView13"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
                     style="@style/Text.Medium"
-                    android:gravity="right" />
+                    android:gravity="right"
+                    android:layout_above="@+id/imageView13"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
 
                 <ImageView
                     android:layout_width="30dp"
@@ -231,9 +231,25 @@
                     android:id="@+id/imageView16"
                     android:src="@drawable/step_03"
                     android:contentDescription="@null"
-                    android:layout_above="@+id/textView17"
-                    android:layout_toLeftOf="@+id/imageView13"
-                    android:layout_toStartOf="@+id/imageView13" />
+                    android:layout_alignBottom="@+id/textView17"
+                    android:layout_toLeftOf="@+id/textView17"
+                    android:layout_toStartOf="@+id/textView17" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/send"
+                    android:background="?attr/selectableItemBackground"
+                    android:id="@+id/button4"
+                    android:paddingBottom="@dimen/base_padding_2x"
+                    android:clickable="false"
+                    android:enabled="true"
+                    android:onClick="onClickedInGuideComponent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignRight="@+id/imageView13"
+                    android:layout_alignEnd="@+id/imageView13" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -262,6 +278,7 @@
                     android:layout_toRightOf="@+id/imageView14"
                     android:layout_toEndOf="@+id/imageView14"
                     android:layout_marginLeft="@dimen/base_padding" />
+
             </RelativeLayout>
 
         </RelativeLayout>
@@ -274,7 +291,7 @@
         android:background="@color/colorPrimaryLightAlpha"
         android:onClick="doNothing"
         android:id="@+id/recorder_layout"
-        android:visibility="visible">
+        android:visibility="gone">
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             xmlns:android="http://schemas.android.com/apk/res/android"

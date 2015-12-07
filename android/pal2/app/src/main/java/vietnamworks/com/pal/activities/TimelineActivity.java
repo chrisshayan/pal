@@ -85,6 +85,7 @@ public class TimelineActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         
         displayHomeAsUpButton(true);
+
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_image_dehaze);
 
         //drawer -- header
@@ -137,10 +138,8 @@ public class TimelineActivity extends BaseActivity {
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                if (drawer_guide.getVisibility() == View.VISIBLE) {
-                    drawer_guide.setVisibility(View.GONE);
-                    LocalStorage.set(getString(R.string.local_storage_show_drawer_guide), true);
-                }
+                removeDrawerGuide();
+                LocalStorage.set(getString(R.string.local_storage_show_drawer_guide), true);
             }
 
             @Override
@@ -175,32 +174,7 @@ public class TimelineActivity extends BaseActivity {
                             drawer_guide.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    drawer_guide.animate().alpha(0).setDuration(500).setListener(new Animator.AnimatorListener() {
-                                        @Override
-                                        public void onAnimationStart(Animator animation) {
-
-                                        }
-
-                                        @Override
-                                        public void onAnimationEnd(Animator animation) {
-                                            try {
-                                                removeDrawerGuide();
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onAnimationCancel(Animator animation) {
-
-                                        }
-
-                                        @Override
-                                        public void onAnimationRepeat(Animator animation) {
-
-                                        }
-                                    });
-
+                                    removeDrawerGuide();
                                     LocalStorage.set(getString(R.string.local_storage_show_drawer_guide), true);
                                 }
                             });
@@ -356,7 +330,6 @@ public class TimelineActivity extends BaseActivity {
             if (deep == 0) {
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 drawer.openDrawer(navigationView);
-                removeDrawerGuide();
             } else {
                 getSupportFragmentManager().popBackStackImmediate();
                 hideKeyboard();
@@ -441,7 +414,6 @@ public class TimelineActivity extends BaseActivity {
 
     private void closeDrawer() {
         drawer.closeDrawer(GravityCompat.START);
-        removeDrawerGuide();
     }
 
     private void setNumberOfUnreadPostUI(final int val) {
@@ -620,7 +592,7 @@ public class TimelineActivity extends BaseActivity {
             }
         }, 100);
     }
-    
+
     private final AbstractUploadServiceReceiver uploadReceiver =
             new AbstractUploadServiceReceiver() {
                 @Override
