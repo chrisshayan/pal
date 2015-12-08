@@ -128,3 +128,48 @@ server.post('/register', function (req, res, next) {
     }
 	return next();
 });
+
+server.post('/verify-new-account', function(req, res, next) {
+    var body = req.body;
+    if (typeof(body) === "string") {
+        try {
+            body = JSON.parse(req.body) || {};
+        } catch (e) {
+            res.send(new errors.InvalidArgumentError("Invalid JSON format"));
+            return next();
+        }
+    }
+    if (typeof(body) !== "object") {
+        res.send(new errors.InvalidArgumentError("Can not parse body"));
+        return next();
+    }
+
+    if (!_.validateEmail(body.email)) {
+        res.send(new errors.InvalidArgumentError("Invalid email format"));
+        return next();
+    }
+
+    if (!body.email) {
+        res.send(new errors.MissingParameterError("`email` is required"));
+        return next();
+    }
+
+    if (validateDomain(body.email)) {
+        ref.changePassword({email: body.email, oldPassword: "********^********^^********^^^********^^********^********", newPassword: "lol"}, function(error) {
+            switch (error.code) {
+                case "INVALID_PASSWORD":
+                    res.send(200, {result: 2});
+                    break;
+                case "INVALID_USER":
+                    res.send(200, {result: 1});
+                    break;
+                default:
+                    res.send(new errors.InternalError());
+                    break;
+            }
+        });
+    } else {
+        res.send(200, {result: 0});
+    }
+	return next();
+})
