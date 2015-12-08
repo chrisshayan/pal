@@ -1,7 +1,9 @@
 package vietnamworks.com.pal.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,14 +90,27 @@ public class LoginFragment extends BaseFragment {
         btnForgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                forget_password();
+                forgetPassword();
             }
         });
 
         return rootView;
     }
 
-    public void forget_password() {
+    public void forgetPassword() {
+        new AlertDialog.Builder(getContext())
+                .setTitle(getString(R.string.reset_password))
+                .setMessage(String.format(getString(R.string.reset_password_confirm), getEmail()))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        doResetPassword();
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
+    }
+
+
+    public void doResetPassword() {
         GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_do_forget_password);
         final String email = getEmail().trim();
         if (email.length() == 0) {

@@ -152,4 +152,8 @@
     <string name="avatar_picker_decode_fail">Không thể truy xuất ảnh</string>
     <string name="recorder_speak_now">Đang ghi âm</string>
     <string name="recorder_timer">Còn lại %1$s giây</string>
+    <string name="oops">Oops. Something went wrong. Please try again later</string>
+    <string name="reset_password">Đặt lại mật khẩu</string>
+    <string name="reset_password_error">Email không tồn tại</string>
+    <string name="reset_password_confirm">Bạn có thật sự muốn đặt lại mật khẩu của tài khoản %1$s</string>
 </resources>
