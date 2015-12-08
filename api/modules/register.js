@@ -169,7 +169,13 @@ server.post('/verify-new-account', function(req, res, next) {
             }
         });
     } else {
-        res.send(200, {result: 0});
+        queueAccount(body.email, body.fullname, function(error) {
+            if (error) {
+                res.send(error);
+            } else {
+                res.send(200, {result: 0});
+            }
+        });
     }
 	return next();
 })
