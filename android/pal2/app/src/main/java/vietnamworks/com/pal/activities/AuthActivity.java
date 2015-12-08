@@ -10,9 +10,7 @@ import android.view.WindowManager;
 import java.util.HashMap;
 
 import vietnamworks.com.pal.R;
-import vietnamworks.com.pal.fragments.AuthProcessingFragment;
 import vietnamworks.com.pal.fragments.LoginFragment;
-import vietnamworks.com.pal.fragments.RegisterErrorFragment;
 import vietnamworks.com.pal.fragments.RegisterFragment;
 import vietnamworks.com.pal.fragments.RegisterSuccessFragment;
 import vietnamworks.com.pal.services.GaService;
@@ -24,14 +22,12 @@ public class AuthActivity extends BaseActivity {
     LoginFragment loginFragment;
     RegisterFragment registerFragment;
     RegisterSuccessFragment registerSuccessFragment;
-    RegisterErrorFragment registerErrorFragment;
-    AuthProcessingFragment authProcessingFragment;
 
     final public static int STATE_LOGIN = 0;
     final public static int STATE_REGISTER = 1;
     final public static int STATE_SUCCESS = 2;
-    final public static int STATE_ERROR = 3;
-    final public static int STATE_PROCESSING = 4;
+    //final public static int STATE_ERROR = 3;
+    //final public static int STATE_PROCESSING = 4;
     int state = -999;
 
     @Override
@@ -56,25 +52,11 @@ public class AuthActivity extends BaseActivity {
         return registerFragment;
     }
 
-    private RegisterErrorFragment getRegisterErrorFragment() {
-        if (registerErrorFragment == null) {
-            registerErrorFragment = new RegisterErrorFragment();
-        }
-        return registerErrorFragment;
-    }
-
     private RegisterSuccessFragment getRegisterSuccessFragment() {
         if (registerSuccessFragment == null) {
             registerSuccessFragment = new RegisterSuccessFragment();
         }
         return registerSuccessFragment;
-    }
-
-    private AuthProcessingFragment getAuthProcessingFragment() {
-        if (authProcessingFragment == null) {
-            authProcessingFragment = new AuthProcessingFragment();
-        }
-        return authProcessingFragment;
     }
 
     @Override
@@ -142,18 +124,6 @@ public class AuthActivity extends BaseActivity {
                                 registerSuccessFragment.setButtonShareVisible(true);
                             }
                         }
-                    } else if (_state == STATE_ERROR) {
-                        pushFragment(getRegisterErrorFragment(), R.id.fragment_holder);
-                        if (ext != null) {
-                            if (ext.containsKey("message")) {
-                                registerErrorFragment.setError(ext.get("message").toString());
-                            } else {
-                                registerErrorFragment.setError(R.string.register_fail);
-                            }
-                        }
-                    } else if (_state == STATE_PROCESSING) {
-                        pushFragment(getAuthProcessingFragment(), R.id.fragment_holder);
-                        hideKeyboard();
                     }
                 } catch (Exception E) {
                     E.printStackTrace();

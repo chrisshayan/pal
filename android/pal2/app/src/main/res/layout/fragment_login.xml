@@ -103,11 +103,24 @@
             android:layout_height="match_parent"
             android:gravity="right">
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/loading">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar3" />
+            </LinearLayout>
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/login_button_height"
                 android:text="@string/register"
-                android:id="@+id/button2"
+                android:id="@+id/btn_register"
                 android:background="?attr/selectableItemBackground"
                 android:onClick="onOpenRequestInvite"
                 style="@style/Text.Small" />
@@ -123,6 +136,7 @@
                 android:id="@+id/btn_login"
                 android:background="@drawable/btn_login_bg"
                 android:textColor="@color/colorTextLight" />
+
         </LinearLayout>
     </LinearLayout>
 

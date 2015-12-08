@@ -260,7 +260,7 @@ public class RegisterFragment extends BaseFragment {
                                 @Override
                                 public void onError(Context ctx, int error_code, String message) {
                                     BaseActivity.toast(R.string.oops);
-                                    ((AuthActivity)getActivity()).setState(AuthActivity.STATE_LOGIN);
+                                    ((AuthActivity) getActivity()).setState(AuthActivity.STATE_LOGIN);
                                 }
                             });
                         }
@@ -303,6 +303,7 @@ public class RegisterFragment extends BaseFragment {
 
     private void startLoading() {
         showError(null);
+        BaseActivity.sInstance.hideKeyboard();
         txtEmail.setEnabled(false);
         txtFullName.setEnabled(false);
         btnRegister.setEnabled(false);

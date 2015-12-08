@@ -90,6 +90,7 @@
     <string name="title_activity_timeline" translatable="false">TimelineActivity</string>
     <string name="login_fail">Incorrect login credentials</string>
     <string name="reset_password_success">Your password has been reset. Please check your email to get new password.</string>
+    <string name="reset_password_error">Account is not valid.</string>
     <string name="forget_password">Forgot your password</string>
     <string name="no_internet">Fail to connect server. Please try again later!</string>
 
