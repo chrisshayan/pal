@@ -49,6 +49,7 @@
     <string name="edit">Edit</string>
     <string name="change">Change</string>
     <string name="uploading">Uploading</string>
+    <string name="oops">Oops. Something went wrong. Please try again later</string>
 
     <!-- post rate -->
     <string name="post_rate_1">Bad</string>
