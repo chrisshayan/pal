@@ -1,7 +1,6 @@
 var crypto = require('crypto');
 
-var createAccount = function(email, name, callback) {
-    var password = crypto.createHash('md5').update((Date.now() + "" + Math.random())).digest("hex").substring(0, 8);
+var createAccount = function(email, name, password, callback) {
     ref.createUser({
         email: email,
         password: password
@@ -104,13 +103,13 @@ server.post('/register', function (req, res, next) {
         return next();
     }
 
-    if (!body.email || !body.fullname) {
-        res.send(new errors.MissingParameterError("`email` and `fullname` are required"));
+    if (!body.email || !body.fullname || !body.password) {
+        res.send(new errors.MissingParameterError("`email` and `fullname` and `password` are required"));
         return next();
     }
 
     if (validateDomain(body.email)) {
-        createAccount(body.email, body.fullname, function(error) {
+        createAccount(body.email, body.fullname, body.password, function(error) {
             if (error) {
                 res.send(error);
             } else {
