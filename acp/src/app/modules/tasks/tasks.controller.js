@@ -258,7 +258,6 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
 
 
 angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $scope, $timeout, $modalInstance, cs, item, firebaseHelper, $http, parseHelper, notify, AdvisorService) {
-    console.log("TaskModalCtrl", item.get());
     $scope.data = cs.purify(item.get());
 
     $scope.formatTime = cs.formatTime;

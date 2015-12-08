@@ -217,8 +217,56 @@ public class TimelineActivity extends BaseActivity {
             setTitle(R.string.title_welcome);
             displayHomeAsUpButton(false);
         } else {
-            onOpenAllPosts(null);
-            setTitle(R.string.title_timeline);
+
+            //read push content
+            Intent intentNotification = getIntent();
+            Bundle extras = intentNotification.getExtras();
+            if (extras!=null) {
+                String jsonData = extras.getString( "com.parse.Data" );
+                if (jsonData != null && !jsonData.isEmpty()) {
+                    try {
+                        JSONObject object = new JSONObject(jsonData);
+                        String post_id = object.getString("post_id");
+                        if (post_id != null && !post_id.isEmpty()) {
+                            TimelineActivity.resumeFromPushWithPostId = post_id;
+                        } else {
+                            TimelineActivity.resumeFromPushWithPostId = null;
+                        }
+                    }catch (Exception E) {}
+                }
+            }
+            if (TimelineActivity.resumeFromPushWithPostId != null) {
+                if (!FirebaseService.checkAuthSync()) {
+                    setTimeout(new Runnable() {
+                        @Override
+                        public void run() {
+                            FirebaseService.logout();
+                            ParseService.unRegisterUser();
+                            openActivity(AuthActivity.class);
+                            closeDrawer();
+                        }
+                    }, 500);
+                    return;
+                }
+            }
+            if (resumeFromPushWithPostId != null) {
+                final String postID = resumeFromPushWithPostId;
+                resumeFromPushWithPostId = null;
+                Posts.markAsRead(postID);
+                setTimeout(new Runnable() {
+                    @Override
+                    public void run() {
+                        Bundle b = new Bundle();
+                        b.putString("id", postID);
+                        allPostsFragment = PostListFragment.createAllPosts();
+                        openFragment(allPostsFragment, R.id.fragment_holder);
+                        openFragment(PostDetailFragment.create(b), R.id.fragment_holder, true);
+                    }
+                });
+            } else {
+                onOpenAllPosts(null);
+                setTitle(R.string.title_timeline);
+            }
         }
         queryTotalUnreadPosts = Posts.getUnreadPostsCounterQuery();
         queryTotalUnreadEvaluatedPosts = Posts.getUnreadEvaluatedPostsCounterQuery();
@@ -352,6 +400,8 @@ public class TimelineActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
+
+
         queryTotalUnreadPosts.addValueEventListener(onChangedUnreadPostsValue);
         queryTotalUnreadEvaluatedPosts.addValueEventListener(onChangedUnreadEvaluatedPostsValue);
         queryRandomQuest.addValueEventListener(onChangedRandomTask);
@@ -368,20 +418,6 @@ public class TimelineActivity extends BaseActivity {
             }
         });
         CurrentUserProfile.increaseSessionCounter();
-
-        if (resumeFromPushWithPostId != null) {
-            final String postID = resumeFromPushWithPostId;
-            resumeFromPushWithPostId = null;
-            Posts.markAsRead(postID);
-            BaseActivity.sInstance.setTimeout(new Runnable() {
-                @Override
-                public void run() {
-                    Bundle b = new Bundle();
-                    b.putString("id", postID);
-                    BaseActivity.sInstance.openFragment(PostDetailFragment.create(b), R.id.fragment_holder, true);
-                }
-            }, 1500);
-        }
     }
 
     @Override

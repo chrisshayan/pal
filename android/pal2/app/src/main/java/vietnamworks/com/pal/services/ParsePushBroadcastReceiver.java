@@ -4,9 +4,12 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import vietnamworks.com.pal.activities.TimelineActivity;
 
 /**
  * Created by duynk on 12/7/15.
@@ -23,7 +26,12 @@ public class ParsePushBroadcastReceiver extends com.parse.ParsePushBroadcastRece
         if (manager != null) {
             manager.cancelAll();
         }
-        super.onPushOpen(context, intent);
+        Log.e("Push", "Clicked");
+        Intent i = new Intent(context, TimelineActivity.class);
+        i.putExtras(intent.getExtras());
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
+        //super.onPushOpen(context, intent);
     }
 
     @Override
