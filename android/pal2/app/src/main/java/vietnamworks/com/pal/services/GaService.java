@@ -18,6 +18,8 @@ public class GaService {
     static GaService instance = new GaService();
     public static void init(Context context) {
         instance.ctx = context;
+        instance.getDefaultTracker().enableAdvertisingIdCollection(true);
+        instance.getDefaultTracker().enableExceptionReporting(true);
     }
     synchronized public Tracker getDefaultTracker() {
         if (mTracker == null) {
