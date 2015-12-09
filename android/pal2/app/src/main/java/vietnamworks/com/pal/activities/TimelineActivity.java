@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alexbbb.uploadservice.AbstractUploadServiceReceiver;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
@@ -400,23 +399,10 @@ public class TimelineActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-
-
         queryTotalUnreadPosts.addValueEventListener(onChangedUnreadPostsValue);
         queryTotalUnreadEvaluatedPosts.addValueEventListener(onChangedUnreadEvaluatedPostsValue);
         queryRandomQuest.addValueEventListener(onChangedRandomTask);
 
-        uploadReceiver.register(this);
-        FirebaseService.setOnConnectionChanged(new FirebaseService.ConnectionListener() {
-            @Override
-            public void onChanged(int now, int last) {
-                if (now == FirebaseService.STATUS_OFFLINE) {
-                    //TODO: handle offline event
-                } else {
-                    //TODO: handle online event
-                }
-            }
-        });
         CurrentUserProfile.increaseSessionCounter();
     }
 
@@ -428,7 +414,6 @@ public class TimelineActivity extends BaseActivity {
         queryTotalUnreadEvaluatedPosts.removeEventListener(onChangedUnreadEvaluatedPostsValue);
         queryRandomQuest.removeEventListener(onChangedRandomTask);
 
-        uploadReceiver.unregister(this);
         FirebaseService.setOnConnectionChanged(null);
     }
 
@@ -645,36 +630,6 @@ public class TimelineActivity extends BaseActivity {
             }
         }, 100);
     }
-
-    private final AbstractUploadServiceReceiver uploadReceiver =
-            new AbstractUploadServiceReceiver() {
-                @Override
-                public void onProgress(String uploadId, int progress) {
-                    System.out.println("The progress of the upload with ID " + uploadId + " is: " + progress);
-                }
-
-                @Override
-                public void onError(String uploadId, Exception exception) {
-                    System.out.println("Error in upload with ID: " + uploadId + ". " + exception.getLocalizedMessage() + " " + exception);
-                    Posts.raiseError(uploadId);
-                }
-
-                @Override
-                public void onCompleted(String uploadId,
-                                        int serverResponseCode,
-                                        String serverResponseMessage) {
-                    System.out.println("Upload with ID " + uploadId
-                            + " has been completed with HTTP " + serverResponseCode
-                            + ". Response from server: " + serverResponseMessage);
-                    try {
-                        JSONObject obj = new JSONObject(serverResponseMessage);
-                        Posts.updateAudioLink(uploadId, obj.getString("url"));
-                    } catch (Exception E) {
-                        Posts.raiseError(uploadId);
-                        E.printStackTrace();
-                    }
-                }
-            };
 
     public void doQuest(View v) {
         if (currentQuest != null) {
