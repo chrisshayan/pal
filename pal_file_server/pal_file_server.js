@@ -4,7 +4,9 @@ var express = require('express'),
     busboy = require('connect-busboy'),
     cloudinary = require('cloudinary'),
     fs = require('fs'),
-    app = express();
+    crypto = require('crypto'),
+    https = require('https');
+
 require("./config");
 
 cloudinary.config({
@@ -12,6 +14,17 @@ cloudinary.config({
     api_key: CLOUDINARY_API_KEY,
     api_secret: CLOUDINARY_API_SECRET
 });
+
+if (USE_HTTPS) {
+    var key = fs.readFileSync('server.key', 'utf8');
+    var certificate = fs.readFileSync('server.pem', 'utf8');
+    var credentials = {key: privateKey, cert: certificate};
+    app = express();
+    server = https.createServer(credentials, app);
+} else {
+    app = express();
+}
+
 
 app.use(cors());
 app.use(bodyParser.json({limit: '50mb'}));
