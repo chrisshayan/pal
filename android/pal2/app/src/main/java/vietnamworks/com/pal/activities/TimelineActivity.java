@@ -87,7 +87,9 @@ public class TimelineActivity extends BaseActivity {
         
         displayHomeAsUpButton(true);
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_image_dehaze);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_image_dehaze);
+        }
 
         //drawer -- header
         navHeaderView = UserProfileNavView.create(this, 0, 0, 0);
@@ -278,7 +280,9 @@ public class TimelineActivity extends BaseActivity {
             TextView versionView = ((TextView) findViewById(R.id.version));
             String version = "Version " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " - build " + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
             versionView.setText(version);
-        } catch (Exception E) {}
+        } catch (Exception E) {
+            E.printStackTrace();
+        }
     }
 
     public void removeDrawerGuide() {
