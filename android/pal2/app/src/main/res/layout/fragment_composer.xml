@@ -57,7 +57,7 @@
             android:inputType="textMultiLine"
             android:scrollbars="vertical"
             android:background="#00000000"
-            android:hint="@string/composer_hint_first_time"
+            android:hint="@string/composer_hint_1st_say_something"
             android:gravity="top"
             android:textColorHint="@color/colorTextInputHint"
             android:layout_marginRight="@dimen/base_padding_4x"

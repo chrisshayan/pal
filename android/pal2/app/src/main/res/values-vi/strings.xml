@@ -11,8 +11,8 @@
     <string name="cancel">Hủy</string>
     <string name="challenge_title">Thử thách</string>
     <string name="close">Quay lại</string>
-    <string name="composer_hint_first_time">Bạn nhập câu hỏi, đoạn văn, bài viết&#8230; ở đây, giáo viên sẽ đánh giá, sửa lỗi và góp ý cho bạn.</string>
-    <string name="composer_hint">Nhập nội dung ở đây</string>
+    <string name="composer_hint_1st_say_something">Bạn nhập câu hỏi, đoạn văn, bài viết&#8230; ở đây. Giáo viên sẽ đánh giá, sửa lỗi và góp ý cho bạn.</string>
+    <string name="composer_hint_1st_topic">Bạn nhập câu trả lời về chủ đề này ở đây. Giáo viên sẽ đánh giá, sửa lỗi và góp ý cho bạn.</string>
     <string name="create_post_successful">Đã gửi bài luyện đến giáo viên</string>
     <string name="start">Bắt đầu</string>
     <string name="email_address">Địa chỉ email</string>
@@ -26,7 +26,7 @@
     <string name="get_started_pick_option">Tuỳ chọn</string>
     <string name="get_started_touch_fab">Chọn bài luyện</string>
     <string name="go">Bắt đầu</string>
-    <string name="guide_user_recorder_1">Bạn cũng có thể ghi âm và gửi cho chúng tôi.</string>
+    <string name="guide_user_recorder_1">Bạn cũng có thể ghi âm và gửi cho giáo viên.</string>
     <string name="guide_user_recorder_2">Chạm nút microphone dừng thu âm</string>
     <string name="hint_send">Chạm để hoàn thành bài luyện</string>
     <string name="introduce_yourself">Giới thiệu bản thân</string>

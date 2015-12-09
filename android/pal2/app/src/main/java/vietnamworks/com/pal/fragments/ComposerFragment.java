@@ -190,17 +190,17 @@ public class ComposerFragment extends BaseFragment {
         });
 
         if (!LocalStorage.getBool(getString(R.string.local_storage_show_composer_guide), false)) {
-            inputMessage.setHint(R.string.composer_hint_first_time);
             final View overlay = rootView.findViewById(R.id.overlay);
             overlay.setVisibility(View.VISIBLE);
             ((BaseActivity) getActivity()).hideKeyboard();
         } else {
             rootView.findViewById(R.id.overlay).setVisibility(View.GONE);
             inputMessage.requestFocus();
-            inputMessage.setHint(R.string.composer_hint);
             ((BaseActivity) getActivity()).showKeyboard();
             removeOverlay();
         }
+        boolean hasTopic = this.postTitle != null && !this.postTitle.isEmpty();
+        inputMessage.setHint(hasTopic ? R.string.composer_hint_1st_topic : R.string.composer_hint_1st_say_something);
 
         txtRecorderTimer = (TextView)rootView.findViewById(R.id.recorder_timeleft);
 

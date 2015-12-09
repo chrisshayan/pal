@@ -124,8 +124,8 @@
     <string name="send">Send</string>
 
     <!--composer-->
-    <string name="composer_hint_first_time">Enter your idea, question, paragraph&#8230; here. Advisers will evaluate, correct and give you some tips to improve your English skill.</string>
-    <string name="composer_hint">Enter your idea here</string>
+    <string name="composer_hint_1st_say_something">Enter your idea, question, paragraph&#8230; here. Advisers will evaluate, correct and give you some tips to improve your English skill.</string>
+    <string name="composer_hint_1st_topic">Enter your point about this topic here. Advisers will evaluate, correct and give you some tips to improve your English skill.</string>
     <string name="create_post_successful">Your post has been saved</string>
     <string name="create_post_fail_audio">Fail to upload the audio recording</string>
     <string name="empty_message">Write or say to complete your challenge</string>
