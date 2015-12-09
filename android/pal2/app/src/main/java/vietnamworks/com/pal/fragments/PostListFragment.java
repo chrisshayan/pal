@@ -172,8 +172,7 @@ public class PostListFragment extends BaseFragment {
 
     private void openOverlay() {
         overlay.setVisibility(View.VISIBLE);
-        overlay.setAlpha(0);
-        overlay.animate().alpha(AppUiConfig.BASE_OVERLAY_ALPHA).setDuration(100).start();
+        overlay.setAlpha(AppUiConfig.BASE_OVERLAY_ALPHA);
     }
 
     private void closeOverlay() {
