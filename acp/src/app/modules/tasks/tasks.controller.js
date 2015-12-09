@@ -243,12 +243,12 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                             $scope.isPickingTask = false;
                             $rootScope.notifyError("No more task available. Please try again later");
                         } else {
-                            console.log("new post", new_post);
+                            // console.log("new post", new_post);
                             openModal(new_post);
                         }
                     })
                 } else {
-                    console.log("Resume last post", post);
+                    // console.log("Resume last post", post);
                     openModal(post);
                 }
             });
@@ -353,7 +353,7 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                         })
                         .doModify(uid)
                         .get();
-                    console.log(recent);
+                    // console.log(recent);
                     return recent;
                 } else {
                     $rootScope.notifyError("This task was tranferred to another advisor before");
@@ -389,7 +389,6 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                     //update user experience
                     var exp_config = $rootScope.config.user_exp_earns;
                     var exp_earn = exp_config[$scope.vote] || 0;
-                    console.log(exp_earn);
                     firebaseHelper.getFireBaseInstance(["profiles_pub", user_id, "exp"]).transaction(function(recent_exp){
                         if (!recent_exp) {
                             return exp_earn;
