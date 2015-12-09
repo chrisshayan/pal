@@ -39,7 +39,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                 }
             }
             if (!$scope.userNextLevelPoints) {
-                $scope.userNextLevelPoints = $scope.userPoints + 1;
+                $scope.userNextLevelPoints = 0;
             }
             var distance = Math.max($scope.userNextLevelPoints - current_level_min_point, 1);
             $scope.userLevelPercent = Math.round ((($scope.userPoints*1.0 - current_level_min_point)/distance)*100);
@@ -409,8 +409,10 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                             var level_completion = 0;
                             var next_level_point = 0;
                             var scale = $rootScope.config.user_level_scales;
+                            var current_level_min_point = 0;
                             for (var k in scale) {
                                 if (scale[k].min_points <= pts) {
+                                    current_level_min_point = scale[k].min_points;
                                     level_name = scale[k].name;
                                     level = k;
                                 } else {
@@ -418,7 +420,12 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                                     break;
                                 }
                             }
-                            level_completion = Math.floor( (pts * 100.0) / Math.max(next_level_point, 1));
+                            if (!next_level_point) {
+                                next_level_point = 0;
+                            }
+                            var level_distance = Math.max(1, next_level_point - current_level_min_point);
+
+                            level_completion = Math.min(100, Math.max(0, Math.floor(((pts - current_level_min_point) * 100.0) / level_distance)));
                             firebaseHelper.getFireBaseInstance(["profiles_pub", user_id]).update({
                                 level_name: level_name,
                                 level: level,
