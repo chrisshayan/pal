@@ -16,9 +16,10 @@ cloudinary.config({
 });
 
 if (USE_HTTPS) {
+    console.log("Use HTTPS");
     var key = fs.readFileSync('server.key', 'utf8');
     var certificate = fs.readFileSync('server.pem', 'utf8');
-    var credentials = {key: privateKey, cert: certificate};
+    var credentials = {key: key, cert: certificate};
     app = express();
     server = https.createServer(credentials, app);
 } else {
@@ -70,6 +71,12 @@ app.use(function (err, req, res, next) {
     next();
 });
 
-app.listen(PORT, function () {
-    console.log('Listening on port ' + PORT);
-});
+if (USE_HTTPS) {
+    server.listen(PORT, function () {
+        console.log('Listening on port ' + PORT);
+    });
+} else {
+    app.listen(PORT, function () {
+        console.log('Listening on port ' + PORT);
+    });
+}
