@@ -319,13 +319,11 @@ public class TimelineActivity extends BaseActivity {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             if (dataSnapshot.getChildrenCount() > 0) {
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    currentQuest = (Topic) new Topic().importData(snapshot.getValue());
-                    txtQuest.setText(currentQuest.getTitle());
-                    if (allPostsFragment != null) {
-                        allPostsFragment.refresh();
-                    }
-                    return;
+                DataSnapshot snapshot = dataSnapshot.getChildren().iterator().next();
+                currentQuest = (Topic) new Topic().importData(snapshot.getValue());
+                txtQuest.setText(currentQuest.getTitle());
+                if (allPostsFragment != null) {
+                    allPostsFragment.refresh();
                 }
             }
         }
