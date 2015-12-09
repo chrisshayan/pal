@@ -17,8 +17,8 @@ cloudinary.config({
 
 if (USE_HTTPS) {
     console.log("Use HTTPS");
-    var key = fs.readFileSync('server.key', 'utf8');
-    var certificate = fs.readFileSync('server.pem', 'utf8');
+    var key = fs.readFileSync(HTTPS_KEY, 'utf8');
+    var certificate = fs.readFileSync(HTTPS_CER, 'utf8');
     var credentials = {key: key, cert: certificate};
     app = express();
     server = https.createServer(credentials, app);
