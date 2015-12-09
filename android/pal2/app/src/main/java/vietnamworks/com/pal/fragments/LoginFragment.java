@@ -101,7 +101,6 @@ public class LoginFragment extends BaseFragment {
         new AlertDialog.Builder(getContext())
                 .setTitle(getString(R.string.reset_password))
                 .setMessage(String.format(getString(R.string.reset_password_confirm), getEmail()))
-                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         doResetPassword();

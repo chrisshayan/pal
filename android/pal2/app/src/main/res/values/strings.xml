@@ -124,11 +124,12 @@
     <string name="send">Send</string>
 
     <!--composer-->
+    <string name="composer_hint_first_time">Enter your idea, question, paragraph&#8230; here. Advisers will evaluate, correct and give you some tips to improve your English skill.</string>
     <string name="composer_hint">Enter your idea here</string>
     <string name="create_post_successful">Your post has been saved</string>
     <string name="create_post_fail_audio">Fail to upload the audio recording</string>
     <string name="empty_message">Write or say to complete your challenge</string>
-    <string name="guide_user_recorder_1">Touch Microphone icon to start recording</string>
+    <string name="guide_user_recorder_1">You can also record your voice and send to us</string>
     <string name="guide_user_recorder_2">Touch Microphone icon to finish recording</string>
     <string name="tips">Tips</string>
     <string name="fail_to_record">Fail to access the microphone</string>
