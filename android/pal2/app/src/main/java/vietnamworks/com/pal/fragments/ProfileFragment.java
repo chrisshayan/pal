@@ -71,6 +71,8 @@ public class ProfileFragment extends BaseFragment {
             }
         });
 
+        ((TimelineActivity) getActivity()).getQuestView().setVisibility(View.GONE);
+
         return rootView;
     }
 
