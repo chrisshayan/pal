@@ -1,7 +1,7 @@
 package vietnamworks.com.pal.activities;
 
-import android.animation.Animator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Rect;
@@ -33,6 +33,7 @@ import java.io.File;
 import java.util.HashMap;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.common.AnimatorEndListener;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.configurations.AppUiConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
@@ -51,6 +52,7 @@ import vietnamworks.com.pal.models.CurrentUserProfile;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.models.Topics;
 import vietnamworks.com.pal.services.AudioMixerService;
+import vietnamworks.com.pal.services.Callback;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
@@ -161,19 +163,16 @@ public class TimelineActivity extends BaseActivity {
             @Override
             public void onBackStackChanged() {
                 int deep = getSupportFragmentManager().getBackStackEntryCount();
+                int current_session = FirebaseService.getUserProfileIntValue("total_sessions", 0);
+
                 getSupportActionBar().setHomeAsUpIndicator(deep == 0 ? R.drawable.ic_image_dehaze : R.drawable.ic_hardware_keyboard_backspace);
 
-                if (deep == 0 && !LocalStorage.getBool(getString(R.string.local_storage_show_drawer_guide), false)) {
+                if (current_session > 5 && deep == 0 && !LocalStorage.getBool(getString(R.string.local_storage_show_drawer_guide), false)) {
                     drawer_guide.setVisibility(View.VISIBLE);
                     drawer_guide.setAlpha(0);
-                    drawer_guide.animate().alpha(AppUiConfig.BASE_OVERLAY_ALPHA).setStartDelay(500).setDuration(500).setListener(new Animator.AnimatorListener() {
+                    drawer_guide.animate().alpha(AppUiConfig.BASE_OVERLAY_ALPHA).setStartDelay(500).setDuration(500).setListener(new AnimatorEndListener(new Callback() {
                         @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
+                        public void onDone(Context ctx, Object obj) {
                             drawer_guide.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -182,17 +181,7 @@ public class TimelineActivity extends BaseActivity {
                                 }
                             });
                         }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    }).start();
+                    })).start();
                 }
 
                 hideKeyboard();
@@ -233,7 +222,9 @@ public class TimelineActivity extends BaseActivity {
                         } else {
                             TimelineActivity.resumeFromPushWithPostId = null;
                         }
-                    }catch (Exception E) {}
+                    }catch (Exception E) {
+                        E.printStackTrace();
+                    }
                 }
             }
             if (TimelineActivity.resumeFromPushWithPostId != null) {

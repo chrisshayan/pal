@@ -1,6 +1,5 @@
 package vietnamworks.com.pal.activities;
 
-import android.animation.Animator;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -73,27 +72,6 @@ public class AuthActivity extends BaseActivity {
             }
         });
     }
-
-    private Animator.AnimatorListener stateTransitionAnimationListener = new Animator.AnimatorListener() {
-        @Override
-        public void onAnimationStart(Animator animation) {
-
-        }
-
-        @Override
-        public void onAnimationEnd(Animator animation) {
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animation) {
-
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation) {
-
-        }
-    };
 
     public void setState(final int _state) {
         setState(_state, null);
