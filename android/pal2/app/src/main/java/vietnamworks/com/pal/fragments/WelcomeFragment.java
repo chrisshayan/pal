@@ -1,6 +1,6 @@
 package vietnamworks.com.pal.fragments;
 
-import android.animation.Animator;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +13,9 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
+import vietnamworks.com.pal.common.AnimatorEndListener;
 import vietnamworks.com.pal.configurations.AppUiConfig;
+import vietnamworks.com.pal.services.Callback;
 import vietnamworks.com.pal.services.LocalStorage;
 
 /**
@@ -120,14 +122,9 @@ public class WelcomeFragment extends BaseFragment {
         fab.collapseImmediately();
 
         fab.setVisibility(View.VISIBLE);
-        fab.animate().scaleX(1).scaleY(1).setDuration(BASE_ANIM_DURATION).setInterpolator(new OvershootInterpolator()).setListener(new Animator.AnimatorListener() {
+        fab.animate().scaleX(1).scaleY(1).setDuration(BASE_ANIM_DURATION).setInterpolator(new OvershootInterpolator()).setListener(new AnimatorEndListener(new Callback() {
             @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
+            public void onDone(Context ctx, Object obj) {
                 preventFabCollapseHintAnim = false;
                 View tutor_1 = getView().findViewById(R.id.tutor_1);
                 tutor_1.setAlpha(0);
@@ -135,16 +132,6 @@ public class WelcomeFragment extends BaseFragment {
                 tutor_1.setVisibility(View.VISIBLE);
                 tutor_1.animate().alpha(1f).x(0).setDuration(BASE_ANIM_DURATION).start();
             }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        }).start();
+        })).start();
     }
 }

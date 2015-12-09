@@ -1,6 +1,5 @@
 package vietnamworks.com.pal.activities;
 
-import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alexbbb.uploadservice.AbstractUploadServiceReceiver;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
@@ -33,13 +31,14 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
 
 import vietnamworks.com.pal.R;
+import vietnamworks.com.pal.common.AnimatorEndListener;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.configurations.AppUiConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.entities.Topic;
+import vietnamworks.com.pal.entities.UserProfile;
 import vietnamworks.com.pal.fragments.AdvisorPreviewFragment;
 import vietnamworks.com.pal.fragments.BaseFragment;
 import vietnamworks.com.pal.fragments.ChangePasswordFragment;
@@ -53,12 +52,12 @@ import vietnamworks.com.pal.fragments.WelcomeFragment;
 import vietnamworks.com.pal.models.CurrentUserProfile;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.models.Topics;
-import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.AudioMixerService;
-import vietnamworks.com.pal.services.CloudinaryService;
+import vietnamworks.com.pal.services.Callback;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
+import vietnamworks.com.pal.services.ParseService;
 
 public class TimelineActivity extends BaseActivity {
 
@@ -80,6 +79,7 @@ public class TimelineActivity extends BaseActivity {
     Topic currentQuest;
     TextView txtQuest;
 
+    public static String resumeFromPushWithPostId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,10 @@ public class TimelineActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         
         displayHomeAsUpButton(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_image_dehaze);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_image_dehaze);
+        }
 
         //drawer -- header
         navHeaderView = UserProfileNavView.create(this, 0, 0, 0);
@@ -104,26 +107,17 @@ public class TimelineActivity extends BaseActivity {
         FirebaseService.SetUserProfileListener(new FirebaseService.UserProfileListener() {
             @Override
             public void onChanged(HashMap<String, Object> data) {
-                int score_1 = FirebaseService.getUserProfileIntValue("score_1", 0);
-                int score_2 = FirebaseService.getUserProfileIntValue("score_2", 0);
-                int score_3 = FirebaseService.getUserProfileIntValue("score_3", 0);
-                int score_4 = FirebaseService.getUserProfileIntValue("score_4", 0);
-                int score_5 = FirebaseService.getUserProfileIntValue("score_5", 0);
-                int total = score_1 + score_2 + score_3 + score_4 + score_5;
-                float score = 0;
-                if (total > 0) {
-                    score = Math.round(((score_1 + score_2 * 2 + score_3 * 3 + score_4 * 4 + score_5 * 5) * 10.0f) / total) / 10f;
-                }
+                UserProfile p = UserProfile.getCurrentUserProfile();
                 if (navHeaderView != null) {
                     navHeaderView.updateStat(
-                            FirebaseService.getUserProfileIntValue("total_posts", 0),
-                            score,
-                            FirebaseService.getUserProfileIntValue("level_completion", 0)
+                            p.getTotalPosts(),
+                            p.getScore(),
+                            p.getLevelCompletion()
                     );
                     navHeaderView.updateProfile(
-                            FirebaseService.getUserProfileStringValue("display_name"),
-                            FirebaseService.getUserProfileStringValue("level_name", "Beginner"),
-                            FirebaseService.getUserProfileStringValue("avatar")
+                            p.getDisplayName(),
+                            p.getLevelName(),
+                            p.getAvatar()
                     );
                 }
             }
@@ -141,10 +135,8 @@ public class TimelineActivity extends BaseActivity {
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                if (drawer_guide.getVisibility() == View.VISIBLE) {
-                    drawer_guide.setVisibility(View.GONE);
-                    LocalStorage.set(getString(R.string.local_storage_show_drawer_guide), true);
-                }
+                removeDrawerGuide();
+                LocalStorage.set(getString(R.string.local_storage_show_drawer_guide), true);
             }
 
             @Override
@@ -163,63 +155,25 @@ public class TimelineActivity extends BaseActivity {
             @Override
             public void onBackStackChanged() {
                 int deep = getSupportFragmentManager().getBackStackEntryCount();
+                int current_session = FirebaseService.getUserProfileIntValue("total_sessions", 0);
+
                 getSupportActionBar().setHomeAsUpIndicator(deep == 0 ? R.drawable.ic_image_dehaze : R.drawable.ic_hardware_keyboard_backspace);
 
-                if (deep == 0 && !LocalStorage.getBool(getString(R.string.local_storage_show_drawer_guide), false)) {
+                if (current_session > 5 && deep == 0 && !LocalStorage.getBool(getString(R.string.local_storage_show_drawer_guide), false)) {
                     drawer_guide.setVisibility(View.VISIBLE);
                     drawer_guide.setAlpha(0);
-                    drawer_guide.animate().alpha(AppUiConfig.BASE_OVERLAY_ALPHA).setStartDelay(500).setDuration(500).setListener(new Animator.AnimatorListener() {
+                    drawer_guide.animate().alpha(AppUiConfig.BASE_OVERLAY_ALPHA).setStartDelay(500).setDuration(500).setListener(new AnimatorEndListener(new Callback() {
                         @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
+                        public void onDone(Context ctx, Object obj) {
                             drawer_guide.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    drawer_guide.animate().alpha(0).setDuration(500).setListener(new Animator.AnimatorListener() {
-                                        @Override
-                                        public void onAnimationStart(Animator animation) {
-
-                                        }
-
-                                        @Override
-                                        public void onAnimationEnd(Animator animation) {
-                                            try {
-                                                removeDrawerGuide();
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onAnimationCancel(Animator animation) {
-
-                                        }
-
-                                        @Override
-                                        public void onAnimationRepeat(Animator animation) {
-
-                                        }
-                                    });
-
+                                    removeDrawerGuide();
                                     LocalStorage.set(getString(R.string.local_storage_show_drawer_guide), true);
                                 }
                             });
                         }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    }).start();
+                    })).start();
                 }
 
                 hideKeyboard();
@@ -245,8 +199,7 @@ public class TimelineActivity extends BaseActivity {
             setTitle(R.string.title_welcome);
             displayHomeAsUpButton(false);
         } else {
-            onOpenAllPosts(null);
-            setTitle(R.string.title_timeline);
+            handlePushNotification(null);
         }
         queryTotalUnreadPosts = Posts.getUnreadPostsCounterQuery();
         queryTotalUnreadEvaluatedPosts = Posts.getUnreadEvaluatedPostsCounterQuery();
@@ -259,8 +212,68 @@ public class TimelineActivity extends BaseActivity {
             TextView versionView = ((TextView) findViewById(R.id.version));
             String version = "Version " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " - build " + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
             versionView.setText(version);
-        } catch (Exception E) {}
+        } catch (Exception E) {
+            E.printStackTrace();
+        }
     }
+
+    public void handlePushNotification(Bundle ext) {
+        //read push content
+        Bundle extras = ext;
+        if (extras == null) {
+            Intent intentNotification = getIntent();
+            extras = intentNotification.getExtras();
+        }
+        if (extras!=null) {
+            String jsonData = extras.getString( "com.parse.Data" );
+            if (jsonData != null && !jsonData.isEmpty()) {
+                try {
+                    JSONObject object = new JSONObject(jsonData);
+                    String post_id = object.getString("post_id");
+                    if (post_id != null && !post_id.isEmpty()) {
+                        TimelineActivity.resumeFromPushWithPostId = post_id;
+                    } else {
+                        TimelineActivity.resumeFromPushWithPostId = null;
+                    }
+                }catch (Exception E) {
+                    E.printStackTrace();
+                }
+            }
+        }
+        if (TimelineActivity.resumeFromPushWithPostId != null) {
+            if (!FirebaseService.checkAuthSync()) {
+                setTimeout(new Runnable() {
+                    @Override
+                    public void run() {
+                        FirebaseService.logout();
+                        ParseService.unRegisterUser();
+                        openActivity(AuthActivity.class);
+                        closeDrawer();
+                    }
+                }, 500);
+                return;
+            }
+        }
+        if (resumeFromPushWithPostId != null) {
+            final String postID = resumeFromPushWithPostId;
+            Posts.markAsRead(postID);
+            setTimeout(new Runnable() {
+                @Override
+                public void run() {
+                    Bundle b = new Bundle();
+                    b.putString("id", postID);
+                    allPostsFragment = PostListFragment.createAllPosts();
+                    openFragment(allPostsFragment, R.id.fragment_holder);
+                    openFragment(PostDetailFragment.create(b), R.id.fragment_holder, true);
+                }
+            });
+        } else {
+            onOpenAllPosts(null);
+            setTitle(R.string.title_timeline);
+        }
+        resumeFromPushWithPostId = null;
+    }
+
 
     public void removeDrawerGuide() {
         try {
@@ -300,13 +313,11 @@ public class TimelineActivity extends BaseActivity {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             if (dataSnapshot.getChildrenCount() > 0) {
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    currentQuest = (Topic) new Topic().importData(snapshot.getValue());
-                    txtQuest.setText(currentQuest.getTitle());
-                    if (allPostsFragment != null) {
-                        allPostsFragment.refresh();
-                    }
-                    return;
+                DataSnapshot snapshot = dataSnapshot.getChildren().iterator().next();
+                currentQuest = (Topic) new Topic().importData(snapshot.getValue());
+                txtQuest.setText(currentQuest.getTitle());
+                if (allPostsFragment != null) {
+                    allPostsFragment.refresh();
                 }
             }
         }
@@ -360,7 +371,6 @@ public class TimelineActivity extends BaseActivity {
             if (deep == 0) {
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 drawer.openDrawer(navigationView);
-                removeDrawerGuide();
             } else {
                 getSupportFragmentManager().popBackStackImmediate();
                 hideKeyboard();
@@ -385,17 +395,6 @@ public class TimelineActivity extends BaseActivity {
         queryTotalUnreadEvaluatedPosts.addValueEventListener(onChangedUnreadEvaluatedPostsValue);
         queryRandomQuest.addValueEventListener(onChangedRandomTask);
 
-        uploadReceiver.register(this);
-        FirebaseService.setOnConnectionChanged(new FirebaseService.ConnectionListener() {
-            @Override
-            public void onChanged(int now, int last) {
-                if (now == FirebaseService.STATUS_OFFLINE) {
-                    //TODO: handle offline event
-                } else {
-                    //TODO: handle online event
-                }
-            }
-        });
         CurrentUserProfile.increaseSessionCounter();
     }
 
@@ -407,7 +406,6 @@ public class TimelineActivity extends BaseActivity {
         queryTotalUnreadEvaluatedPosts.removeEventListener(onChangedUnreadEvaluatedPostsValue);
         queryRandomQuest.removeEventListener(onChangedRandomTask);
 
-        uploadReceiver.unregister(this);
         FirebaseService.setOnConnectionChanged(null);
     }
 
@@ -445,7 +443,6 @@ public class TimelineActivity extends BaseActivity {
 
     private void closeDrawer() {
         drawer.closeDrawer(GravityCompat.START);
-        removeDrawerGuide();
     }
 
     private void setNumberOfUnreadPostUI(final int val) {
@@ -461,6 +458,48 @@ public class TimelineActivity extends BaseActivity {
                 view.setVisibility(val > 0 ? View.VISIBLE : View.INVISIBLE);
             }
         });
+    }
+
+    public void highlightAllPostMenuItem(boolean val) {
+        TextView v = (TextView)findViewById(R.id.nav_item_allposts);
+        if (v != null) {
+            if (val) {
+                applyFont(v, RobotoB, true);
+                if (Utils.isLollipopOrLater()) {
+                    v.setTextColor(getResources().getColor(R.color.colorTextPrimary, getTheme()));
+                } else {
+                    v.setTextColor(getResources().getColor(R.color.colorTextPrimary));
+                }
+            } else {
+                applyFont(v, RobotoR, true);
+                if (Utils.isLollipopOrLater()) {
+                    v.setTextColor(getResources().getColor(R.color.colorActionItem, getTheme()));
+                } else {
+                    v.setTextColor(getResources().getColor(R.color.colorActionItem));
+                }
+            }
+        }
+    }
+
+    public void highlightEvaluatedMenuItem(boolean val) {
+        TextView v = (TextView)findViewById(R.id.nav_item_evaluated);
+        if (v != null) {
+            if (val) {
+                applyFont(v, RobotoB, true);
+                if (Utils.isLollipopOrLater()) {
+                    v.setTextColor(getResources().getColor(R.color.colorTextPrimary, getTheme()));
+                } else {
+                    v.setTextColor(getResources().getColor(R.color.colorTextPrimary));
+                }
+            } else {
+                applyFont(v, RobotoR, true);
+                if (Utils.isLollipopOrLater()) {
+                    v.setTextColor(getResources().getColor(R.color.colorActionItem, getTheme()));
+                } else {
+                    v.setTextColor(getResources().getColor(R.color.colorActionItem));
+                }
+            }
+        }
     }
 
     private void setNumberOfUnreadEvaluatedPostUI(final int val) {
@@ -528,6 +567,7 @@ public class TimelineActivity extends BaseActivity {
             @Override
             public void run() {
                 FirebaseService.logout();
+                ParseService.unRegisterUser();
                 openActivity(AuthActivity.class);
                 closeDrawer();
             }
@@ -625,88 +665,6 @@ public class TimelineActivity extends BaseActivity {
         }, 100);
     }
 
-    private boolean submitTask(ComposerFragment f) {
-        Topics.requestRandomTopics();
-        f.stopRecorder();
-
-        if (!FirebaseService.isConnected()) {
-            toast(R.string.post_audio_no_internet);
-            return false;
-        }
-
-        String audio = f.getAudioPath();
-        String subject = f.getSubject();
-        String topic = f.getTopic();
-        String message = f.getMessage().trim();
-
-        if (audio == null && message.length() == 0) {
-            toast(R.string.empty_message);
-            return false;
-        }
-
-        if (audio == null) { //text
-            Posts.addText(subject, topic, message);
-            toast(R.string.create_post_successful);
-        } else {
-            final String post_id = Posts.addAudioAsync(subject, topic, message);
-            final String server_file_path = Utils.getAudioServerFileName(FirebaseService.getUid(), post_id);
-            CloudinaryService.upload(audio, server_file_path, new AsyncCallback() {
-                @Override
-                public void onSuccess(Context ctx, Object res) {
-                    Map m = (Map)res;
-                    toast(R.string.create_post_successful);
-                    Posts.updateAudioLink(post_id, m.get("secure_url").toString());
-                }
-
-                @Override
-                public void onError(Context ctx, int error_code, String message) {
-                    toast(R.string.create_post_fail_audio);
-                    Posts.raiseError(post_id);
-                }
-            });
-            /*
-            FileUploadService.upload(
-                    this,
-                    post_id,
-                    AppConfig.AudioUploadURL,
-                    audio,
-                    server_file_path);
-                    */
-        }
-        //toast(R.string.create_post_successful);
-        return true;
-    }
-
-    private final AbstractUploadServiceReceiver uploadReceiver =
-            new AbstractUploadServiceReceiver() {
-                @Override
-                public void onProgress(String uploadId, int progress) {
-                    System.out.println("The progress of the upload with ID " + uploadId + " is: " + progress);
-                }
-
-                @Override
-                public void onError(String uploadId, Exception exception) {
-                    System.out.println("Error in upload with ID: " + uploadId + ". " + exception.getLocalizedMessage() + " " + exception);
-                    Posts.raiseError(uploadId);
-                }
-
-                @Override
-                public void onCompleted(String uploadId,
-                                        int serverResponseCode,
-                                        String serverResponseMessage) {
-                    System.out.println("Upload with ID " + uploadId
-                            + " has been completed with HTTP " + serverResponseCode
-                            + ". Response from server: " + serverResponseMessage);
-                    try {
-                        JSONObject obj = new JSONObject(serverResponseMessage);
-                        Posts.updateAudioLink(uploadId, obj.getString("url"));
-                    } catch (Exception E) {
-                        Posts.raiseError(uploadId);
-                        E.printStackTrace();
-                    }
-                }
-            };
-
     public void doQuest(View v) {
         if (currentQuest != null) {
             pushFragment(new ComposerFragment().setTopic(currentQuest.getTitle(), currentQuest.getId(), currentQuest.getHint()), R.id.fragment_holder);
@@ -760,11 +718,13 @@ public class TimelineActivity extends BaseActivity {
         String res = null;
         String[] proj = { MediaStore.Images.Media.DATA };
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if(cursor.moveToFirst()){;
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            res = cursor.getString(column_index);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                res = cursor.getString(column_index);
+            }
+            cursor.close();
         }
-        cursor.close();
         return res;
     }
 

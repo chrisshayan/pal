@@ -28,8 +28,10 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
         if (firebaseHelper.hasAlreadyLogin() && $rootScope.config) {
             $scope.userPoints = firebaseHelper.getPublicProfile().points || 0;
             var scale = $rootScope.config.advisor_level_scales;
+            var current_level_min_point = 0;
             for (var k in scale) {
                 if (scale[k].min_points <= $scope.userPoints) {
+                    current_level_min_point = scale[k].min_points;
                     $scope.userLevel = scale[k].name;
                 } else {
                     $scope.userNextLevelPoints = scale[k].min_points;
@@ -37,9 +39,10 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                 }
             }
             if (!$scope.userNextLevelPoints) {
-                $scope.userNextLevelPoints = $scope.userPoints + 1;
+                $scope.userNextLevelPoints = 0;
             }
-            $scope.userLevelPercent = Math.round (($scope.userPoints*1.0/$scope.userNextLevelPoints)*100);
+            var distance = Math.max($scope.userNextLevelPoints - current_level_min_point, 1);
+            $scope.userLevelPercent = Math.round ((($scope.userPoints*1.0 - current_level_min_point)/distance)*100);
         }
         setTimeout(function() {
             $scope.$apply();
@@ -68,7 +71,7 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
         $scope.role = firebaseHelper.getRole();
         $scope.hasFullfillProfile = firebaseHelper.getRole() == 'admin' ||
             (
-                pubProfile.first_name && pubProfile.last_name && pubProfile.avatar && pubProfile.exp
+                pubProfile.first_name && pubProfile.last_name && pubProfile.avatar && pubProfile.teaching_exp
             );
 
         $scope.newPosts = firebaseHelper.syncArray(
@@ -240,12 +243,12 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
                             $scope.isPickingTask = false;
                             $rootScope.notifyError("No more task available. Please try again later");
                         } else {
-                            console.log("new post", new_post);
+                            // console.log("new post", new_post);
                             openModal(new_post);
                         }
                     })
                 } else {
-                    console.log("Resume last post", post);
+                    // console.log("Resume last post", post);
                     openModal(post);
                 }
             });
@@ -350,7 +353,7 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                         })
                         .doModify(uid)
                         .get();
-                    console.log(recent);
+                    // console.log(recent);
                     return recent;
                 } else {
                     $rootScope.notifyError("This task was tranferred to another advisor before");
@@ -384,14 +387,8 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                         }
                     });
                     //update user experience
-                    var exp_earn = 0;
-                    if ($scope.vote == 3) {
-                        exp_earn = 1;
-                    } else if ($scope.vote == 4) {
-                        exp_earn = 5;
-                    } else if ($scope.vote == 5) {
-                        exp_earn = 10;
-                    }
+                    var exp_config = $rootScope.config.user_exp_earns;
+                    var exp_earn = exp_config[$scope.vote] || 0;
                     firebaseHelper.getFireBaseInstance(["profiles_pub", user_id, "exp"]).transaction(function(recent_exp){
                         if (!recent_exp) {
                             return exp_earn;
@@ -406,8 +403,10 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                             var level_completion = 0;
                             var next_level_point = 0;
                             var scale = $rootScope.config.user_level_scales;
+                            var current_level_min_point = 0;
                             for (var k in scale) {
                                 if (scale[k].min_points <= pts) {
+                                    current_level_min_point = scale[k].min_points;
                                     level_name = scale[k].name;
                                     level = k;
                                 } else {
@@ -415,7 +414,12 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                                     break;
                                 }
                             }
-                            level_completion = Math.floor( (pts * 100.0) / Math.max(next_level_point, 1));
+                            if (!next_level_point) {
+                                next_level_point = 0;
+                            }
+                            var level_distance = Math.max(1, next_level_point - current_level_min_point);
+
+                            level_completion = Math.min(100, Math.max(0, Math.floor(((pts - current_level_min_point) * 100.0) / level_distance)));
                             firebaseHelper.getFireBaseInstance(["profiles_pub", user_id]).update({
                                 level_name: level_name,
                                 level: level,
@@ -425,10 +429,9 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                     });
                 }
 
-
-
-
-                parseHelper.push($scope.data.created_by, "You've got new feedback from advisor");
+                parseHelper.push($scope.data.created_by, "You've got new feedback from advisor", {
+                    post_id: $scope.data.$id
+                });
             }
             $scope.isSubmitting = false;
             $scope.$apply();

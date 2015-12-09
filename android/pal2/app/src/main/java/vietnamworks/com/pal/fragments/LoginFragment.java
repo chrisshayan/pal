@@ -1,12 +1,17 @@
 package vietnamworks.com.pal.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -28,9 +33,11 @@ import vietnamworks.com.pal.services.ParseService;
  */
 public class LoginFragment extends BaseFragment {
     EditText txtPassword;
-    EditText txtEmail;
+    AutoCompleteTextView txtEmail;
     TextView txtError;
-    View errorView;
+    View errorView, loadingView;
+
+    Button btnLogin, btnRegister, btnForgetPassword;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,9 +48,14 @@ public class LoginFragment extends BaseFragment {
 
         BaseActivity.applyFont(rootView);
 
-        txtEmail = (EditText)rootView.findViewById(R.id.email);
-        txtPassword = (EditText)rootView.findViewById(R.id.password);
+        txtEmail = (AutoCompleteTextView)rootView.findViewById(R.id.email);
 
+        String emailList = LocalStorage.getString("email_history", "");
+        String emailArray[] = emailList.split(",");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_1, emailArray);
+        txtEmail.setAdapter(adapter);
+
+        txtPassword = (EditText)rootView.findViewById(R.id.password);
         txtPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -62,24 +74,42 @@ public class LoginFragment extends BaseFragment {
         errorView = rootView.findViewById(R.id.error_view);
         errorView.setVisibility(View.INVISIBLE);
 
-        rootView.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
+        loadingView = rootView.findViewById(R.id.loading);
+
+        btnLogin = (Button) rootView.findViewById(R.id.btn_login);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 login();
             }
         });
 
-        rootView.findViewById(R.id.btn_forget_password).setOnClickListener(new View.OnClickListener() {
+        btnRegister = (Button) rootView.findViewById(R.id.btn_register);
+
+        btnForgetPassword = (Button)rootView.findViewById(R.id.btn_forget_password);
+        btnForgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                forget_password();
+                forgetPassword();
             }
         });
 
         return rootView;
     }
 
-    public void forget_password() {
+    public void forgetPassword() {
+        new AlertDialog.Builder(getContext())
+                .setTitle(getString(R.string.reset_password))
+                .setMessage(String.format(getString(R.string.reset_password_confirm), getEmail()))
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        doResetPassword();
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
+    }
+
+
+    public void doResetPassword() {
         GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_do_forget_password);
         final String email = getEmail().trim();
         if (email.length() == 0) {
@@ -87,8 +117,7 @@ public class LoginFragment extends BaseFragment {
             GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_missing_email);
             focusEmail();
         } else {
-            setError(null);
-            ((AuthActivity)getActivity()).setState(AuthActivity.STATE_PROCESSING);
+            startLoading();
             FirebaseService.resetPassword(email, new AsyncCallback() {
                 @Override
                 public void onSuccess(Context ctx, Object obj) {
@@ -96,13 +125,13 @@ public class LoginFragment extends BaseFragment {
                     bundle.put("message", getString(R.string.reset_password_success));
                     bundle.put("allowShare", false);
                     ((AuthActivity) getActivity()).setState(AuthActivity.STATE_SUCCESS, bundle);
+                    stopLoading();
                 }
 
                 @Override
                 public void onError(Context ctx, int error_code, String message) {
-                    HashMap<String, Object> bundle = new HashMap<String, Object>();
-                    bundle.put("message", getString(R.string.reset_password_success));
-                    ((AuthActivity) getActivity()).setState(AuthActivity.STATE_ERROR, bundle);
+                    setError(getString(R.string.reset_password_error));
+                    stopLoading();
                 }
             });
         }
@@ -112,6 +141,7 @@ public class LoginFragment extends BaseFragment {
         GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_do_login);
         final String email = getEmail().trim();
         final String password = getPassword().trim();
+
         if (email.length() == 0) {
             setError(getString(R.string.require_email));
             GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_missing_email);
@@ -125,23 +155,26 @@ public class LoginFragment extends BaseFragment {
             focusEmail();
             GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_invalid_email_format);
         } else {
-            setError(null);
-            ((AuthActivity)getActivity()).setState(AuthActivity.STATE_PROCESSING);
+           startLoading();
             FirebaseService.login(email, password, new AsyncCallback() {
                 @Override
                 public void onSuccess(Context ctx, Object obj) {
-                    ParseService.registerUser(FirebaseService.getUid());
+                    stopLoading();
+                    ParseService.registerUser(FirebaseService.getUid(), email);
                     BaseActivity.sInstance.openActivity(TimelineActivity.class);
                     LocalStorage.set(getString(R.string.local_storage_first_launch), false);
                     GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_login_success);
+                    //save email
+                    String emailList = LocalStorage.getString("email_history", "");
+                    if (!emailList.contains(email)) {
+                        emailList = emailList + "," + email;
+                        LocalStorage.set("email_history", emailList);
+                    }
                 }
 
                 @Override
                 public void onError(Context ctx, int code, String message) {
-                    HashMap<String, Object> bundle = new HashMap<String, Object>();
-                    bundle.put("message", getString(R.string.login_fail));
-                    ((AuthActivity) getActivity()).setState(AuthActivity.STATE_ERROR, bundle);
-                    GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_login_fail);
+                    setError(getString(R.string.login_fail));
                 }
             });
         }
@@ -167,6 +200,7 @@ public class LoginFragment extends BaseFragment {
         if (message != null && !message.isEmpty()) {
             txtError.setText(message);
             errorView.setVisibility(View.VISIBLE);
+            stopLoading();
         } else {
             errorView.setVisibility(View.INVISIBLE);
         }
@@ -180,6 +214,30 @@ public class LoginFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        setError(null);
+        stopLoading();
         GaService.trackScreen(R.string.ga_screen_login);
+    }
+
+    private void startLoading() {
+        setError(null);
+        BaseActivity.sInstance.hideKeyboard();
+        loadingView.setVisibility(View.VISIBLE);
+
+        txtEmail.setEnabled(false);
+        txtPassword.setEnabled(false);
+        btnLogin.setEnabled(false);
+        btnRegister.setEnabled(false);
+        btnForgetPassword.setEnabled(false);
+    }
+
+    private void stopLoading() {
+        loadingView.setVisibility(View.GONE);
+
+        txtEmail.setEnabled(true);
+        txtPassword.setEnabled(true);
+        btnLogin.setEnabled(true);
+        btnRegister.setEnabled(true);
+        btnForgetPassword.setEnabled(true);
     }
 }

@@ -1,6 +1,5 @@
 package vietnamworks.com.pal.fragments;
 
-import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +26,7 @@ import java.util.HashMap;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.activities.TimelineActivity;
+import vietnamworks.com.pal.common.AnimatorEndListener;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.configurations.AppUiConfig;
 import vietnamworks.com.pal.custom_views.TimelineItemBaseView;
@@ -37,6 +37,7 @@ import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.entities.UserProfile;
 import vietnamworks.com.pal.models.AppModel;
 import vietnamworks.com.pal.models.Posts;
+import vietnamworks.com.pal.services.Callback;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
@@ -171,52 +172,16 @@ public class PostListFragment extends BaseFragment {
 
     private void openOverlay() {
         overlay.setVisibility(View.VISIBLE);
-        overlay.setAlpha(0);
-        overlay.animate().alpha(AppUiConfig.BASE_OVERLAY_ALPHA).setDuration(100).setListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                overlay.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        }).start();
+        overlay.setAlpha(AppUiConfig.BASE_OVERLAY_ALPHA);
     }
 
     private void closeOverlay() {
-        overlay.animate().alpha(0f).setDuration(100).setListener(new Animator.AnimatorListener() {
+        overlay.animate().alpha(0f).setDuration(100).setListener(new AnimatorEndListener(new Callback() {
             @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
+            public void onDone(Context ctx, Object obj) {
                 overlay.setVisibility(View.GONE);
             }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        }).start();
+        })).start();
     }
 
     @Override
@@ -231,9 +196,15 @@ public class PostListFragment extends BaseFragment {
             if (mode == FILTER_ALL) {
                 dataRef = Posts.getAllPostsQuery().limitToFirst(dataSize);
                 BaseActivity.sInstance.setTitle(R.string.title_timeline);
+                act.highlightAllPostMenuItem(true);
+                act.highlightEvaluatedMenuItem(false);
+
             } else if (mode == FILTER_EVALUATED) {
                 dataRef = Posts.getEvaluatedPostsQuery().limitToFirst(dataSize);
                 BaseActivity.sInstance.setTitle(R.string.title_evaluated_posts);
+
+                act.highlightAllPostMenuItem(false);
+                act.highlightEvaluatedMenuItem(true);
             }
             dataRef.addValueEventListener(dataValueEventListener);
         }
@@ -249,6 +220,13 @@ public class PostListFragment extends BaseFragment {
         if (dataRef != null) {
             dataRef.removeEventListener(dataValueEventListener);
             mini_quest_view.setVisibility(View.GONE);
+
+            Activity _act = this.getActivity();
+            if (_act != null) {
+                TimelineActivity act = (TimelineActivity) _act;
+                act.highlightAllPostMenuItem(false);
+                act.highlightEvaluatedMenuItem(false);
+            }
         }
     }
 
@@ -401,7 +379,7 @@ public class PostListFragment extends BaseFragment {
                         icon = R.drawable.timeline_upload_anim_01;
                     }
 
-                    view.highlight(!p.isHas_read());
+                    view.highlight(!p.isHas_read() && p.getStatus() > Post.STATUS_READY);
                     view.setClickEventListener(new TimelineItemView.OnClickEventListener() {
                         @Override
                         public void onClick(final String itemId) {

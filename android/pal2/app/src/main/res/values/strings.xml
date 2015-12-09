@@ -49,6 +49,7 @@
     <string name="edit">Edit</string>
     <string name="change">Change</string>
     <string name="uploading">Uploading</string>
+    <string name="oops">Oops. Something went wrong. Please try again later</string>
 
     <!-- post rate -->
     <string name="post_rate_1">Bad</string>
@@ -89,7 +90,10 @@
     <string name="title_activity_timeline" translatable="false">TimelineActivity</string>
     <string name="login_fail">Incorrect login credentials</string>
     <string name="reset_password_success">Your password has been reset. Please check your email to get new password.</string>
+    <string name="reset_password_error">Account is not valid.</string>
     <string name="forget_password">Forgot your password</string>
+    <string name="reset_password">Reset password</string>
+    <string name="reset_password_confirm">Do you really want to reset password of account %1$s</string>
     <string name="no_internet">Fail to connect server. Please try again later!</string>
 
     <string name="current_password">Current password</string>
@@ -120,11 +124,12 @@
     <string name="send">Send</string>
 
     <!--composer-->
-    <string name="composer_hint">Enter your idea here</string>
+    <string name="composer_hint_1st_say_something">Enter your idea, question, paragraph&#8230; here. Advisers will evaluate, correct and give you some tips to improve your English skill.</string>
+    <string name="composer_hint_1st_topic">Enter your point about this topic here. Advisers will evaluate, correct and give you some tips to improve your English skill.</string>
     <string name="create_post_successful">Your post has been saved</string>
     <string name="create_post_fail_audio">Fail to upload the audio recording</string>
     <string name="empty_message">Write or say to complete your challenge</string>
-    <string name="guide_user_recorder_1">Touch Microphone icon to start recording</string>
+    <string name="guide_user_recorder_1">You can also record your voice and send to us</string>
     <string name="guide_user_recorder_2">Touch Microphone icon to finish recording</string>
     <string name="tips">Tips</string>
     <string name="fail_to_record">Fail to access the microphone</string>
@@ -133,6 +138,7 @@
     <string name="post_audio_no_internet">Fail to connect server. Please try again later!</string>
     <string name="recorder_speak_now">Speak now</string>
     <string name="recorder_timer">Timeleft: %1$s sec</string>
+    <string name="send_upper">SEND</string>
 
     <!--post list-->
     <string name="you_wrote">You wrote</string>

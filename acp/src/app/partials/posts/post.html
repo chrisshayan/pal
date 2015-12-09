@@ -1,4 +1,4 @@
-<li ng-style="{'cursor':'text'}">
+<li ng-style="{'cursor':'text'}" ng-show="isReady">
     <h4 style="display:block" ng-click="onOpenTask()">
         {{data.title || (user_display_name + " said")}}<br/><br/>
         <small><i class="fa fa-fw fa-user"></i>{{user_display_name}}</small><br/>

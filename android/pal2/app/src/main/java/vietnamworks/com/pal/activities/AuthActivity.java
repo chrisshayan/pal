@@ -1,28 +1,18 @@
 package vietnamworks.com.pal.activities;
 
-import android.animation.Animator;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
-import org.json.JSONObject;
-
 import java.util.HashMap;
 
 import vietnamworks.com.pal.R;
-import vietnamworks.com.pal.common.Utils;
-import vietnamworks.com.pal.fragments.AuthProcessingFragment;
 import vietnamworks.com.pal.fragments.LoginFragment;
-import vietnamworks.com.pal.fragments.RegisterErrorFragment;
 import vietnamworks.com.pal.fragments.RegisterFragment;
 import vietnamworks.com.pal.fragments.RegisterSuccessFragment;
-import vietnamworks.com.pal.services.AsyncCallback;
-import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
-import vietnamworks.com.pal.services.HttpService;
 
 /**
  * Created by duynk on 10/26/15.
@@ -31,14 +21,12 @@ public class AuthActivity extends BaseActivity {
     LoginFragment loginFragment;
     RegisterFragment registerFragment;
     RegisterSuccessFragment registerSuccessFragment;
-    RegisterErrorFragment registerErrorFragment;
-    AuthProcessingFragment authProcessingFragment;
 
     final public static int STATE_LOGIN = 0;
     final public static int STATE_REGISTER = 1;
     final public static int STATE_SUCCESS = 2;
-    final public static int STATE_ERROR = 3;
-    final public static int STATE_PROCESSING = 4;
+    //final public static int STATE_ERROR = 3;
+    //final public static int STATE_PROCESSING = 4;
     int state = -999;
 
     @Override
@@ -63,25 +51,11 @@ public class AuthActivity extends BaseActivity {
         return registerFragment;
     }
 
-    private RegisterErrorFragment getRegisterErrorFragment() {
-        if (registerErrorFragment == null) {
-            registerErrorFragment = new RegisterErrorFragment();
-        }
-        return registerErrorFragment;
-    }
-
     private RegisterSuccessFragment getRegisterSuccessFragment() {
         if (registerSuccessFragment == null) {
             registerSuccessFragment = new RegisterSuccessFragment();
         }
         return registerSuccessFragment;
-    }
-
-    private AuthProcessingFragment getAuthProcessingFragment() {
-        if (authProcessingFragment == null) {
-            authProcessingFragment = new AuthProcessingFragment();
-        }
-        return authProcessingFragment;
     }
 
     @Override
@@ -98,27 +72,6 @@ public class AuthActivity extends BaseActivity {
             }
         });
     }
-
-    private Animator.AnimatorListener stateTransitionAnimationListener = new Animator.AnimatorListener() {
-        @Override
-        public void onAnimationStart(Animator animation) {
-
-        }
-
-        @Override
-        public void onAnimationEnd(Animator animation) {
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animation) {
-
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation) {
-
-        }
-    };
 
     public void setState(final int _state) {
         setState(_state, null);
@@ -149,18 +102,6 @@ public class AuthActivity extends BaseActivity {
                                 registerSuccessFragment.setButtonShareVisible(true);
                             }
                         }
-                    } else if (_state == STATE_ERROR) {
-                        pushFragment(getRegisterErrorFragment(), R.id.fragment_holder);
-                        if (ext != null) {
-                            if (ext.containsKey("message")) {
-                                registerErrorFragment.setError(ext.get("message").toString());
-                            } else {
-                                registerErrorFragment.setError(R.string.register_fail);
-                            }
-                        }
-                    } else if (_state == STATE_PROCESSING) {
-                        pushFragment(getAuthProcessingFragment(), R.id.fragment_holder);
-                        hideKeyboard();
                     }
                 } catch (Exception E) {
                     E.printStackTrace();
@@ -172,91 +113,6 @@ public class AuthActivity extends BaseActivity {
     public void onOpenRequestInvite(View v) {
         setState(STATE_REGISTER);
     }
-
-    public void onExecuteRequestInvite(View v) {
-        GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_request_invite);
-        final String email = registerFragment.getEmail().trim();
-        final String fullname = registerFragment.getFullName().trim();
-        if (fullname.length() == 0) {
-            toast(R.string.require_full_name);
-            GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_missing_fullname);
-            setTimeout(new Runnable() {
-                @Override
-                public void run() {
-                    registerFragment.focusFullName();
-                }
-            });
-        } else if (email.length() == 0) {
-            toast(R.string.require_email);
-            GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_missing_email);
-            setTimeout(new Runnable() {
-                @Override
-                public void run() {
-                    registerFragment.focusEmail();
-                }
-            });
-        } else if (!Utils.isValidEmail(email)) {
-            toast(R.string.invalid_email);
-            setTimeout(new Runnable() {
-                @Override
-                public void run() {
-                    registerFragment.focusEmail();
-                }
-            });
-            GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_invalid_email_format);
-        } else if (!FirebaseService.isConnected()) {
-            toast(R.string.no_internet);
-        } else {
-            setState(STATE_PROCESSING);
-            HashMap<String, String> data = new HashMap<>();
-            data.put("email", email);
-            data.put("fullname", fullname);
-
-            HttpService.Post(getBaseContext(), "register", data, new AsyncCallback() {
-                @Override
-                public void onSuccess(Context ctx, Object obj) {
-                    JSONObject json = (JSONObject) obj;
-                    try {
-                        int result = json.getInt("result");
-                        if (result == 0) {//saved
-                            HashMap<String, Object> bundle = new HashMap<String, Object>();
-                            bundle.put("message", getString(R.string.register_thank));
-                            setState(STATE_SUCCESS, bundle);
-                            registerFragment.resetForm();
-                        } else {
-                            HashMap<String, Object> bundle = new HashMap<String, Object>();
-                            bundle.put("message", getString(R.string.register_success));
-                            setState(STATE_SUCCESS, bundle);
-                            registerFragment.resetForm();
-                        }
-                        GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_register_success);
-                    } catch (Exception E) {
-                        HashMap<String, Object> bundle = new HashMap<String, Object>();
-                        bundle.put("message", getString(R.string.register_fail));
-                        setState(STATE_ERROR, bundle);
-                        registerFragment.resetForm();
-                    }
-                }
-
-                @Override
-                public void onError(Context ctx, int error_code, String message) {
-                    GaService.trackEvent(R.string.ga_cat_register, R.string.ga_event_register_fail);
-                    if (error_code == 409) { //dup
-                        HashMap<String, Object> bundle = new HashMap<String, Object>();
-                        bundle.put("message", getString(R.string.register_dup_email));
-                        setState(STATE_ERROR, bundle);
-                        registerFragment.resetForm();
-                    } else {
-                        HashMap<String, Object> bundle = new HashMap<String, Object>();
-                        bundle.put("message", getString(R.string.register_fail));
-                        setState(STATE_ERROR, bundle);
-                        registerFragment.resetForm();
-                    }
-                }
-            });
-        }
-    }
-
 
     public void onOpenLogin(View v) {
         setState(STATE_LOGIN);

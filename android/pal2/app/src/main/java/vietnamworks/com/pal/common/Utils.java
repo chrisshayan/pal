@@ -215,29 +215,31 @@ public class Utils {
     }
 
     public static Bitmap getFixOrientationBitmap(String path, int maxWidth, int maxHeight) {
-        Bitmap bm;
-        BitmapFactory.Options btmapOptions = new BitmapFactory.Options();
-        bm = BitmapFactory.decodeFile(path, btmapOptions);
-        try {
-            ExifInterface exif = new ExifInterface(path);
-            int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-            int angle = 0;
-            if (rotation == ExifInterface.ORIENTATION_ROTATE_90) {
-                angle = 0;
-            } else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {
-                angle = 180;
-            } else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {
-                angle = 270;
+        Bitmap bm = null;
+        if (path != null && maxWidth > 0 && maxHeight > 0) {
+            BitmapFactory.Options btmapOptions = new BitmapFactory.Options();
+            bm = BitmapFactory.decodeFile(path, btmapOptions);
+            try {
+                ExifInterface exif = new ExifInterface(path);
+                int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                int angle = 0;
+                if (rotation == ExifInterface.ORIENTATION_ROTATE_90) {
+                    angle = 0;
+                } else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {
+                    angle = 180;
+                } else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {
+                    angle = 270;
+                }
+                Matrix matrix = new Matrix();
+                if (rotation != 0f) {
+                    matrix.preRotate(angle);
+                }
+                bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+            } catch (Exception e) {
+                Crittercism.logHandledException(e);
             }
-            Matrix matrix = new Matrix();
-            if (rotation != 0f) {
-                matrix.preRotate(angle);
-            }
-            bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
-        } catch (Exception e) {
-            Crittercism.logHandledException(e);
+            bm = resize(bm, maxWidth, maxHeight);
         }
-        bm = resize(bm, maxWidth, maxHeight);
         return bm;
     }
 

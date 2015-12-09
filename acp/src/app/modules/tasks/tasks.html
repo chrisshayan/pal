@@ -37,8 +37,8 @@
                                 <div class="sk-double-bounce1"></div>
                                 <div class="sk-double-bounce2"></div>
                             </div>
-                            <custom-post ng-repeat = "p in pendingPosts | limitTo:1" ref="p"></custom-post>
-                            <custom-post ng-repeat = "p in newPosts | limitTo:5" ref="p"></custom-post>
+                            <custom-post ng-show="!isPickingTask" ng-repeat = "p in pendingPosts | limitTo:1" ref="p"></custom-post>
+                            <custom-post ng-repeat = "p in newPosts | limitTo:5 - pendingPosts.length" ref="p"></custom-post>
                         </ul>
                     </div>
                 </div>

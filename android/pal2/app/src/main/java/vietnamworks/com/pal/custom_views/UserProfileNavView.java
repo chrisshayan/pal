@@ -65,7 +65,7 @@ public class UserProfileNavView extends LinearLayout {
             txtUserName = (TextView) findViewById(R.id.username);
             imgAvatar = (ImageView) findViewById(R.id.avatar);
 
-            imgAvatar.setOnClickListener(new OnClickListener() {
+            this.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ((TimelineActivity)BaseActivity.sInstance).onOpenUserProfile(v);

@@ -122,8 +122,9 @@ angular.module('inspinia').controller('ActivateModalCtrl', function($rootScope, 
     }, 500);
 
     $scope.onDone = function () {
-        if (!$scope.isProcessing && $scope.data.first_name && $scope.data.last_name && $scope.data.exp && $scope.data.avatar) {
+        if (!$scope.isProcessing && $scope.data.first_name && $scope.data.last_name && $scope.data.teaching_exp && $scope.data.avatar) {
             $scope.isProcessing = true;
+			$scope.data.teaching_exp = parseInt($scope.data.teaching_exp);
             var obj = new Advisor(cs.purify($scope.data));
 			obj.set('display_name', obj.get('first_name') + " " + obj.get('last_name'));
 			obj.doModify(obj.get('$id'));

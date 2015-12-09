@@ -6,6 +6,10 @@
       ".read": "true",
       ".write": "auth != null && newData.parent().child('profiles').child(auth.uid).child('role').val() == 'admin'"
     },
+    "confirm_token": {
+      ".read": "true",
+      ".write": "true"
+    },
     "schools": {
       ".validate": "newData.hasChildren(['created_by', 'created_date', 'last_modified_by', 'last_modified_date', 'address', 'city', 'name'])",
       "created_by": {
@@ -170,6 +174,9 @@
           ".validate": "newData.isNumber() || newData.val() == null"
         },
         "total_sessions": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "teaching_exp": {
           ".validate": "newData.isNumber() || newData.val() == null"
         },
         "points": {

@@ -49,6 +49,9 @@ function onChanged(snapshot) {
         var val = snapshot.val();
         var key = snapshot.key();
 
+        if (val.status <= PostStatus.Ready) {
+            val.has_read = true; //fix user cancel task
+        }
         var obj = {
             status: val.status,
             last_modified_date: val.last_modified_date,

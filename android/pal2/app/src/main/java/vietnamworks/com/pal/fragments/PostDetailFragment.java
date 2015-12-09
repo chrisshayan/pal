@@ -42,6 +42,7 @@ public class PostDetailFragment extends BaseFragment {
     RecyclerView recyclerView;
     Post post;
     ProgressBar progressBar;
+    String title = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,13 @@ public class PostDetailFragment extends BaseFragment {
         super.onPause();
         if (dataRef != null) {
             dataRef.removeEventListener(dataValueEventListener);
+        }
+    }
+
+    @Override
+    public void onResumeFromBackStack() {
+        if (!title.isEmpty()) {
+            BaseActivity.sInstance.setTitle(Utils.getFirstWordsExtra(title, 5));
         }
     }
 
@@ -192,7 +200,7 @@ public class PostDetailFragment extends BaseFragment {
             BaseActivity.sInstance.setTimeout(new Runnable() {
                 @Override
                 public void run() {
-                    String title = post.getTitle();
+                    title = post.getTitle();
                     if (title == null || title.isEmpty()) {
                         title = getString(R.string.you_said);
                     }

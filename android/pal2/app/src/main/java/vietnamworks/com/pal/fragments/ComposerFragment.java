@@ -1,7 +1,6 @@
 package vietnamworks.com.pal.fragments;
 
 import android.Manifest;
-import android.animation.Animator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -48,13 +47,9 @@ public class ComposerFragment extends BaseFragment {
 
     private TextView txtSubject;
     private EditText inputMessage;
-    private TextView txtHint;
     private ImageButton btnHint;
     private TextView txtRecorderTimer;
     private View viewRecorderLayout;
-
-    int tutorStep = 0;
-    boolean isInTutorial = false;
 
     public String getAudioPath() {
         if (hasAudio) {
@@ -75,17 +70,12 @@ public class ComposerFragment extends BaseFragment {
 
         BaseActivity.applyFont(rootView);
 
-        txtHint = (TextView)rootView.findViewById(R.id.recorder_hint);
-        txtHint.setVisibility(View.VISIBLE);
-        txtHint.setText(getString(R.string.guide_user_recorder_1));
-
         audioPlayer = (AudioPlayer)rootView.findViewById(R.id.player);
         audioPlayer.setVisibility(View.INVISIBLE);
         audioPlayer.setAudioPlayerCallback(new AudioPlayer.AudioPlayerCallback() {
             @Override
             public void onRemoveAudio() {
                 audioPlayer.setVisibility(View.INVISIBLE);
-                txtHint.setVisibility(View.VISIBLE);
                 hasAudio = false;
             }
         });
@@ -97,6 +87,7 @@ public class ComposerFragment extends BaseFragment {
         btnRecorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                removeOverlay();
                 BaseActivity.sInstance.askForPermission(new String[]{Manifest.permission.RECORD_AUDIO}, new AsyncCallback() {
                     @Override
                     public void onSuccess(Context ctx, Object obj) {
@@ -109,11 +100,10 @@ public class ComposerFragment extends BaseFragment {
                                 myAudioRecorder.release();
                                 myAudioRecorder = null;
                             } catch (Exception E) {
+                                E.printStackTrace();
                             }
-                            updateUI(false);
                             audioPlayer.setAudioSource(Utils.getSampleRecordPath(), true);
                             audioPlayer.setVisibility(View.VISIBLE);
-                            txtHint.setVisibility(View.INVISIBLE);
                             hasAudio = true;
                         }
                         viewRecorderLayout.setVisibility(View.VISIBLE);
@@ -121,8 +111,6 @@ public class ComposerFragment extends BaseFragment {
                         Utils.newSampleRecord();
 
                         audioPlayer.setVisibility(View.INVISIBLE);
-                        txtHint.setVisibility(View.VISIBLE);
-
                         audioPlayer.setAudioSource(null);
 
                         myAudioRecorder = new MediaRecorder();
@@ -136,19 +124,16 @@ public class ComposerFragment extends BaseFragment {
                             myAudioRecorder.start();
                             onStartRecorderTimer();
                             BaseActivity.sInstance.hideKeyboard();
-                            updateUI(true);
 
                             myAudioRecorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
                                 @Override
                                 public void onError(MediaRecorder mr, int what, int extra) {
                                     myAudioRecorder = null;
-                                    updateUI(false);
                                 }
                             });
                             GaService.trackEvent(R.string.ga_cat_recorder, R.string.ga_event_recorder_success);
                         } catch (Exception e) {
                             myAudioRecorder = null;
-                            updateUI(false);
                             e.printStackTrace();
                             BaseActivity.toast(R.string.fail_to_record);
                             GaService.trackEvent(R.string.ga_cat_recorder, R.string.ga_event_recorder_fail);
@@ -158,7 +143,6 @@ public class ComposerFragment extends BaseFragment {
                     @Override
                     public void onError(Context ctx, int error_code, String message) {
                         myAudioRecorder = null;
-                        updateUI(false);
                         BaseActivity.toast(R.string.fail_to_record);
                         GaService.trackEvent(R.string.ga_cat_recorder, R.string.ga_event_recorder_fail);
                     }
@@ -177,6 +161,15 @@ public class ComposerFragment extends BaseFragment {
 
         txtSubject = (TextView)rootView.findViewById(R.id.subject);
         inputMessage = (EditText)rootView.findViewById(R.id.message);
+        inputMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    removeOverlay();
+                }
+            }
+        });
+
         setTopic(this.postTitle, this.topicRef, this.tips);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
@@ -185,74 +178,29 @@ public class ComposerFragment extends BaseFragment {
         btnHint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = tips;
                 new AlertDialog.Builder(BaseActivity.sInstance)
                         .setTitle(BaseActivity.sInstance.getString(R.string.tips))
                         .setMessage(tips)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
                             }
                         })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
             }
         });
 
         if (!LocalStorage.getBool(getString(R.string.local_storage_show_composer_guide), false)) {
-            isInTutorial = true;
             final View overlay = rootView.findViewById(R.id.overlay);
-            final View tutor1 = overlay.findViewById(R.id.tutor_1);
-            final View tutor2 = overlay.findViewById(R.id.tutor_2);
-            final View tutor3 = overlay.findViewById(R.id.tutor_3);
-            overlay.setVisibility(View.GONE);
-            overlay.setAlpha(0);
-            overlay.animate().alpha(1f).setListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                    overlay.setVisibility(View.VISIBLE);
-                    tutor1.setVisibility(View.VISIBLE);
-                    tutor2.setVisibility(View.GONE);
-                    tutor3.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    overlay.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            LocalStorage.set(getString(R.string.local_storage_show_composer_guide), true);
-                            tutorStep++;
-                            if (tutorStep == 1) {
-                                tutor1.setVisibility(View.GONE);
-                                tutor2.setVisibility(View.VISIBLE);
-                            } else if (tutorStep == 2) {
-                                tutor2.setVisibility(View.GONE);
-                                tutor3.setVisibility(View.VISIBLE);
-                            } else {
-                                tutor3.setVisibility(View.GONE);
-                                overlay.setVisibility(View.GONE);
-                                isInTutorial = false;
-                            }
-                        }
-                    });
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
-            }).start();
+            overlay.setVisibility(View.VISIBLE);
+            ((BaseActivity) getActivity()).hideKeyboard();
         } else {
             rootView.findViewById(R.id.overlay).setVisibility(View.GONE);
             inputMessage.requestFocus();
             ((BaseActivity) getActivity()).showKeyboard();
+            removeOverlay();
         }
+        boolean hasTopic = this.postTitle != null && !this.postTitle.isEmpty();
+        inputMessage.setHint(hasTopic ? R.string.composer_hint_1st_topic : R.string.composer_hint_1st_say_something);
 
         txtRecorderTimer = (TextView)rootView.findViewById(R.id.recorder_timeleft);
 
@@ -260,10 +208,7 @@ public class ComposerFragment extends BaseFragment {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isInTutorial()) {
-                    onClickedSend();
-                    return;
-                }
+                LocalStorage.set(getString(R.string.local_storage_show_composer_guide), true);
                 Topics.requestRandomTopics();
                 stopRecorder();
                 if (!FirebaseService.isConnected()) {
@@ -314,30 +259,35 @@ public class ComposerFragment extends BaseFragment {
         return rootView;
     }
 
+    private void removeOverlay() {
+        View v = getView();
+        if (v != null) {
+            final View overlay = v.findViewById(R.id.overlay);
+            if (overlay != null) {
+                BaseActivity.timeout(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            ((ViewGroup) overlay.getParent()).removeView(overlay);
+                        }catch (Exception E) {}
+                    }
+                });
+            }
+        }
+    }
+
     public void stopRecorder() {
         if (myAudioRecorder != null) { //recording, stop now
             myAudioRecorder.stop();
             myAudioRecorder.reset();
             myAudioRecorder.release();
             myAudioRecorder = null;
-            updateUI(false);
             audioPlayer.setAudioSource(Utils.getSampleRecordPath(), true);
             audioPlayer.setVisibility(View.VISIBLE);
             hasAudio = true;
-            txtHint.setVisibility(View.INVISIBLE);
         }
         viewRecorderLayout.setVisibility(View.GONE);
         onStopRecorderTimer();
-    }
-
-    private void updateUI(boolean isplaying) {
-        if (isplaying) {
-            //btnRecorder.setImageResource(R.drawable.ic_av_stop_circle_outline_danger);
-            txtHint.setText("");
-        } else {
-            //btnRecorder.setImageResource(R.drawable.ic_av_mic);
-            txtHint.setText(getString(R.string.guide_user_recorder_1));
-        }
     }
 
     public ComposerFragment setTopic(String title, String topicRef, String hint) {
@@ -387,21 +337,6 @@ public class ComposerFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         GaService.trackScreen(R.string.ga_screen_compose);
-    }
-
-    public boolean isInTutorial() {
-        return isInTutorial;
-    }
-
-    public void onClickedSend() {
-        if (isInTutorial && tutorStep == 2) {
-            final View overlay = getView().findViewById(R.id.overlay);
-            final View tutor3 = overlay.findViewById(R.id.tutor_3);
-
-            tutor3.setVisibility(View.GONE);
-            overlay.setVisibility(View.GONE);
-            isInTutorial = false;
-        }
     }
 
     //recorder timer

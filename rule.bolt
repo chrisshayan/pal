@@ -8,6 +8,11 @@ path /config {
     read() = true;
 }
 
+path /confirm_token {
+    read() = true;
+    write() = true;
+}
+
 path /schools is School;
 path /cities is City;
 path /nations is Nation;
@@ -98,6 +103,7 @@ type PublicProfile {
     total_sessions: Number | Null,
 
     //for advisor
+    teaching_exp: Number | Null,
     points: Number | Null,
     rate1: Number | Null,
     rate2: Number | Null,

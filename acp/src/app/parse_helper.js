@@ -17,38 +17,26 @@ angular.module('parseHelper', [])
 
 .service('parseHelper', function(parseHelperConfig, $http) {
     var self = this;
-    this.push = function(to_user, message) {
-        // $http({
-        //     method: 'POST',
-        //     url: 'https://api.parse.com/1/push',
-        //     headers: {
-        //         "X-Parse-Application-Id": parseHelperConfig.app_id,
-        //         "X-Parse-REST-API-Key": parseHelperConfig.app_key,
-        //         "Content-Type": "application/json"
-        //     },
-        //     data: {
-        //         where: {
-        //             user_id: to_user
-        //         },
-        //         data: {
-        //             "alert": message
-        //         }
-        //     }
-        // }).then(function successCallback(response) {
-        // }, function errorCallback(response) {
-        // });
-        Parse.Push.send({
+    this.push = function(to_user, message, extra) {
+        var data = {
+            alert: message
+        }
+        if (extra) {
+            for (var k in extra) {
+                data[k] = extra[k];
+            }
+        }
+        var parse_data = {
             where: {
                 user_id: to_user
             },
-            data: {
-                alert: message
-            }
-        }, {
+            data: data,
+        };
+        Parse.Push.send(parse_data, {
             success: function() {
             },
             error: function(error) {
-                // Handle error
+                console.log(error);
             }
         });
 
