@@ -191,6 +191,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public static void applyFont(final View v, Typeface font) {
+        applyFont(v, font, false);
+    }
+
+    public static void applyFont(final View v, Typeface font, boolean force) {
         if (v != null) {
             try {
                 if (v instanceof ViewGroup) {
@@ -202,7 +206,7 @@ public class BaseActivity extends AppCompatActivity {
                 }
                 else if (v instanceof TextView) {
                     TextView t = (TextView)v;
-                    if (t.getTypeface() != null) {
+                    if (!force && t.getTypeface() != null) {
                         int style = t.getTypeface().getStyle();
                         if (style == Typeface.BOLD) {
                             ((TextView) v).setTypeface(RobotoB);

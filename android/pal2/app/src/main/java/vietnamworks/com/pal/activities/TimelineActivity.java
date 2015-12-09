@@ -461,6 +461,48 @@ public class TimelineActivity extends BaseActivity {
         });
     }
 
+    public void highlightAllPostMenuItem(boolean val) {
+        TextView v = (TextView)findViewById(R.id.nav_item_allposts);
+        if (v != null) {
+            if (val) {
+                applyFont(v, RobotoB, true);
+                if (Utils.isLollipopOrLater()) {
+                    v.setTextColor(getResources().getColor(R.color.colorTextPrimary, getTheme()));
+                } else {
+                    v.setTextColor(getResources().getColor(R.color.colorTextPrimary));
+                }
+            } else {
+                applyFont(v, RobotoR, true);
+                if (Utils.isLollipopOrLater()) {
+                    v.setTextColor(getResources().getColor(R.color.colorActionItem, getTheme()));
+                } else {
+                    v.setTextColor(getResources().getColor(R.color.colorActionItem));
+                }
+            }
+        }
+    }
+
+    public void highlightEvaluatedMenuItem(boolean val) {
+        TextView v = (TextView)findViewById(R.id.nav_item_evaluated);
+        if (v != null) {
+            if (val) {
+                applyFont(v, RobotoB, true);
+                if (Utils.isLollipopOrLater()) {
+                    v.setTextColor(getResources().getColor(R.color.colorTextPrimary, getTheme()));
+                } else {
+                    v.setTextColor(getResources().getColor(R.color.colorTextPrimary));
+                }
+            } else {
+                applyFont(v, RobotoR, true);
+                if (Utils.isLollipopOrLater()) {
+                    v.setTextColor(getResources().getColor(R.color.colorActionItem, getTheme()));
+                } else {
+                    v.setTextColor(getResources().getColor(R.color.colorActionItem));
+                }
+            }
+        }
+    }
+
     private void setNumberOfUnreadEvaluatedPostUI(final int val) {
         setTimeout(new Runnable() {
             @Override

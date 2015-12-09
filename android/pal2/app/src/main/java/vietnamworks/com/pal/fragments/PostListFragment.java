@@ -196,9 +196,15 @@ public class PostListFragment extends BaseFragment {
             if (mode == FILTER_ALL) {
                 dataRef = Posts.getAllPostsQuery().limitToFirst(dataSize);
                 BaseActivity.sInstance.setTitle(R.string.title_timeline);
+                act.highlightAllPostMenuItem(true);
+                act.highlightEvaluatedMenuItem(false);
+
             } else if (mode == FILTER_EVALUATED) {
                 dataRef = Posts.getEvaluatedPostsQuery().limitToFirst(dataSize);
                 BaseActivity.sInstance.setTitle(R.string.title_evaluated_posts);
+
+                act.highlightAllPostMenuItem(false);
+                act.highlightEvaluatedMenuItem(true);
             }
             dataRef.addValueEventListener(dataValueEventListener);
         }
@@ -214,6 +220,13 @@ public class PostListFragment extends BaseFragment {
         if (dataRef != null) {
             dataRef.removeEventListener(dataValueEventListener);
             mini_quest_view.setVisibility(View.GONE);
+
+            Activity _act = this.getActivity();
+            if (_act != null) {
+                TimelineActivity act = (TimelineActivity) _act;
+                act.highlightAllPostMenuItem(false);
+                act.highlightEvaluatedMenuItem(false);
+            }
         }
     }
 
