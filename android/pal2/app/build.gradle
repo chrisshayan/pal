@@ -44,9 +44,6 @@ dependencies {
     //firebase
     compile 'com.firebase:firebase-client-android:2.4.0'
 
-    //upload file
-    compile 'com.alexbbb:uploadservice:1.4' //https://github.com/alexbbb/android-upload-service
-
     //fab
     compile 'com.getbase:floatingactionbutton:1.10.1'
 

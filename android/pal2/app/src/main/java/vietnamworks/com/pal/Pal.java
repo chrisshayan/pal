@@ -7,7 +7,6 @@ import com.crittercism.app.Crittercism;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.services.CloudinaryService;
-import vietnamworks.com.pal.services.FileUploadService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.HttpService;
@@ -28,7 +27,6 @@ public class Pal extends Application {
         ParseService.init(this);
         ParseService.clearAllNotification();
         FirebaseService.init(this);
-        FileUploadService.init();
         LocalStorage.init(this);
         GaService.init(this);
         CloudinaryService.init(this);
