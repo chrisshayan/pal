@@ -28,8 +28,10 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
         if (firebaseHelper.hasAlreadyLogin() && $rootScope.config) {
             $scope.userPoints = firebaseHelper.getPublicProfile().points || 0;
             var scale = $rootScope.config.advisor_level_scales;
+            var current_level_min_point = 0;
             for (var k in scale) {
                 if (scale[k].min_points <= $scope.userPoints) {
+                    current_level_min_point = scale[k].min_points;
                     $scope.userLevel = scale[k].name;
                 } else {
                     $scope.userNextLevelPoints = scale[k].min_points;
@@ -39,7 +41,8 @@ angular.module('inspinia').controller('TasksCtrl', function ($scope, firebaseHel
             if (!$scope.userNextLevelPoints) {
                 $scope.userNextLevelPoints = $scope.userPoints + 1;
             }
-            $scope.userLevelPercent = Math.round (($scope.userPoints*1.0/$scope.userNextLevelPoints)*100);
+            var distance = Math.max($scope.userNextLevelPoints - current_level_min_point, 1);
+            $scope.userLevelPercent = Math.round ((($scope.userPoints*1.0 - current_level_min_point)/distance)*100);
         }
         setTimeout(function() {
             $scope.$apply();
