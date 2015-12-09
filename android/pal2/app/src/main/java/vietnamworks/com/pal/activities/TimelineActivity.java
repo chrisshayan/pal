@@ -38,6 +38,7 @@ import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.configurations.AppUiConfig;
 import vietnamworks.com.pal.custom_views.UserProfileNavView;
 import vietnamworks.com.pal.entities.Topic;
+import vietnamworks.com.pal.entities.UserProfile;
 import vietnamworks.com.pal.fragments.AdvisorPreviewFragment;
 import vietnamworks.com.pal.fragments.BaseFragment;
 import vietnamworks.com.pal.fragments.ChangePasswordFragment;
@@ -106,26 +107,17 @@ public class TimelineActivity extends BaseActivity {
         FirebaseService.SetUserProfileListener(new FirebaseService.UserProfileListener() {
             @Override
             public void onChanged(HashMap<String, Object> data) {
-                int score_1 = FirebaseService.getUserProfileIntValue("score_1", 0);
-                int score_2 = FirebaseService.getUserProfileIntValue("score_2", 0);
-                int score_3 = FirebaseService.getUserProfileIntValue("score_3", 0);
-                int score_4 = FirebaseService.getUserProfileIntValue("score_4", 0);
-                int score_5 = FirebaseService.getUserProfileIntValue("score_5", 0);
-                int total = score_1 + score_2 + score_3 + score_4 + score_5;
-                float score = 0;
-                if (total > 0) {
-                    score = Math.round(((score_1 + score_2 * 2 + score_3 * 3 + score_4 * 4 + score_5 * 5) * 10.0f) / total) / 10f;
-                }
+                UserProfile p = UserProfile.getCurrentUserProfile();
                 if (navHeaderView != null) {
                     navHeaderView.updateStat(
-                            FirebaseService.getUserProfileIntValue("total_posts", 0),
-                            score,
-                            FirebaseService.getUserProfileIntValue("level_completion", 0)
+                            p.getTotalPosts(),
+                            p.getScore(),
+                            p.getLevelCompletion()
                     );
                     navHeaderView.updateProfile(
-                            FirebaseService.getUserProfileStringValue("display_name"),
-                            FirebaseService.getUserProfileStringValue("level_name", "Beginner"),
-                            FirebaseService.getUserProfileStringValue("avatar")
+                            p.getDisplayName(),
+                            p.getLevelName(),
+                            p.getAvatar()
                     );
                 }
             }
