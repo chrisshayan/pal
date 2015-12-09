@@ -387,14 +387,9 @@ angular.module('inspinia').controller('TaskModalCtrl', function($rootScope, $sco
                         }
                     });
                     //update user experience
-                    var exp_earn = 0;
-                    if ($scope.vote == 3) {
-                        exp_earn = 1;
-                    } else if ($scope.vote == 4) {
-                        exp_earn = 5;
-                    } else if ($scope.vote == 5) {
-                        exp_earn = 10;
-                    }
+                    var exp_config = $rootScope.config.user_exp_earns;
+                    var exp_earn = exp_config[$scope.vote] || 0;
+                    console.log(exp_earn);
                     firebaseHelper.getFireBaseInstance(["profiles_pub", user_id, "exp"]).transaction(function(recent_exp){
                         if (!recent_exp) {
                             return exp_earn;
