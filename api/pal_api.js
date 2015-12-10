@@ -8,10 +8,23 @@ errors = require('restify-errors');
 require("./config.js");
 _ = require("./helper.js");
 
-server = restify.createServer({
+var opt = {
 	name: 'pal_api',
 	version: '0.0.1'
-});
+}
+server = restify.createServer(opt);
+
+https_server = null
+if (HTTPS_CER && HTTPS_KEY) {
+	var key = fs.readFileSync(HTTPS_KEY, 'utf8');
+	var certificate = fs.readFileSync(HTTPS_CER, 'utf8');
+	opt.key = key;
+	opt.name = "pal_api_https";
+	opt.certificate = certificate;
+	https_server = restify.createServer(opt);
+	console.log("USE_HTTPS");
+}
+
 
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
@@ -29,7 +42,7 @@ function unknownMethodHandler(req, res) {
 		if (res.methods.indexOf('OPTIONS') === -1) res.methods.push('OPTIONS');
 
 	    res.header('Access-Control-Allow-Credentials', true);
-	    res.header('Access-Control-Allow-Headers', allowHeaders.join(', '));
+		    res.header('Access-Control-Allow-Headers', allowHeaders.join(', '));
 	    res.header('Access-Control-Allow-Methods', res.methods.join(', '));
 	    res.header('Access-Control-Allow-Origin', req.headers.origin);
 
@@ -65,11 +78,16 @@ ref.authWithCustomToken(FIREBASE_TOKEN, function(error, authData) {
         ref.child("config").once("value", function(snap) {
             config = snap.val();
             server.listen(PORT, function () {
-				ref.child("config").on("value", function(snap) {
-					config = snap.val();
-				});
+		ref.child("config").on("value", function(snap) {
+			config = snap.val();
+		});
             	console.log('%s listening at %s', server.name, server.url);
             });
+            if (https_server) {
+	        https_server.listen(PORT + 1, function () {
+                    console.log('%s listening at %s', https_server.name, https_server.url);
+                });
+	    }
         });
     }
 });
