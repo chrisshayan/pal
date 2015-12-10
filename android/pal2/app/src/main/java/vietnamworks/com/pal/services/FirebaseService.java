@@ -28,7 +28,7 @@ public class FirebaseService {
     public static AuthData authData;
     public static Context context = null;
     public static boolean isConnected;
-    
+
     private static FirebaseService sInstance = new FirebaseService();
 
 
