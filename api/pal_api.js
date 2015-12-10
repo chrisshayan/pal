@@ -19,7 +19,7 @@ server.use(restify.bodyParser());
 server.use(restify.fullResponse());
 
 server.pre(function(req, res, next) {
-	console.log(req.method, req.url);
+	// console.log(req.method, req.url);
 	return next();
 })
 
