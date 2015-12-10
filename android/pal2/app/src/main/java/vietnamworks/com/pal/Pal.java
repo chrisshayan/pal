@@ -24,6 +24,11 @@ public class Pal extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (!BuildConfig.DEBUG) {
+            Crittercism.initialize(this, Utils.r13(getString((R.string.crittercism_key))));
+        }
+
         ParseService.init(this);
         ParseService.clearAllNotification();
         FirebaseService.init(this);
@@ -32,10 +37,6 @@ public class Pal extends Application {
         CloudinaryService.init(this);
         Post.init(this);
         HttpService.init(this);
-
-        if (!BuildConfig.DEBUG) {
-            Crittercism.initialize(getApplicationContext(), Utils.r13(getString((R.string.crittercism_key))));
-        }
     }
 
     @Override
