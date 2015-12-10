@@ -186,7 +186,7 @@ public class TimelineActivity extends BaseActivity {
         quest_view.setVisibility(View.GONE);
         txtQuest = (TextView) quest_view.findViewById(R.id.quest);
 
-        quest_view.findViewById(R.id.accept_challenge).setOnClickListener(new View.OnClickListener() {
+        quest_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 quest_view.setVisibility(View.GONE);

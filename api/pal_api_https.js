@@ -9,10 +9,23 @@ require("./config.js");
 _ = require("./helper.js");
 
 var opt = {
-	name: 'pal_api',
+	name: 'pal_api_https',
 	version: '0.0.1'
 }
-server = restify.createServer(opt);
+
+server = null
+if (HTTPS_CER && HTTPS_KEY) {
+	var key = fs.readFileSync(HTTPS_KEY, 'utf8');
+	var certificate = fs.readFileSync(HTTPS_CER, 'utf8');
+	opt.key = key;
+	opt.certificate = certificate;
+	server = restify.createServer(opt);
+} else {
+	console.log("ERROR: NO CER FOUND");
+	return;
+}
+
+
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
@@ -64,7 +77,7 @@ ref.authWithCustomToken(FIREBASE_TOKEN, function(error, authData) {
 	} else {
 		ref.child("config").once("value", function(snap) {
 			config = snap.val();
-			server.listen(PORT, function () {
+			server.listen(PORT + 1, function () {
 				ref.child("config").on("value", function(snap) {
 					config = snap.val();
 				});
