@@ -8,3 +8,6 @@ log.txt
 test.csv
 *.apk
 deploy_live.sh
+*.key
+*.cer
+*.pem
