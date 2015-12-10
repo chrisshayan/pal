@@ -28,11 +28,7 @@ public class FirebaseService {
     public static AuthData authData;
     public static Context context = null;
     public static boolean isConnected;
-
-    public interface OnConnectStatusChanged {
-        void onStatusChanged(boolean status);
-    }
-    private OnConnectStatusChanged onConnectStatusChangedListener;
+    
     private static FirebaseService sInstance = new FirebaseService();
 
 
@@ -53,10 +49,6 @@ public class FirebaseService {
     HashMap<String, Object> userProfile;
 
     public FirebaseService() {
-    }
-
-    public static void SetOnConnectStatusChangedListener(OnConnectStatusChanged listener) {
-        sInstance.onConnectStatusChangedListener = listener;
     }
 
     public static void SetUserProfileListener(UserProfileListener listener) {
