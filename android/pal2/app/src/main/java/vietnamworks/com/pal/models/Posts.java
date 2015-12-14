@@ -1,6 +1,8 @@
 package vietnamworks.com.pal.models;
 
+import com.crittercism.app.Crittercism;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
 import java.util.ArrayList;
@@ -28,7 +30,15 @@ public class Posts extends AbstractContainer<Post> {
         p.setStatus(p.getStatus()); //update status index
 
         HashMap data = p.exportData();
-        ref.setValue(data);
+        ref.setValue(data, new Firebase.CompletionListener() {
+            @Override
+            public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                if (firebaseError != null) {
+                    System.out.println(firebaseError);
+                    Crittercism.logHandledException(new Exception(firebaseError.getMessage()));
+                }
+            }
+        });
 
         if (p.getRef_topic() != null && !p.getRef_topic().isEmpty()) {
             Topics.addSubmit(p.getRef_topic());
