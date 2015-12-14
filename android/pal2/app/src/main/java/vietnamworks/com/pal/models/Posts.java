@@ -34,7 +34,7 @@ public class Posts extends AbstractContainer<Post> {
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                 if (firebaseError != null) {
-                    System.out.println(firebaseError);
+                    System.out.println("!!!" + firebaseError);
                     Crittercism.logHandledException(new Exception(firebaseError.getMessage()));
                 }
             }

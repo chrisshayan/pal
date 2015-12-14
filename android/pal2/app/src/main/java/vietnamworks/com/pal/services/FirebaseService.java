@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import vietnamworks.com.pal.BuildConfig;
 import vietnamworks.com.pal.R;
 
 /**
@@ -64,7 +65,9 @@ public class FirebaseService {
         apiUrl = context.getString(R.string.firebase_app_url);
         isConnected = false;
         Firebase.setAndroidContext(context);
-        Firebase.getDefaultConfig().setLogLevel(Logger.Level.DEBUG);
+        if (!BuildConfig.DEBUG) {
+            Firebase.getDefaultConfig().setLogLevel(Logger.Level.DEBUG);
+        }
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
 
         sInstance.root = newRef();
@@ -231,6 +234,7 @@ public class FirebaseService {
     }
 
     public static boolean checkAuthSync() {
+        Firebase.goOnline();
         AuthData authData = newRef().getAuth();
         if (authData != null) {
             FirebaseService.authData = authData;

@@ -396,6 +396,19 @@ public class TimelineActivity extends BaseActivity {
         queryRandomQuest.addValueEventListener(onChangedRandomTask);
 
         CurrentUserProfile.increaseSessionCounter();
+
+        if (!FirebaseService.checkAuthSync()) {
+            setTimeout(new Runnable() {
+                @Override
+                public void run() {
+                    FirebaseService.logout();
+                    ParseService.unRegisterUser();
+                    openActivity(AuthActivity.class);
+                    closeDrawer();
+                }
+            }, 500);
+            return;
+        }
     }
 
     @Override
