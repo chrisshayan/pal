@@ -144,10 +144,10 @@ public class Utils {
         return BaseActivity.applicationDataPath;
     }
 
-    public static String currentSampleRecordSeed = System.currentTimeMillis() + "";
+    public static String currentSampleRecordSeed = Utils.getMillis() + "";
 
     public static void newSampleRecord() {
-        currentSampleRecordSeed = System.currentTimeMillis() + "";
+        currentSampleRecordSeed = Utils.getMillis() + "";
     }
 
     public static String getSampleRecordPath() {
@@ -155,7 +155,7 @@ public class Utils {
     }
 
     public static String getAudioServerFileName(String user_id, String post_id) {
-        return "user_" + user_id + "_" + post_id + "_" + System.currentTimeMillis();// + AppConfig.RecorderFileExt;
+        return "user_" + user_id + "_" + post_id + "_" + Utils.getMillis();// + AppConfig.RecorderFileExt;
     }
 
     public static String padRight(String s, int n) {

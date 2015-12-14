@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.entities.Post;
 import vietnamworks.com.pal.services.FirebaseService;
 
@@ -23,12 +24,11 @@ public class Posts extends AbstractContainer<Post> {
     public static String add(Post p) {
         p.modifyOrCreate();
         Firebase ref = FirebaseService.newRef("posts").push();
-        p.setUser_last_request(System.currentTimeMillis());
+        p.setUser_last_request(Utils.getMillis());
         p.setStatus(p.getStatus()); //update status index
 
         HashMap data = p.exportData();
         ref.setValue(data);
-        //ref.setPriority(-System.currentTimeMillis());
 
         if (p.getRef_topic() != null && !p.getRef_topic().isEmpty()) {
             Topics.addSubmit(p.getRef_topic());
