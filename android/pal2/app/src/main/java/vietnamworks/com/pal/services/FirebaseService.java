@@ -7,6 +7,7 @@ import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Logger;
 import com.firebase.client.ValueEventListener;
 
 import java.util.Arrays;
@@ -63,6 +64,7 @@ public class FirebaseService {
         apiUrl = context.getString(R.string.firebase_app_url);
         isConnected = false;
         Firebase.setAndroidContext(context);
+        Firebase.getDefaultConfig().setLogLevel(Logger.Level.DEBUG);
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
 
         sInstance.root = newRef();
