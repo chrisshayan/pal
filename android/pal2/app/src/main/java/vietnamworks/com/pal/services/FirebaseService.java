@@ -70,7 +70,7 @@ public class FirebaseService {
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
 
         sInstance.root = newRef();
-        
+
         sInstance.connectStatusQuery = newRef(".info/connected");
         sInstance.connectStatusQuery.addValueEventListener(new ValueEventListener() {
             @Override
