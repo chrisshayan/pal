@@ -2,7 +2,6 @@ package vietnamworks.com.pal.services;
 
 import android.content.Context;
 
-import com.crittercism.app.Crittercism;
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -277,9 +276,12 @@ public class FirebaseService {
 
     public static String getUid() {
         if (authData != null) {
+            if (authData.getUid() == null || authData.getUid().isEmpty()) {
+                ExceptionReportService.report("authData.getUid() is null or empty");
+            }
             return authData.getUid();
         } else {
-            Crittercism.logHandledException(new Exception("authData is null"));
+            ExceptionReportService.report("authData is null");
             return null;
         }
     }

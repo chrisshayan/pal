@@ -8,8 +8,6 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 
-import com.crittercism.app.Crittercism;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -23,6 +21,7 @@ import java.util.TimeZone;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.configurations.AppConfig;
+import vietnamworks.com.pal.services.ExceptionReportService;
 
 /**
  * Created by duynk on 10/27/15.
@@ -236,7 +235,7 @@ public class Utils {
                 }
                 bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
             } catch (Exception e) {
-                Crittercism.logHandledException(e);
+                ExceptionReportService.report(e);
             }
             bm = resize(bm, maxWidth, maxHeight);
         }
