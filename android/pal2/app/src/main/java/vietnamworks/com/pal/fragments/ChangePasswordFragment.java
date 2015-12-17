@@ -13,6 +13,8 @@ import com.firebase.client.FirebaseError;
 
 import java.util.HashMap;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.activities.TimelineActivity;
@@ -22,7 +24,7 @@ import vietnamworks.com.pal.services.FirebaseService;
  * Created by duynk on 11/30/15.
  */
 public class ChangePasswordFragment extends BaseFragment {
-    View errorView;
+    @Bind(R.id.error_view) View errorView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,7 +33,7 @@ public class ChangePasswordFragment extends BaseFragment {
         final ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_change_password, container, false);
 
-        errorView = rootView.findViewById(R.id.error_view);
+        ButterKnife.bind(rootView);
         errorView.setVisibility(View.INVISIBLE);
 
         final Button btn_change_password = (Button)rootView.findViewById(R.id.btn_change_password);
