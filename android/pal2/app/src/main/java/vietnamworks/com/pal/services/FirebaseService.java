@@ -64,7 +64,7 @@ public class FirebaseService {
         apiUrl = context.getString(R.string.firebase_app_url);
         isConnected = false;
         Firebase.setAndroidContext(context);
-        if (!BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Firebase.getDefaultConfig().setLogLevel(Logger.Level.DEBUG);
         }
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
