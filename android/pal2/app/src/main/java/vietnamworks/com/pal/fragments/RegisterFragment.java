@@ -246,12 +246,12 @@ public class RegisterFragment extends BaseFragment {
                                 @Override
                                 public void onSuccess(Context ctx, Object obj) {
                                     ParseService.registerUser(FirebaseService.getUid(), email);
-                                    LocalStorage.set(getString(R.string.local_storage_first_launch), false);
+                                    LocalStorage.set(R.string.ls_first_launch, false);
                                     //save email
-                                    String emailList = LocalStorage.getString("email_history", "");
+                                    String emailList = LocalStorage.getString(R.string.ls_email_history, "");
                                     if (!emailList.contains(email)) {
                                         emailList = emailList + "," + email;
-                                        LocalStorage.set("email_history", emailList);
+                                        LocalStorage.set(R.string.ls_email_history, emailList);
                                     }
 
                                     BaseActivity.sInstance.openActivity(TimelineActivity.class);

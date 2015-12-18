@@ -189,7 +189,7 @@ public class ComposerFragment extends BaseFragment {
             }
         });
 
-        if (!LocalStorage.getBool(getString(R.string.local_storage_show_composer_guide), false)) {
+        if (!LocalStorage.getBool(R.string.ls_show_composer_guide, false)) {
             final View overlay = rootView.findViewById(R.id.overlay);
             overlay.setVisibility(View.VISIBLE);
             ((BaseActivity) getActivity()).hideKeyboard();
@@ -208,7 +208,7 @@ public class ComposerFragment extends BaseFragment {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LocalStorage.set(getString(R.string.local_storage_show_composer_guide), true);
+                LocalStorage.set(R.string.ls_show_composer_guide, true);
                 Topics.requestRandomTopics();
                 stopRecorder();
                 if (!FirebaseService.isConnected()) {

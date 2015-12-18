@@ -21,7 +21,7 @@ public class SplashScreenActivity extends BaseActivity {
 
         setContentView(R.layout.activity_main);
 
-        if (LocalStorage.getBool(getString(R.string.local_storage_first_launch), true)) {
+        if (LocalStorage.getBool(R.string.ls_first_launch, true)) {
             setTimeout(new Runnable() {
                 @Override
                 public void run() {

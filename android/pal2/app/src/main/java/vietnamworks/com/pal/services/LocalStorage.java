@@ -10,11 +10,13 @@ import com.snappydb.DBFactory;
  */
 public class LocalStorage {
     static LocalStorage sInstance = new LocalStorage();
+    Context ctx;
     DB db;
 
     public static void init(Context ctx) {
         try {
             sInstance.db = DBFactory.open(ctx);
+            sInstance.ctx = ctx;
         } catch (Exception E) {
             E.printStackTrace();
         }
@@ -28,7 +30,7 @@ public class LocalStorage {
         }
     }
 
-    public static void set(String key, int value) {
+    private static void set(String key, int value) {
         try {
             sInstance.db.putInt(key, value);
         } catch (Exception E) {
@@ -36,7 +38,7 @@ public class LocalStorage {
         }
     }
 
-    public static void set(String key, String value) {
+    private static void set(String key, String value) {
         try {
             sInstance.db.put(key, value);
         } catch (Exception E) {
@@ -44,7 +46,7 @@ public class LocalStorage {
         }
     }
 
-    public static void set(String key, boolean b) {
+    private static void set(String key, boolean b) {
         try {
             sInstance.db.putBoolean(key, b);
         } catch (Exception E) {
@@ -52,7 +54,19 @@ public class LocalStorage {
         }
     }
 
-    public static int getInt(String key, int defaultValue) {
+    public static void set(int key, boolean b) {
+        set(sInstance.ctx.getString(key), b);
+    }
+
+    public static void set(int key, int value) {
+        set(sInstance.ctx.getString(key), value);
+    }
+
+    public static void set(int key, String value) {
+        set(sInstance.ctx.getString(key), value);
+    }
+
+    private static int getInt(String key, int defaultValue) {
         try {
             return sInstance.db.getInt(key);
         } catch (Exception E) {
@@ -60,7 +74,7 @@ public class LocalStorage {
         }
     }
 
-    public static String getString(String key, String defaultValue) {
+    private static String getString(String key, String defaultValue) {
         try {
             return sInstance.db.get(key);
         } catch (Exception E) {
@@ -68,11 +82,23 @@ public class LocalStorage {
         }
     }
 
-    public static boolean getBool(String key, boolean defaultValue) {
+    private static boolean getBool(String key, boolean defaultValue) {
         try {
             return sInstance.db.getBoolean(key);
         } catch (Exception E) {
             return defaultValue;
         }
+    }
+
+    public static int getInt(int key, int defaultValue) {
+        return getInt(sInstance.ctx.getString(key), defaultValue);
+    }
+
+    public static String getString(int key, String defaultValue) {
+        return getString(sInstance.ctx.getString(key), defaultValue);
+    }
+
+    public static boolean getBool(int key, boolean defaultValue) {
+        return getBool(sInstance.ctx.getString(key), defaultValue);
     }
 }

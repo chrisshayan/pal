@@ -142,11 +142,11 @@ public class PostListFragment extends BaseFragment {
 
 
         //show dialog remind user to fulfill profile
-        int last_remind_session = LocalStorage.getInt("total_sessions", 0);
+        int last_remind_session = LocalStorage.getInt(R.string.ls_total_sessions, 0);
         int current_session = FirebaseService.getUserProfileIntValue("total_sessions", 0);
         if ((last_remind_session == 0 && current_session - last_remind_session >= 5) || (current_session - last_remind_session >= 20)) {
             UserProfile p = UserProfile.getCurrentUserProfile();
-            LocalStorage.set("total_sessions", current_session);
+            LocalStorage.set(R.string.ls_total_sessions, current_session);
             if (p.getFirstName().isEmpty() || p.getLastName().isEmpty() || p.getAvatar().isEmpty()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setMessage(getString(R.string.profile_update_encourage_message))

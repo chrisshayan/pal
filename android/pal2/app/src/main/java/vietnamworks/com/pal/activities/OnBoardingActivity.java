@@ -59,7 +59,7 @@ public class OnBoardingActivity extends BaseActivity {
         });
         setTitleBarColor(R.color.colorPrimary);
 
-        if (!(LocalStorage.getBool(getString(R.string.local_storage_first_launch), true))) {
+        if (!(LocalStorage.getBool(R.string.ls_first_launch, true))) {
             onSkip(null);
         }
 
