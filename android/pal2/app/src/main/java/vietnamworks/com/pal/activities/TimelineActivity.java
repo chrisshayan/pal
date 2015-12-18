@@ -1,6 +1,7 @@
 package vietnamworks.com.pal.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -52,8 +53,10 @@ import vietnamworks.com.pal.fragments.WelcomeFragment;
 import vietnamworks.com.pal.models.CurrentUserProfile;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.models.Topics;
+import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.AudioMixerService;
 import vietnamworks.com.pal.services.Callback;
+import vietnamworks.com.pal.services.ExceptionReportService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
@@ -241,18 +244,7 @@ public class TimelineActivity extends BaseActivity {
             }
         }
         if (TimelineActivity.resumeFromPushWithPostId != null) {
-            if (!FirebaseService.checkAuthSync()) {
-                setTimeout(new Runnable() {
-                    @Override
-                    public void run() {
-                        FirebaseService.logout();
-                        ParseService.unRegisterUser();
-                        openActivity(AuthActivity.class);
-                        closeDrawer();
-                    }
-                }, 500);
-                return;
-            }
+            autoLogin();
         }
         if (resumeFromPushWithPostId != null) {
             final String postID = resumeFromPushWithPostId;
@@ -394,21 +386,9 @@ public class TimelineActivity extends BaseActivity {
         queryTotalUnreadPosts.addValueEventListener(onChangedUnreadPostsValue);
         queryTotalUnreadEvaluatedPosts.addValueEventListener(onChangedUnreadEvaluatedPostsValue);
         queryRandomQuest.addValueEventListener(onChangedRandomTask);
-
         CurrentUserProfile.increaseSessionCounter();
 
-        if (!FirebaseService.checkAuthSync()) {
-            setTimeout(new Runnable() {
-                @Override
-                public void run() {
-                    FirebaseService.logout();
-                    ParseService.unRegisterUser();
-                    openActivity(AuthActivity.class);
-                    closeDrawer();
-                }
-            }, 500);
-            return;
-        }
+        autoLogin();
     }
 
     @Override
@@ -574,8 +554,7 @@ public class TimelineActivity extends BaseActivity {
         }, 500);
     }
 
-    public void onLogout(View v) {
-        GaService.trackAction(R.string.ga_action_logout);
+    private void logout() {
         setTimeout(new Runnable() {
             @Override
             public void run() {
@@ -585,7 +564,11 @@ public class TimelineActivity extends BaseActivity {
                 closeDrawer();
             }
         }, 500);
+    }
 
+    public void onLogout(View v) {
+        GaService.trackAction(R.string.ga_action_logout);
+        logout();
     }
 
     public void onOpenChangePasswordForm(View v) {
@@ -747,4 +730,45 @@ public class TimelineActivity extends BaseActivity {
         openFragmentAndClean(allPostsFragment, R.id.fragment_holder);
     }
 
+
+    private boolean isProcessAutoLogin = false;
+    private void autoLogin() {
+        if (isProcessAutoLogin) {
+            return;
+        }
+        isProcessAutoLogin = true;
+        String uid = FirebaseService.getUid();
+        if (!FirebaseService.checkAuthSync() || uid == null || uid.isEmpty()) {
+            final ProgressDialog dialog = new ProgressDialog(this);
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("Loading. Please wait...");
+            dialog.setIndeterminate(true);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+
+            String email = LocalStorage.getString(R.string.ls_last_success_email, "");
+            String pwd = LocalStorage.getString(R.string.ls_last_success_password, "");
+            if (email.isEmpty() || pwd.isEmpty()) {
+                isProcessAutoLogin = false;
+                dialog.hide();
+                logout();
+            } else {
+                FirebaseService.login(email, Utils.r13(pwd), new AsyncCallback() {
+                    @Override
+                    public void onSuccess(Context ctx, Object obj) {
+                        isProcessAutoLogin = false;
+                        dialog.hide();
+                    }
+
+                    @Override
+                    public void onError(Context ctx, int error_code, String message) {
+                        isProcessAutoLogin = false;
+                        dialog.hide();
+                        ExceptionReportService.report("Fail to auto login from last success");
+                        logout();
+                    }
+                });
+            }
+        }
+    }
 }
