@@ -737,8 +737,11 @@ public class TimelineActivity extends BaseActivity {
             return;
         }
         isProcessAutoLogin = true;
-        String uid = FirebaseService.getUid();
-        if (!FirebaseService.checkAuthSync() || uid == null || uid.isEmpty()) {
+
+        long last_login = LocalStorage.getLong(R.string.ls_last_login, 0);
+
+        if (last_login - Utils.getMillis() > 60*60*1000) {
+            LocalStorage.set(R.string.ls_last_login, Utils.getMillis());
             final ProgressDialog dialog = new ProgressDialog(this);
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             dialog.setMessage("Loading. Please wait...");

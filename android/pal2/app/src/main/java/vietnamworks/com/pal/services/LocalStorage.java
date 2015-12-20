@@ -38,6 +38,14 @@ public class LocalStorage {
         }
     }
 
+    private static void set(String key, long value) {
+        try {
+            sInstance.db.putLong(key, value);
+        } catch (Exception E) {
+            E.printStackTrace();
+        }
+    }
+
     private static void set(String key, String value) {
         try {
             sInstance.db.put(key, value);
@@ -62,6 +70,10 @@ public class LocalStorage {
         set(sInstance.ctx.getString(key), value);
     }
 
+    public static void set(int key, long value) {
+        set(sInstance.ctx.getString(key), value);
+    }
+
     public static void set(int key, String value) {
         set(sInstance.ctx.getString(key), value);
     }
@@ -69,6 +81,14 @@ public class LocalStorage {
     private static int getInt(String key, int defaultValue) {
         try {
             return sInstance.db.getInt(key);
+        } catch (Exception E) {
+            return defaultValue;
+        }
+    }
+
+    private static long getLong(String key, long defaultValue) {
+        try {
+            return sInstance.db.getLong(key);
         } catch (Exception E) {
             return defaultValue;
         }
@@ -92,6 +112,10 @@ public class LocalStorage {
 
     public static int getInt(int key, int defaultValue) {
         return getInt(sInstance.ctx.getString(key), defaultValue);
+    }
+
+    public static long getLong(int key, long defaultValue) {
+        return getLong(sInstance.ctx.getString(key), defaultValue);
     }
 
     public static String getString(int key, String defaultValue) {

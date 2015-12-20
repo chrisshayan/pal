@@ -245,6 +245,7 @@ public class RegisterFragment extends BaseFragment {
                             FirebaseService.login(getEmail(), getPassword(), new AsyncCallback() {
                                 @Override
                                 public void onSuccess(Context ctx, Object obj) {
+                                    LocalStorage.set(R.string.ls_last_login, Utils.getMillis());
                                     ParseService.registerUser(FirebaseService.getUid(), email);
                                     LocalStorage.set(R.string.ls_first_launch, false);
                                     //save email

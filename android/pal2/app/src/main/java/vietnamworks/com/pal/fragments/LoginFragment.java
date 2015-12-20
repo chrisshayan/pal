@@ -159,6 +159,7 @@ public class LoginFragment extends BaseFragment {
             FirebaseService.login(email, password, new AsyncCallback() {
                 @Override
                 public void onSuccess(Context ctx, Object obj) {
+                    LocalStorage.set(R.string.ls_last_login, Utils.getMillis());
                     stopLoading();
                     ParseService.registerUser(FirebaseService.getUid(), email);
                     BaseActivity.sInstance.openActivity(TimelineActivity.class);
