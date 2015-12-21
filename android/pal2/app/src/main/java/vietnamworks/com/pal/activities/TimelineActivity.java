@@ -514,44 +514,32 @@ public class TimelineActivity extends BaseActivity {
         GaService.trackAction(R.string.ga_action_open_all_posts);
         hideKeyboard();
         closeDrawer();
-        setTimeout(new Runnable() {
-            @Override
-            public void run() {
-                Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
-                if (!(f instanceof PostListFragment) || ((PostListFragment) f).getFilterType() != PostListFragment.FILTER_ALL) {
-                    if (allPostsFragment == null) {
-                        allPostsFragment = PostListFragment.createAllPosts();
-                        openFragment(allPostsFragment, R.id.fragment_holder);
-                    } else {
-                        openFragment(allPostsFragment, R.id.fragment_holder);
-                    }
-                }
-                if (f instanceof PostListFragment) {
-                    ((PostListFragment) f).refresh();
-                }
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+        if (!(f instanceof PostListFragment) || ((PostListFragment) f).getFilterType() != PostListFragment.FILTER_ALL) {
+            if (allPostsFragment == null) {
+                allPostsFragment = PostListFragment.createAllPosts();
             }
-        }, 500);
+            openFragment(allPostsFragment, R.id.fragment_holder);
+        }
+        if (f instanceof PostListFragment) {
+            ((PostListFragment) f).refresh();
+        }
     }
 
     public void onOpenRecentEvaluatedPost(View v) {
         GaService.trackAction(R.string.ga_action_open_recent_evaluated_list);
         hideKeyboard();
         closeDrawer();
-        setTimeout(new Runnable() {
-            @Override
-            public void run() {
-                Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
-                if (!(f instanceof PostListFragment) || ((PostListFragment) f).getFilterType() != PostListFragment.FILTER_EVALUATED) {
-                    if (evaluatedPostsFragment == null) {
-                        evaluatedPostsFragment = PostListFragment.createEvaluatedList();
-                    }
-                    openFragment(evaluatedPostsFragment, R.id.fragment_holder);
-                }
-                if (f instanceof PostListFragment) {
-                    ((PostListFragment) f).refresh();
-                }
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+        if (!(f instanceof PostListFragment) || ((PostListFragment) f).getFilterType() != PostListFragment.FILTER_EVALUATED) {
+            if (evaluatedPostsFragment == null) {
+                evaluatedPostsFragment = PostListFragment.createEvaluatedList();
             }
-        }, 500);
+            openFragment(evaluatedPostsFragment, R.id.fragment_holder);
+        }
+        if (f instanceof PostListFragment) {
+            ((PostListFragment) f).refresh();
+        }
     }
 
     private void logout() {

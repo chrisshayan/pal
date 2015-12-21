@@ -188,23 +188,7 @@ public class AdvisorPreviewFragment extends BaseFragment {
 
         BaseActivity.applyFont(rootView);
 
-        ButterKnife.bind(rootView);
-        /*
-        commentView = rootView.findViewById(R.id.comment_view);
-        profileView = rootView.findViewById(R.id.profile);
-        avatar = (ImageView) rootView.findViewById(R.id.avatar);
-        txtDisplayName = (TextView) rootView.findViewById(R.id.display_name);
-        txtScore = (TextView) rootView.findViewById(R.id.score);
-        txtRate = (TextView) rootView.findViewById(R.id.nrate);
-        chart = (RatingChart) rootView.findViewById(R.id.rate_chart);
-        ratingBar = (RatingBar) rootView.findViewById(R.id.rating_bar);
-        btnOK = (Button) rootView.findViewById(R.id.btn_submit);
-        btnCancel = (Button) rootView.findViewById(R.id.btn_cancel);
-        comment = (EditText) rootView.findViewById(R.id.comment);
-        commentsView = (ViewGroup) rootView.findViewById(R.id.comments);
-
-        txtNoVote = (TextView) rootView.findViewById(R.id.no_vote);
-        */
+        ButterKnife.bind(this, rootView);
 
         txtNoVote.setVisibility(View.VISIBLE);
 

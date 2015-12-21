@@ -20,6 +20,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.activities.TimelineActivity;
@@ -38,18 +40,19 @@ import vietnamworks.com.pal.services.LocalStorage;
  * Created by duynk on 10/29/15.
  */
 public class ComposerFragment extends BaseFragment {
-    ImageButton btnRecorder;
     private MediaRecorder myAudioRecorder;
-    private AudioPlayer audioPlayer;
     private boolean hasAudio = false;
     private String postTitle;
     private String topicRef;
 
-    private TextView txtSubject;
-    private EditText inputMessage;
-    private ImageButton btnHint;
-    private TextView txtRecorderTimer;
-    private View viewRecorderLayout;
+    @Bind(R.id.subject)             TextView        txtSubject;
+    @Bind(R.id.btnHint)             ImageButton     btnHint;
+    @Bind(R.id.message)             EditText        inputMessage;
+    @Bind(R.id.recorder_timeleft)   TextView        txtRecorderTimer;
+    @Bind(R.id.recorder_layout)     View            viewRecorderLayout;
+    @Bind(R.id.player)              AudioPlayer     audioPlayer;
+    @Bind(R.id.recorder)            ImageButton     btnRecorder;
+    @Bind(R.id.btn_stop_recorder)   Button          btnStopRecorder;
 
     public String getAudioPath() {
         if (hasAudio) {
@@ -69,8 +72,8 @@ public class ComposerFragment extends BaseFragment {
                 .inflate(R.layout.fragment_composer, container, false);
 
         BaseActivity.applyFont(rootView);
+        ButterKnife.bind(this, rootView);
 
-        audioPlayer = (AudioPlayer)rootView.findViewById(R.id.player);
         audioPlayer.setVisibility(View.INVISIBLE);
         audioPlayer.setAudioPlayerCallback(new AudioPlayer.AudioPlayerCallback() {
             @Override
@@ -80,10 +83,8 @@ public class ComposerFragment extends BaseFragment {
             }
         });
 
-        viewRecorderLayout = rootView.findViewById(R.id.recorder_layout);
         viewRecorderLayout.setVisibility(View.GONE);
 
-        btnRecorder = (ImageButton)rootView.findViewById(R.id.recorder);
         btnRecorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +151,6 @@ public class ComposerFragment extends BaseFragment {
             }
         });
 
-        ImageButton btnStopRecorder = (ImageButton)rootView.findViewById(R.id.btn_stop_recorder);
         btnStopRecorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,9 +158,6 @@ public class ComposerFragment extends BaseFragment {
             }
         });
 
-
-        txtSubject = (TextView)rootView.findViewById(R.id.subject);
-        inputMessage = (EditText)rootView.findViewById(R.id.message);
         inputMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -173,7 +170,6 @@ public class ComposerFragment extends BaseFragment {
         setTopic(this.postTitle, this.topicRef, this.tips);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-        btnHint = (ImageButton) rootView.findViewById(R.id.btnHint);
         btnHint.setVisibility(tips != null && !tips.isEmpty() ? View.VISIBLE : View.GONE);
         btnHint.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,8 +197,6 @@ public class ComposerFragment extends BaseFragment {
         }
         boolean hasTopic = this.postTitle != null && !this.postTitle.isEmpty();
         inputMessage.setHint(hasTopic ? R.string.composer_hint_1st_topic : R.string.composer_hint_1st_say_something);
-
-        txtRecorderTimer = (TextView)rootView.findViewById(R.id.recorder_timeleft);
 
         Button btnDone = (Button)rootView.findViewById(R.id.btn_done);
         btnDone.setOnClickListener(new View.OnClickListener() {

@@ -33,7 +33,7 @@ public class ChangePasswordFragment extends BaseFragment {
         final ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_change_password, container, false);
 
-        ButterKnife.bind(rootView);
+        ButterKnife.bind(this, rootView);
         errorView.setVisibility(View.INVISIBLE);
 
         final Button btn_change_password = (Button)rootView.findViewById(R.id.btn_change_password);
