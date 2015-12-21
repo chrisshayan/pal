@@ -50,7 +50,7 @@
                 android:id="@+id/subject"
                 style="@style/Text.Medium"
                 android:layout_marginBottom="@dimen/base_padding_2x"
-                android:layout_marginTop="@dimen/base_padding_2x" />
+                android:layout_marginTop="@dimen/base_padding" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
