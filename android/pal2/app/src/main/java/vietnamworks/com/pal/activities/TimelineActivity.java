@@ -728,7 +728,7 @@ public class TimelineActivity extends BaseActivity {
 
         long last_login = LocalStorage.getLong(R.string.ls_last_login, 0);
 
-        if (last_login - Utils.getMillis() > 60*60*1000) {
+        if (Utils.getMillis() - last_login > 60*60*1000) {
             LocalStorage.set(R.string.ls_last_login, Utils.getMillis());
             final ProgressDialog dialog = new ProgressDialog(this);
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
