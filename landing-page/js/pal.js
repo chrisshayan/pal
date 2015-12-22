@@ -3,15 +3,14 @@ $(function () {
 
     $('.main-nav').find('a').click(function (e) {
         e.preventDefault();
-        var thisTarget = $(this).attr('href'),
-            $thisTarget = $(thisTarget);
+        var thisTarget = $(this).attr('href');
 
         // Activate active tab
         $(this).closest('li').addClass('active').siblings().removeClass('active');
 
         // Scroll to section
         $('body,html').animate({
-            scrollTop: $(thisTarget).offset().top
+            scrollTop: $(thisTarget).offset().top - 30
         }, 'fast')
     });
 
@@ -20,12 +19,9 @@ $(function () {
 
         var winTop = $(window).scrollTop(),
             $navBar = $('.navbar');
-
         if (winTop > 0) {
-
             $navBar.addClass('navbar-fixed-top navbar-default');
         } else {
-
             $navBar.removeClass('navbar-fixed-top navbar-default');
         }
 
@@ -36,7 +32,7 @@ $(function () {
         $('body,html').animate({
             scrollTop: 0
         }, 'fast')
-    })
+    });
 
     var myFirebaseRef = new Firebase("https://pallive.firebaseio.com/config/download_url/android");
     myFirebaseRef.on("value", function(snapshot) {
