@@ -43,7 +43,6 @@ $(function () {
         var url = snapshot.val();
         $(".google_play_link").each(function( index ) {
             $( this ).attr("href", url);
-            console.log($(this));
         });
     });
 });
