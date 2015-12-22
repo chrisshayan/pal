@@ -174,17 +174,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <ImageButton
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/btn_stop_recorder"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_recorder_on"
-                    android:background="?attr/selectableItemBackground"
-                    android:contentDescription="@null"
-                    android:scaleType="centerInside"
-                    android:paddingTop="@dimen/base_padding_2x" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -203,21 +192,31 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/recorder_timer"
                     android:id="@+id/recorder_timeleft"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="@dimen/base_padding_4x"
-                    style="@style/Text.Medium.Muted" />
-
-                <TextView
-                    style="@style/Text.ExtraSmall.Muted"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/guide_user_recorder_2"
-                    android:id="@+id/textView21"
+                    style="@style/Text.Small.Muted"
                     android:layout_below="@+id/recorder_screen_guide"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/base_padding" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:text="@string/done"
+                    android:id="@+id/btn_stop_recorder"
+                    android:background="@drawable/btn_login_bg"
+                    android:textColor="@color/colorTextLight"
+                    android:layout_height="@dimen/login_button_height"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/base_padding_2x" />
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/imageView14"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_recorder_on"
+                    android:contentDescription="@null" />
+
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>

@@ -1,6 +1,7 @@
 package vietnamworks.com.pal.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -52,8 +53,10 @@ import vietnamworks.com.pal.fragments.WelcomeFragment;
 import vietnamworks.com.pal.models.CurrentUserProfile;
 import vietnamworks.com.pal.models.Posts;
 import vietnamworks.com.pal.models.Topics;
+import vietnamworks.com.pal.services.AsyncCallback;
 import vietnamworks.com.pal.services.AudioMixerService;
 import vietnamworks.com.pal.services.Callback;
+import vietnamworks.com.pal.services.ExceptionReportService;
 import vietnamworks.com.pal.services.FirebaseService;
 import vietnamworks.com.pal.services.GaService;
 import vietnamworks.com.pal.services.LocalStorage;
@@ -136,7 +139,7 @@ public class TimelineActivity extends BaseActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 removeDrawerGuide();
-                LocalStorage.set(getString(R.string.local_storage_show_drawer_guide), true);
+                LocalStorage.set(R.string.ls_show_drawer_guide, true);
             }
 
             @Override
@@ -159,7 +162,7 @@ public class TimelineActivity extends BaseActivity {
 
                 getSupportActionBar().setHomeAsUpIndicator(deep == 0 ? R.drawable.ic_image_dehaze : R.drawable.ic_hardware_keyboard_backspace);
 
-                if (current_session > 5 && deep == 0 && !LocalStorage.getBool(getString(R.string.local_storage_show_drawer_guide), false)) {
+                if (current_session > 5 && deep == 0 && !LocalStorage.getBool(R.string.ls_show_drawer_guide, false)) {
                     drawer_guide.setVisibility(View.VISIBLE);
                     drawer_guide.setAlpha(0);
                     drawer_guide.animate().alpha(AppUiConfig.BASE_OVERLAY_ALPHA).setStartDelay(500).setDuration(500).setListener(new AnimatorEndListener(new Callback() {
@@ -169,7 +172,7 @@ public class TimelineActivity extends BaseActivity {
                                 @Override
                                 public void onClick(View v) {
                                     removeDrawerGuide();
-                                    LocalStorage.set(getString(R.string.local_storage_show_drawer_guide), true);
+                                    LocalStorage.set(R.string.ls_show_drawer_guide, true);
                                 }
                             });
                         }
@@ -194,7 +197,7 @@ public class TimelineActivity extends BaseActivity {
             }
         });
 
-        if (!LocalStorage.getBool(getString(R.string.local_storage_show_fab_guide), false)) {
+        if (!LocalStorage.getBool(R.string.ls_show_fab_guide, false)) {
             openFragment(new WelcomeFragment(), R.id.fragment_holder);
             setTitle(R.string.title_welcome);
             displayHomeAsUpButton(false);
@@ -241,18 +244,7 @@ public class TimelineActivity extends BaseActivity {
             }
         }
         if (TimelineActivity.resumeFromPushWithPostId != null) {
-            if (!FirebaseService.checkAuthSync()) {
-                setTimeout(new Runnable() {
-                    @Override
-                    public void run() {
-                        FirebaseService.logout();
-                        ParseService.unRegisterUser();
-                        openActivity(AuthActivity.class);
-                        closeDrawer();
-                    }
-                }, 500);
-                return;
-            }
+            autoLogin();
         }
         if (resumeFromPushWithPostId != null) {
             final String postID = resumeFromPushWithPostId;
@@ -394,8 +386,9 @@ public class TimelineActivity extends BaseActivity {
         queryTotalUnreadPosts.addValueEventListener(onChangedUnreadPostsValue);
         queryTotalUnreadEvaluatedPosts.addValueEventListener(onChangedUnreadEvaluatedPostsValue);
         queryRandomQuest.addValueEventListener(onChangedRandomTask);
-
         CurrentUserProfile.increaseSessionCounter();
+
+        autoLogin();
     }
 
     @Override
@@ -521,48 +514,35 @@ public class TimelineActivity extends BaseActivity {
         GaService.trackAction(R.string.ga_action_open_all_posts);
         hideKeyboard();
         closeDrawer();
-        setTimeout(new Runnable() {
-            @Override
-            public void run() {
-                Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
-                if (!(f instanceof PostListFragment) || ((PostListFragment) f).getFilterType() != PostListFragment.FILTER_ALL) {
-                    if (allPostsFragment == null) {
-                        allPostsFragment = PostListFragment.createAllPosts();
-                        openFragment(allPostsFragment, R.id.fragment_holder);
-                    } else {
-                        openFragment(allPostsFragment, R.id.fragment_holder);
-                    }
-                }
-                if (f instanceof PostListFragment) {
-                    ((PostListFragment) f).refresh();
-                }
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+        if (!(f instanceof PostListFragment) || ((PostListFragment) f).getFilterType() != PostListFragment.FILTER_ALL) {
+            if (allPostsFragment == null) {
+                allPostsFragment = PostListFragment.createAllPosts();
             }
-        }, 500);
+            openFragment(allPostsFragment, R.id.fragment_holder);
+        }
+        if (f instanceof PostListFragment) {
+            ((PostListFragment) f).refresh();
+        }
     }
 
     public void onOpenRecentEvaluatedPost(View v) {
         GaService.trackAction(R.string.ga_action_open_recent_evaluated_list);
         hideKeyboard();
         closeDrawer();
-        setTimeout(new Runnable() {
-            @Override
-            public void run() {
-                Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
-                if (!(f instanceof PostListFragment) || ((PostListFragment) f).getFilterType() != PostListFragment.FILTER_EVALUATED) {
-                    if (evaluatedPostsFragment == null) {
-                        evaluatedPostsFragment = PostListFragment.createEvaluatedList();
-                    }
-                    openFragment(evaluatedPostsFragment, R.id.fragment_holder);
-                }
-                if (f instanceof PostListFragment) {
-                    ((PostListFragment) f).refresh();
-                }
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_holder);
+        if (!(f instanceof PostListFragment) || ((PostListFragment) f).getFilterType() != PostListFragment.FILTER_EVALUATED) {
+            if (evaluatedPostsFragment == null) {
+                evaluatedPostsFragment = PostListFragment.createEvaluatedList();
             }
-        }, 500);
+            openFragment(evaluatedPostsFragment, R.id.fragment_holder);
+        }
+        if (f instanceof PostListFragment) {
+            ((PostListFragment) f).refresh();
+        }
     }
 
-    public void onLogout(View v) {
-        GaService.trackAction(R.string.ga_action_logout);
+    private void logout() {
         setTimeout(new Runnable() {
             @Override
             public void run() {
@@ -572,7 +552,11 @@ public class TimelineActivity extends BaseActivity {
                 closeDrawer();
             }
         }, 500);
+    }
 
+    public void onLogout(View v) {
+        GaService.trackAction(R.string.ga_action_logout);
+        logout();
     }
 
     public void onOpenChangePasswordForm(View v) {
@@ -734,4 +718,48 @@ public class TimelineActivity extends BaseActivity {
         openFragmentAndClean(allPostsFragment, R.id.fragment_holder);
     }
 
+
+    private boolean isProcessAutoLogin = false;
+    private void autoLogin() {
+        if (isProcessAutoLogin) {
+            return;
+        }
+        isProcessAutoLogin = true;
+
+        long last_login = LocalStorage.getLong(R.string.ls_last_login, 0);
+
+        if (Utils.getMillis() - last_login > 60*60*1000) {
+            LocalStorage.set(R.string.ls_last_login, Utils.getMillis());
+            final ProgressDialog dialog = new ProgressDialog(this);
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("Loading. Please wait...");
+            dialog.setIndeterminate(true);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+
+            String email = LocalStorage.getString(R.string.ls_last_success_email, "");
+            String pwd = LocalStorage.getString(R.string.ls_last_success_password, "");
+            if (email.isEmpty() || pwd.isEmpty()) {
+                isProcessAutoLogin = false;
+                dialog.hide();
+                logout();
+            } else {
+                FirebaseService.login(email, Utils.r13(pwd), new AsyncCallback() {
+                    @Override
+                    public void onSuccess(Context ctx, Object obj) {
+                        isProcessAutoLogin = false;
+                        dialog.hide();
+                    }
+
+                    @Override
+                    public void onError(Context ctx, int error_code, String message) {
+                        isProcessAutoLogin = false;
+                        dialog.hide();
+                        ExceptionReportService.report("Fail to auto login from last success");
+                        logout();
+                    }
+                });
+            }
+        }
+    }
 }

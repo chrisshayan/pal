@@ -74,7 +74,7 @@ public class PostDetailFragment extends BaseFragment {
         super.onResume();
         if (dataRef == null) {
             if (itemId == null) {
-                itemId = LocalStorage.getString("tmp_detail_fragment_id", "-1");
+                itemId = LocalStorage.getString(R.string.ls_tmp_detail_fragment_id, "-1");
             }
             dataRef = Posts.getPostDetailQuery(itemId);
         }
@@ -101,7 +101,7 @@ public class PostDetailFragment extends BaseFragment {
     public static PostDetailFragment create(Bundle b) {
         PostDetailFragment obj = new PostDetailFragment();
         obj.itemId = b.getString("id");
-        LocalStorage.set("tmp_detail_fragment_id", obj.itemId);
+        LocalStorage.set(R.string.ls_tmp_detail_fragment_id, obj.itemId);
         return obj;
     }
 

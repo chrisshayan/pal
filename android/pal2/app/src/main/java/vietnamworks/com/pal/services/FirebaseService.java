@@ -2,17 +2,18 @@ package vietnamworks.com.pal.services;
 
 import android.content.Context;
 
-import com.crittercism.app.Crittercism;
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Logger;
 import com.firebase.client.ValueEventListener;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import vietnamworks.com.pal.BuildConfig;
 import vietnamworks.com.pal.R;
 
 /**
@@ -63,10 +64,12 @@ public class FirebaseService {
         apiUrl = context.getString(R.string.firebase_app_url);
         isConnected = false;
         Firebase.setAndroidContext(context);
+        if (BuildConfig.DEBUG) {
+            Firebase.getDefaultConfig().setLogLevel(Logger.Level.DEBUG);
+        }
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
 
         sInstance.root = newRef();
-        sInstance.root.keepSynced(true);
 
         sInstance.connectStatusQuery = newRef(".info/connected");
         sInstance.connectStatusQuery.addValueEventListener(new ValueEventListener() {
@@ -229,6 +232,7 @@ public class FirebaseService {
     }
 
     public static boolean checkAuthSync() {
+        Firebase.goOnline();
         AuthData authData = newRef().getAuth();
         if (authData != null) {
             FirebaseService.authData = authData;
@@ -271,9 +275,12 @@ public class FirebaseService {
 
     public static String getUid() {
         if (authData != null) {
+            if (authData.getUid() == null || authData.getUid().isEmpty()) {
+                ExceptionReportService.report("authData.getUid() is null or empty");
+            }
             return authData.getUid();
         } else {
-            Crittercism.logHandledException(new Exception("authData is null"));
+            ExceptionReportService.report("authData is null");
             return null;
         }
     }

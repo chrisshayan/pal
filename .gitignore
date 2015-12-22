@@ -11,3 +11,4 @@ deploy_live.sh
 *.key
 *.cer
 *.pem
+deploy.sh

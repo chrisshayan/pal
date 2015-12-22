@@ -50,7 +50,7 @@ public class LoginFragment extends BaseFragment {
 
         txtEmail = (AutoCompleteTextView)rootView.findViewById(R.id.email);
 
-        String emailList = LocalStorage.getString("email_history", "");
+        String emailList = LocalStorage.getString(R.string.ls_email_history, "");
         String emailArray[] = emailList.split(",");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_1, emailArray);
         txtEmail.setAdapter(adapter);
@@ -159,17 +159,20 @@ public class LoginFragment extends BaseFragment {
             FirebaseService.login(email, password, new AsyncCallback() {
                 @Override
                 public void onSuccess(Context ctx, Object obj) {
+                    LocalStorage.set(R.string.ls_last_login, Utils.getMillis());
                     stopLoading();
                     ParseService.registerUser(FirebaseService.getUid(), email);
                     BaseActivity.sInstance.openActivity(TimelineActivity.class);
-                    LocalStorage.set(getString(R.string.local_storage_first_launch), false);
+                    LocalStorage.set(R.string.ls_first_launch, false);
                     GaService.trackEvent(R.string.ga_cat_login, R.string.ga_event_login_success);
                     //save email
-                    String emailList = LocalStorage.getString("email_history", "");
+                    String emailList = LocalStorage.getString(R.string.ls_email_history, "");
                     if (!emailList.contains(email)) {
                         emailList = emailList + "," + email;
-                        LocalStorage.set("email_history", emailList);
+                        LocalStorage.set(R.string.ls_email_history, emailList);
                     }
+                    LocalStorage.set(R.string.ls_last_success_email, email);
+                    LocalStorage.set(R.string.ls_last_success_password, Utils.r13(password));
                 }
 
                 @Override

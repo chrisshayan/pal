@@ -33,6 +33,7 @@ import java.util.List;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.common.Utils;
 import vietnamworks.com.pal.services.AsyncCallback;
+import vietnamworks.com.pal.services.ExceptionReportService;
 
 /**
  * Created by duynk on 10/1/15.
@@ -248,12 +249,16 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void openFragmentAndClean(android.support.v4.app.Fragment f, int holder_id) {
-        FragmentManager fm = getSupportFragmentManager();
-        int count = fm.getBackStackEntryCount();
-        for(int i = 0; i < count; ++i) {
-            fm.popBackStackImmediate();
+        FragmentManager manager = getSupportFragmentManager();
+        try {
+            if (manager.getBackStackEntryCount() > 0) {
+                FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
+                manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
+        }catch (Exception E) {
+            ExceptionReportService.report(E);
         }
-        getSupportFragmentManager().beginTransaction().replace(holder_id, f).commit();
+        manager.beginTransaction().replace(holder_id, f).commit();
     }
 
     public void openFragment(android.support.v4.app.Fragment f, int holder_id) {

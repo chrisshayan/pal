@@ -1,6 +1,3 @@
 <resources>
-    <string name="local_storage_first_launch" translatable="false">first launch</string>
-    <string name="local_storage_show_drawer_guide" translatable="false">shown drawer guide</string>
-    <string name="local_storage_show_fab_guide" translatable="false">shown fab guide</string>
-    <string name="local_storage_show_composer_guide" translatable="false">shown composer guide</string>
+
 </resources>

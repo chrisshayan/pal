@@ -1,0 +1,13 @@
+<resources>
+    <string name="ls_last_success_email" translatable="false">last_success_email</string>
+    <string name="ls_last_success_password" translatable="false">last_success_password</string>
+    <string name="ls_email_history" translatable="false">email_history</string>
+    <string name="ls_tmp_detail_fragment_id" translatable="false">tmp_detail_fragment_id</string>
+
+    <string name="ls_first_launch" translatable="false">first launch</string>
+    <string name="ls_show_drawer_guide" translatable="false">shown drawer guide</string>
+    <string name="ls_show_fab_guide" translatable="false">shown fab guide</string>
+    <string name="ls_show_composer_guide" translatable="false">shown composer guide</string>
+    <string name="ls_total_sessions" translatable="false">total_sessions</string>
+    <string name="ls_last_login" translatable="false">last_login</string>
+</resources>

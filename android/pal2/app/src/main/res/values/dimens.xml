@@ -42,7 +42,7 @@
 
     <!-- post item -->
     <dimen name="post_item_min_height">100dp</dimen>
-    <dimen name="post_avatar_size">50dp</dimen>
+    <dimen name="post_avatar_size">40dp</dimen>
     <dimen name="post_star_size">@dimen/star_small</dimen>
 
 

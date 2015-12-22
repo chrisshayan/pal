@@ -20,11 +20,11 @@
             android:layout_width="@dimen/post_avatar_size"
             android:layout_height="@dimen/post_avatar_size"
             android:id="@+id/icon"
-            android:src="@drawable/ic_big_success"
+            android:src="@drawable/ic_evaluated"
             android:contentDescription="@null" />
 
         <View
-            android:layout_width="2dp"
+            android:layout_width="1dp"
             android:layout_height="fill_parent"
             android:background="@color/colorTimelineVBar"
             android:layout_marginTop="@dimen/base_padding_2x" />
@@ -50,7 +50,7 @@
                 android:id="@+id/subject"
                 style="@style/Text.Medium"
                 android:layout_marginBottom="@dimen/base_padding_2x"
-                android:layout_marginTop="@dimen/base_padding_2x" />
+                android:layout_marginTop="@dimen/base_padding" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

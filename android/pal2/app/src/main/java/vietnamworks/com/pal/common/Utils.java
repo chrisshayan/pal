@@ -8,8 +8,6 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 
-import com.crittercism.app.Crittercism;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -23,6 +21,7 @@ import java.util.TimeZone;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.configurations.AppConfig;
+import vietnamworks.com.pal.services.ExceptionReportService;
 
 /**
  * Created by duynk on 10/27/15.
@@ -144,10 +143,10 @@ public class Utils {
         return BaseActivity.applicationDataPath;
     }
 
-    public static String currentSampleRecordSeed = System.currentTimeMillis() + "";
+    public static String currentSampleRecordSeed = Utils.getMillis() + "";
 
     public static void newSampleRecord() {
-        currentSampleRecordSeed = System.currentTimeMillis() + "";
+        currentSampleRecordSeed = Utils.getMillis() + "";
     }
 
     public static String getSampleRecordPath() {
@@ -155,7 +154,7 @@ public class Utils {
     }
 
     public static String getAudioServerFileName(String user_id, String post_id) {
-        return "user_" + user_id + "_" + post_id + "_" + System.currentTimeMillis();// + AppConfig.RecorderFileExt;
+        return "user_" + user_id + "_" + post_id + "_" + Utils.getMillis();// + AppConfig.RecorderFileExt;
     }
 
     public static String padRight(String s, int n) {
@@ -236,7 +235,7 @@ public class Utils {
                 }
                 bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
             } catch (Exception e) {
-                Crittercism.logHandledException(e);
+                ExceptionReportService.report(e);
             }
             bm = resize(bm, maxWidth, maxHeight);
         }

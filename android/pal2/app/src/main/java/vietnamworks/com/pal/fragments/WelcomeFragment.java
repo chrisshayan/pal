@@ -109,7 +109,7 @@ public class WelcomeFragment extends BaseFragment {
     }
 
     private void getStarted() {
-        LocalStorage.set(getString(R.string.local_storage_show_fab_guide), true);
+        LocalStorage.set(R.string.ls_show_fab_guide, true);
         View overlay = getView().findViewById(R.id.overlay);
         overlay.setAlpha(0);
         overlay.setVisibility(View.VISIBLE);

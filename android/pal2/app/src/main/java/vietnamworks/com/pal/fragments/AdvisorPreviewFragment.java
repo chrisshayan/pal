@@ -18,6 +18,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import vietnamworks.com.pal.R;
 import vietnamworks.com.pal.activities.BaseActivity;
 import vietnamworks.com.pal.common.PicassoCircleTransform;
@@ -34,15 +36,19 @@ import vietnamworks.com.pal.services.GaService;
  * Created by duynk on 11/5/15.
  */
 public class AdvisorPreviewFragment extends BaseFragment {
-    View commentView, profileView;
-    ViewGroup commentsView;
-    ImageView avatar;
-    TextView txtDisplayName, txtScore, txtRate;
-    RatingBar ratingBar;
-    RatingChart chart;
-    Button btnOK, btnCancel;
-    EditText comment;
-    TextView txtNoVote;
+    @Bind(R.id.comment_view)    View        commentView;
+    @Bind(R.id.profile)         View        profileView;
+    @Bind(R.id.comments)        ViewGroup   commentsView;
+    @Bind(R.id.avatar)          ImageView   avatar;
+    @Bind(R.id.display_name)    TextView    txtDisplayName;
+    @Bind(R.id.score)           TextView    txtScore;
+    @Bind(R.id.nrate)           TextView    txtRate;
+    @Bind(R.id.rating_bar)      RatingBar   ratingBar;
+    @Bind(R.id.rate_chart)      RatingChart chart;
+    @Bind(R.id.btn_submit)      Button      btnOK;
+    @Bind(R.id.btn_cancel)      Button      btnCancel;
+    @Bind(R.id.comment)         EditText    comment;
+    @Bind(R.id.no_vote)         TextView    txtNoVote;
 
     String advisorId = "";
 
@@ -182,20 +188,8 @@ public class AdvisorPreviewFragment extends BaseFragment {
 
         BaseActivity.applyFont(rootView);
 
-        commentView = rootView.findViewById(R.id.comment_view);
-        profileView = rootView.findViewById(R.id.profile);
-        avatar = (ImageView) rootView.findViewById(R.id.avatar);
-        txtDisplayName = (TextView) rootView.findViewById(R.id.display_name);
-        txtScore = (TextView) rootView.findViewById(R.id.score);
-        txtRate = (TextView) rootView.findViewById(R.id.nrate);
-        chart = (RatingChart) rootView.findViewById(R.id.rate_chart);
-        ratingBar = (RatingBar) rootView.findViewById(R.id.rating_bar);
-        btnOK = (Button) rootView.findViewById(R.id.btn_submit);
-        btnCancel = (Button) rootView.findViewById(R.id.btn_cancel);
-        comment = (EditText) rootView.findViewById(R.id.comment);
-        commentsView = (ViewGroup) rootView.findViewById(R.id.comments);
+        ButterKnife.bind(this, rootView);
 
-        txtNoVote = (TextView) rootView.findViewById(R.id.no_vote);
         txtNoVote.setVisibility(View.VISIBLE);
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
