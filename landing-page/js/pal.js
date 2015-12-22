@@ -37,4 +37,13 @@ $(function () {
             scrollTop: 0
         }, 'fast')
     })
+
+    var myFirebaseRef = new Firebase("https://pallive.firebaseio.com/config/download_url/android");
+    myFirebaseRef.on("value", function(snapshot) {
+        var url = snapshot.val();
+        $(".google_play_link").each(function( index ) {
+            $( this ).attr("href", url);
+            console.log($(this));
+        });
+    });
 });
