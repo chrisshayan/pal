@@ -1,0 +1,30 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">0dp</dimen>
+    <dimen name="activity_vertical_margin">0dp</dimen>
+
+    <dimen name="base_padding">16dp</dimen>
+    <dimen name="base_padding_half">8dp</dimen>
+    <dimen name="base_padding_quarter">4dp</dimen>
+
+    <dimen name="toolbar_height">60dp</dimen>
+    <!--common card-->
+    <dimen name="card_corner_radius">0dp</dimen>
+    <dimen name="card_elevation">3dp</dimen>
+    <dimen name="card_horizontal_padding">0dp</dimen>
+    <dimen name="card_vertical_padding">5dp</dimen>
+
+    <!--sendme card-->
+    <dimen name="sendme_card_vertical_padding">20dp</dimen>
+
+    <!--recent thread-->
+    <dimen name="recent_thread_image_size">80dp</dimen>
+    <dimen name="recent_thread_image_padding">5dp</dimen>
+
+    <!-- others -->
+    <dimen name="button_elevation">1dp</dimen>
+    <dimen name="button_press_elevation">18dp</dimen>
+
+    <dimen name="floating_button_size">60dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

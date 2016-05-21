@@ -1,0 +1,46 @@
+<resources>
+    <string name="ga_screen_login" translatable="false">Login</string>
+    <string name="ga_screen_register" translatable="false">Register</string>
+    <string name="ga_screen_onboarding" translatable="false">Onboarding</string>
+    <string name="ga_screen_post_list" translatable="false">Post list</string>
+    <string name="ga_screen_compose" translatable="false">Compose</string>
+    <string name="ga_screen_advisor_preview" translatable="false">Advisor Preview</string>
+    <string name="ga_screen_post_detail" translatable="false">Post detail</string>
+    <string name="ga_screen_topics" translatable="false">Topics</string>
+    <string name="ga_screen_profile" translatable="false">Profile</string>
+    <string name="ga_screen_update_basic_profile" translatable="false">Update basic profile</string>
+
+    <string name="ga_cat_register" translatable="false">Register</string>
+    <string name="ga_event_request_invite" translatable="false">Request an invite</string>
+    <string name="ga_event_missing_email" translatable="false">Missing email</string>
+    <string name="ga_event_missing_fullname" translatable="false">Missing fullname</string>
+    <string name="ga_event_invalid_email_format" translatable="false">Invalid email format</string>
+    <string name="ga_event_register_success" translatable="false">Success</string>
+    <string name="ga_event_register_fail" translatable="false">Fail</string>
+    <string name="ga_event_back_to_login" translatable="false">Back to login</string>
+    <string name="ga_event_close_register_result" translatable="false">Close register result</string>
+    <string name="ga_event_share" translatable="false">Share</string>
+
+
+    <string name="ga_cat_login" translatable="false">login</string>
+    <string name="ga_event_do_forget_password" translatable="false">forget_password</string>
+    <string name="ga_event_do_login" translatable="false">Do login</string>
+    <string name="ga_event_missing_password" translatable="false">Missing password</string>
+    <string name="ga_event_login_success" translatable="false">Success</string>
+    <string name="ga_event_login_fail" translatable="false">Fail</string>
+
+    <string name="ga_cat_recorder" translatable="false">recorder</string>
+    <string name="ga_event_recorder_success" translatable="false">Record success</string>
+    <string name="ga_event_recorder_fail" translatable="false">Record fail</string>
+
+    <string name="ga_action_logout" translatable="false">Logout</string>
+    <string name="ga_action_open_recent_evaluated_list" translatable="false">Open recent evaluated</string>
+    <string name="ga_action_open_all_posts" translatable="false">Open all posts</string>
+    <string name="ga_action_onboarding_next" translatable="false">Onboarding go next</string>
+    <string name="ga_action_onboarding_skip" translatable="false">Onboarding skip</string>
+    <string name="ga_action_open_topics" translatable="false">Open topics</string>
+    <string name="ga_action_open_say_something" translatable="false">Open say something</string>
+    <string name="ga_action_do_record" translatable="false">Do record</string>
+    <string name="ga_action_change_password" translatable="false">Change password</string>
+
+</resources>

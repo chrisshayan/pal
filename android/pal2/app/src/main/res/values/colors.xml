@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+
+    <color name="colorSuccess">#4caf50</color>
+    <color name="colorDanger">#E91E63</color>
+    <color name="colorWarning">#f39c12</color>
+
+    <color name="colorPrimary">#2196f3</color>
+    <color name="colorPrimaryDark">#1976d2</color>
+    <color name="colorAccent">#4caf50</color>
+    <color name="colorPrimaryLight">#FFFFFF</color>
+    <color name="colorPrimarySemiBlack">#B2000000</color>
+    <color name="colorPrimaryLightAlpha">#ddcccccc</color>
+
+    <color name="colorTextDefault">#212121</color>
+    <color name="colorTextMuted">#757575</color>
+    <color name="colorTextInputHint">#999999</color>
+    <color name="colorTextLight">#FFFFFF</color>
+    <color name="colorTextSuccess">@color/colorSuccess</color>
+    <color name="colorTextPrimary">@color/colorPrimary</color>
+    <color name="colorTextDanger">@color/colorDanger</color>
+    <color name="colorTextTitle">#37474f</color>
+    <color name="colorTextMutedTitle">#78909c</color>
+    <color name="colorActionItem">#BF323232</color>
+
+    <color name="colorDivider">#FFFFFF</color>
+    <color name="colorDividerDark">#000000</color>
+    <color name="colorDividerDarkAlpha">#30000000</color>
+
+    <color name="rate_5_stars">@color/colorSuccess</color>
+    <color name="rate_4_stars">#2ecc71</color>
+    <color name="rate_3_stars">#f1c40f</color>
+    <color name="rate_2_stars">#f39c12</color>
+    <color name="rate_1_stars">@color/colorDanger</color>
+
+    <color name="colorTextAreaBgDark">#0a000000</color>
+
+    <color name="colorTimelineVBar">#9999cc</color>
+
+    <color name="colorFabPrimary">@color/colorPrimaryDark</color>
+    <color name="colorFabPrimaryPressed">@color/colorPrimary</color>
+    <color name="colorFabSecondary">#607d8b</color>
+    <color name="colorFabSecondaryPressed">#607d8b</color>
+
+    <color name="colorStar">#f1c40f</color>
+
+</resources>

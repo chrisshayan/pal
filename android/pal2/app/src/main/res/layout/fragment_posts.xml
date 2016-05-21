@@ -1,0 +1,82 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimaryLight">
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/post_list"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/colorPrimaryLight"
+        android:alpha="0"
+        android:id="@+id/overlay"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            xmlns:fab="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_addButtonColorNormal="@color/colorFabPrimary"
+            fab:fab_addButtonColorPressed="@color/colorFabPrimaryPressed"
+            fab:fab_addButtonPlusIconColor="@color/colorTextLight"
+            fab:fab_labelStyle="@style/fab_labels_style"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin">
+
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_a"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onOpenSaySomethingComposer"
+                fab:fab_colorNormal="@color/colorFabSecondary"
+                fab:fab_title="@string/say_something"
+                fab:fab_colorPressed="@color/colorFabSecondaryPressed"
+                fab:fab_icon="@drawable/ic_editor_border_color"
+                fab:fab_size="mini"/>
+
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onOpenChallengeList"
+                fab:fab_colorNormal="@color/colorFabSecondary"
+                fab:fab_title="@string/pick_up_challenge"
+                fab:fab_colorPressed="@color/colorFabSecondaryPressed"
+                fab:fab_icon="@drawable/ic_communication_chat"
+                fab:fab_size="mini"/>
+
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress_bar"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+</FrameLayout>

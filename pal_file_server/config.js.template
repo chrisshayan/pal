@@ -1,0 +1,10 @@
+PORT = 4041;
+HOST = "http://localhost" + (PORT?(":" + PORT):"");
+
+USE_HTTPS = false;
+HTTPS_CER = ""
+HTTPS_KEY = ""
+
+CLOUDINARY_CLOUD_NAME = "";
+CLOUDINARY_API_KEY = "";
+CLOUDINARY_API_SECRET = "";

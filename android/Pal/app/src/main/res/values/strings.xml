@@ -1,0 +1,57 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Pal</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_launcher">PAL</string>
+    <string name="title_activity_tutorial">Tutorial</string>
+    <string name="title_activity_auth">AuthActivity</string>
+
+    <!-- common -->
+    <string name="message_fail_to_connect_server">Fail to connect server. Please check your internet connection and try again</string>
+    <string name="message_thank_you">Thank you</string>
+    <string name="message_precessing">Processing</string>
+    <string name="message_loading">Loading</string>
+
+    <!-- tutorial -->
+    <string-array name="tutor">
+        <item>Learn English for Free</item>
+        <item>Practice pronunciation with experienced English teachers</item>
+        <item>Track your learning progress</item>
+        <item></item>
+    </string-array>
+
+    <!-- login & signup -->
+    <string name="login_title">Let\'s start</string>
+    <string name="login_email_hint">your@email.com</string>
+    <string name="login_password_hint">password</string>
+
+    <string name="signup_title">Sign Up</string>
+    <string name="signup_has_account">Already have account?</string>
+    <string name="signup_queueing">Thank you!\nYour request has been queued</string>
+
+    
+    <string name="login_validation_empty_email">Email is required</string>
+    <string name="login_validation_empty_password">Password is required</string>
+    <string name="login_validation_invalid_email_format">This email is invalid</string>
+    <string name="login_message_login_fail">Invalid email/password combination. Please try again.</string>
+
+    <string name="btn_login">Login</string>
+    <string name="btn_signup">Sign up</string>
+    <string name="btn_try_again">Try again</string>
+
+    <!-- main screen -->
+    <string name="btn_say_something">Say something</string>
+    <string name="btn_ask_something">Write something</string>
+    <string name="enter_topic">Enter your topic</string>
+    <string name="user_topic_validation_empty_string">Topic is required</string>
+    <string name="user_message_validation_empty_string">Content is required</string>
+
+    <string name="create_post_successful">Your post has been saved</string>
+
+
+    <string name="post_page_all_posts">All posts</string>
+    <string name="post_page_evaluated_posts">Evaluated posts</string>
+    <string name="post_page_writing_posts">Writing posts</string>
+    <string name="post_page_speaking_posts">Speaking posts</string>
+    <string name="post_page_detail"> </string>
+</resources>

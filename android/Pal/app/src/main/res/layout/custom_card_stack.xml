@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:id="@+id/ccs_holder">
+
+    <vietnamworks.com.pal.components.CustomCardView
+        android:layout_width="400dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:id="@+id/ccs_back"/>
+    <vietnamworks.com.pal.components.CustomCardView
+        android:layout_width="400dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:id="@+id/ccs_mid"/>
+    <vietnamworks.com.pal.components.CustomCardView
+        android:layout_width="400dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:id="@+id/ccs_front" />
+</FrameLayout>

@@ -1,0 +1,93 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingTop="@dimen/base_padding_2x"
+    android:paddingBottom="@dimen/base_padding_2x"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/avatar"
+        android:src="@drawable/ic_action_account_circle_dark" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/base_padding_2x">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/display_name"
+            style="@style/Text.Small" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="@dimen/star_extra_small"
+                android:layout_height="match_parent"
+                android:id="@+id/rate1"
+                android:src="@drawable/ic_action_grade"
+                android:contentDescription="@null" />
+
+            <ImageView
+                android:layout_width="@dimen/star_extra_small"
+                android:layout_height="match_parent"
+                android:id="@+id/rate2"
+                android:src="@drawable/ic_action_grade"
+                android:contentDescription="@null" />
+
+            <ImageView
+                android:layout_width="@dimen/star_extra_small"
+                android:layout_height="match_parent"
+                android:id="@+id/rate3"
+                android:src="@drawable/ic_action_grade"
+                android:contentDescription="@null" />
+
+            <ImageView
+                android:layout_width="@dimen/star_extra_small"
+                android:layout_height="match_parent"
+                android:id="@+id/rate4"
+                android:src="@drawable/ic_action_grade"
+                android:contentDescription="@null" />
+
+            <ImageView
+                android:layout_width="@dimen/star_extra_small"
+                android:layout_height="match_parent"
+                android:id="@+id/rate5"
+                android:src="@drawable/ic_action_grade"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/created_date"
+                style="@style/Text.ExtraSmall.Muted"
+                android:paddingLeft="@dimen/base_padding_2x"
+                android:gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/comment"
+            style="@style/Text.Small"
+            android:paddingTop="@dimen/base_padding_2x"
+            android:paddingBottom="@dimen/base_padding_2x" />
+
+    </LinearLayout>
+</LinearLayout>

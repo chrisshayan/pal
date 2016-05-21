@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Text.Large" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/colorTextDefault</item>
+        <item name="android:textSize">@dimen/font_l</item>
+    </style>
+    <style name="Text.Medium" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/colorTextDefault</item>
+        <item name="android:textSize">@dimen/font_m</item>
+    </style>
+    <style name="Text.Small" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/colorTextDefault</item>
+        <item name="android:textSize">@dimen/font_s</item>
+    </style>
+    <style name="Text.ExtraSmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:textSize">@dimen/font_xs</item>
+        <item name="android:textColor">@color/colorTextDefault</item>
+    </style>
+
+    <style name="Text.Large.Light" parent="@style/Text.Large">
+        <item name="android:textColor">@color/colorTextLight</item>
+    </style>
+    <style name="Text.Large.Muted" parent="@style/Text.Large">
+        <item name="android:textColor">@color/colorTextMuted</item>
+    </style>
+    <style name="Text.Large.Success" parent="@style/Text.Large">
+        <item name="android:textColor">@color/colorTextSuccess</item>
+    </style>
+    <style name="Text.Large.Primary" parent="@style/Text.Large">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+    <style name="Text.Large.Danger" parent="@style/Text.Large">
+        <item name="android:textColor">@color/colorTextDanger</item>
+    </style>
+    <style name="Text.Large.Title" parent="@style/Text.Large">
+        <item name="android:textColor">@color/colorTextTitle</item>
+    </style>
+    <style name="Text.Large.MutedTitle" parent="@style/Text.Large">
+        <item name="android:textColor">@color/colorTextMutedTitle</item>
+    </style>
+
+    <style name="Text.Medium.Light" parent="@style/Text.Medium">
+        <item name="android:textColor">@color/colorTextLight</item>
+    </style>
+    <style name="Text.Medium.Muted" parent="@style/Text.Medium">
+        <item name="android:textColor">@color/colorTextMuted</item>
+    </style>
+    <style name="Text.Medium.Success" parent="@style/Text.Medium">
+        <item name="android:textColor">@color/colorTextSuccess</item>
+    </style>
+    <style name="Text.Medium.Primary" parent="@style/Text.Medium">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+    <style name="Text.Medium.Danger" parent="@style/Text.Medium">
+        <item name="android:textColor">@color/colorTextDanger</item>
+    </style>
+    <style name="Text.Medium.Title" parent="@style/Text.Medium">
+        <item name="android:textColor">@color/colorTextTitle</item>
+    </style>
+    <style name="Text.Medium.MutedTitle" parent="@style/Text.Medium">
+        <item name="android:textColor">@color/colorTextMutedTitle</item>
+    </style>
+
+    <style name="Text.Small.Light" parent="@style/Text.Small">
+        <item name="android:textColor">@color/colorTextLight</item>
+    </style>
+    <style name="Text.Small.Muted" parent="@style/Text.Small">
+        <item name="android:textColor">@color/colorTextMuted</item>
+    </style>
+    <style name="Text.Small.Success" parent="@style/Text.Small">
+        <item name="android:textColor">@color/colorTextSuccess</item>
+    </style>
+    <style name="Text.Small.Primary" parent="@style/Text.Small">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+    <style name="Text.Small.Danger" parent="@style/Text.Small">
+        <item name="android:textColor">@color/colorTextDanger</item>
+    </style>
+    <style name="Text.Small.Title" parent="@style/Text.Small">
+        <item name="android:textColor">@color/colorTextTitle</item>
+    </style>
+    <style name="Text.Small.MutedTitle" parent="@style/Text.Small">
+        <item name="android:textColor">@color/colorTextMutedTitle</item>
+    </style>
+
+    <style name="Text.ExtraSmall.Light" parent="@style/Text.ExtraSmall">
+        <item name="android:textColor">@color/colorTextLight</item>
+    </style>
+    <style name="Text.ExtraSmall.Muted" parent="@style/Text.ExtraSmall">
+        <item name="android:textColor">@color/colorTextMuted</item>
+    </style>
+    <style name="Text.ExtraSmall.Success" parent="@style/Text.ExtraSmall">
+        <item name="android:textColor">@color/colorTextSuccess</item>
+    </style>
+    <style name="Text.ExtraSmall.Primary" parent="@style/Text.ExtraSmall">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+    <style name="Text.ExtraSmall.Danger" parent="@style/Text.ExtraSmall">
+        <item name="android:textColor">@color/colorTextDanger</item>
+    </style>
+    <style name="Text.ExtraSmall.Title" parent="@style/Text.ExtraSmall">
+        <item name="android:textColor">@color/colorTextTitle</item>
+    </style>
+    <style name="Text.ExtraSmall.MutedTitle" parent="@style/Text.ExtraSmall">
+        <item name="android:textColor">@color/colorTextMutedTitle</item>
+    </style>
+
+    <style name="Text.ActionMenuItem" parent="@style/Text.Small">
+        <item name="android:textColor">@color/colorActionItem</item>
+    </style>
+
+
+
+    <style name="Text.Badge" parent="@style/Text.ExtraSmall.Light">
+        <item name="android:paddingTop">@dimen/base_padding_half</item>
+        <item name="android:paddingBottom">@dimen/base_padding_half</item>
+        <item name="android:paddingLeft">@dimen/base_padding</item>
+        <item name="android:paddingRight">@dimen/base_padding</item>
+        <item name="android:minWidth">@dimen/badge_min_width</item>
+        <item name="android:background">@drawable/shape_badge</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+</resources>

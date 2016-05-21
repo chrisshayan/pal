@@ -1,0 +1,95 @@
+<div ng-controller="TopicsCtrl">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Topics</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="active">
+                    <strong>Topics</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox" ng-show="addTopicMode">
+                <div class="ibox-title">
+                    <h5>New topic</h5>
+                </div>
+                <div class="ibox-content">
+                    <form role="form" ng-submit="onAddTopic()">
+                        <div class="form-group">
+                            <label>Topic</label>
+                            <textarea ng-model="newTopic.title" placeholder="eg. Introducing yourself" class="form-control" require=""></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Level</label>
+                            <select ng-model="newTopic.level" class="form-control"
+                                ng-options="parseInt(key) as value for (key, value) in ['Beginning', 'Pre-intermediate', 'Intermediate', 'Advanced']">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Hint</label>
+                            <textarea rows="6" ng-model="newTopic.hint" placeholder="eg. Where are you from? What are you doing now? What's your favourite sport? ..." class="form-control" require=""></textarea>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label>Type</label>
+                            <select class="form-control m-b" ng-model="newTopic.type">
+                                <option value="0">audio</option>
+                                <option value="1">text</option>
+                            </select>
+                        </div> -->
+                        <div class="pull-right" >
+                            <button ng-click="onCancelAddTopic()" class="btn btn-sm btn-primary m-t-n-xs"><strong>Cancel</strong></button>
+                            <button ng-disabled="!newTopic.title" class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Add</strong></button>
+                        </div>
+                        <label> &nbsp; </label>
+                    </form>
+                </div>
+            </div>
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Topics</h5>
+                    <div class="ibox-tools">
+                        <a ng-show="!addTopicMode" ng-click="addTopicMode=!addTopicMode" href="" class="btn btn-primary btn-xs">Add new topic</a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-hover issue-tracker">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Level</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="r in topics">
+                                    <td class="issue-info">
+                                        <i ng-if="r.status == 1" class="fa fa-fw fa-check-circle text-success"></i>
+                                        <i ng-if="r.status == 0" class="fa fa-fw fa-times-circle text-danger"></i>
+                                        {{r.title}}
+                                    </td>
+                                    <td>
+                                        <span ng-if="r.level==0">Beginning</span>
+                                        <span ng-if="r.level==1">Pre-intermediate</span>
+                                        <span ng-if="r.level==2">Intermediate</span>
+                                        <span ng-if="r.level==3">Advanced</span>
+                                    </td>
+                                    <td class="text-right">
+                                        <button ng-show="r.status == 1" ng-click="onSetTopicStatus(r.$id, 0)" class="btn btn-success btn-xs"> Disable</button>
+                                        <button ng-show="r.status == 0" ng-click="onSetTopicStatus(r.$id, 1)" class="btn btn-danger btn-xs"> Enable</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

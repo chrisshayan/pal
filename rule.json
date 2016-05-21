@@ -1,0 +1,685 @@
+{
+  "rules": {
+    ".read": "true",
+    ".write": "auth != null",
+    "config": {
+      ".read": "true",
+      ".write": "auth != null && newData.parent().child('profiles').child(auth.uid).child('role').val() == 'admin'"
+    },
+    "confirm_token": {
+      ".read": "true",
+      ".write": "true"
+    },
+    "schools": {
+      ".validate": "newData.hasChildren(['created_by', 'created_date', 'last_modified_by', 'last_modified_date', 'address', 'city', 'name'])",
+      "created_by": {
+        ".validate": "newData.isString()"
+      },
+      "created_date": {
+        ".validate": "newData.isNumber()"
+      },
+      "last_modified_by": {
+        ".validate": "newData.isString()"
+      },
+      "last_modified_date": {
+        ".validate": "newData.isNumber()"
+      },
+      "address": {
+        ".validate": "newData.isString()"
+      },
+      "city": {
+        ".validate": "newData.isString()"
+      },
+      "name": {
+        ".validate": "newData.isString()"
+      },
+      "$other": {
+        ".validate": "false"
+      }
+    },
+    "cities": {
+      ".validate": "newData.hasChildren(['created_by', 'created_date', 'last_modified_by', 'last_modified_date', 'en', 'nation', 'vi'])",
+      "created_by": {
+        ".validate": "newData.isString()"
+      },
+      "created_date": {
+        ".validate": "newData.isNumber()"
+      },
+      "last_modified_by": {
+        ".validate": "newData.isString()"
+      },
+      "last_modified_date": {
+        ".validate": "newData.isNumber()"
+      },
+      "en": {
+        ".validate": "newData.isString()"
+      },
+      "nation": {
+        ".validate": "newData.isString()"
+      },
+      "vi": {
+        ".validate": "newData.isString()"
+      },
+      "$other": {
+        ".validate": "false"
+      }
+    },
+    "nations": {
+      ".validate": "newData.hasChildren(['en', 'vi'])",
+      "en": {
+        ".validate": "newData.isString()"
+      },
+      "vi": {
+        ".validate": "newData.isString()"
+      },
+      "$other": {
+        ".validate": "false"
+      }
+    },
+    "profiles": {
+      "$userid": {
+        ".validate": "newData.hasChildren(['role'])",
+        "first_password": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "role": {
+          ".validate": "newData.isString()"
+        },
+        "confirmed": {
+          ".validate": "newData.isBoolean() || newData.val() == null"
+        },
+        "pub_profile_last_update": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        ".read": "auth != null && root.child('profiles').child(auth.uid).child('role').val() == 'admin'",
+        ".write": "auth != null && newData.parent().parent().child('profiles').child(auth.uid).child('role').val() == 'admin'",
+        ".indexOn": [
+          "role"
+        ]
+      }
+    },
+    "profiles_pub": {
+      "$userid": {
+        ".validate": "newData.hasChildren()",
+        "created_by": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "created_date": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "last_modified_by": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "last_modified_date": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "avatar": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "display_name": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "email": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "first_name": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "last_name": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "city": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "address": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "school": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "job_title": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "exp": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "level": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "level_completion": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "level_name": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "score_1": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "score_2": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "score_3": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "score_4": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "score_5": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "total_posts": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "total_sessions": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "teaching_exp": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "points": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "rate1": {
+          ".validate": "newData.isNumber() || newData.val() == null",
+          ".write": "auth != null"
+        },
+        "rate2": {
+          ".validate": "newData.isNumber() || newData.val() == null",
+          ".write": "auth != null"
+        },
+        "rate3": {
+          ".validate": "newData.isNumber() || newData.val() == null",
+          ".write": "auth != null"
+        },
+        "rate4": {
+          ".validate": "newData.isNumber() || newData.val() == null",
+          ".write": "auth != null"
+        },
+        "rate5": {
+          ".validate": "newData.isNumber() || newData.val() == null",
+          ".write": "auth != null"
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "advisor_votes": {
+      "$advisor_id": {
+        "$user_id": {
+          ".validate": "newData.hasChildren()",
+          "avatar": {
+            ".validate": "newData.isString() || newData.val() == null"
+          },
+          "created_date": {
+            ".validate": "newData.isNumber() || newData.val() == null"
+          },
+          "display_name": {
+            ".validate": "newData.isString() || newData.val() == null"
+          },
+          "message": {
+            ".validate": "newData.isString() || newData.val() == null"
+          },
+          "rate": {
+            ".validate": "newData.isNumber() || newData.val() == null"
+          },
+          "$other": {
+            ".validate": "false"
+          },
+          ".read": "auth != null",
+          ".write": "auth != null"
+        }
+      }
+    },
+    "advisor_votes_log": {
+      "$advisor_id": {
+        "$user_id": {
+          "$key1": {
+            ".validate": "newData.hasChildren()",
+            "avatar": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "created_date": {
+              ".validate": "newData.isNumber() || newData.val() == null"
+            },
+            "display_name": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "message": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "rate": {
+              ".validate": "newData.isNumber() || newData.val() == null"
+            },
+            "$other": {
+              ".validate": "false"
+            }
+          },
+          ".read": "auth != null",
+          ".write": "auth != null"
+        }
+      }
+    },
+    "log_advisor_points": {
+      "$advisor_id": {
+        "$post_id": {
+          ".validate": "newData.hasChildren(['action', 'created_date', 'points'])",
+          "action": {
+            ".validate": "newData.isString()"
+          },
+          "created_date": {
+            ".validate": "newData.isNumber()"
+          },
+          "meta": {
+            ".validate": "newData.hasChildren() || newData.val() == null"
+          },
+          "points": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": "false"
+          },
+          ".read": "auth != null",
+          ".write": "auth != null && auth.uid == $advisor_id"
+        }
+      }
+    },
+    "posts": {
+      "$key2": {
+        ".validate": "newData.hasChildren(['created_by', 'created_date'])",
+        "created_by": {
+          ".validate": "newData.isString()"
+        },
+        "created_date": {
+          ".validate": "newData.isNumber()"
+        },
+        "last_modified_by": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "last_modified_date": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "advisor_id": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "index_advisior_status": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "audio": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "text": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "title": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "ref_topic": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "status": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "score": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "conversation": {
+          "$key3": {
+            ".validate": "newData.hasChildren(['uid'])",
+            "audio": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "created_date": {
+              ".validate": "newData.isNumber() || newData.val() == null"
+            },
+            "text": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "uid": {
+              ".validate": "newData.isString()"
+            },
+            "$other": {
+              ".validate": "false"
+            }
+          }
+        },
+        "next": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "prev": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "has_read": {
+          ".validate": "newData.isBoolean() || newData.val() == null"
+        },
+        "user_last_request": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "$other": {
+          ".validate": "false"
+        }
+      },
+      ".read": "auth != null",
+      ".indexOn": [
+        "status",
+        "created_by",
+        "index_advisior_status"
+      ]
+    },
+    "users_posts": {
+      "$userid": {
+        "all": {
+          "$key2": {
+            ".validate": "newData.hasChildren(['created_by', 'created_date'])",
+            "created_by": {
+              ".validate": "newData.isString()"
+            },
+            "created_date": {
+              ".validate": "newData.isNumber()"
+            },
+            "last_modified_by": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "last_modified_date": {
+              ".validate": "newData.isNumber() || newData.val() == null"
+            },
+            "advisor_id": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "index_advisior_status": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "audio": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "text": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "title": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "ref_topic": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "status": {
+              ".validate": "newData.isNumber() || newData.val() == null"
+            },
+            "score": {
+              ".validate": "newData.isNumber() || newData.val() == null"
+            },
+            "conversation": {
+              "$key3": {
+                ".validate": "newData.hasChildren(['uid'])",
+                "audio": {
+                  ".validate": "newData.isString() || newData.val() == null"
+                },
+                "created_date": {
+                  ".validate": "newData.isNumber() || newData.val() == null"
+                },
+                "text": {
+                  ".validate": "newData.isString() || newData.val() == null"
+                },
+                "uid": {
+                  ".validate": "newData.isString()"
+                },
+                "$other": {
+                  ".validate": "false"
+                }
+              }
+            },
+            "next": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "prev": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "has_read": {
+              ".validate": "newData.isBoolean() || newData.val() == null"
+            },
+            "user_last_request": {
+              ".validate": "newData.isNumber() || newData.val() == null"
+            },
+            "$other": {
+              ".validate": "false"
+            }
+          },
+          ".read": "auth != null"
+        },
+        "evaluated": {
+          "$key2": {
+            ".validate": "newData.hasChildren(['created_by', 'created_date'])",
+            "created_by": {
+              ".validate": "newData.isString()"
+            },
+            "created_date": {
+              ".validate": "newData.isNumber()"
+            },
+            "last_modified_by": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "last_modified_date": {
+              ".validate": "newData.isNumber() || newData.val() == null"
+            },
+            "advisor_id": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "index_advisior_status": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "audio": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "text": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "title": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "ref_topic": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "status": {
+              ".validate": "newData.isNumber() || newData.val() == null"
+            },
+            "score": {
+              ".validate": "newData.isNumber() || newData.val() == null"
+            },
+            "conversation": {
+              "$key3": {
+                ".validate": "newData.hasChildren(['uid'])",
+                "audio": {
+                  ".validate": "newData.isString() || newData.val() == null"
+                },
+                "created_date": {
+                  ".validate": "newData.isNumber() || newData.val() == null"
+                },
+                "text": {
+                  ".validate": "newData.isString() || newData.val() == null"
+                },
+                "uid": {
+                  ".validate": "newData.isString()"
+                },
+                "$other": {
+                  ".validate": "false"
+                }
+              }
+            },
+            "next": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "prev": {
+              ".validate": "newData.isString() || newData.val() == null"
+            },
+            "has_read": {
+              ".validate": "newData.isBoolean() || newData.val() == null"
+            },
+            "user_last_request": {
+              ".validate": "newData.isNumber() || newData.val() == null"
+            },
+            "$other": {
+              ".validate": "false"
+            }
+          },
+          ".read": "auth != null"
+        },
+        "evaluated_unread": {
+          "$post_id": {
+            ".validate": "newData.isBoolean()",
+            ".read": "auth != null"
+          }
+        },
+        "unread": {
+          ".validate": "newData.isBoolean()",
+          ".read": "auth != null"
+        }
+      }
+    },
+    "topics": {
+      "$key4": {
+        ".validate": "newData.hasChildren(['level', 'status', 'title'])",
+        "created_by": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "created_date": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "last_modified_by": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "last_modified_date": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "hint": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "level": {
+          ".validate": "newData.isNumber()"
+        },
+        "status": {
+          ".validate": "newData.isNumber()"
+        },
+        "submits": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "title": {
+          ".validate": "newData.isString()"
+        },
+        "type": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "views": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "$other": {
+          ".validate": "false"
+        }
+      },
+      ".read": "auth != null",
+      ".write": "auth != null && newData.parent().child('profiles').child(auth.uid).child('role').val() == 'admin'"
+    },
+    "register": {
+      "$key5": {
+        ".validate": "newData.hasChildren(['created_date', 'email', 'name'])",
+        "created_date": {
+          ".validate": "newData.isString()"
+        },
+        "email": {
+          ".validate": "newData.isString()"
+        },
+        "hit": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "last_modified_date": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "name": {
+          ".validate": "newData.isString()"
+        },
+        "$other": {
+          ".validate": "false"
+        }
+      },
+      ".read": "auth != null && root.child('profiles').child(auth.uid).child('role').val() == 'admin'",
+      ".write": "true"
+    },
+    "user_quests": {
+      "$userid": {
+        "$key4": {
+          ".validate": "newData.hasChildren(['level', 'status', 'title'])",
+          "created_by": {
+            ".validate": "newData.isString() || newData.val() == null"
+          },
+          "created_date": {
+            ".validate": "newData.isNumber() || newData.val() == null"
+          },
+          "last_modified_by": {
+            ".validate": "newData.isString() || newData.val() == null"
+          },
+          "last_modified_date": {
+            ".validate": "newData.isNumber() || newData.val() == null"
+          },
+          "hint": {
+            ".validate": "newData.isString() || newData.val() == null"
+          },
+          "level": {
+            ".validate": "newData.isNumber()"
+          },
+          "status": {
+            ".validate": "newData.isNumber()"
+          },
+          "submits": {
+            ".validate": "newData.isNumber() || newData.val() == null"
+          },
+          "title": {
+            ".validate": "newData.isString()"
+          },
+          "type": {
+            ".validate": "newData.isNumber() || newData.val() == null"
+          },
+          "views": {
+            ".validate": "newData.isNumber() || newData.val() == null"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        },
+        ".read": "auth != null"
+      }
+    },
+    "post_queue": {
+      ".validate": "newData.hasChildren()",
+      ".read": "auth != null",
+      "tasks": {
+        ".validate": "newData.hasChildren()",
+        ".indexOn": [
+          "_state"
+        ]
+      }
+    },
+    "quest_queue": {
+      ".validate": "newData.hasChildren()",
+      ".read": "auth != null",
+      "tasks": {
+        ".validate": "newData.hasChildren()",
+        ".indexOn": [
+          "_state"
+        ]
+      }
+    },
+    "mail_queue": {
+      ".validate": "newData.hasChildren()",
+      ".read": "auth != null",
+      "tasks": {
+        ".validate": "newData.hasChildren()",
+        ".indexOn": [
+          "_state"
+        ]
+      }
+    }
+  }
+}

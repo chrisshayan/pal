@@ -1,0 +1,68 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <dimen name="base_padding_half">2dp</dimen>
+    <dimen name="base_padding">4dp</dimen>
+    <dimen name="base_padding_2x">8dp</dimen>
+    <dimen name="base_padding_4x">16dp</dimen>
+    <dimen name="base_padding_8x">32dp</dimen>
+    <dimen name="base_padding_16x">64dp</dimen>
+
+
+    <dimen name="star_extra_small">12sp</dimen>
+    <dimen name="star_small">14sp</dimen>
+    <dimen name="star_medium">16sp</dimen>
+
+    <dimen name="badge_min_width">30sp</dimen>
+
+    <dimen name="font_xs">12sp</dimen>
+    <dimen name="font_s">14sp</dimen>
+    <dimen name="font_m">17sp</dimen>
+    <dimen name="font_l">22sp</dimen>
+
+    <dimen name="login_button_height">30sp</dimen>
+
+    <dimen name="player_controller_button_size">30dp</dimen>
+
+    <!-- nav -->
+    <dimen name="nav_header_height">200dp</dimen>
+    <dimen name="nav_avatar_size">60dp</dimen>
+    <dimen name="nav_menu_item_height">50dp</dimen>
+
+    <!-- screen based value -->
+    <dimen name="onboarding_pager_view_controller_height">32dp</dimen>
+
+    <dimen name="splash_screen_logo_width">300dp</dimen>
+
+    <dimen name="auth_dialog_width">290dp</dimen>
+    <dimen name="auth_footer_height">60dp</dimen>
+
+    <!-- post item -->
+    <dimen name="post_item_min_height">100dp</dimen>
+    <dimen name="post_avatar_size">40dp</dimen>
+    <dimen name="post_star_size">@dimen/star_small</dimen>
+
+
+    <!-- fab -->
+    <dimen name="fab_margin">@dimen/base_padding_2x</dimen>
+
+    <!-- tutor -->
+    <dimen name="tutor_fab_margin_right">80dp</dimen>
+    <dimen name="tutor_fab_margin_right_quarter">20dp</dimen>
+    <dimen name="tutor_fab_height">100dp</dimen>
+    <dimen name="tutor_fab_arrow_width">80dp</dimen>
+
+    <!-- login page -->
+    <dimen name="login_form_margin_bottom_size">50dp</dimen>
+    <dimen name="login_form_height">280dp</dimen>
+
+    <!--profile-->
+    <dimen name="profile_avatar_size">100dp</dimen>
+    <dimen name="profile_top_panel_height">220dp</dimen>
+
+    <!-- getting started -->
+    <dimen name="getting_started_banner_height">200dp</dimen>
+</resources>

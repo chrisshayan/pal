@@ -1,0 +1,171 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="10sp"
+            android:layout_height="wrap_content"
+            android:text="5"
+            style="@style/Text.ExtraSmall.Muted"
+            android:layout_marginRight="@dimen/base_padding" />
+
+        <ImageView
+            android:layout_width="@dimen/star_extra_small"
+            android:layout_height="@dimen/star_extra_small"
+            android:src="@drawable/ic_action_grade"
+            android:contentDescription="@null" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <View
+                android:id="@+id/rate5"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/rate_5_stars"
+                android:layout_marginLeft="@dimen/base_padding" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="10sp"
+            android:layout_height="wrap_content"
+            android:text="4"
+            style="@style/Text.ExtraSmall.Muted"
+            android:layout_marginRight="@dimen/base_padding" />
+
+        <ImageView
+            android:layout_width="@dimen/star_extra_small"
+            android:layout_height="@dimen/star_extra_small"
+            android:src="@drawable/ic_action_grade"
+            android:contentDescription="@null" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <View
+                android:id="@+id/rate4"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/rate_4_stars"
+                android:layout_marginLeft="@dimen/base_padding" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="10sp"
+            android:layout_height="wrap_content"
+            android:text="3"
+            style="@style/Text.ExtraSmall.Muted"
+            android:layout_marginRight="@dimen/base_padding" />
+
+        <ImageView
+            android:layout_width="@dimen/star_extra_small"
+            android:layout_height="@dimen/star_extra_small"
+            android:src="@drawable/ic_action_grade"
+            android:contentDescription="@null" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <View
+                android:id="@+id/rate3"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/rate_3_stars"
+                android:layout_marginLeft="@dimen/base_padding" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="10sp"
+            android:layout_height="wrap_content"
+            android:text="2"
+            style="@style/Text.ExtraSmall.Muted"
+            android:layout_marginRight="@dimen/base_padding" />
+
+        <ImageView
+            android:layout_width="@dimen/star_extra_small"
+            android:layout_height="@dimen/star_extra_small"
+            android:src="@drawable/ic_action_grade"
+            android:contentDescription="@null" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <View
+                android:id="@+id/rate2"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/rate_2_stars"
+                android:layout_marginLeft="@dimen/base_padding" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="10sp"
+            android:layout_height="wrap_content"
+            android:text="1"
+            style="@style/Text.ExtraSmall.Muted"
+            android:layout_marginRight="@dimen/base_padding" />
+
+        <ImageView
+            android:layout_width="@dimen/star_extra_small"
+            android:layout_height="@dimen/star_extra_small"
+            android:src="@drawable/ic_action_grade"
+            android:contentDescription="@null" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <View
+                android:id="@+id/rate1"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/rate_1_stars"
+                android:layout_marginLeft="@dimen/base_padding" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

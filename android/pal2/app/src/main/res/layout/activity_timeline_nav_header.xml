@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="@dimen/nav_header_height"
+    android:background="@drawable/gradient_background"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark" android:orientation="vertical"
+    android:gravity="center_vertical|center_horizontal">
+
+    <ImageView android:layout_width="@dimen/nav_avatar_size" android:layout_height="@dimen/nav_avatar_size"
+        android:id="@+id/avatar"
+        android:src="@drawable/ic_action_account_box"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null" />
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="@string/placeholder_text_short"
+        android:gravity="center"
+        android:padding="@dimen/base_padding_half"
+        style="@style/Text.Medium.Light"
+        android:id="@+id/username" />
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="@string/placeholder_text_extra_short" android:id="@+id/user_level"
+        android:gravity="center"
+        android:paddingBottom="@dimen/base_padding_2x"
+        style="@style/Text.Small.Light" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="top">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="top">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/posted"
+                android:id="@+id/textView3"
+                android:gravity="center"
+                android:padding="@dimen/base_padding"
+                style="@style/Text.ExtraSmall.Light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/total_posts"
+                android:gravity="center"
+                style="@style/Text.Small.Light" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="top|center_horizontal">
+
+            <!--
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/following"
+                android:id="@+id/textView8"
+                android:gravity="center"
+                android:padding="@dimen/base_padding"
+                style="@style/Text.ExtraSmall.Light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/total_following"
+                android:gravity="center"
+                android:textIsSelectable="false"
+                style="@style/Text.Small.Light" />
+
+                -->
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/lv_progress"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                custom:donut_progress="0"
+                custom:donut_unfinished_stroke_width="2dp"
+                custom:donut_finished_stroke_width="2dp"
+                custom:donut_text_color="@color/colorTextLight"
+                custom:donut_text_size="@dimen/font_xs"
+                android:layout_marginTop="@dimen/base_padding"
+                custom:donut_finished_color="@color/colorTextSuccess"
+                custom:donut_unfinished_color="@color/colorDividerDarkAlpha"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="top">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/avg_point"
+                android:id="@+id/textView6"
+                android:gravity="center"
+                android:padding="@dimen/base_padding"
+                style="@style/Text.ExtraSmall.Light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/avg_points"
+                android:gravity="center"
+                style="@style/Text.Small.Light" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,84 @@
+<div ng-controller="SchoolsCtrl">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Schools</h5>
+                    <div class="ibox-tools">
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row" style="margin-bottom:5px">
+                        <div class="col-md-12">
+                            <a ng-click="onAdd()" class="btn btn-sm btn-white"> <i class="fa fa-plus"> Add</i> </a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover issue-tracker">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th><a href="#" ng-click="sortBy('name')">
+                                        <i class="fa fa-fw" ng-class="{'fa-sort':sortedBy!='name' && sortedBy!='-name', 'text-muted':sortedBy!='name' && sortedBy!='-name', 'fa-sort-desc':sortedBy=='-name', 'fa-sort-asc':sortedBy=='name'}"></i>
+                                        Name</a></th>
+                                    <th><a href="#" ng-click="sortBy('address')">
+                                        <i class="fa fa-fw" ng-class="{'fa-sort':sortedBy!='address' && sortedBy!='-address', 'text-muted':sortedBy!='address' && sortedBy!='-address', 'fa-sort-desc':sortedBy=='-address', 'fa-sort-asc':sortedBy=='address'}"></i>
+                                        Address</a></th>
+                                    <th><a href="#" ng-click="sortBy('city')">
+                                        <i class="fa fa-fw" ng-class="{'fa-sort':sortedBy!='city' && sortedBy!='-city', 'text-muted':sortedBy!='city' && sortedBy!='-city', 'fa-sort-desc':sortedBy=='-city', 'fa-sort-asc':sortedBy=='city'}"></i>
+                                        City</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="r in data | toArray | orderBy: sortedBy" ng-click="onEdit(r.$id)" style="cursor:pointer" id="item_{{r.$id}}">
+                                    <td>
+                                        {{$index + 1}}
+                                    </td>
+                                    <td>
+                                        {{r.name}}
+                                    </td>
+                                    <td>
+                                        {{r.address}}
+                                    </td>
+                                    <td>
+                                        {{cities[r.city].en}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="school_modal.html">
+        <div class="modal-header">
+            <h3 class="modal-title" ng-if="isNew">Add new School</h3>
+            <h3 class="modal-title" ng-if="!isNew">Update School</h3>
+        </div>
+        <div class="modal-body">
+            <form role="form">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input ng-readonly="isProcessing" ng-model="data.name" type="text" placeholder="School name" class="form-control" require=""/>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input ng-readonly="isProcessing" ng-model="data.address" type="text" placeholder="Address" class="form-control" require=""/>
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <select class="form-control" ng-readonly="isProcessing" ng-model="data.city">
+                        <option value="">Select city</option>
+                        <option ng-repeat="n in cities" value="{{n.$id}}">{{n.en}}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-disabled="isProcessing || !data.name || !data.address || !data.city" ng-click="onDone()">OK</button>
+            <button class="btn btn-warning" type="button" ng-disabled="isProcessing" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+</div>

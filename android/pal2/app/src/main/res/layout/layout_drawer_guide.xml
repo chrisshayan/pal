@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="vietnamworks.com.pal.activities.TimelineActivity"
+    android:id="@+id/overlay_with_drawer_guide"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/colorPrimaryLight"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/tutor_fab_arrow_width"
+            android:id="@+id/imageView10"
+            android:src="@drawable/ic_tutor_arrow_3"
+            android:contentDescription="@null"
+            android:layout_marginLeft="@dimen/base_padding_2x" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/get_started_drawer_button_guide"
+            android:id="@+id/textView12"
+            android:layout_below="@+id/imageView10"
+            android:layout_marginLeft="@dimen/base_padding"
+            style="@style/Text.Small" />
+
+        <ImageView
+            android:layout_width="@dimen/tutor_fab_arrow_width"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView11"
+            android:src="@drawable/ic_tutor_arrow"
+            android:contentDescription="@null"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/get_started_drawer_swipe_guide"
+            android:id="@+id/textView15"
+            android:layout_toRightOf="@+id/imageView11"
+            android:layout_alignTop="@+id/imageView11"
+            android:layout_marginLeft="@dimen/base_padding"
+            style="@style/Text.Small" />
+    </RelativeLayout>
+</LinearLayout>

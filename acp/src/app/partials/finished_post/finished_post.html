@@ -1,0 +1,39 @@
+<li class="">
+    <h4 style="display:block" ng-click="onOpenTask()">
+        {{data.title || (user_display_name + " said")}}<br/><br/>
+        <small><i class="fa fa-fw fa-user"></i>{{user_display_name}}</small><br/>
+        <small><i class="fa fa-fw fa-clock-o"></i>{{formatDateTime(data.last_modified_date)}}</small>
+        <span class="badge badge-info pull-right">
+            <span ng-if="data.audio">Speaking</span>
+            <span ng-if="!data.audio">Writing</span>
+        </span>
+        <span class="badge badge-warning pull-right" style="margin-right:5px">{{data.score}} <i class="fa fa-star"></i></span>
+    </h4>
+    <div ng-show="isShowDetail">
+        <hr/>
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <span><b>User said: ({{formatDateTime(data.created_date)}})</b></span><br/>
+                <div style="font-size:10pt">
+                    <audio-player ng-if="data.audio" audio="{{data.audio}}"></audio-player>
+                    {{data.text}}
+                </div>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div ng-repeat="c in data.conversation">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <span ng-if="c.uid != uid"><b>User said: ({{formatDateTime(c.created_date)}})</b></span>
+                    <span ng-if="c.uid == uid"><b>You said: ({{formatDateTime(c.created_date)}})</b></span>
+                    <br/>
+                    <div style="font-size:10pt">
+                        <audio-player ng-if="c.audio" audio="{{c.audio}}"></audio-player>
+                        {{c.text}}
+                    </div>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+        </div>
+    </div>
+</li>

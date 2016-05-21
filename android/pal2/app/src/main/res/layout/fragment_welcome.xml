@@ -1,0 +1,276 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimaryLight">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcome_panel"
+        android:layout_margin="@dimen/base_padding_2x"
+        card_view:cardElevation="2dp">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/getting_started_banner_height"
+                android:background="#9cddf9">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView2"
+                    android:src="@drawable/ic_welcome_icon"
+                    android:scaleType="centerInside" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView5"
+                    style="@style/Text.Large"
+                    android:text="@string/get_started_header"
+                    android:textColor="@color/colorTextPrimary"
+                    android:paddingLeft="@dimen/base_padding_2x"
+                    android:paddingRight="@dimen/base_padding_2x"
+                    android:paddingTop="@dimen/base_padding_4x"
+                    android:paddingBottom="@dimen/base_padding_4x"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/get_started_desc"
+                    android:id="@+id/textView8"
+                    style="@style/Text.Medium"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/base_padding_4x"
+                    android:paddingRight="@dimen/base_padding_4x" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/get_started"
+                    android:id="@+id/btn_getStarted"
+                    android:layout_marginTop="@dimen/base_padding_8x"
+                    android:background="@drawable/btn_get_started"
+                    style="@style/Text.Medium.Light"
+                    android:paddingLeft="@dimen/base_padding_4x"
+                    android:paddingRight="@dimen/base_padding_4x"
+                    android:layout_marginBottom="@dimen/base_padding_8x"
+                    android:paddingTop="@dimen/base_padding_2x"
+                    android:paddingBottom="@dimen/base_padding_2x" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <!--
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcome_panel"
+        android:layout_margin="@dimen/base_padding_2x"
+        card_view:cardElevation="2dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/imageView7"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_welcome_banner"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/base_padding_4x">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/get_started_header"
+                    android:id="@+id/textView5"
+                    style="@style/Text.Large" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/get_started_desc"
+                    android:id="@+id/textView8"
+                    style="@style/Text.Medium"
+                    android:paddingTop="@dimen/base_padding_4x" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorDividerDarkAlpha"
+                    android:layout_marginTop="@dimen/base_padding_4x"
+                    android:layout_marginBottom="@dimen/base_padding_2x" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/btn_getStarted"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_action_done"
+                        android:layout_marginBottom="@dimen/base_padding"
+                        android:contentDescription="@null" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/get_started"
+                        android:id="@+id/btn_getStarted_Text"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginLeft="@dimen/base_padding_2x" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryLight"
+        android:alpha="0.9"
+        android:id="@+id/overlay"
+        android:visibility="gone"
+        android:elevation="4dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="5dp">
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            xmlns:fab="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_addButtonColorNormal="@color/colorFabPrimary"
+            fab:fab_addButtonColorPressed="@color/colorFabPrimaryPressed"
+            fab:fab_addButtonPlusIconColor="@color/colorTextLight"
+            fab:fab_labelStyle="@style/fab_labels_style"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:visibility="gone">
+
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_a"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onOpenWelcomeSaySomethingComposer"
+                fab:fab_colorNormal="@color/colorFabSecondary"
+                fab:fab_title="@string/say_something"
+                fab:fab_colorPressed="@color/colorFabSecondaryPressed"
+                fab:fab_icon="@drawable/ic_editor_border_color"
+                fab:fab_size="mini"/>
+
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onOpenChallengeList"
+                fab:fab_colorNormal="@color/colorFabSecondary"
+                fab:fab_title="@string/pick_up_challenge"
+                fab:fab_colorPressed="@color/colorFabSecondaryPressed"
+                fab:fab_icon="@drawable/ic_communication_chat"
+                fab:fab_size="mini"/>
+
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fab"
+            android:layout_alignRight="@+id/fab"
+            android:id="@+id/tutor_2"
+            android:layout_marginRight="@dimen/tutor_fab_margin_right_quarter"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/tutor_fab_arrow_width"
+                android:id="@+id/imageView9"
+                android:src="@drawable/ic_tutor_arrow_2"
+                android:contentDescription="@null"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/get_started_pick_option"
+                android:id="@+id/textView11"
+                style="@style/Text.Medium"
+                android:layout_above="@+id/imageView9"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tutor_fab_height"
+        android:layout_marginRight="@dimen/tutor_fab_margin_right"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical|right"
+        android:elevation="5dp"
+        style="?android:attr/borderlessButtonStyle"
+        android:id="@+id/tutor_1"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/get_started_touch_fab"
+            android:id="@+id/textView9"
+            style="@style/Text.Medium"
+            android:layout_margin="@dimen/base_padding" />
+
+        <ImageView
+            android:layout_width="@dimen/tutor_fab_arrow_width"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView8"
+            android:src="@drawable/ic_tutor_arrow"
+            android:contentDescription="@null" />
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,19 @@
+{
+  "name": "pal_file_server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "pal_file_server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "cloudinary": "^1.2.5",
+    "connect-busboy": "0.0.2",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "sys": "0.0.1"
+  }
+}

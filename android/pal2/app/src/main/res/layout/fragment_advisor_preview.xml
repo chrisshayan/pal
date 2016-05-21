@@ -1,0 +1,183 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    android:background="@color/colorPrimaryLight"
+    android:nestedScrollingEnabled="false">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/base_padding_4x"
+            android:paddingTop="@dimen/base_padding_4x"
+            android:paddingRight="@dimen/base_padding_4x">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/profile">
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:id="@+id/avatar"
+                        android:src="@drawable/ic_action_account_circle_dark"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Duy Nguyen Khanh"
+                        android:id="@+id/display_name"
+                        style="@style/Text.Small"
+                        android:layout_marginTop="@dimen/base_padding_2x" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Text.ExtraSmall.Muted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vote_for_advisor"
+                    android:id="@+id/textView7" />
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rating_bar"
+                    android:numStars="5"
+                    android:layout_marginTop="@dimen/base_padding_2x"
+                    android:stepSize="1"
+                    android:progressDrawable="@drawable/rating_star" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/comment_view"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:ems="10"
+                        android:id="@+id/comment"
+                        android:minLines="5"
+                        android:hint="@string/vote_for_advisor_comment"
+                        android:gravity="top"
+                        android:background="@color/colorTextAreaBgDark"
+                        android:maxLength="512"
+                        android:padding="@dimen/base_padding" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cancel"
+                            android:id="@+id/btn_cancel"
+                            android:layout_gravity="right"
+                            android:background="?attr/selectableItemBackgroundBorderless"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/submit"
+                            android:id="@+id/btn_submit"
+                            android:layout_gravity="right"
+                            android:background="?attr/selectableItemBackgroundBorderless"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/colorDividerDarkAlpha"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/base_padding_4x"
+                android:paddingBottom="@dimen/base_padding_2x"
+                android:layout_marginBottom="@dimen/base_padding_4x">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4.3"
+                        android:id="@+id/score"
+                        style="@style/Text.Large"
+                        android:textSize="40sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="1234 rating"
+                        android:id="@+id/nrate"
+                        style="@style/Text.ExtraSmall.Muted"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <vietnamworks.com.pal.custom_views.RatingChart
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/base_padding_8x"
+                    android:id="@+id/rate_chart" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/colorDividerDarkAlpha"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_padding_2x" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/no_vote"
+                android:id="@+id/no_vote" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/comments"
+                android:paddingBottom="@dimen/base_padding_2x"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

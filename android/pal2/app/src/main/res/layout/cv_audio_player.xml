@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingTop="@dimen/base_padding_2x"
+    android:paddingBottom="@dimen/base_padding_2x"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <ImageButton
+        android:layout_width="@dimen/player_controller_button_size"
+        android:layout_height="@dimen/player_controller_button_size"
+        android:id="@+id/btn_play"
+        android:src="@drawable/ic_player_play"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress_bar"
+        android:layout_marginLeft="@dimen/base_padding"
+        android:max="100"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="00:00"
+        android:id="@+id/txt_timer"
+        android:layout_marginLeft="@dimen/base_padding"
+        style="@style/Text.ExtraSmall"
+        android:gravity="center" />
+
+    <ImageButton
+        android:layout_width="@dimen/player_controller_button_size"
+        android:layout_height="@dimen/player_controller_button_size"
+        android:id="@+id/btn_remove"
+        android:src="@drawable/ic_player_remove"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_marginLeft="@dimen/base_padding"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null" />
+</LinearLayout>

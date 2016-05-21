@@ -1,0 +1,99 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:weightSum="1"
+    android:id="@+id/submitText"
+    android:visibility="visible">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp">
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/btn_play"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_play_blue"
+                android:scaleType="fitCenter"
+                android:onClick="onToggleReplay"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_alignTop="@+id/btn_record"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="@dimen/base_padding" />
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/btn_record"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_microphone_red"
+                android:scaleType="fitCenter"
+                android:onClick="onToggleRecorder"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/recording_status"
+                android:layout_below="@+id/btn_record"
+                android:layout_centerHorizontal="true"
+                android:typeface="monospace"
+                android:textColor="@color/icons"
+                android:text="00:00" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textAnswerButtons"
+        android:layout_weight="1"
+        android:background="@color/primary_dark"
+        android:elevation="3dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:id="@+id/button3"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="onCancelSubmitAudio"
+            android:textColor="@color/icons" />
+        <View
+            android:layout_width="1px"
+            android:layout_height="fill_parent"
+            android:background="@color/primary_light"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:alpha="0.5" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:id="@+id/button4"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="onSubmitAudio"
+            android:textColor="@color/icons" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,76 @@
+<div class="row wrapper wrapper-content animated fadeInRight" ng-controller="ProfileCtrl">
+    <div class="col-lg-12">
+        <div class="ibox" ng-if="loading">
+            <div class="ibox-title">
+                <h5>Profiles</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="spiner-example">
+                    <div class="sk-spinner sk-spinner-rotating-plane"></div>
+                </div>
+            </div>
+        </div>
+        <div class="ibox float-e-margins" ng-show="!loading">
+            <div class="ibox-title">
+                <h5>Profiles
+                </h5>
+                <div ibox-tools></div>
+            </div>
+            <div class="ibox-content">
+                <form method="get" class="form-horizontal" ng-submit="onPost()">
+                    <div class="form-group"><label class="col-sm-2 control-label">Avatar</label>
+                        <div class="col-sm-10">
+                            <img style="cursor:pointer" ng-click="onChangeAvatar()" width="160px" ng-src="{{profile.avatar || NO_AVATAR}}"/>
+                        </div>
+                    </div>
+                    <div class="form-group"><label class="col-sm-2 control-label">First name</label>
+                        <div class="col-sm-10"><input ng-model="profile.first_name" type="text" class="form-control" require=""></div>
+                    </div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Last name</label>
+                        <div class="col-sm-10"><input ng-model="profile.last_name" type="text" class="form-control" require=""></div>
+                    </div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Display name</label>
+                        <div class="col-sm-10"><input ng-model="profile.display_name" type="text" class="form-control" require=""></div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div ng-show="role='advisor'">
+                        <div class="form-group" ><label class="col-sm-2 control-label">School</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" ng-model="profile.school">
+                                    <option ng-repeat="n in schools" value="{{n.$id}}">{{n.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group"><label class="col-sm-2 control-label">Year of Experience Teaching English</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" ng-model="profile.teaching_exp">
+                                    <option value="1">Less then 2 years</option>
+                                    <option value="2">2-5 years</option>
+                                    <option value="5">5-10 years</option>
+                                    <option value="11">more than 10 years</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group" ><label class="col-sm-2 control-label">Address</label>
+                        <div class="col-sm-10"><input ng-model="profile.address" type="text" class="form-control"></div>
+                    </div>
+                    <div class="form-group"><label class="col-sm-2 control-label">City</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-readonly="isProcessing" ng-model="profile.city">
+                                <option value="">Select city</option>
+                                <option ng-repeat="n in cities" value="{{n.$id}}">{{n.en}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div>
+                        <button ng-disabled="!profile.first_name || !profile.last_name || !profile.avatar || !profile.teaching_exp" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Update</strong></button>
+                    </div>
+                    <strong>&nbsp;</strong>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

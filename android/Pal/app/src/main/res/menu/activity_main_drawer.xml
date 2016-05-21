@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single" android:id="@+id/group1">
+        <item android:id="@+id/all_posts" android:icon="@android:drawable/ic_input_get"
+            android:title="All posts" />
+        <item android:id="@+id/recent_evaluated_posts" android:icon="@android:drawable/ic_input_get"
+            android:title="Recent evaluated posts" />
+    </group>
+
+    <group android:checkableBehavior="single" android:id="@+id/post_type">
+        <item android:id="@+id/writing_posts" android:icon="@android:drawable/ic_input_get"
+            android:title="Writing" />
+        <item android:id="@+id/speaking_posts" android:icon="@android:drawable/ic_input_get"
+            android:title="Speaking" />
+    </group>
+
+    <item android:title="Account">
+        <menu>
+            <item android:id="@+id/nav_change_password" android:icon="@android:drawable/ic_secure"
+                android:title="Change password" />
+            <item android:id="@+id/nav_logout" android:icon="@android:drawable/ic_lock_power_off"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>

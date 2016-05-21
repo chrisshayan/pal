@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_dark"
+    android:elevation="3dp"
+    android:gravity="center_vertical">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/imageButton"
+        android:src="@drawable/ic_menu_borderless_white"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:onClick="onOpenDrawer"
+        android:layout_marginLeft="@dimen/base_padding_half"
+        android:layout_marginRight="@dimen/base_padding_half" />
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="fill_parent"
+        android:background="@color/primary_light"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:alpha="0.5" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/btn_audio_mode"
+            android:background="@drawable/shape_circle_line_button"
+            android:src="@drawable/ic_microphone_borderless_lightblue"
+            android:onClick="onToggleAudioMode"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/base_padding_half"
+            android:layout_marginLeft="@dimen/base_padding_half"
+            android:scaleType="fitCenter"
+            android:padding="@dimen/base_padding_quarter" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView"
+            android:src="@drawable/ic_header_logo"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/base_padding_half"
+            android:layout_marginRight="@dimen/base_padding_half" />
+    </RelativeLayout>
+</LinearLayout>

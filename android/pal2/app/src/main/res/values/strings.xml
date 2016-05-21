@@ -1,0 +1,234 @@
+<resources>
+    <string name="app_name">Pal</string>
+    <string name="title_timeline">Your activities</string>
+    <string name="title_evaluated_posts">Evaluated posted</string>
+    <string name="title_composer">Compose</string>
+    <string name="title_challenge">Challenges</string>
+    <string name="title_advisor_rating">Advisor</string>
+    <string name="title_welcome">Welcome</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_update_profile">Edit profile</string>
+
+    <string name="time_1_min_ago">%1$s min ago</string>
+    <string name="time_n_min_ago">%1$s mins ago</string>
+    <string name="time_1_h_1_min_ago">1 hr  %1$s min ago</string>
+    <string name="time_1_h_n_min_ago">1 hr  %1$s mins ago</string>
+    <string name="time_n_h_ago">%1$s hrs ago</string>
+    <string name="time_n_d_ago">%1$s days ago</string>
+
+    <string name="you_are_offline">You are offline</string>
+
+    <string name="tutor_header_1">Learn English for Free</string>
+    <string name="tutor_header_2">Challenge Yourself</string>
+    <string name="tutor_header_3">Improve Your Pronunciation</string>
+    <string-array name="tutor_header">
+        <item>@string/tutor_header_1</item>
+        <item>@string/tutor_header_2</item>
+        <item>@string/tutor_header_3</item>
+    </string-array>
+
+    <string name="tutor_body_1">English is the most commonly used language among foreign language speakers. English is important to advance in your career and we believe it should be FREE.</string>
+    <string name="tutor_body_2">Practice and improve your English daily through challenges. The more you practice the more you will get better at. Keep challenging yourself!</string>
+    <string name="tutor_body_3">Say it and get specific guidance on how it should be pronounced, our teachers will feedback to you how to improve your pronunciation.</string>
+    <string-array name="tutor_body">
+        <item>@string/tutor_body_1</item>
+        <item>@string/tutor_body_2</item>
+        <item>@string/tutor_body_3</item>
+    </string-array>
+
+    <string name="skip">Skip</string>
+    <string name="start">Start</string>
+    <string name="done">Done</string>
+    <string name="next">Next</string>
+    <string name="go">Go</string>
+    <string name="ok">OK</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="you">You</string>
+    <string name="edit">Edit</string>
+    <string name="change">Change</string>
+    <string name="uploading">Uploading</string>
+    <string name="oops">Oops. Something went wrong. Please try again later</string>
+
+    <!-- post rate -->
+    <string name="post_rate_1">Bad</string>
+    <string name="post_rate_2">Limited</string>
+    <string name="post_rate_3">OK</string>
+    <string name="post_rate_4">Good</string>
+    <string name="post_rate_5">Perfect</string>
+    <string-array name="post_rate">
+        <item>@string/post_rate_1</item>
+        <item>@string/post_rate_2</item>
+        <item>@string/post_rate_3</item>
+        <item>@string/post_rate_4</item>
+        <item>@string/post_rate_5</item>
+    </string-array>
+
+
+    <!-- authentication screen!-->
+    <string name="email_address">Email</string>
+    <string name="your_email_adress" translatable="false">your@email.com</string>
+    <string name="password">Password</string>
+    <string name="password_placeholder" translatable="false">********</string>
+    <string name="your_full_name">Your full name</string>
+    <string name="login">Sign in</string>
+    <string name="register">Register</string>
+    <string name="close">Back</string>
+    <string name="share">Share</string>
+    <string name="register_success">Thank for your interest.\nConfirmation email is sent to you arleady. Please check your mail box.</string>
+    <string name="register_thank">Thank for your interest.\nYour request has been queued.</string>
+    <string name="send_to">Send to</string>
+    <string name="share_text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</string>
+    <string name="register_fail">Fail to connect server. Please try again later!</string>
+    <string name="register_dup_email">Email is already existed</string>
+    <string name="require_email">Please enter your email.</string>
+    <string name="require_password">Please enter your password.</string>
+    <string name="invalid_email">The email is invalid.</string>
+    <string name="require_full_name">Please enter your full name.</string>
+    <string name="processing">Processing</string>
+    <string name="title_activity_timeline" translatable="false">TimelineActivity</string>
+    <string name="login_fail">Incorrect login credentials</string>
+    <string name="reset_password_success">Your password has been reset. Please check your email to get new password.</string>
+    <string name="reset_password_error">Account is not valid.</string>
+    <string name="forget_password">Forgot your password</string>
+    <string name="reset_password">Reset password</string>
+    <string name="reset_password_confirm">Do you really want to reset password of account %1$s</string>
+    <string name="no_internet">Fail to connect server. Please try again later!</string>
+
+    <string name="current_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_password">Confirm new password</string>
+    <string name="require_new_password">Please enter your new password.</string>
+    <string name="require_confirm_password">Please enter your confirm password.</string>
+    <string name="password_not_matched">New password does not match the confirm password</string>
+    <string name="password_has_changed">Your password has been updated</string>
+
+    <!--drawer-->
+    <string name="posted">Posted</string>
+    <string name="avg_point">Avg. points</string>
+
+    <string name="all_posts">All posts</string>
+    <string name="recent_evaluated_post">Recent evaluated posts</string>
+    <string name="logout">Logout</string>
+    <string name="change_password">Change password</string>
+    <string name="update_profile">Update profile</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!--fab-->
+    <string name="say_something">SAY SOMETHING</string>
+    <string name="pick_up_challenge">PICK UP A CHALLENGE</string>
+
+    <!--action bar-->
+    <string name="send">Send</string>
+
+    <!--composer-->
+    <string name="composer_hint_1st_say_something">Enter your idea, question, paragraph&#8230; here. Advisers will evaluate, correct and give you some tips to improve your English skill.</string>
+    <string name="composer_hint_1st_topic">Enter your point about this topic here. Advisers will evaluate, correct and give you some tips to improve your English skill.</string>
+    <string name="create_post_successful">Your post has been saved</string>
+    <string name="create_post_fail_audio">Fail to upload the audio recording</string>
+    <string name="empty_message">Write or say to complete your challenge</string>
+    <string name="guide_user_recorder_1">You can also record your voice and send to us</string>
+    <string name="guide_user_recorder_2">Touch Microphone icon to finish recording</string>
+    <string name="tips">Tips</string>
+    <string name="fail_to_record">Fail to access the microphone</string>
+    <string name="introduce_yourself">Introduce yourself</string>
+    <string name="hint_send">Touch here to submit your post</string>
+    <string name="post_audio_no_internet">Fail to connect server. Please try again later!</string>
+    <string name="recorder_speak_now">Speak now</string>
+    <string name="recorder_timer">Timeleft: %1$s sec</string>
+    <string name="send_upper">SEND</string>
+
+    <!--post list-->
+    <string name="you_wrote">You wrote</string>
+    <string name="you_said">You said</string>
+    <string name="joined_at">Joined since %1$s</string>
+    <string name="challenge_title">Quest</string>
+
+    <!--post detail-->
+    <string name="said">said</string>
+    <string name="answer">answered</string>
+    <string name="advisor_said">Advisor said</string>
+
+    <!-- topics view-->
+    <string name="topic_level_beginning">Beginning</string>
+    <string name="topic_level_pre">Pre-intermediate</string>
+    <string name="topic_level_intermediate">Intermediate</string>
+    <string name="topic_level_advanced">Advanced</string>
+
+    <string-array name="topics_level">
+        <item>@string/topic_level_beginning</item>
+        <item>@string/topic_level_pre</item>
+        <item>@string/topic_level_intermediate</item>
+        <item>@string/topic_level_advanced</item>
+    </string-array>
+    <string name="single_view">%1$s view</string>
+    <string name="n_view">%1$s views</string>
+    <string name="single_submit">%1$s submit</string>
+    <string name="n_submit">%1$s submits</string>
+    <string name="accept_challenge">Accept</string>
+
+    <!-- place holder text-->
+    <string name="placeholder_text_extra_short" translatable="false">Lorem ipsum</string>
+    <string name="placeholder_text_short" translatable="false">Lorem ipsum dolor sit amet</string>
+    <string name="placeholder_text_medium" translatable="false">Ei errem zril intellegat vis, vix wisi tempor no, sit munere ocurreret ad. His debet nominati no, ius volutpat scripserit liberavisse at</string>
+    <string name="placeholder_text_long" translatable="false">Mazim viris facilis cu sed, eos vidisse adolescens an. Eum iudico omnium instructior ne. Ut est integre ancillae erroribus. Te mei causae percipitur. Vis ei suavitate dignissim euripidis. Ea omnis soleat sit, ea libris integre cum.</string>
+
+    <!-- advisor profile -->
+    <string name="vote_for_advisor">Rate for advisor</string>
+    <string name="vote_for_advisor_comment">Enter your comment here</string>
+    <string name="advisor_total_vote_single">%1$s user</string>
+    <string name="advisor_total_vote">%1$s users</string>
+    <string name="thank_for_voting">Thanks for your vote</string>
+    <string name="no_vote">No data found</string>
+
+    <!-- welcome -->
+    <string name="get_started">Get started</string>
+    <string name="get_started_header">Practise English with PAL</string>
+    <string name="get_started_desc">Let\'s improve your English skills by daily challenges. Receive feedback from experienced English teachers to obtain higher levels. Are you ready to go?</string>
+    <string name="get_started_touch_fab">Take a challenge</string>
+    <string name="get_started_pick_option">Pick an option</string>
+    <string name="get_started_drawer_button_guide">Touch this icon to open Menu</string>
+    <string name="get_started_drawer_swipe_guide">Or swipe to the right to open Menu</string>
+
+    <!-- post status-->
+    <string name="post_status_none">Unknown</string>
+    <string name="post_status_pending">Sync</string>
+    <string name="post_status_error">Error</string>
+    <string name="post_status_sync">Sync</string>
+    <string name="post_status_ready">Wait for advisor</string>
+    <string name="post_status_processing">Processing</string>
+    <string name="post_status_evaluated">Evaluated</string>
+    <string name="post_status_user_conversation">Conversation</string>
+    <string name="post_status_advisor_conversation">Waiting</string>
+    <string name="post_status_user_closed">Closed</string>
+    <string name="post_status_user_closed_and_redo">Closed</string>
+
+
+    <!-- profile -->
+    <string name="profile_basic_info">Basic</string>
+    <string name="profile_first_name">First name</string>
+    <string name="profile_last_name">Last name</string>
+    <string name="profile_display_name">Display name</string>
+    <string name="profile_job_title">Job title</string>
+
+    <string name="profile_progress_info">Progress</string>
+    <string name="profile_exp_point">Exp. point</string>
+    <string name="profile_level">Level</string>
+    <string name="profile_level_percent">Level progress</string>
+    <string name="profile_update_encourage_title">Thank you</string>
+    <string name="profile_update_encourage_message">Thank for your interest in our product. Please fulfill your profile that helps you have a better opportunity of learning English.</string>
+
+    <!-- avatar picker -->
+    <string name="avatar_picker_title">Add avatar</string>
+    <string name="avatar_picker_take_photo">Take photo</string>
+    <string name="avatar_picker_take_photo_temp_file" translatable="false">pal_avatar_temp.jpg</string>
+    <string name="avatar_picker_library">Choose from Library</string>
+    <string name="avatar_picker_select_file">Select photo</string>
+    <string name="avatar_picker_upload_fail">Fail to upload your avatar</string>
+    <string name="avatar_picker_decode_fail">Fail to load your image</string>
+
+    <string name="avatar_picker_fail_to_access_camera">Fail to access your camera</string>
+    <string name="avatar_picker_fail_to_access_photo">Fail to access your photo galary</string>
+</resources>

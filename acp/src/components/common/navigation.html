@@ -1,0 +1,52 @@
+<nav class="navbar-default navbar-static-side" role="navigation" ng-controller="NavCtrl">
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+
+                <div class="dropdown profile-element" uib-dropdown>
+                    <a class="dropdown-toggle" uib-dropdown-toggle href>
+                            <span class="clear">
+                                <span class="block m-t-xs">
+                                    <strong class="font-bold">{{info.email}}</strong>
+                                </span>
+                                <span class="text-muted text-xs block">Menu<b class="fa fa-caret-down fa-fw"></b></span>
+                            </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeIn m-t-xs">
+                        <li><a ui-sref="index.profiles">Update profiles</a></li>
+                        <li><a href="" ng-click="onChangePassword()">Change password</a></li>
+                        <li class="divider"></li>
+                        <li><a href="" ng-click="onLogout()">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    PAL
+                </div>
+
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="index.tasks"><i class="fa fa-laptop"></i> <span class="nav-label">Tasks</span> </a>
+            </li>
+            <li ui-sref-active="active" ng-show="info.role=='admin'">
+                <a ui-sref="index.topics"><i class="fa fa-desktop"></i> <span class="nav-label">Manage Topic</span></a>
+            </li>
+            <li ui-sref-active="active" ng-show="info.role=='admin'">
+                <a ui-sref="index.advisors"><i class="fa fa-desktop"></i> <span class="nav-label">Manage Advisor</span></a>
+            </li>
+            <li ui-sref-active="active" ng-show="info.role=='admin'">
+                <a ui-sref="index.settings"><i class="fa fa-desktop"></i> <span class="nav-label">Settings</span></a>
+            </li>
+
+            <li ng-class="{active: state.includes('database')}" ng-show="info.role=='admin'">
+                <a href=""><i class="fa fa-desktop"></i> <span class="nav-label">Database</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" ng-class="{in: state.includes('database')}">
+                    <li ui-sref-active="active"><a ui-sref="database.nations">Nation</a></li>
+                    <li ui-sref-active="active"><a ui-sref="database.cities">City</a></li>
+                    <li ui-sref-active="active"><a ui-sref="database.schools">School</a></li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+</nav>

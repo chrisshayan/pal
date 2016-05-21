@@ -1,0 +1,25 @@
+<div class="middle-box text-center loginscreen  animated fadeInDown" ng-controller="ChangePassCtrl">
+    <div>
+        <div>
+            <h1 class="logo-name">PAL</h1>
+        </div>
+        <h3>Welcome to PAL</h3>
+        <form class="m-t" role="form" ng-submit="onChangePassword()">
+            <div class="form-group">
+                <input ng-readonly="true" name="email" type="email" class="form-control" placeholder="Email" required="" ng-model="email">
+            </div>
+            <div class="form-group">
+                <input name="" type="password" class="form-control" placeholder="Password" required="" ng-model="password">
+            </div>
+            <div class="form-group">
+                <input name="" type="password" class="form-control" placeholder="New password" required="" ng-model="new_password">
+            </div>
+            <div class="form-group">
+                <input name="" type="password" class="form-control" placeholder="New password confirm" required="" ng-model="new_password_confirm">
+            </div>
+            <button type="submit" class="btn btn-primary block full-width m-b" ng-disabled="!ready || !new_password || new_password != new_password_confirm">Change Password</button>
+            <button ng-click="goBack()" class="btn block full-width m-b">Go back</button>
+        </form>
+        <p class="m-t"> <small>PAL &copy; 2015</small> </p>
+    </div>
+</div>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
+    android:onClick="doNothing">
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="2dp"
+        card_view:cardBackgroundColor="#ffffff"
+        android:layout_marginLeft="@dimen/base_padding_2x"
+        android:layout_marginRight="@dimen/base_padding_2x"
+        android:layout_marginTop="@dimen/base_padding_2x"
+        android:baselineAligned="false"
+        android:id="@+id/view2">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/base_padding"
+                android:id="@+id/profile_basic">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/base_padding_2x">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profile_basic_info"
+                        style="@style/Text.Small"
+                        android:layout_weight="1"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/colorDividerDarkAlpha" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/base_padding_2x">
+
+                    <TextView
+                        style="@style/Text.Small.Muted"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/profile_first_name" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/edit_firstname"
+                        style="@style/Text.Small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/base_padding_2x">
+
+                    <TextView
+                        style="@style/Text.Small.Muted"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/profile_last_name" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/edit_lastname"
+                        style="@style/Text.Small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/base_padding_2x" >
+
+                    <TextView
+                        style="@style/Text.Small.Muted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profile_display_name" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/edit_displayname"
+                        style="@style/Text.Small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/base_padding_2x" >
+
+                    <TextView
+                        style="@style/Text.Small.Muted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/profile_job_title" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:ems="10"
+                        android:id="@+id/edit_job_title"
+                        android:lines="2"
+                        style="@style/Text.Small" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v7.widget.CardView>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        fab:fab_colorNormal="@color/colorFabPrimary"
+        fab:fab_icon="@drawable/ic_content_save"
+        android:layout_marginRight="@dimen/base_padding_2x"
+        android:layout_marginBottom="@dimen/base_padding_2x" />
+</RelativeLayout>

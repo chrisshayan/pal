@@ -1,0 +1,285 @@
+path / {
+    read() = true;
+    write() = isSignedIn();
+}
+
+path /config {
+    write() = isAdmin();
+    read() = true;
+}
+
+path /confirm_token {
+    read() = true;
+    write() = true;
+}
+
+path /schools is School;
+path /cities is City;
+path /nations is Nation;
+
+type School {
+    created_by: String,
+    created_date: Number,
+    last_modified_by: String,
+    last_modified_date: Number,
+
+    address: String,
+    city: String,
+    name: String
+}
+
+type City {
+    created_by: String,
+    created_date: Number,
+    last_modified_by: String,
+    last_modified_date: Number,
+
+    en: String,
+    nation: String,
+    vi: String
+}
+
+type Nation {
+    en: String,
+    vi: String
+}
+
+//=======================================================
+//user profile
+//=======================================================
+path /profiles/$userid is PrivateProfle {
+    write() = isAdmin();
+    read() = isAdmin();
+    index() = ["role"];
+}
+
+type PrivateProfle {
+    first_password: String | Null,
+    role: String,
+    confirmed: Boolean | Null, //advisor confirm account
+    pub_profile_last_update: Number | Null //keep track when public profile is updated
+}
+
+path /profiles_pub/$userid is PublicProfile {
+    write() = isSignedIn();
+    read() = isSignedIn();
+}
+
+path /profiles_pub/$userid/rate1 {write() = isSignedIn();}
+path /profiles_pub/$userid/rate2 {write() = isSignedIn();}
+path /profiles_pub/$userid/rate3 {write() = isSignedIn();}
+path /profiles_pub/$userid/rate4 {write() = isSignedIn();}
+path /profiles_pub/$userid/rate5 {write() = isSignedIn();}
+
+type PublicProfile {
+    created_by: String | Null,
+    created_date: Number | Null,
+    last_modified_by: String | Null,
+    last_modified_date: Number | Null,
+
+    avatar: String | Null,
+    display_name: String | Null,
+    email: String | Null,
+
+    first_name: String | Null,
+    last_name: String | Null,
+    city: String | Null,
+    address: String | Null,
+    school: String | Null,
+
+    job_title: String | Null,
+
+    //for student
+    exp: Number | Null,
+    level: String | Null,
+    level_completion: Number | Null,
+    level_name: String | Null,
+    score_1: Number | Null,
+    score_2: Number | Null,
+    score_3: Number | Null,
+    score_4: Number | Null,
+    score_5: Number | Null,
+    total_posts: Number | Null,
+    total_sessions: Number | Null,
+
+    //for advisor
+    teaching_exp: Number | Null,
+    points: Number | Null,
+    rate1: Number | Null,
+    rate2: Number | Null,
+    rate3: Number | Null,
+    rate4: Number | Null,
+    rate5: Number | Null
+}
+
+//=======================================================
+//user vote for advisor
+//=======================================================
+
+path /advisor_votes/$advisor_id/$user_id is Rating {
+    write() = isSignedIn();
+    read() = isSignedIn();
+}
+
+path /advisor_votes_log/$advisor_id/$user_id is Rating[] {
+    write() = isSignedIn();
+    read() = isSignedIn();
+}
+
+type Rating {
+    avatar: String | Null,
+    created_date: Number | Null,
+    display_name: String | Null,
+    message: String | Null,
+    rate: Number | Null
+}
+
+//=======================================================
+//advisor vote for user post
+//=======================================================
+path /log_advisor_points/$advisor_id/$post_id is AdminPointEarnedLog {
+    write() = isCurrentUser($advisor_id);
+    read() = isSignedIn();
+}
+
+type AdminPointEarnedLog {
+    action: String,
+    created_date: Number,
+    meta: Object | Null,
+    points: Number
+}
+
+//=======================================================
+//user posts
+//=======================================================
+path /posts is Post[] {
+    read() = isSignedIn();
+    index() = ["status", "created_by", "index_advisior_status"];
+}
+path /users_posts/$userid/all is Post[] {
+    read() = isSignedIn();
+}
+path /users_posts/$userid/evaluated is Post[] {
+    read() = isSignedIn();
+}
+path /users_posts/$userid/evaluated_unread/$post_id is Boolean {
+    read() = isSignedIn();
+}
+path /users_posts/$userid/unread is Boolean {
+    read() = isSignedIn();
+}
+
+type Post {
+    created_by: String,
+    created_date: Number,
+    last_modified_by: String | Null,
+    last_modified_date: Number | Null,
+
+    advisor_id: String | Null, //advisor id who pick this task
+    index_advisior_status: String | Null, //index for quick filter advisor & task status
+
+    //post detail
+    audio: String | Null,
+    text: String | Null,
+    title: String | Null,
+    ref_topic: String | Null,
+    status: Number | Null,
+    score: Number | Null, //score that user evalute this post
+    conversation: Conversation[],
+
+    //post trail
+    next: String | Null,
+    prev: String | Null,
+
+    //for user
+    has_read: Boolean | Null,
+    user_last_request: Number | Null
+}
+
+type Conversation {
+    audio: String | Null,
+    created_date: Number | Null,
+    text: String | Null,
+    uid: String
+}
+
+
+//=======================================================
+//topics
+//=======================================================
+path /topics is Topic[] {
+    write() = isAdmin();
+    read() = isSignedIn();
+}
+
+type Topic {
+    created_by: String | Null,
+    created_date: Number | Null,
+    last_modified_by: String | Null,
+    last_modified_date: Number | Null,
+
+    hint: String | Null,
+    level: Number,
+    status: Number,
+    submits: Number | Null,
+    title: String,
+    type: Number | Null, //not use anymore
+    views: Number | Null
+}
+
+//=======================================================
+//register
+//=======================================================
+path /register is RegisterData[] {
+    write() = true;
+    read() = isAdmin();
+}
+
+type RegisterData {
+    created_date: String,
+    email: String,
+    hit: Number | Null,
+    last_modified_date: Number | Null,
+    name: String
+}
+
+//=======================================================
+//user quest
+//=======================================================
+path /user_quests/$userid is Topic[] {
+    read() = isSignedIn();
+}
+
+//=======================================================
+//queue
+//=======================================================
+path /post_queue is Object {
+    read() = isSignedIn();
+}
+path /post_queue/tasks is Object {
+    index() = ["_state"];
+}
+
+path /quest_queue is Object {
+    read() = isSignedIn();
+}
+path /quest_queue/tasks is Object {
+    index() = ["_state"];
+}
+
+path /mail_queue is Object {
+    read() = isSignedIn();
+}
+path /mail_queue/tasks is Object {
+    index() = ["_state"];
+}
+
+//=======================================================
+//utils
+//=======================================================
+isNew(ref) = prior(ref) == null;
+isCurrentUser(userid) = auth != null && auth.uid == userid;
+isSignedIn() = auth != null;
+isAdmin() = auth != null && (root.child('profiles').child(auth.uid).child('role').val() == 'admin');
+isAdminOrOwner(userid) = auth != null && (auth.uid == userid || root.child('profiles').child(auth.uid).child('role').val() == 'admin');
+isAdvisorOrOwner(userid) = auth != null && (auth.uid == userid || root.child('profiles').child(auth.uid).child('role').val() == 'admin' || root.child('profiles').child(auth.uid).child('role').val() == 'advisor');

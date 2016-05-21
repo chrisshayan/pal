@@ -1,0 +1,134 @@
+<div ng-controller="TasksCtrl">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-6 col-md-6 col-xs-6">
+            <h2>My Tasks</h2>
+        </div>
+        <div class="col-lg-6 col-md-6 col-xs-6">
+            <h2 ng-show="!loading &&!hasFullfillProfile"><a class="btn btn-primary pull-right" ui-sref="index.profiles">Complete your profiles</a></h2>
+        </div>
+    </div>
+
+    <div ng-if="loading" style="margin-top:25%;">
+        <div class="sk-spinner sk-spinner-rotating-plane"></div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeIn" ng-show="!loading && hasFullfillProfile">
+        <div class="row animated fadeIn">
+            <div class="col-lg-6">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h3>To do</h3>
+                    </div>
+                    <div class="ibox-content">
+                        <div style="min-height:60px">
+                            <p ng-if="newPosts && (newPosts.length + pendingPosts.length) == 0">There is no task</p>
+                            <p ng-if="newPosts && (newPosts.length + pendingPosts.length) == 1">There is 1 task</p>
+                            <p ng-if="newPosts && (newPosts.length + pendingPosts.length) > 1">There are {{newPosts.length >= 20?"20+":newPosts.length}} tasks</p>
+                            <div style="text-align:center">
+                                <a ng-disabled="isPickingTask || (!(newPosts.length + pendingPosts.length > 0))" class="btn btn-primary btn-block noselect" href="" ng-click="onPickTask()">
+                                    <span ng-if="!isPickingTask">Take a task</span>
+                                    <span ng-if="isPickingTask">Loading ...</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <ul class="connectList agile-list" style="padding:0">
+                            <div class="sk-spinner sk-spinner-double-bounce" ng-if="!newPosts">
+                                <div class="sk-double-bounce1"></div>
+                                <div class="sk-double-bounce2"></div>
+                            </div>
+                            <custom-post ng-show="!isPickingTask" ng-repeat = "p in pendingPosts | limitTo:1" ref="p"></custom-post>
+                            <custom-post ng-repeat = "p in newPosts | limitTo:5 - pendingPosts.length" ref="p"></custom-post>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h3>Done</h3>
+                    </div>
+                    <div class="ibox-content">
+                        <div style="min-height:60px">
+                            <div class="row" >
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <p ng-if="completedPosts && completedPosts.length == 0">You have completed no task</p>
+                                    <p ng-if="completedPosts && completedPosts.length == 1">You have completed 1 task</p>
+                                    <p ng-if="completedPosts && completedPosts.length > 1">You have completed {{completedPosts.length >= 20?"20+":completedPosts.length}} tasks</p>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:10px">
+                                <div class="col-lg-2 col-md-2 col-xs-2">
+                                    <span>{{userLevel}}:</span>
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-xs-7">
+                                    <progressbar style="margin-bottom:0" value="userLevelPercent" type="info" class="progress-striped"></progressbar>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-3">
+                                    <span>{{userPoints}}/{{userNextLevelPoints}} pts</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <ul class="connectList agile-list" style="padding:0">
+                            <div class="sk-spinner sk-spinner-double-bounce" ng-if="!completedPosts">
+                                <div class="sk-double-bounce1"></div>
+                                <div class="sk-double-bounce2"></div>
+                            </div>
+                            <custom-finished-post ng-repeat = "p in completedPosts.slice().reverse()" ref="p"></custom-finished-post>
+                        </ul>
+                        <a ng-show="hasMoreDoneTask" class="btn btn-block btn-outline noselect" href="" ng-click="onLoadMoreDoneTask()">
+                            See more items
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="task_modal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">{{data.title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12 col-xs-12 form-group">
+                    <h4>{{user_display_name}} says:</h4>
+                    <p style="font-size:10pt">{{data.text}}</p>
+                    <div style="text-align:center" ng-show="data.audio">
+                        <audio-player audio="{{data.audio}}"></audio-player>
+                    </div>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <h4>Your comment:</h4>
+                </div>
+                <div class="col-md-10 col-xs-10 form-group" style="text-align:center">
+                    <textarea maxlength="{{config.max_advisor_comment_length}}" ng-readonly="isSubmitting" ng-model="comment" rows="10" class="form-control" style="resize:vertical" placeholder="Your comment"></textarea>
+                    <span class="pull-right">{{config.max_advisor_comment_length - comment.length}} letters left</span>
+                </div>
+                <div class="col-md-2 col-xs-2" style="text-align:center">
+                    <button ng-show="isRecording" class="btn btn-warning dim" type="button" ng-click="stopRecord()"><i class="fa fa-stop"></i></button>
+                    <button ng-hide="isRecording" class="btn btn-success dim" type="button" ng-click="startRecord()"><i class="fa fa-microphone"></i></button>
+                    <button ng-disabled="isSubmitting" ng-show="teacher_audio && !teacher_audio.playing && !isRecording" class="btn btn-success dim" type="button" ng-click="playStopRecord()"><i class="fa fa-play"></i></button>
+                    <button ng-disabled="isSubmitting" ng-show="teacher_audio && teacher_audio.playing && !isRecording" class="btn btn-warning dim" type="button" ng-click="playStopRecord()"><i class="fa fa-pause"></i></button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="text-align:center; margin: 10px 0 10px 0" ng-mouseleave="pre_vote=vote">
+                    <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote == 0 || pre_vote == 0, 'fa-star': vote >= 1 && pre_vote >= 1, 'text-warning': vote >= 1 || pre_vote >= 1}" ng-mouseover="pre_vote=1" ng-click="vote=1"></span>
+                    <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 2  || pre_vote < 2 , 'fa-star': vote >= 2 && pre_vote >= 2, 'text-warning': vote >= 2 || pre_vote >= 2}" ng-mouseover="pre_vote=2" ng-click="vote=2"></span>
+                    <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 3  || pre_vote < 3 , 'fa-star': vote >= 3 && pre_vote >= 3, 'text-warning': vote >= 3 || pre_vote >= 3}" ng-mouseover="pre_vote=3" ng-click="vote=3"></span>
+                    <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 4  || pre_vote < 4 , 'fa-star': vote >= 4 && pre_vote >= 4, 'text-warning': vote >= 4 || pre_vote >= 4}" ng-mouseover="pre_vote=4" ng-click="vote=4"></span>
+                    <span style="padding:0 5px 0 5px" class="fa fa-2x" ng-class="{'fa-star-o': !vote || vote < 5  || pre_vote < 5 , 'fa-star': vote >= 5 && pre_vote >= 5, 'text-warning': vote >= 5 || pre_vote >= 5}" ng-mouseover="pre_vote=5" ng-click="vote=5"></span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-disabled="isSubmitting || (!comment && !audioRecorder) || !vote" ng-click="onDone()">OK</button>
+            <button class="btn btn-warning" type="button" ng-disabled="isSubmitting" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+</div>

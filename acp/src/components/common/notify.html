@@ -1,0 +1,29 @@
+<div class="gmail-template cg-notify-message" ng-click="$close()" ng-class="[$classes,
+    $position === 'center' ? 'cg-notify-message-center' : '',
+    $position === 'left' ? 'cg-notify-message-left' : '',
+    $position === 'right' ? 'cg-notify-message-right' : '']"
+    ng-style="{'margin-left': $centerMargin}">
+
+
+    <style>
+        .gmail-template {
+            text-align: center;
+            border:1px solid rgb(240, 195, 109);
+            background-color: rgb(249, 237, 190);
+            font-size: 13px;
+            font-weight: bold;
+            padding:2px 8px 2px 8px;
+            border-radius: 0;
+            color:#333;
+        }
+    </style>
+
+    <div ng-show="!$messageTemplate">
+        {{$message}}
+    </div>
+
+    <div ng-show="$messageTemplate" class="cg-notify-message-template">
+
+    </div>
+
+</div>

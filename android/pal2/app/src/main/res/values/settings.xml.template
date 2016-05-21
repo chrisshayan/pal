@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+
+    <item name="crittercism_key" type="string" translatable="false"></item>
+    <item name="parse_app_id" type="string" translatable="false"></item>
+    <item name="parse_app_key" type="string" translatable="false"></item>
+
+    <item name="firebase_app_url" type="string" translatable="false"></item>
+
+    <item name="cloudinary_cloud_name" type="string" translatable="false"></item>
+    <string name="cloudinary_api_key" translatable="false"></string>
+    <item name="cloudinary_api_secret" type="string" translatable="false"></item>
+
+    <item name="api_url" type="string" translatable="false"></item>
+
+    -->
+</resources>
+

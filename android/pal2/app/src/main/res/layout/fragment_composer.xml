@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/app_bar_timeline"
+    tools:context="vietnamworks.com.pal.activities.TimelineActivity"
+    android:background="@color/colorPrimaryLight"
+    android:onClick="doNothing">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/base_padding_4x"
+            android:paddingRight="@dimen/base_padding_4x">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/say_something"
+                android:id="@+id/subject"
+                style="@style/Text.Medium.Muted"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/base_padding_2x"
+                android:layout_marginBottom="@dimen/base_padding_2x"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/btnHint"
+                    android:src="@drawable/ic_action_info_outline"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@null"
+                    android:padding="5dp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/message"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
+            android:background="#00000000"
+            android:hint="@string/composer_hint_1st_say_something"
+            android:gravity="top"
+            android:textColorHint="@color/colorTextInputHint"
+            android:layout_marginRight="@dimen/base_padding_4x"
+            android:layout_marginLeft="@dimen/base_padding_4x"
+            style="@style/Text.Small" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:src="@drawable/dashed"
+            android:contentDescription="@null"
+            android:layerType="software"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/recorder"
+                android:src="@drawable/ic_av_mic"
+                android:background="?attr/selectableItemBackground"
+                android:scaleType="centerInside"
+                android:contentDescription="@null"
+                android:paddingLeft="@dimen/base_padding_2x"
+                android:paddingRight="@dimen/base_padding_2x"
+                android:layout_marginRight="@dimen/base_padding_2x"
+                android:layout_marginLeft="@dimen/base_padding" />
+
+            <FrameLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="@dimen/base_padding_4x">
+
+                <vietnamworks.com.pal.custom_views.AudioPlayer android:id="@+id/player" android:layout_height="match_parent" android:layout_width="fill_parent"
+                    android:gravity="center_vertical">
+                </vietnamworks.com.pal.custom_views.AudioPlayer>
+
+            </FrameLayout>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/send_upper"
+                android:background="?attr/selectableItemBackground"
+                android:id="@+id/btn_done"
+                android:layout_marginRight="@dimen/base_padding_2x"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/overlay"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/guide_user_recorder_1"
+                android:id="@+id/textView16"
+                style="@style/Text.Small.Muted"
+                android:paddingLeft="@dimen/base_padding"
+                android:layout_marginLeft="@dimen/base_padding_2x"
+                android:layout_marginRight="@dimen/base_padding_2x" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/tutor_fab_arrow_width"
+                android:id="@+id/imageView12"
+                android:src="@drawable/ic_tutor_arrow_5"
+                android:contentDescription="@null"
+                android:layout_marginLeft="10dp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryLightAlpha"
+        android:onClick="doNothing"
+        android:id="@+id/recorder_layout"
+        android:visibility="gone">
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            card_view:cardElevation="2dp"
+            card_view:cardBackgroundColor="#ffffff"
+            android:baselineAligned="false"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/base_padding_2x">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/recorder_speak_now"
+                    android:id="@+id/recorder_screen_guide"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/base_padding_4x"
+                    style="@style/Text.Medium.Muted" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/recorder_timer"
+                    android:id="@+id/recorder_timeleft"
+                    style="@style/Text.Small.Muted"
+                    android:layout_below="@+id/recorder_screen_guide"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/base_padding" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:text="@string/done"
+                    android:id="@+id/btn_stop_recorder"
+                    android:background="@drawable/btn_login_bg"
+                    android:textColor="@color/colorTextLight"
+                    android:layout_height="@dimen/login_button_height"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/base_padding_2x" />
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/imageView14"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_recorder_on"
+                    android:contentDescription="@null" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+    </RelativeLayout>
+
+</FrameLayout>

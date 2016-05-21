@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryLight"
+    android:onClick="doNothing">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/profile_top_panel_height"
+            android:src="@drawable/ic_low_poly_bg"
+            android:scaleType="centerCrop"
+            android:contentDescription="@null" />
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="@dimen/profile_top_panel_height"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_gravity="right|center_vertical"
+            android:elevation="5dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="center_vertical">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_profile_back"
+                    android:src="@drawable/ic_navigation_arrow_back"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/title_profile"
+                    android:id="@+id/textView20"
+                    style="@style/Text.Medium.Light"
+                    android:paddingLeft="@dimen/base_padding_2x" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView android:layout_width="@dimen/profile_avatar_size" android:layout_height="@dimen/profile_avatar_size"
+                    android:id="@+id/avatar"
+                    android:src="@drawable/ic_action_account_box"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@null" />
+
+                <Button
+                    style="@style/Text.Small.Light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/login_button_height"
+                    android:text="@string/change"
+                    android:background="@drawable/btn_semi_grey"
+                    android:drawableLeft="@drawable/ic_image_photo_camera"
+                    android:id="@+id/btn_upload_avatar"
+                    android:layout_marginTop="@dimen/base_padding_4x"
+                    android:paddingRight="@dimen/base_padding_2x"
+                    android:layout_marginBottom="@dimen/base_padding_4x" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardElevation="2dp"
+                card_view:cardBackgroundColor="#ffffff"
+                android:layout_marginLeft="@dimen/base_padding_2x"
+                android:layout_marginRight="@dimen/base_padding_2x"
+                android:layout_marginTop="@dimen/base_padding_2x"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/base_padding"
+                    android:id="@+id/profile_basic">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/base_padding_2x">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_basic_info"
+                            style="@style/Text.Small"
+                            android:layout_weight="1"
+                            android:textStyle="bold" />
+
+                        <Button
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/login_button_height"
+                            android:text="@string/edit"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:drawableLeft="@drawable/ic_content_create"
+                            android:id="@+id/btn_edit_basic_profile"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:background="@color/colorDividerDarkAlpha" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/base_padding_2x">
+
+                        <TextView
+                            style="@style/Text.Small.Muted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_first_name"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/Text.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/firstname" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/base_padding_2x">
+
+                        <TextView
+                            style="@style/Text.Small.Muted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_last_name"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/Text.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/lastname" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/base_padding_2x" >
+
+                        <TextView
+                            style="@style/Text.Small.Muted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_display_name"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/Text.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/display_name" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/base_padding_2x" >
+
+                        <TextView
+                            style="@style/Text.Small.Muted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_job_title"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/Text.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/job_title" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/base_padding_2x" >
+
+                        <TextView
+                            style="@style/Text.Small.Muted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/email_address"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/Text.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/email" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardElevation="2dp"
+                card_view:cardBackgroundColor="#ffffff"
+                android:layout_marginLeft="@dimen/base_padding_2x"
+                android:layout_marginRight="@dimen/base_padding_2x"
+                android:layout_marginTop="@dimen/base_padding_2x"
+                android:layout_marginBottom="@dimen/base_padding_2x"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/base_padding"
+                    android:id="@+id/profile_progress">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/base_padding_2x" >
+
+                        <TextView
+                            style="@style/Text.Small"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_progress_info"
+                            android:layout_weight="1"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:background="@color/colorDividerDarkAlpha" />
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/base_padding_2x" >
+
+                        <TextView
+                            style="@style/Text.Small.Muted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/posted"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/Text.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/posts" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/base_padding_2x" >
+
+                        <TextView
+                            style="@style/Text.Small.Muted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/avg_point"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/Text.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/avg_pts" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/base_padding_2x" >
+
+                        <TextView
+                            style="@style/Text.Small.Muted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_exp_point"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/Text.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/exp_pts" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/base_padding_2x" >
+
+                        <TextView
+                            style="@style/Text.Small.Muted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_level"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/Text.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/level" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/base_padding_2x" >
+
+                        <TextView
+                            style="@style/Text.Small.Muted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_level_percent"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/Text.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/level_percent" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

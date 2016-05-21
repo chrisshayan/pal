@@ -1,0 +1,97 @@
+<div ng-controller="AdvisorsCtrl">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Advisor list</h5>
+                    <div class="ibox-tools">
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row" style="margin-bottom:5px">
+                        <div class="col-md-12">
+                            <a ng-click="onAddItem()" class="btn btn-sm btn-white"> <i class="fa fa-plus"> Add</i> </a>
+                            <a ng-show="nChecked==1" ng-click="onEditItem()" class="btn btn-sm btn-white"> <i class="fa fa-pencil"> Edit</i> </a>
+                            <a ng-show="nChecked==1" ng-click="onResetPassword()" class="btn btn-sm btn-white"> <i class="fa fa-cog"> Reset password</i> </a>
+                            <a ng-show="nChecked==1 && isReinvite" ng-click="onReinvite()" class="btn btn-sm btn-white"> <i class="fa fa-envelope-o"> Re-invite</i> </a>
+                            <a ng-show="nChecked>0 && isBan" ng-click="onBanUsers()" class="btn btn-sm btn-white"> <i class="fa fa-ban"> Ban user</i> </a>
+                            <a ng-show="nChecked>0 && !isBan" ng-click="onUnbanUsers()" class="btn btn-sm btn-white"> <i class="fa fa-check"> Unban user</i> </a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover issue-tracker">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>School</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="r in data" ng-click="onEditItem(r)" style="cursor:pointer" id="item_{{r.$id}}">
+                                    <td>
+                                        <checkbox ng-id="{{r.$id}}" ng-model="checked[r.$id]" ng-changed="onSelectItem(r.$id)"></checkbox>
+                                    </td>
+                                    <td class="issue-info" ng-class="{'text-muted':r.ban}">
+                                        {{r.display_name}}
+                                    </td>
+                                    <td ng-class="{'text-muted':r.ban}">
+                                        {{r.email}}
+                                    </td>
+                                    <td ng-class="{'text-muted':r.ban}">
+                                        {{schools[r.school].name || 'unknown'}}
+                                    </td>
+                                    <td ng-class="{'text-muted':r.ban}">
+                                        <span class="badge badge-primary" ng-if="r.confirmed && !r.ban" tooltip-placement="top" tooltip="Active"> Active</span>
+                                        <span class="badge badge-danger" ng-if="r.ban" tooltip-placement="top" tooltip="Banned"> Banned</span>
+                                        <span class="badge badge-warning" ng-if="!r.confirmed && !r.ban" tooltip-placement="top" tooltip="Wait for confirm"> Pending</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="advisor_modal.html">
+        <div class="modal-header">
+            <h3 class="modal-title" ng-if="isNewUser">Add new Advisor</h3>
+            <h3 class="modal-title" ng-if="!isNewUser">Update Advisor</h3>
+        </div>
+        <div class="modal-body">
+            <form role="form">
+                <div class="form-group">
+                    <label>Email (*)</label>
+                    <input ng-readonly="!isNewUser || isProcessing" ng-model="data.email" type="email" placeholder="Enter email" class="form-control" require=""/>
+                </div>
+                <div class="form-group">
+                    <label>First name (*)</label>
+                    <input ng-readonly="isProcessing" ng-model="data.first_name" type="text" placeholder="First name" class="form-control" require=""/>
+                </div>
+                <div class="form-group">
+                    <label>Last name (*)</label>
+                    <input ng-readonly="isProcessing" ng-model="data.last_name" type="text" placeholder="Last name" class="form-control" require=""/>
+                </div>
+                <div class="form-group">
+                    <label>Display name</label>
+                    <input ng-readonly="isProcessing" ng-model="data.display_name" type="text" placeholder="Display name" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label>School</label>
+                    <select class="form-control" ng-readonly="isProcessing" ng-model="data.school">
+                        <option value="">Select school (optional)</option>
+                        <option ng-repeat="n in schools" value="{{n.$id}}">{{n.name}}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-disabled="isProcessing || !data.email || !data.first_name || !data.last_name" ng-click="onDone()">OK</button>
+            <button class="btn btn-warning" type="button" ng-disabled="isProcessing" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+</div>
